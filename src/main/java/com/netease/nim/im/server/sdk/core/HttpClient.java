@@ -1,7 +1,7 @@
 package com.netease.nim.im.server.sdk.core;
 
 
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkIOException;
+import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.core.http.ContextType;
 import com.netease.nim.im.server.sdk.core.http.HttpMethod;
 import com.netease.nim.im.server.sdk.core.http.HttpResponse;
@@ -13,7 +13,7 @@ import com.netease.nim.im.server.sdk.core.trace.ApiVersion;
  */
 public interface HttpClient {
 
-    HttpResponse execute(HttpMethod method, ContextType contextType, ApiVersion apiVersion, String uri, String path, String data) throws YunxinSdkIOException;
+    HttpResponse execute(HttpMethod method, ContextType contextType, ApiVersion apiVersion, String uri, String path, String data) throws YunxinSdkException;
 
     Stats getStats();
 }

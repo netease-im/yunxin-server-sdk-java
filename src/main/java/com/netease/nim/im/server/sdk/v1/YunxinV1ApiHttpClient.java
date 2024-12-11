@@ -4,7 +4,7 @@ import com.netease.nim.im.server.sdk.core.EndpointConfig;
 import com.netease.nim.im.server.sdk.core.YunxinHttpClient;
 import com.netease.nim.im.server.sdk.core.YunxinHttpClientConfig;
 import com.netease.nim.im.server.sdk.core.endpoint.*;
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkIOException;
+import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.core.http.ContextType;
 import com.netease.nim.im.server.sdk.core.http.HttpMethod;
 import com.netease.nim.im.server.sdk.core.http.HttpResponse;
@@ -125,7 +125,7 @@ public class YunxinV1ApiHttpClient {
      * @param paramMap param-map
      * @return response
      */
-    public final YunxinV1ApiResponse execute(String path, Map<String, String> paramMap) throws YunxinSdkIOException {
+    public final YunxinV1ApiResponse execute(String path, Map<String, String> paramMap) throws YunxinSdkException {
         ParamBuilder builder = new ParamBuilder();
         for (Map.Entry<String, String> entry : paramMap.entrySet()) {
             builder.addParam(entry.getKey(), entry.getValue());

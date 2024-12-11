@@ -1,7 +1,7 @@
 package com.netease.nim.im.server.sdk.core;
 
 import com.netease.nim.im.server.sdk.core.exception.HttpCodeException;
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkIOException;
+import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.core.http.ContextType;
 import com.netease.nim.im.server.sdk.core.http.HttpMethod;
 import com.netease.nim.im.server.sdk.core.http.HttpResponse;
@@ -63,7 +63,7 @@ public class YunxinHttpClient implements HttpClient {
     }
 
     @Override
-    public HttpResponse execute(HttpMethod method, ContextType contextType, ApiVersion apiVersion, String uri, String path, String data) throws YunxinSdkIOException {
+    public HttpResponse execute(HttpMethod method, ContextType contextType, ApiVersion apiVersion, String uri, String path, String data) throws YunxinSdkException {
         //trace-id
         String traceId = YunxinTraceId.get();
         if (traceId == null) {
@@ -75,7 +75,7 @@ public class YunxinHttpClient implements HttpClient {
             //context
             ExecuteContext executeContext = new ExecuteContext(endpoint, method, contextType, apiVersion, path, data, traceId);
             //exception
-            YunxinSdkIOException exception = null;
+            YunxinSdkException exception = null;
             for (int i=0; i<=maxRetry; i++) {
                 //request
                 Request.Builder builder = new Request.Builder();
@@ -130,7 +130,7 @@ public class YunxinHttpClient implements HttpClient {
                     if (metricsCollector != null) {
                         metricsCollector.collect(endpoint, method, contextType, apiVersion, uri, result, System.currentTimeMillis() - startTime);
                     }
-                    exception = new YunxinSdkIOException(executeContext, e);
+                    exception = new YunxinSdkException(executeContext, e);
                     RetryPolicy.RetryAction retryAction = retryPolicy.onError(executeContext, e);
                     if (!retryAction.isRetry()) {
                         throw exception;
@@ -143,7 +143,7 @@ public class YunxinHttpClient implements HttpClient {
             if (exception != null) {
                 throw exception;
             }
-            throw new YunxinSdkIOException(executeContext, null);
+            throw new YunxinSdkException(executeContext, null);
         } finally {
             YunxinTraceId.clear();
         }

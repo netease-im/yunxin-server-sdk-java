@@ -1,7 +1,7 @@
 package com.netease.nim.im.server.sdk.test;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkIOException;
+import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.v1.YunxinV1ApiHttpClient;
 import com.netease.nim.im.server.sdk.v1.YunxinV1ApiResponse;
 
@@ -34,7 +34,7 @@ public class Test {
         YunxinV1ApiResponse response;
         try {
             response = client.execute(path, paramMap);
-        } catch (YunxinSdkIOException e) {
+        } catch (YunxinSdkException e) {//这是一个RuntimeException
             // 请求失败
             System.err.println("register error, traceId = " + e.getTraceId());
             return;

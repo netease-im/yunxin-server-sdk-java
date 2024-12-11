@@ -1,11 +1,10 @@
 package com.netease.nim.im.server.sdk.v1.account.response;
 
-import com.netease.nim.im.server.sdk.v1.common.BaseResponse;
 
 /**
  * Created by caojiajun on 2024/12/11
  */
-public class CreateAccountResponse extends BaseResponse {
+public class CreateAccountResponse {
     private String accid;
     private String name;
     private String token;

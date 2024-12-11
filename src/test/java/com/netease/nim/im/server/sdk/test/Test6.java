@@ -1,12 +1,11 @@
 package com.netease.nim.im.server.sdk.test;
 
 import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkIOException;
+import com.netease.nim.im.server.sdk.v1.Result;
 import com.netease.nim.im.server.sdk.v1.YunxinV1ApiHttpClient;
 import com.netease.nim.im.server.sdk.v1.YunxinV1ApiServices;
 import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequest;
 import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponse;
-import com.netease.nim.im.server.sdk.v1.exception.YunxinSdkCodeException;
 
 /**
  * Created by caojiajun on 2024/12/11
@@ -30,18 +29,18 @@ public class Test6 {
         CreateAccountRequest request = new CreateAccountRequest();
         request.setAccid("zhangsan");
         try {
-            CreateAccountResponse response = services.getAccountService().createAccount(request);
-            // 注册成功
-            System.out.println("register success, accid = " + response.getAccid() + ", token = " + response.getAccid() + ", traceId=" + response.getTraceId());
-        } catch (YunxinSdkIOException e) {
+            Result<CreateAccountResponse> result = services.getAccountService().createAccount(request);
+            if (result.isSuccess()) {
+                CreateAccountResponse response = result.getResponse();
+                // 注册成功
+                System.out.println("register success, accid=" + response.getAccid() + ", token=" + response.getToken() + ", traceId=" + result.getTraceId());
+            } else {
+                // 注册失败，如参数错误、重复注册等
+                System.err.println("register fail, code=" + result.getCode() + ", msg=" + result.getMsg() + ", traceId=" + result.getTraceId());
+            }
+        } catch (YunxinSdkException e) {//这是一个RuntimeException
             // 超时等异常
             System.err.println("register error, endpoint = " + e.getContext().getEndpoint() + ", traceId=" + e.getTraceId());
-        } catch (YunxinSdkCodeException e) {
-            // 错误码异常，如已经注册
-            System.err.println("register fail, code=" + e.getCode() + ", endpoint = " + e.getEndpoint() + ", traceId=" + e.getTraceId() + ", msg=" + e.getMsg());
-        } catch (YunxinSdkException e) {
-            // 未知异常
-            System.err.println("register error, traceId=" + e.getTraceId());
         }
     }
 }

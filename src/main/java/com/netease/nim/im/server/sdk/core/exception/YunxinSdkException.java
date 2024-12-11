@@ -1,22 +1,24 @@
 package com.netease.nim.im.server.sdk.core.exception;
 
+import com.netease.nim.im.server.sdk.core.endpoint.ExecuteContext;
+
 /**
- * Created by caojiajun on 2024/12/11
+ * Created by caojiajun on 2024/12/9
  */
-public class YunxinSdkException extends Exception {
+public class YunxinSdkException extends RuntimeException {
 
-    private final String traceId;
+    private final ExecuteContext context;
 
-    public YunxinSdkException(String traceId, String message, Throwable error) {
-        super(message, error);
-        this.traceId = traceId;
+    public YunxinSdkException(ExecuteContext context, Exception e) {
+        super("endpoint: " + context.getEndpoint() + ", trace-id: " + context.getTraceId() + ", message: " + e.getMessage(), e);
+        this.context = context;
     }
 
-    public YunxinSdkException(String traceId) {
-        this.traceId = traceId;
+    public ExecuteContext getContext() {
+        return context;
     }
 
     public String getTraceId() {
-        return traceId;
+        return context.getTraceId();
     }
 }
