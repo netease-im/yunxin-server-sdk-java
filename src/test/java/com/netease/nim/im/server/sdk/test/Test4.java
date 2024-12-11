@@ -19,6 +19,7 @@ public class Test4 {
             System.out.println("receive stats callback");
             System.out.println(JSONObject.toJSONString(stats));
         };
+
         //
         YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
