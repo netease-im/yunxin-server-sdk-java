@@ -4,7 +4,7 @@ package com.netease.nim.im.server.sdk.v1.account.request;
 /**
  * Created by caojiajun on 2024/12/11
  */
-public class CreateAccountRequest {
+public class CreateAccountRequestV1 {
     private String accid;
     private String token;
     private String name;

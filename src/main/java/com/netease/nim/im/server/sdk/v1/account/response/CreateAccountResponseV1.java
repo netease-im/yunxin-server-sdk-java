@@ -4,7 +4,7 @@ package com.netease.nim.im.server.sdk.v1.account.response;
 /**
  * Created by caojiajun on 2024/12/11
  */
-public class CreateAccountResponse {
+public class CreateAccountResponseV1 {
     private String accid;
     private String name;
     private String token;

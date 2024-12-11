@@ -1,8 +1,5 @@
-package com.netease.nim.im.server.sdk.v1;
+package com.netease.nim.im.server.sdk.core;
 
-import com.netease.nim.im.server.sdk.core.EndpointConfig;
-import com.netease.nim.im.server.sdk.core.YunxinHttpClient;
-import com.netease.nim.im.server.sdk.core.YunxinHttpClientConfig;
 import com.netease.nim.im.server.sdk.core.endpoint.*;
 import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.core.http.ContextType;
@@ -19,12 +16,12 @@ import java.util.Map;
 /**
  * Created by caojiajun on 2024/12/9
  */
-public class YunxinV1ApiHttpClient {
+public class YunxinApiHttpClient {
 
     private final YunxinHttpClient httpClient;
 
-    private YunxinV1ApiHttpClient(String appkey, String appsecret, EndpointConfig endpointConfig,
-                                 YunxinHttpClientConfig httpClientConfig, MetricsConfig metricsConfig) {
+    private YunxinApiHttpClient(String appkey, String appsecret, EndpointConfig endpointConfig,
+                                YunxinHttpClientConfig httpClientConfig, MetricsConfig metricsConfig) {
         this.httpClient = new YunxinHttpClient(appkey, appsecret, endpointConfig, httpClientConfig, metricsConfig);
     }
 
@@ -109,12 +106,12 @@ public class YunxinV1ApiHttpClient {
             return this;
         }
 
-        public YunxinV1ApiHttpClient build() {
+        public YunxinApiHttpClient build() {
             if (endpointConfig.getEndpointSelector() == null) {
                 EndpointSelector endpointSelector = new DynamicEndpointSelector(new DynamicEndpointFetcher(appkey, ApiVersion.V1));
                 endpointConfig.setEndpointSelector(endpointSelector);
             }
-            return new YunxinV1ApiHttpClient(appkey, appsecret, endpointConfig, httpClientConfig, metricsConfig);
+            return new YunxinApiHttpClient(appkey, appsecret, endpointConfig, httpClientConfig, metricsConfig);
         }
     }
 
@@ -124,14 +121,30 @@ public class YunxinV1ApiHttpClient {
      * @param path path
      * @param paramMap param-map
      * @return response
+     * @throws YunxinSdkException exception
      */
-    public final YunxinV1ApiResponse execute(String path, Map<String, String> paramMap) throws YunxinSdkException {
+    public final YunxinApiResponse executeV1Api(String path, Map<String, String> paramMap) throws YunxinSdkException {
         ParamBuilder builder = new ParamBuilder();
         for (Map.Entry<String, String> entry : paramMap.entrySet()) {
             builder.addParam(entry.getKey(), entry.getValue());
         }
-        HttpResponse response = httpClient.execute(HttpMethod.POST, ContextType.form_url_encoded, ApiVersion.V1, path, path, builder.build());
-        return new YunxinV1ApiResponse(response.getEndpoint(), response.getData(), response.getTraceId());
+        HttpResponse response = httpClient.execute(HttpMethod.POST, ContextType.form_url_encoded, ApiVersion.V1, path, path, null, builder.build());
+        return new YunxinApiResponse(response.getEndpoint(), response.getData(), response.getTraceId());
+    }
+
+    /**
+     * yunxin v2 api
+     * @param method http method
+     * @param uri only for metrics
+     * @param path real path
+     * @param queryString query string
+     * @param data data
+     * @return response
+     * @throws YunxinSdkException exception
+     */
+    public final YunxinApiResponse executeV2Api(HttpMethod method, String uri, String path, Map<String, String> queryString, String data) throws YunxinSdkException {
+        HttpResponse response = httpClient.execute(method, ContextType.json, ApiVersion.V2, uri, path, queryString, data);
+        return new YunxinApiResponse(response.getEndpoint(), response.getData(), response.getTraceId());
     }
 
     /**

@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.netease.nim.im.server.sdk.core.metrics.MetricsCallback;
 import com.netease.nim.im.server.sdk.core.metrics.PrometheusConverter;
 import com.netease.nim.im.server.sdk.core.metrics.Stats;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiHttpClient;
+import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
 
 /**
  * Created by caojiajun on 2024/12/10
@@ -20,7 +20,7 @@ public class Test4 {
             System.out.println(JSONObject.toJSONString(stats));
         };
         //
-        YunxinV1ApiHttpClient client = new YunxinV1ApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .metricEnable(true)//默认true
                 .metricCollectIntervalSeconds(60)//默认60s

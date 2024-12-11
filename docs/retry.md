@@ -9,7 +9,7 @@
 ```java
 import com.netease.nim.im.server.sdk.core.endpoint.DefaultRetryPolicy;
 import com.netease.nim.im.server.sdk.core.endpoint.RetryPolicy;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiHttpClient;
+import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
 
 /**
  * Created by caojiajun on 2024/12/10
@@ -28,7 +28,7 @@ public class Test2 {
         boolean retryOn502 = true;
         RetryPolicy retryPolicy = new DefaultRetryPolicy(retryOn502);
         //
-        YunxinV1ApiHttpClient client = new YunxinV1ApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .maxRetry(maxRetry)
                 .retryPolicy(retryPolicy)

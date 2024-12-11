@@ -5,7 +5,7 @@
 * 私有化场景下，可以手动指定endpoint，此时多域名切换机制将失效
 
 ```java
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiHttpClient;
+import com.netease.nim.im.server.sdk.core.core.YunxinApiHttpClient;
 
 /**
  * Created by caojiajun on 2024/12/10
@@ -19,7 +19,7 @@ public class Test5 {
 
         String endpoint = "https://xxxx.com";
         //
-        YunxinV1ApiHttpClient client = new YunxinV1ApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .endpoint(endpoint)
                 .build();

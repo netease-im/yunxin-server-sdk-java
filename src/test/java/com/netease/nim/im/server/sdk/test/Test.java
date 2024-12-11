@@ -2,8 +2,8 @@ package com.netease.nim.im.server.sdk.test;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiHttpClient;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiResponse;
+import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.im.server.sdk.core.YunxinApiResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ public class Test {
         String appsecret = "xx";
         int timeoutMillis = 5000;
         //
-        YunxinV1ApiHttpClient client = new YunxinV1ApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .build();
 
@@ -31,9 +31,9 @@ public class Test {
         paramMap.put("accid", "zhangsan");
 
         // 执行请求
-        YunxinV1ApiResponse response;
+        YunxinApiResponse response;
         try {
-            response = client.execute(path, paramMap);
+            response = client.executeV1Api(path, paramMap);
         } catch (YunxinSdkException e) {//这是一个RuntimeException
             // 请求失败
             System.err.println("register error, traceId = " + e.getTraceId());

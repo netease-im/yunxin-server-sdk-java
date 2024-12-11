@@ -6,6 +6,7 @@ import com.netease.nim.im.server.sdk.core.http.ContextType;
 import com.netease.nim.im.server.sdk.core.http.HttpMethod;
 import com.netease.nim.im.server.sdk.core.http.HttpResponse;
 import com.netease.nim.im.server.sdk.core.endpoint.*;
+import com.netease.nim.im.server.sdk.core.http.ParamBuilder;
 import com.netease.nim.im.server.sdk.core.metrics.MetricsConfig;
 import com.netease.nim.im.server.sdk.core.metrics.Stats;
 import com.netease.nim.im.server.sdk.core.metrics.YunxinApiSdkMetricsCollector;
@@ -16,6 +17,7 @@ import com.netease.nim.im.server.sdk.core.utils.CheckSumBuilder;
 import com.netease.nim.im.server.sdk.core.utils.ExceptionUtils;
 import okhttp3.*;
 
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -62,8 +64,10 @@ public class YunxinHttpClient implements HttpClient {
         this.endpointSelector.init(okHttpClient);
     }
 
+
     @Override
-    public HttpResponse execute(HttpMethod method, ContextType contextType, ApiVersion apiVersion, String uri, String path, String data) throws YunxinSdkException {
+    public HttpResponse execute(HttpMethod method, ContextType contextType, ApiVersion apiVersion,
+                                String uri, String path, Map<String, String> queryString, String data) throws YunxinSdkException {
         //trace-id
         String traceId = YunxinTraceId.get();
         if (traceId == null) {
@@ -73,14 +77,28 @@ public class YunxinHttpClient implements HttpClient {
             //select endpoint
             String endpoint = endpointSelector.selectEndpoint(null);
             //context
-            ExecuteContext executeContext = new ExecuteContext(endpoint, method, contextType, apiVersion, path, data, traceId);
+            ExecuteContext executeContext = new ExecuteContext(endpoint, method, contextType, apiVersion, uri, path, queryString, data, traceId);
+            String url;
+            if (queryString == null || queryString.isEmpty()) {
+                url = path;
+            } else {
+                ParamBuilder query = new ParamBuilder();
+                for (Map.Entry<String, String> entry : queryString.entrySet()) {
+                    query.addParam(entry.getKey(), entry.getValue());
+                }
+                url = path + "?" + query.build();
+            }
             //exception
             YunxinSdkException exception = null;
             for (int i=0; i<=maxRetry; i++) {
                 //request
                 Request.Builder builder = new Request.Builder();
-                builder.method(method.name(), RequestBody.create(MediaType.parse(contextType.getValue()), data));
-                builder.url(endpoint + path);
+                if (method == HttpMethod.GET) {
+                    builder.get();
+                } else {
+                    builder.method(method.name(), RequestBody.create(MediaType.parse(contextType.getValue()), data == null ? "" : data));
+                }
+                builder.url(endpoint + url);
                 //add headers
                 addHeaders(builder, apiVersion, traceId);
                 //build request

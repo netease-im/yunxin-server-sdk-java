@@ -2,11 +2,11 @@ package com.netease.nim.im.server.sdk.v1.account;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
-import com.netease.nim.im.server.sdk.v1.Result;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiHttpClient;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiResponse;
-import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequest;
-import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponse;
+import com.netease.nim.im.server.sdk.core.Result;
+import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.im.server.sdk.core.YunxinApiResponse;
+import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequestV1;
+import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponseV1;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,15 +14,16 @@ import java.util.Map;
 /**
  * Created by caojiajun on 2024/12/11
  */
-public class AccountService implements IAccountService {
+public class AccountV1Service implements IAccountV1Service {
 
-    private final YunxinV1ApiHttpClient httpClient;
+    private final YunxinApiHttpClient httpClient;
 
-    public AccountService(YunxinV1ApiHttpClient httpClient) {
+    public AccountV1Service(YunxinApiHttpClient httpClient) {
         this.httpClient = httpClient;
     }
 
-    public Result<CreateAccountResponse> createAccount(CreateAccountRequest request) throws YunxinSdkException {
+    @Override
+    public Result<CreateAccountResponseV1> createAccount(CreateAccountRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("accid", request.getAccid());
         if (request.getToken() != null) {
@@ -52,18 +53,18 @@ public class AccountService implements IAccountService {
         if (request.getEx() != null) {
             paramMap.put("ex", request.getEx());
         }
-        YunxinV1ApiResponse apiResponse = httpClient.execute("/user/create.action", paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api("/user/create.action", paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
-            return new Result<>(code, apiResponse.getTraceId(), object.getString("desc"), null);
+            return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), object.getString("desc"), null);
         }
-        CreateAccountResponse response = new CreateAccountResponse();
+        CreateAccountResponseV1 response = new CreateAccountResponseV1();
         JSONObject info = object.getJSONObject("info");
         response.setAccid(info.getString("accid"));
         response.setName(info.getString("name"));
         response.setToken(info.getString("token"));
-        return new Result<>(code, apiResponse.getTraceId(), null, response);
+        return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
     }
 
 }

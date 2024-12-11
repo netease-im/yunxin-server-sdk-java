@@ -1,11 +1,11 @@
 package com.netease.nim.im.server.sdk.test;
 
 import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
-import com.netease.nim.im.server.sdk.v1.Result;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiHttpClient;
+import com.netease.nim.im.server.sdk.core.Result;
+import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
 import com.netease.nim.im.server.sdk.v1.YunxinV1ApiServices;
-import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequest;
-import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponse;
+import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequestV1;
+import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponseV1;
 
 /**
  * Created by caojiajun on 2024/12/11
@@ -18,7 +18,7 @@ public class Test6 {
         String appsecret = "xx";
         int timeoutMillis = 5000;
         //
-        YunxinV1ApiHttpClient client = new YunxinV1ApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .build();
 
@@ -26,12 +26,12 @@ public class Test6 {
         YunxinV1ApiServices services = new YunxinV1ApiServices(client);
 
         // request
-        CreateAccountRequest request = new CreateAccountRequest();
+        CreateAccountRequestV1 request = new CreateAccountRequestV1();
         request.setAccid("zhangsan");
         try {
-            Result<CreateAccountResponse> result = services.getAccountService().createAccount(request);
+            Result<CreateAccountResponseV1> result = services.getAccountService().createAccount(request);
             if (result.isSuccess()) {
-                CreateAccountResponse response = result.getResponse();
+                CreateAccountResponseV1 response = result.getResponse();
                 // 注册成功
                 System.out.println("register success, accid=" + response.getAccid() + ", token=" + response.getToken() + ", traceId=" + result.getTraceId());
             } else {
