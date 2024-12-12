@@ -15,6 +15,40 @@
 
 <img src="docs/img.png" width="60%" height="60%">
 
+## 引入依赖
+
+### release包
+
+```
+<dependency>
+    <groupId>com.netease.nim</groupId>
+    <artifactId>yunxin-im-server-sdk</artifactId>
+    <version>x.x.x</version>
+</dependency>
+```
+
+### snapshot包
+```
+<repositories>
+  <repository>
+    <id>sonatype-snapshots</id>
+    <name>Sonatype Snapshot Repository</name>
+    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    <snapshots>
+      <enabled>true</enabled>
+    </snapshots>
+  </repository>
+</repositories>
+```
+
+```
+<dependency>
+    <groupId>com.netease.nim</groupId>
+    <artifactId>yunxin-im-server-sdk</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+</dependency>
+```
+
 ## 快速开始（v1接口，使用raw-client）
 
 ```java
