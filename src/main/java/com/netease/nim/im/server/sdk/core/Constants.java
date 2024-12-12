@@ -31,7 +31,9 @@ public class Constants {
 
     public static class Endpoint {
 
-        public static final String lbs = "https://lbs.netease.im/lbs/getApiEndpoints";
+        public static final String lbs = "https://srv-sdk-lbs.yunxinapi.com/srv-sdk/allocate";
+        public static final String lbs_cn = "https://srv-sdk-lbs-cn.yunxinapi.com/srv-sdk/allocate";
+        public static final String lbs_sg = "https://srv-sdk-lbs-sg.yunxinapi.com/srv-sdk/allocate";
 
         public static final String detectPath = "/health/liveness.action";
         public static final int scheduleDetectIntervalSeconds = 5;

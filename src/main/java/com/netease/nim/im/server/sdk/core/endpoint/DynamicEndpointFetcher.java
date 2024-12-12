@@ -6,7 +6,6 @@ import com.alibaba.fastjson2.JSONObject;
 import com.netease.nim.im.server.sdk.core.Constants;
 import com.netease.nim.im.server.sdk.core.exception.EndpointFetchException;
 import com.netease.nim.im.server.sdk.core.http.ParamBuilder;
-import com.netease.nim.im.server.sdk.core.trace.ApiVersion;
 import com.netease.nim.im.server.sdk.core.utils.NamedThreadFactory;
 import com.netease.nim.im.server.sdk.core.version.YunxinApiSdkVersion;
 import okhttp3.OkHttpClient;
@@ -16,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -29,8 +30,7 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
     private static final Logger logger = LoggerFactory.getLogger(DynamicEndpointFetcher.class);
 
     private final String appkey;
-    private final String lbs;
-    private final ApiVersion apiVersion;
+    private final List<String> lbsList;
     private final int reloadIntervalSeconds;
 
     private OkHttpClient okHttpClient;
@@ -39,42 +39,66 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
     private Endpoints endpoints;
     private long nextFetchTime;
 
-    public DynamicEndpointFetcher(String appkey, ApiVersion apiVersion) {
-        this(appkey, Constants.Endpoint.lbs, apiVersion, Constants.Endpoint.scheduleFetchIntervalSeconds);
+    public DynamicEndpointFetcher(String appkey) {
+        this(appkey, Arrays.asList(Constants.Endpoint.lbs, Constants.Endpoint.lbs_cn, Constants.Endpoint.lbs_sg), Constants.Endpoint.scheduleFetchIntervalSeconds);
     }
 
-    public DynamicEndpointFetcher(String appkey, String lbs, ApiVersion apiVersion, int reloadIntervalSeconds) {
+    public DynamicEndpointFetcher(String appkey, Region region) {
         this.appkey = appkey;
-        this.lbs = lbs;
-        this.apiVersion = apiVersion;
+        if (region == Region.CN) {
+            this.lbsList = Collections.singletonList(Constants.Endpoint.lbs_cn);
+        } else if (region == Region.SG) {
+            this.lbsList = Collections.singletonList(Constants.Endpoint.lbs_sg);
+        } else {
+            this.lbsList = Arrays.asList(Constants.Endpoint.lbs, Constants.Endpoint.lbs_cn, Constants.Endpoint.lbs_sg);
+        }
+        this.reloadIntervalSeconds = Constants.Endpoint.scheduleFetchIntervalSeconds;
+    }
+
+    public DynamicEndpointFetcher(String appkey, List<String> lbsList, int reloadIntervalSeconds) {
+        this.appkey = appkey;
+        this.lbsList = lbsList;
         this.reloadIntervalSeconds = reloadIntervalSeconds;
     }
 
     @Override
     public void init(OkHttpClient okHttpClient) {
         this.okHttpClient = okHttpClient;
-        reload();
+        for (String lbs : lbsList) {
+            try {
+                boolean reload = reload(lbs);
+                if (reload) {
+                    break;
+                }
+            } catch (Exception e) {
+                logger.error("fetch endpoints error, lbs = {}", lbs, e);
+            }
+        }
         if (endpoints == null) {
             throw new EndpointFetchException("init endpoints error");
         }
         Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("yunxin-im-sdk-endpoint-fetch"))
                 .scheduleAtFixedRate(() -> {
-                    try {
-                        reload();
-                    } catch (Exception e) {
-                        logger.error("reload error", e);
+                    for (String lbs : lbsList) {
+                        try {
+                            boolean reload = reload(lbs);
+                            if (reload) {
+                                break;
+                            }
+                        } catch (Exception e) {
+                            logger.error("fetch endpoints error, lbs = {}", lbs, e);
+                        }
                     }
                 }, reloadIntervalSeconds, reloadIntervalSeconds, TimeUnit.SECONDS);
     }
 
-    private void reload() {
+    private boolean reload(String lbs) {
         if (System.currentTimeMillis() < nextFetchTime) {
-            return;
+            return true;
         }
         ParamBuilder builder = new ParamBuilder();
         builder.addParam("k", appkey);
         builder.addParam("sv", YunxinApiSdkVersion.version);
-        builder.addParam("api", apiVersion.getValue());
         if (md5 != null) {
             builder.addParam("md5", md5);
         }
@@ -92,10 +116,10 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
             Integer code = json.getInteger("code");
             if (code == null) {
                 logger.error("illegal endpoints, response = {}", string);
-                return;
+                return false;
             }
             if (code == 304) {//没有发生变更
-                return;
+                return true;
             }
             if (code == 200) {
                 String defaultEndpoint = json.getString("default.endpoint");
@@ -111,7 +135,7 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
                 endpoints.setBackupEndpoints(backupEndpoints);
                 if (defaultEndpoint == null) {
                     logger.error("illegal endpoints, response = {}", string);
-                    return;
+                    return false;
                 }
                 logger.info("endpoints update, old = {}, new = {}", JSONObject.toJSONString(this.endpoints), JSONObject.toJSONString(endpoints));
                 int ttl = json.getIntValue("ttl", 30);
@@ -121,6 +145,10 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
                 this.nextFetchTime = System.currentTimeMillis() + ttl * 1000L;
                 this.md5 = json.getString("md5");
                 this.endpoints = endpoints;
+                return true;
+            } else {
+                logger.error("fetch endpoints error, response = {}", string);
+                return false;
             }
         } catch (EndpointFetchException e) {
             throw e;

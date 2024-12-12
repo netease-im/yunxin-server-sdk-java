@@ -32,6 +32,7 @@ public class YunxinApiHttpClient {
         private final EndpointConfig endpointConfig = new EndpointConfig();
         private YunxinHttpClientConfig httpClientConfig = new YunxinHttpClientConfig();
         private final MetricsConfig metricsConfig = new MetricsConfig();
+        private Region region;
 
         public Builder(String appkey, String appsecret) {
             this.appkey = appkey;
@@ -106,9 +107,14 @@ public class YunxinApiHttpClient {
             return this;
         }
 
+        public Builder region(Region region) {
+            this.region = region;
+            return this;
+        }
+
         public YunxinApiHttpClient build() {
             if (endpointConfig.getEndpointSelector() == null) {
-                EndpointSelector endpointSelector = new DynamicEndpointSelector(new DynamicEndpointFetcher(appkey, ApiVersion.V1));
+                EndpointSelector endpointSelector = new DynamicEndpointSelector(new DynamicEndpointFetcher(appkey, region));
                 endpointConfig.setEndpointSelector(endpointSelector);
             }
             return new YunxinApiHttpClient(appkey, appsecret, endpointConfig, httpClientConfig, metricsConfig);

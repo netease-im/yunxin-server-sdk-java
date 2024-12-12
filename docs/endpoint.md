@@ -23,7 +23,7 @@ public class Test3 {
         String appsecret = "xx";
         int timeoutMillis = 5000;
         // EndpointSelector可以自定义
-        EndpointSelector endpointSelector = new DynamicEndpointSelector(new DynamicEndpointFetcher(appkey, ApiVersion.V1));
+        EndpointSelector endpointSelector = new DynamicEndpointSelector(new DynamicEndpointFetcher(appkey));
         //
         YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
                 .timeoutMillis(timeoutMillis)

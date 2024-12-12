@@ -50,3 +50,34 @@ public class Test6 {
     }
 }
 ```
+
+
+### 关于sdk的调度
+
+* sdk初始化时会通过云信服务器下发实际使用的api域名
+* 调度域名默认使用全球化加速的域名
+* 如果希望限制调度服务的地区，可以初始化时增加region参数配置，如下
+
+```java
+import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.im.server.sdk.core.endpoint.Region;
+
+/**
+ * Created by caojiajun on 2024/12/10
+ */
+public class Test9 {
+
+    public static void main(String[] args) {
+        // 初始化
+        String appkey = "xx";
+        String appsecret = "xx";
+        int timeoutMillis = 5000;
+        //
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+                .timeoutMillis(timeoutMillis)
+                .region(Region.SG)//限制调度服务域名的地区，默认可以不填
+                .build();
+    }
+}
+
+```
