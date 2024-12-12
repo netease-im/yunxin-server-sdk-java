@@ -123,11 +123,21 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
             }
             if (code == 200) {
                 String defaultEndpoint = json.getString("default.endpoint");
+                if (!check(defaultEndpoint)) {
+                    logger.error("default endpoint check error, skip update, endpoint = {}", defaultEndpoint);
+                    return false;
+                }
                 JSONArray backupEndpointsJson = json.getJSONArray("backup.endpoints");
                 Endpoints endpoints = new Endpoints();
                 List<String> backupEndpoints = new ArrayList<>();
+                boolean existsSkip = false;
                 if (backupEndpointsJson != null) {
                     for (Object backupEndpoint : backupEndpointsJson) {
+                        if (!check(String.valueOf(backupEndpoint))) {
+                            logger.error("backup endpoint check error, skip, endpoint = {}", defaultEndpoint);
+                            existsSkip = true;
+                            continue;
+                        }
                         backupEndpoints.add(String.valueOf(backupEndpoint));
                     }
                 }
@@ -143,7 +153,9 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
                     ttl = 30;
                 }
                 this.nextFetchTime = System.currentTimeMillis() + ttl * 1000L;
-                this.md5 = json.getString("md5");
+                if (!existsSkip) {
+                    this.md5 = json.getString("md5");
+                }
                 this.endpoints = endpoints;
                 return true;
             } else {
@@ -161,5 +173,29 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
     @Override
     public Endpoints get() {
         return endpoints;
+    }
+
+    private boolean check(String endpoint) {
+        if (okHttpClient == null) {
+            return true;
+        }
+        String url = endpoint + Constants.Endpoint.detectPath;
+        Request request = new Request.Builder().get()
+                .url(url)
+                .build();
+        boolean success;
+        try (Response response = okHttpClient.newCall(request).execute()) {
+            String string = response.body().string();
+            success = response.code() == 200;
+            if (logger.isDebugEnabled()) {
+                logger.debug("detect, endpoint = {}, path = {}, code = {}, response = {}", endpoint, Constants.Endpoint.detectPath, response.code(), string);
+            }
+        } catch (Exception e) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("detect error, endpoint = {}, path = {}", endpoint, Constants.Endpoint.detectPath, e);
+            }
+            success = false;
+        }
+        return success;
     }
 }
