@@ -1,7 +1,6 @@
 package com.netease.nim.im.server.sdk.core;
 
 import com.netease.nim.im.server.sdk.core.endpoint.DefaultRetryPolicy;
-import com.netease.nim.im.server.sdk.core.endpoint.DynamicEndpointSelector;
 import com.netease.nim.im.server.sdk.core.endpoint.RetryPolicy;
 
 /**

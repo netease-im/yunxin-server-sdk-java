@@ -64,14 +64,19 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
     @Override
     public void init(OkHttpClient okHttpClient) {
         this.okHttpClient = okHttpClient;
-        for (String lbs : lbsList) {
-            try {
-                boolean reload = reload(lbs);
-                if (reload) {
-                    break;
+        for (int i=0; i<3; i++) {//初始化时多试几次
+            for (String lbs : lbsList) {
+                try {
+                    boolean reload = reload(lbs);
+                    if (reload) {
+                        break;
+                    }
+                } catch (Exception e) {
+                    logger.error("fetch endpoints error, lbs = {}", lbs, e);
                 }
-            } catch (Exception e) {
-                logger.error("fetch endpoints error, lbs = {}", lbs, e);
+            }
+            if (endpoints != null) {
+                break;
             }
         }
         if (endpoints == null) {
