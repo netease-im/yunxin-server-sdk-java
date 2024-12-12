@@ -7,8 +7,8 @@ import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
 import com.netease.nim.im.server.sdk.core.YunxinApiResponse;
 import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequestV1;
 import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponseV1;
+import com.netease.nim.im.server.sdk.v1.annotation.YunxinParamUtils;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,35 +24,7 @@ public class AccountV1Service implements IAccountV1Service {
 
     @Override
     public Result<CreateAccountResponseV1> createAccount(CreateAccountRequestV1 request) throws YunxinSdkException {
-        Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("accid", request.getAccid());
-        if (request.getToken() != null) {
-            paramMap.put("token", request.getToken());
-        }
-        if (request.getName() != null) {
-            paramMap.put("name", request.getName());
-        }
-        if (request.getIcon() != null) {
-            paramMap.put("icon", request.getIcon());
-        }
-        if (request.getSign() != null) {
-            paramMap.put("sign", request.getSign());
-        }
-        if (request.getEmail() != null) {
-            paramMap.put("email", request.getEmail());
-        }
-        if (request.getBirth() != null) {
-            paramMap.put("birth", request.getBirth());
-        }
-        if (request.getMobile() != null) {
-            paramMap.put("mobile", request.getMobile());
-        }
-        if (request.getGender() != null) {
-            paramMap.put("gender", request.getGender());
-        }
-        if (request.getEx() != null) {
-            paramMap.put("ex", request.getEx());
-        }
+        Map<String, String> paramMap = YunxinParamUtils.convert(request);
         YunxinApiResponse apiResponse = httpClient.executeV1Api("/user/create.action", paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");

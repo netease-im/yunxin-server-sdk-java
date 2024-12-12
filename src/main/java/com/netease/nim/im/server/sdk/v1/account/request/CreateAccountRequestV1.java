@@ -1,19 +1,41 @@
 package com.netease.nim.im.server.sdk.v1.account.request;
 
 
+import com.netease.nim.im.server.sdk.v1.annotation.YunxinParam;
+
 /**
  * Created by caojiajun on 2024/12/11
  */
 public class CreateAccountRequestV1 {
+
+    @YunxinParam("accid")
     private String accid;
+
+    @YunxinParam("token")
     private String token;
+
+    @YunxinParam("name")
     private String name;
+
+    @YunxinParam("icon")
     private String icon;
+
+    @YunxinParam("sign")
     private String sign;
+
+    @YunxinParam("email")
     private String email;
+
+    @YunxinParam("birth")
     private String birth;
+
+    @YunxinParam("mobile")
     private String mobile;
+
+    @YunxinParam("gender")
     private String gender;
+
+    @YunxinParam("ex")
     private String ex;
 
     public String getAccid() {
