@@ -38,6 +38,22 @@ public class BatchQueryAccountsResponseV2 {
         @JSONField(name = "configuration")
         private Configuration configuration;
 
+        public String getAccountId() {
+            return accountId;
+        }
+
+        public void setAccountId(String accountId) {
+            this.accountId = accountId;
+        }
+
+        public Configuration getConfiguration() {
+            return configuration;
+        }
+
+        public void setConfiguration(Configuration configuration) {
+            this.configuration = configuration;
+        }
+
         public static class Configuration {
 
             @JSONField(name = "enabled")
