@@ -17,7 +17,7 @@
 
 ## 引入依赖
 
-### release包
+### release包（还在开发阶段，请勿用于线上环境）
 
 ```
 <dependency>
