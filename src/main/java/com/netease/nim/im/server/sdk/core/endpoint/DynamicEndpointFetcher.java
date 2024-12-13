@@ -1,6 +1,5 @@
 package com.netease.nim.im.server.sdk.core.endpoint;
 
-
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.netease.nim.im.server.sdk.core.Constants;
@@ -40,17 +39,17 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
     private long nextFetchTime;
 
     public DynamicEndpointFetcher(String appkey) {
-        this(appkey, Arrays.asList(Constants.Endpoint.lbs, Constants.Endpoint.lbs_cn, Constants.Endpoint.lbs_sg), Constants.Endpoint.scheduleFetchIntervalSeconds);
+        this(appkey, null);
     }
 
     public DynamicEndpointFetcher(String appkey, Region region) {
         this.appkey = appkey;
         if (region == Region.CN) {
-            this.lbsList = Collections.singletonList(Constants.Endpoint.lbs_cn);
+            this.lbsList = Collections.singletonList(Constants.Endpoint.LBS.cn_lbs);
         } else if (region == Region.SG) {
-            this.lbsList = Collections.singletonList(Constants.Endpoint.lbs_sg);
+            this.lbsList = Collections.singletonList(Constants.Endpoint.LBS.sg_lbs);
         } else {
-            this.lbsList = Arrays.asList(Constants.Endpoint.lbs, Constants.Endpoint.lbs_cn, Constants.Endpoint.lbs_sg);
+            this.lbsList = Arrays.asList(Constants.Endpoint.LBS.default_lbs, Constants.Endpoint.LBS.cn_lbs, Constants.Endpoint.LBS.sg_lbs);
         }
         this.reloadIntervalSeconds = Constants.Endpoint.scheduleFetchIntervalSeconds;
     }
@@ -193,11 +192,11 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
             String string = response.body().string();
             success = response.code() == 200;
             if (logger.isDebugEnabled()) {
-                logger.debug("detect, endpoint = {}, path = {}, code = {}, response = {}", endpoint, Constants.Endpoint.detectPath, response.code(), string);
+                logger.debug("check, endpoint = {}, path = {}, code = {}, response = {}", endpoint, Constants.Endpoint.detectPath, response.code(), string);
             }
         } catch (Exception e) {
             if (logger.isDebugEnabled()) {
-                logger.debug("detect error, endpoint = {}, path = {}", endpoint, Constants.Endpoint.detectPath, e);
+                logger.debug("check error, endpoint = {}, path = {}", endpoint, Constants.Endpoint.detectPath, e);
             }
             success = false;
         }

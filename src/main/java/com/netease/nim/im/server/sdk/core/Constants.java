@@ -30,16 +30,19 @@ public class Constants {
 
     public static class Endpoint {
 
-        public static final String lbs = "https://srv-sdk-lbs.yunxinapi.com/srv-sdk/allocate";
-        public static final String lbs_cn = "https://srv-sdk-lbs-cn.yunxinapi.com/srv-sdk/allocate";
-        public static final String lbs_sg = "https://srv-sdk-lbs-sg.yunxinapi.com/srv-sdk/allocate";
-
         public static final String detectPath = "/health/liveness.action";
         public static final int scheduleDetectIntervalSeconds = 5;
         public static final int scheduleResultIntervalSeconds = 10;
         public static final int scheduleFetchIntervalSeconds = 60;
         public static final int slideWindowBuckets = 12;
         public static final long slideWindowTime = 5000L;
+
+        public static class LBS {
+            public static final String default_lbs = "https://srv-sdk-lbs.yunxinapi.com/srv-sdk/allocate";
+            public static final String cn_lbs = "https://srv-sdk-lbs-cn.yunxinapi.com/srv-sdk/allocate";
+            public static final String sg_lbs = "https://srv-sdk-lbs-sg.yunxinapi.com/srv-sdk/allocate";
+        }
+
         public static class CN {
             public static final String DEFAULT = "https://api-cn.yunxinapi.com/nimserver";
             public static final String BACKUP = "https://api-cn-bak.yunxinapi.com/nimserver";
