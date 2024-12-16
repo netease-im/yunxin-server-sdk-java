@@ -1,7 +1,7 @@
 
 ## 重试机制
 
-* 重试机制由三个部分组成，分别是最大重试次数、重试策略、重试间隔，由 `RetryPolicy.java` 定义
+* 重试机制由三个部分组成，分别是最大重试次数（最多允许128次）、重试策略、重试间隔，由 `RetryPolicy.java` 定义
 * 你可以自定义 `RetryPolicy.java`, 默认为 `DefaultRetryPolicy.java`，此时重试逻辑如下：
 * 默认最大重试为：`1` 次，可以自定义最大重试次数，如果设置为 `0` ，则表示不重试
 * 默认重试策略为：`http.code=502` 或者 `连接超时` 时重试，否则不重试
@@ -78,7 +78,6 @@ public class Test2 {
         YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .retryPolicy(retryPolicy)
-                .retryInterval(retryInterval)
                 .build();
 
         //
