@@ -15,15 +15,13 @@ public class Test2 {
         String appsecret = "xx";
         int timeoutMillis = 5000;
         //
-        // 重试次数可以自定义
-        int maxRetry = 1;
         // RetryPolicy可以自定义
+        int maxRetry = 1;
         boolean retryOn502 = true;
-        RetryPolicy retryPolicy = new DefaultRetryPolicy(retryOn502);
+        RetryPolicy retryPolicy = new DefaultRetryPolicy(maxRetry, retryOn502);
         //
         YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
-                .maxRetry(maxRetry)
                 .retryPolicy(retryPolicy)
                 .build();
 

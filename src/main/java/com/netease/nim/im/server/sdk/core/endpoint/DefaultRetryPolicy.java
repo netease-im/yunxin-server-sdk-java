@@ -8,14 +8,21 @@ import com.netease.nim.im.server.sdk.core.utils.ExceptionUtils;
  */
 public class DefaultRetryPolicy implements RetryPolicy {
 
+    private final int maxRetry;
     private final boolean retryOn502;
 
-    public DefaultRetryPolicy(boolean retryOn502) {
+    public DefaultRetryPolicy(int maxRetry, boolean retryOn502) {
+        this.maxRetry = maxRetry;
         this.retryOn502 = retryOn502;
     }
 
     @Override
-    public RetryAction onError(ExecuteContext retryContext, Throwable error) {
+    public int maxRetry() {
+        return maxRetry;
+    }
+
+    @Override
+    public RetryAction onError(ExecuteContext retryContext, int retry, Throwable error) {
         if (error instanceof HttpCodeException) {
             if (((HttpCodeException) error).getCode() == 502 && retryOn502) {
                 return RetryAction.RETRY_NEXT;

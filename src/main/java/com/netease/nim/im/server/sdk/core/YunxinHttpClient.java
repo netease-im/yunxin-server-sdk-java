@@ -16,6 +16,8 @@ import com.netease.nim.im.server.sdk.core.trace.TraceIdUtils;
 import com.netease.nim.im.server.sdk.core.utils.CheckSumBuilder;
 import com.netease.nim.im.server.sdk.core.utils.ExceptionUtils;
 import okhttp3.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.UUID;
@@ -25,6 +27,8 @@ import java.util.concurrent.TimeUnit;
  * Created by caojiajun on 2024/11/27
  */
 public class YunxinHttpClient implements HttpClient {
+
+    private static final Logger logger = LoggerFactory.getLogger(YunxinHttpClient.class);
 
     private static final String APPKEY = "AppKey";
     private static final String NONCE = "Nonce";
@@ -37,7 +41,6 @@ public class YunxinHttpClient implements HttpClient {
     private final String appsecret;
     private final OkHttpClient okHttpClient;
     private final RetryPolicy retryPolicy;
-    private final int maxRetry;
     private final EndpointSelector endpointSelector;
 
     private YunxinApiSdkMetricsCollector metricsCollector;
@@ -46,7 +49,6 @@ public class YunxinHttpClient implements HttpClient {
         this.appkey = appkey;
         this.appsecret = appsecret;
         this.retryPolicy = endpointConfig.getRetryPolicy();
-        this.maxRetry = endpointConfig.getMaxRetry();
         this.endpointSelector = endpointConfig.getEndpointSelector();
         if (metricsConfig.isEnable()) {
             metricsCollector = new YunxinApiSdkMetricsCollector(metricsConfig.getCollectIntervalSeconds(), metricsConfig.getMetricsCallback());
@@ -90,6 +92,13 @@ public class YunxinHttpClient implements HttpClient {
             }
             //exception
             YunxinSdkException exception = null;
+            int maxRetry = retryPolicy.maxRetry();
+            if (maxRetry <= 0) {
+                maxRetry = 0;
+            }
+            if (maxRetry > 128) {
+                maxRetry = 128;
+            }
             for (int i=0; i<=maxRetry; i++) {
                 //request
                 Request.Builder builder = new Request.Builder();
@@ -149,9 +158,17 @@ public class YunxinHttpClient implements HttpClient {
                         metricsCollector.collect(endpoint, method, contextType, apiVersion, uri, result, System.currentTimeMillis() - startTime);
                     }
                     exception = new YunxinSdkException(executeContext, e);
-                    RetryPolicy.RetryAction retryAction = retryPolicy.onError(executeContext, e);
+                    RetryPolicy.RetryAction retryAction = retryPolicy.onError(executeContext, i, e);
                     if (!retryAction.isRetry()) {
                         throw exception;
+                    }
+                    long interval = retryPolicy.retryInterval(executeContext, i);
+                    if (interval > 0) {
+                        try {
+                            TimeUnit.MILLISECONDS.sleep(interval);
+                        } catch (InterruptedException ex) {
+                            logger.error(ex.getMessage(), ex);
+                        }
                     }
                     if (retryAction.isNextEndpoint()) {
                         endpoint = endpointSelector.selectEndpoint(endpoint);

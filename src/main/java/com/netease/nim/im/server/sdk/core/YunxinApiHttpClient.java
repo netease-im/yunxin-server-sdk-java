@@ -39,14 +39,6 @@ public class YunxinApiHttpClient {
             this.appsecret = appsecret;
         }
 
-        public Builder maxRetry(int maxRetry) {
-            if (maxRetry < 0) {
-                throw new IllegalArgumentException("illegal maxRetry");
-            }
-            endpointConfig.setMaxRetry(maxRetry);
-            return this;
-        }
-
         public Builder retryPolicy(RetryPolicy retryPolicy) {
             if (retryPolicy == null) {
                 throw new IllegalArgumentException("retry policy null");

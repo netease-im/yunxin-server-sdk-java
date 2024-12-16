@@ -20,7 +20,7 @@ public class Constants {
 
     public static class Retry {
         public static final int maxRetry = 1;
-        public static final RetryPolicy retryPolicy = new DefaultRetryPolicy(true);
+        public static final RetryPolicy retryPolicy = new DefaultRetryPolicy(maxRetry, true);
     }
 
     public static class Metric {

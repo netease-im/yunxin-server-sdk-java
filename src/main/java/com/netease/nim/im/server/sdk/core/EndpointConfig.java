@@ -9,17 +9,8 @@ import com.netease.nim.im.server.sdk.core.endpoint.RetryPolicy;
  */
 public class EndpointConfig {
 
-    private int maxRetry = Constants.Retry.maxRetry;
     private RetryPolicy retryPolicy = Constants.Retry.retryPolicy;
     private EndpointSelector endpointSelector;
-
-    public int getMaxRetry() {
-        return maxRetry;
-    }
-
-    public void setMaxRetry(int maxRetry) {
-        this.maxRetry = maxRetry;
-    }
 
     public RetryPolicy getRetryPolicy() {
         return retryPolicy;

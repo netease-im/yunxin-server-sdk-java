@@ -6,7 +6,7 @@ package com.netease.nim.im.server.sdk.core.endpoint;
 public class NeverRetryPolicy implements RetryPolicy {
 
     @Override
-    public RetryAction onError(ExecuteContext retryContext, Throwable error) {
+    public RetryAction onError(ExecuteContext retryContext, int retry, Throwable error) {
         return RetryAction.NO_RETRY;
     }
 }
