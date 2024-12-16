@@ -126,12 +126,13 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
                 return true;
             }
             if (code == 200) {
-                String defaultEndpoint = json.getString("default.endpoint");
+                JSONObject data = json.getJSONObject("data");
+                String defaultEndpoint = data.getString("default.endpoint");
                 if (!check(defaultEndpoint)) {
                     logger.error("default endpoint check error, skip update, endpoint = {}", defaultEndpoint);
                     return false;
                 }
-                JSONArray backupEndpointsJson = json.getJSONArray("backup.endpoints");
+                JSONArray backupEndpointsJson = data.getJSONArray("backup.endpoints");
                 Endpoints endpoints = new Endpoints();
                 List<String> backupEndpoints = new ArrayList<>();
                 boolean existsSkip = false;
@@ -152,13 +153,13 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
                     return false;
                 }
                 logger.info("endpoints update, old = {}, new = {}", JSONObject.toJSONString(this.endpoints), JSONObject.toJSONString(endpoints));
-                int ttl = json.getIntValue("ttl", 30);
+                int ttl = data.getIntValue("ttl", 30);
                 if (ttl <= 0 || ttl > 86400) {
                     ttl = 30;
                 }
                 this.nextFetchTime = System.currentTimeMillis() + ttl * 1000L;
                 if (!existsSkip) {
-                    this.md5 = json.getString("md5");
+                    this.md5 = data.getString("md5");
                 }
                 this.endpoints = endpoints;
                 return true;
