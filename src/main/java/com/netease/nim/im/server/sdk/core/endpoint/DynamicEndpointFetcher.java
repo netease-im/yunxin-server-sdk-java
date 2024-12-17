@@ -116,6 +116,9 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
                 throw new EndpointFetchException("http.code=" + response.code());
             }
             string = response.body().string();
+            if (logger.isDebugEnabled()) {
+                logger.debug("fetch endpoints, lbs = {}, response = {}", lbs, string);
+            }
             JSONObject json = JSONObject.parseObject(string);
             Integer code = json.getInteger("code");
             if (code == null) {
