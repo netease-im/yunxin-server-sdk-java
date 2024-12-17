@@ -114,6 +114,10 @@ public class YunxinHttpClient implements HttpClient {
                 Request request = builder.build();
                 //invoke
                 long startTime = System.currentTimeMillis();
+                if (logger.isDebugEnabled()) {
+                    logger.debug("execute, method = {}, contextType = {}, apiVersion= {}, uri = {}, traceId = {}",
+                            method, contextType, apiVersion, uri, traceId);
+                }
                 try (Response response = okHttpClient.newCall(request).execute()) {
                     int code = response.code();
                     String string = response.body().string();
@@ -175,10 +179,7 @@ public class YunxinHttpClient implements HttpClient {
                     }
                 }
             }
-            if (exception != null) {
-                throw exception;
-            }
-            throw new YunxinSdkException(executeContext, null);
+            throw exception;
         } finally {
             YunxinTraceId.clear();
         }
