@@ -115,8 +115,8 @@ public class YunxinHttpClient implements HttpClient {
                 //invoke
                 long startTime = System.currentTimeMillis();
                 if (logger.isDebugEnabled()) {
-                    logger.debug("execute, method = {}, contextType = {}, apiVersion= {}, uri = {}, traceId = {}",
-                            method, contextType, apiVersion, uri, traceId);
+                    logger.debug("execute, endpoint = {}, method = {}, contextType = {}, apiVersion= {}, uri = {}, traceId = {}",
+                            endpoint, method, contextType, apiVersion, uri, traceId);
                 }
                 try (Response response = okHttpClient.newCall(request).execute()) {
                     int code = response.code();
