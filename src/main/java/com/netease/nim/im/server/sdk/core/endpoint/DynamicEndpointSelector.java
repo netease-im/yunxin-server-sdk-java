@@ -125,6 +125,12 @@ public class DynamicEndpointSelector implements EndpointSelector {
             for (Entry entry : list) {
                 result.add(entry.endpoint);
             }
+            if (logger.isDebugEnabled()) {
+                for (Entry entry : list) {
+                    logger.debug("endpoint = {}, default-endpoint = {}, ratio = {}, latency = {}",
+                            entry.endpoint, entry.defaultEndpoint, entry.ratio, entry.latency);
+                }
+            }
             this.orderedEndpoints = result;
         } catch (Exception e) {
             logger.error("schedule result error", e);
