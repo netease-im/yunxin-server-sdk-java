@@ -1,5 +1,9 @@
 # 云信im-server-sdk
 
+![GitHub](https://img.shields.io/badge/license-MIT-blue.svg)
+![GitHub release](https://img.shields.io/github/release/netease-im/yunxin-im-server-sdk.svg)
+![java_language](https://img.shields.io/badge/java--language-1.8-blue.svg)
+
 ## 核心特性
 
 * 基于okhttp封装了云信服务器api的sdk
@@ -18,13 +22,13 @@
 
 ## 引入依赖
 
-### release包（还在开发阶段，请勿用于线上环境）
+### release包
 
 ```
 <dependency>
     <groupId>com.netease.nim</groupId>
     <artifactId>yunxin-im-server-sdk</artifactId>
-    <version>x.x.x</version>
+    <version>0.1.0</version>
 </dependency>
 ```
 
@@ -46,9 +50,13 @@
 <dependency>
     <groupId>com.netease.nim</groupId>
     <artifactId>yunxin-im-server-sdk</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
 </dependency>
 ```
+
+## 更新日志
+
+具体见：[更新日志](update.md)
 
 ## 快速开始（v1接口，使用raw-client）
 
