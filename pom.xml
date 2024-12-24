@@ -6,7 +6,10 @@
 
     <groupId>com.netease.nim</groupId>
     <artifactId>yunxin-im-server-sdk</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
+    <name>yunxin-im-server-sdk</name>
+    <url>https://github.com/netease-im/yunxin-im-server-sdk</url>
+    <description>yunxin-im-server-sdk</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -166,8 +169,8 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/netease-im/camellia</url>
-        <connection>https://github.com/netease-im/camellia.git</connection>
+        <url>https://github.com/netease-im/yunxin-im-server-sdk</url>
+        <connection>https://github.com/netease-im/yunxin-im-server-sdk.git</connection>
         <developerConnection>https://github.com/caojiajun</developerConnection>
     </scm>
 
