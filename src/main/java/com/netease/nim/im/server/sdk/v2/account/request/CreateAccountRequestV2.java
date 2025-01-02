@@ -28,6 +28,14 @@ public class CreateAccountRequestV2 {
         this.accountId = accountId;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public Configuration getConfiguration() {
         return configuration;
     }

@@ -1,7 +1,6 @@
 package com.netease.nim.im.server.sdk.v2.account.request;
 
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.netease.nim.im.server.sdk.v2.account.response.CreateAccountResponseV2;
 
 /**
  * Created by caojiajun on 2024/12/11

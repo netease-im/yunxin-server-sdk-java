@@ -1,18 +1,14 @@
 package com.netease.nim.im.server.sdk.v1.account.response;
 
-
 import com.alibaba.fastjson2.annotation.JSONField;
 
 /**
- * Created by caojiajun on 2024/12/11
+ * Created by caojiajun on 2024/12/26
  */
-public class CreateAccountResponseV1 {
+public class RefreshTokenResponseV1 {
 
     @JSONField(name = "accid")
     private String accid;
-
-    @JSONField(name = "name")
-    private String name;
 
     @JSONField(name = "token")
     private String token;
@@ -23,14 +19,6 @@ public class CreateAccountResponseV1 {
 
     public void setAccid(String accid) {
         this.accid = accid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getToken() {
