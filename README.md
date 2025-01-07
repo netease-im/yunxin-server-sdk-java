@@ -79,7 +79,7 @@ public class Test {
         String appkey = "xx";
         String appsecret = "xx";
         int timeoutMillis = 5000;
-        //
+        // 全局一个YunxinApiHttpClient实例即可，务必不要每次请求都build一次，以免产生资源泄漏
         YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .build();
@@ -144,7 +144,7 @@ public class Test6 {
         String appkey = "xx";
         String appsecret = "xx";
         int timeoutMillis = 5000;
-        //
+        // 全局一个YunxinApiHttpClient实例即可，务必不要每次请求都build一次，以免产生资源泄漏
         YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .build();
@@ -206,7 +206,7 @@ public class Test7 {
         String appkey = "xx";
         String appsecret = "xx";
         int timeoutMillis = 5000;
-        //
+        // 全局一个YunxinApiHttpClient实例即可，务必不要每次请求都build一次，以免产生资源泄漏
         YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .build();
@@ -348,7 +348,7 @@ public class Test8 {
         String appkey = "xx";
         String appsecret = "xx";
         int timeoutMillis = 5000;
-        //
+        // 全局一个YunxinApiHttpClient实例即可，务必不要每次请求都build一次，以免产生资源泄漏
         YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .build();
