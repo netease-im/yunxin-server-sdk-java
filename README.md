@@ -13,7 +13,7 @@
 * 支持trace-id，方便问题排查
 * 支持metrics，支持prometheus格式输出
 * 支持使用raw-client直接发起请求，也支持使用面向对象的client发起请求
-* 支持云信的v1-api，也支持v2-api
+* 支持云信的v1-api（对应于官网的v9），也支持v2-api（对应于官网的v10）
 * 支持云信私有化环境使用
 
 ## 架构图
