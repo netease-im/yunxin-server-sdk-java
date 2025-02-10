@@ -11,6 +11,7 @@ import com.netease.nim.im.server.sdk.v1.account.response.*;
 import com.netease.nim.im.server.sdk.v1.annotation.YunxinParamUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -126,15 +127,17 @@ public class AccountV1Service implements IAccountV1Service {
 
     @Override
     public Result<QueryAccountOnlineStatusResponseV1> queryOnlineStatus(QueryAccountOnlineStatusRequestV1 request) throws YunxinSdkException {
-        Map<String, String> paramMap = YunxinParamUtils.convert(request);
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("accids", JSONArray.toJSONString(request.getAccids()));
         YunxinApiResponse apiResponse = httpClient.executeV1Api("/user/userOnlineStatus.action", paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
             return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), object.getString("desc"), null);
         }
+        JSONObject data = object.getJSONObject("data");
         QueryAccountOnlineStatusResponseV1 response = new QueryAccountOnlineStatusResponseV1();
-        JSONArray jsonArray = object.getJSONArray("invalidAccids");
+        JSONArray jsonArray = data.getJSONArray("invalidAccids");
         List<String> invalidAccids = new ArrayList<>();
         if (jsonArray != null) {
             for (Object o : jsonArray) {
@@ -144,7 +147,7 @@ public class AccountV1Service implements IAccountV1Service {
         response.setInvalidAccids(invalidAccids);
 
         List<QueryAccountOnlineStatusResponseV1.OnlineStatus> onlineStatusList = new ArrayList<>();
-        JSONObject statusJson = object.getJSONObject("status");
+        JSONObject statusJson = data.getJSONObject("status");
         if (statusJson != null) {
             for (Map.Entry<String, Object> entry : statusJson.entrySet()) {
                 QueryAccountOnlineStatusResponseV1.OnlineStatus onlineStatus = new QueryAccountOnlineStatusResponseV1.OnlineStatus();

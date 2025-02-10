@@ -1,6 +1,5 @@
 package com.netease.nim.im.server.sdk.v1.account.request;
 
-import com.netease.nim.im.server.sdk.v1.annotation.YunxinParam;
 
 import java.util.List;
 
@@ -9,7 +8,6 @@ import java.util.List;
  */
 public class QueryAccountOnlineStatusRequestV1 {
 
-    @YunxinParam("accids")
     private List<String> accids;
 
     public List<String> getAccids() {
