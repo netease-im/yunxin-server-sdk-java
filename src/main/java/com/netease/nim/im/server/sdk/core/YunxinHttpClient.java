@@ -11,6 +11,7 @@ import com.netease.nim.im.server.sdk.core.metrics.MetricsConfig;
 import com.netease.nim.im.server.sdk.core.metrics.Stats;
 import com.netease.nim.im.server.sdk.core.metrics.YunxinApiSdkMetricsCollector;
 import com.netease.nim.im.server.sdk.core.trace.ApiVersion;
+import com.netease.nim.im.server.sdk.core.trace.TimeoutSetter;
 import com.netease.nim.im.server.sdk.core.trace.YunxinTraceId;
 import com.netease.nim.im.server.sdk.core.trace.TraceIdUtils;
 import com.netease.nim.im.server.sdk.core.utils.CheckSumBuilder;
@@ -99,6 +100,9 @@ public class YunxinHttpClient implements HttpClient {
             if (maxRetry > 128) {
                 maxRetry = 128;
             }
+            Long timeoutMillis = TimeoutSetter.getAndClear();
+            OkHttpClient client = client(timeoutMillis);
+
             for (int i=0; i<=maxRetry; i++) {
                 //request
                 Request.Builder builder = new Request.Builder();
@@ -118,7 +122,7 @@ public class YunxinHttpClient implements HttpClient {
                     logger.debug("execute, endpoint = {}, method = {}, contextType = {}, apiVersion= {}, uri = {}, traceId = {}",
                             endpoint, method, contextType, apiVersion, uri, traceId);
                 }
-                try (Response response = okHttpClient.newCall(request).execute()) {
+                try (Response response = client.newCall(request).execute()) {
                     int code = response.code();
                     String string = response.body().string();
                     if (code != 200) {
@@ -183,6 +187,17 @@ public class YunxinHttpClient implements HttpClient {
         } finally {
             YunxinTraceId.clear();
         }
+    }
+
+    private OkHttpClient client(Long timeoutMillis) {
+        if (timeoutMillis == null) {
+            return okHttpClient;
+        }
+        return okHttpClient.newBuilder()
+                .connectTimeout(timeoutMillis, TimeUnit.MILLISECONDS)
+                .readTimeout(timeoutMillis, TimeUnit.MILLISECONDS)
+                .writeTimeout(timeoutMillis, TimeUnit.MILLISECONDS)
+                .build();
     }
 
     @Override
