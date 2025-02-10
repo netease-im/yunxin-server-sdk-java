@@ -12,11 +12,14 @@ import com.netease.nim.im.server.sdk.core.metrics.MetricsCallback;
 import com.netease.nim.im.server.sdk.core.trace.ApiVersion;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by caojiajun on 2024/12/9
  */
 public class YunxinApiHttpClient {
+
+    private static final ConcurrentHashMap<String, YunxinApiHttpClient> clientMap = new ConcurrentHashMap<>();
 
     private final YunxinHttpClient httpClient;
 
@@ -37,6 +40,11 @@ public class YunxinApiHttpClient {
         public Builder(String appkey, String appsecret) {
             this.appkey = appkey;
             this.appsecret = appsecret;
+            String cacheKey = appkey + "/" + appsecret;
+            YunxinApiHttpClient client = clientMap.get(cacheKey);
+            if (client != null) {
+                throw new IllegalStateException("YunxinApiHttpClient with appkey = [" + appkey + "] duplicate init");
+            }
         }
 
         public Builder retryPolicy(RetryPolicy retryPolicy) {
@@ -105,11 +113,18 @@ public class YunxinApiHttpClient {
         }
 
         public YunxinApiHttpClient build() {
+            String cacheKey = appkey + "/" + appsecret;
+            YunxinApiHttpClient client = clientMap.get(cacheKey);
+            if (client != null) {
+                throw new IllegalStateException("YunxinApiHttpClient with appkey = [" + appkey + "] duplicate init");
+            }
             if (endpointConfig.getEndpointSelector() == null) {
                 EndpointSelector endpointSelector = new DynamicEndpointSelector(new DynamicEndpointFetcher(appkey, region));
                 endpointConfig.setEndpointSelector(endpointSelector);
             }
-            return new YunxinApiHttpClient(appkey, appsecret, endpointConfig, httpClientConfig, metricsConfig);
+            YunxinApiHttpClient yunxinApiHttpClient = new YunxinApiHttpClient(appkey, appsecret, endpointConfig, httpClientConfig, metricsConfig);
+            clientMap.put(cacheKey, yunxinApiHttpClient);
+            return yunxinApiHttpClient;
         }
     }
 

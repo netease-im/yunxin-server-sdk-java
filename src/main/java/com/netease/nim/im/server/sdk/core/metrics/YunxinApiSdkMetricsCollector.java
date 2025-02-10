@@ -20,7 +20,8 @@ public class YunxinApiSdkMetricsCollector {
 
     private static final Logger logger = LoggerFactory.getLogger(YunxinApiSdkMetricsCollector.class);
 
-    private final ThreadPoolExecutor callbackExecutor = new ThreadPoolExecutor(1, 1,
+    private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("yunxin-im-sdk-metrics-collector"));
+    private static final ThreadPoolExecutor callbackExecutor = new ThreadPoolExecutor(1, 1,
             0, TimeUnit.SECONDS, new LinkedBlockingQueue<>(100), new NamedThreadFactory("yunxin-im-sdk-stats-callback"));
 
     private final ConcurrentHashMap<Key1, Statistics> map1 = new ConcurrentHashMap<>();
@@ -35,8 +36,7 @@ public class YunxinApiSdkMetricsCollector {
             throw new IllegalArgumentException("illegal collectIntervalSeconds");
         }
         this.metricsCallback = metricsCallback;
-        Executors.newSingleThreadScheduledExecutor()
-                .scheduleAtFixedRate(this::calc, collectIntervalSeconds, collectIntervalSeconds, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this::calc, collectIntervalSeconds, collectIntervalSeconds, TimeUnit.SECONDS);
     }
 
     public void collect(String endpoint, HttpMethod method, ContextType contextType, ApiVersion apiVersion,

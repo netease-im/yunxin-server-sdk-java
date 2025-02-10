@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,6 +20,9 @@ import java.util.concurrent.TimeUnit;
 public class DynamicEndpointSelector implements EndpointSelector {
 
     private static final Logger logger = LoggerFactory.getLogger(DynamicEndpointSelector.class);
+
+    private static final ScheduledExecutorService scheduler1 = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("yunxin-im-sdk-detect"));
+    private static final ScheduledExecutorService scheduler2 = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("yunxin-im-sdk-schedule"));
 
     private final EndpointFetcher fetcher;
     private final int scheduleDetectIntervalSeconds;
@@ -74,11 +78,9 @@ public class DynamicEndpointSelector implements EndpointSelector {
             orderedEndpoints.addAll(backupEndpoints);
         }
         if (detectPath != null) {
-            Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("yunxin-im-sdk-detect"))
-                    .scheduleAtFixedRate(this::scheduleDetect, scheduleDetectIntervalSeconds, scheduleDetectIntervalSeconds, TimeUnit.SECONDS);
+            scheduler1.scheduleAtFixedRate(this::scheduleDetect, scheduleDetectIntervalSeconds, scheduleDetectIntervalSeconds, TimeUnit.SECONDS);
         }
-        Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("yunxin-im-sdk-schedule"))
-                .scheduleAtFixedRate(this::scheduleResult, scheduleResultIntervalSeconds, scheduleResultIntervalSeconds, TimeUnit.SECONDS);
+        scheduler2.scheduleAtFixedRate(this::scheduleResult, scheduleResultIntervalSeconds, scheduleResultIntervalSeconds, TimeUnit.SECONDS);
     }
 
     @Override

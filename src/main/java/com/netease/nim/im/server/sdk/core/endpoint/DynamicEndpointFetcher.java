@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 
@@ -27,6 +28,8 @@ import java.util.concurrent.TimeUnit;
 public class DynamicEndpointFetcher implements EndpointFetcher {
 
     private static final Logger logger = LoggerFactory.getLogger(DynamicEndpointFetcher.class);
+
+    private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("yunxin-im-sdk-endpoint-fetch"));
 
     private final String appkey;
     private final List<String> lbsList;
@@ -81,8 +84,7 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
         if (endpoints == null) {
             throw new EndpointFetchException("init endpoints error");
         }
-        Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("yunxin-im-sdk-endpoint-fetch"))
-                .scheduleAtFixedRate(() -> {
+        scheduler.scheduleAtFixedRate(() -> {
                     for (String lbs : lbsList) {
                         try {
                             boolean reload = reload(lbs);
