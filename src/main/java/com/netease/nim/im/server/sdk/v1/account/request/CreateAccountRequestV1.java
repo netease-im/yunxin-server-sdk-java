@@ -33,7 +33,7 @@ public class CreateAccountRequestV1 {
     private String mobile;
 
     @YunxinParam("gender")
-    private String gender;
+    private int gender;
 
     @YunxinParam("ex")
     private String ex;
@@ -102,11 +102,11 @@ public class CreateAccountRequestV1 {
         this.mobile = mobile;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
