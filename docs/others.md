@@ -81,3 +81,54 @@ public class Test9 {
 }
 
 ```
+
+### 关于超时
+
+* sdk初始化时会配置接口的超时参数
+* 如果对于某一次请求希望单独修改超时参数，则可以使用TimeoutSetter#setTimeout方法进行
+
+```java
+import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
+import com.netease.nim.im.server.sdk.core.Result;
+import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.im.server.sdk.core.trace.TimeoutSetter;
+import com.netease.nim.im.server.sdk.v1.YunxinV1ApiServices;
+import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequestV1;
+import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponseV1;
+
+import java.util.UUID;
+
+/**
+ * Created by caojiajun on 2024/12/11
+ */
+public class Test6 {
+
+    public static void main(String[] args) {
+        // 初始化
+        String appkey = "xx";
+        String appsecret = "xx";
+        int timeoutMillis = 5000;
+        //
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+                .timeoutMillis(timeoutMillis)
+                .build();
+
+        // services
+        YunxinV1ApiServices services = new YunxinV1ApiServices(client);
+
+        // request
+        CreateAccountRequestV1 request = new CreateAccountRequestV1();
+        request.setAccid("zhangsan");
+        try {
+            //本次请求单独设置为1000ms的超时，而不是默认的5000ms超时，注意这个参数是一次性的
+            TimeoutSetter.setTimeout(1000);
+            //
+            Result<CreateAccountResponseV1> result = services.getAccountService().createAccount(request);
+            //...
+        } catch (YunxinSdkException e) {
+            //...
+        }
+        //下一次请求还是会使用默认的5000ms请求
+    }
+}
+```
