@@ -168,4 +168,28 @@ public class AccountV1Service implements IAccountV1Service {
         response.setOnlineStatusList(onlineStatusList);
         return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
     }
+
+    @Override
+    public Result<QueryUserInfosResponseV1> queryUserInfos(QueryUserInfosRequestV1 request) throws YunxinSdkException {
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("accids", JSONArray.toJSONString(request.getAccids()));
+        if (request.getMuteStatus() != null) {
+            paramMap.put("muteStatus", String.valueOf(request.getMuteStatus()));
+        }
+        YunxinApiResponse apiResponse = httpClient.executeV1Api("/user/getUinfos.action", paramMap);
+        JSONObject object = JSONObject.parseObject(apiResponse.getData());
+        int code = object.getIntValue("code");
+        if (code != 200) {
+            return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), object.getString("desc"), null);
+        }
+        QueryUserInfosResponseV1 response = new QueryUserInfosResponseV1();
+        List<QueryUserInfosResponseV1.UserInfo> userInfoList = new ArrayList<>();
+        JSONArray uinfos = object.getJSONArray("uinfos");
+        for (Object uinfo : uinfos) {
+            QueryUserInfosResponseV1.UserInfo userInfo = JSONObject.parseObject(uinfo.toString(), QueryUserInfosResponseV1.UserInfo.class);
+            userInfoList.add(userInfo);
+        }
+        response.setUserInfoList(userInfoList);
+        return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
+    }
 }

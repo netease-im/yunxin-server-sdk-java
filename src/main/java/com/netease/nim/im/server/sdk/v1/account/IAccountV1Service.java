@@ -82,4 +82,12 @@ public interface IAccountV1Service {
      * @throws YunxinSdkException exception
      */
     Result<QueryAccountOnlineStatusResponseV1> queryOnlineStatus(QueryAccountOnlineStatusRequestV1 request) throws YunxinSdkException;
+
+    /**
+     * query user infos
+     * @param request request
+     * @return result
+     * @throws YunxinSdkException exception
+     */
+    Result<QueryUserInfosResponseV1> queryUserInfos(QueryUserInfosRequestV1 request) throws YunxinSdkException;
 }

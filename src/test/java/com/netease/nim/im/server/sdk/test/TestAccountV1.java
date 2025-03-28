@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -42,10 +43,11 @@ public class TestAccountV1 {
     public void test() {
         if (services == null) return;
         IAccountV1Service accountService = services.getAccountService();
+        String name = "zhangsan-" + UUID.randomUUID();
         {
             CreateAccountRequestV1 request = new CreateAccountRequestV1();
             request.setAccid(accid);
-            request.setName("zhangsan-" + UUID.randomUUID());
+            request.setName(name);
             request.setEx("ex");
             request.setBirth("1970-01-01");
             request.setGender(1);
@@ -131,6 +133,19 @@ public class TestAccountV1 {
             Assert.assertEquals(invalidAccids.get(0), invalidAccid);
             List<QueryAccountOnlineStatusResponseV1.OnlineStatus> onlineStatusList = response.getOnlineStatusList();
             Assert.assertEquals(0, onlineStatusList.size());
+        }
+        {
+            QueryUserInfosRequestV1 request = new QueryUserInfosRequestV1();
+            List<String> accids = new ArrayList<>();
+            accids.add(accid);
+            request.setAccids(accids);
+            request.setMuteStatus(true);
+            Result<QueryUserInfosResponseV1> result = accountService.queryUserInfos(request);
+            Assert.assertEquals(200, result.getCode());
+            QueryUserInfosResponseV1 response = result.getResponse();
+            Assert.assertEquals(1, response.getUserInfoList().size());
+            QueryUserInfosResponseV1.UserInfo userInfo = response.getUserInfoList().get(0);
+            Assert.assertEquals(userInfo.getName(), name);
         }
     }
 
