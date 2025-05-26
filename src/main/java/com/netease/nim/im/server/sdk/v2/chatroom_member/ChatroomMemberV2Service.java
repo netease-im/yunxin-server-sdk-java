@@ -609,10 +609,6 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
             if (request.getChatBannedDuration() == null) {
                 throw new IllegalArgumentException("Chat banned duration is required when banning members");
             }
-            
-            if (request.getChatBannedDuration() <= 0 || request.getChatBannedDuration() > 2592000) {
-                throw new IllegalArgumentException("Chat banned duration must be positive and not exceed 2592000 seconds (30 days)");
-            }
         }
 
         // Convert the request to JSON string

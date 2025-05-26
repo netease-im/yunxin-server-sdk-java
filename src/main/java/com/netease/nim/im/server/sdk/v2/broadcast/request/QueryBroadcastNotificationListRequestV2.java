@@ -73,11 +73,7 @@ public class QueryBroadcastNotificationListRequestV2 {
      * @param limit Number of broadcast messages per page
      */
     public void setLimit(Integer limit) {
-        if (limit != null && limit > 0 && limit <= 100) {
-            this.limit = limit;
-        } else {
-            this.limit = 100;
-        }
+        this.limit = limit;
     }
     
     /**
