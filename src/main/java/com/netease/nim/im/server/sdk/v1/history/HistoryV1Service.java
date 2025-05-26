@@ -1,0 +1,163 @@
+package com.netease.nim.im.server.sdk.v1.history;
+
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import com.netease.nim.im.server.sdk.core.Result;
+import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.im.server.sdk.core.YunxinApiResponse;
+import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
+import com.netease.nim.im.server.sdk.v1.annotation.YunxinParamUtils;
+import com.netease.nim.im.server.sdk.v1.history.request.*;
+import com.netease.nim.im.server.sdk.v1.history.response.*;
+
+import java.util.Map;
+
+public class HistoryV1Service implements IHistoryV1Service {
+
+    private final YunxinApiHttpClient httpClient;
+
+    public HistoryV1Service(YunxinApiHttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
+
+    @Override
+    public Result<QuerySessionHistoryMessageResponseV1> querySessionHistoryMessage(QuerySessionHistoryMessageRequestV1 request) throws YunxinSdkException {
+        Map<String, String> paramMap = YunxinParamUtils.convert(request);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.QUERY_SESSION_MSG, paramMap);
+        JSONObject object = JSONObject.parseObject(apiResponse.getData());
+        int code = object.getIntValue("code");
+        if (code != 200) {
+            return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), object.getString("desc"), null);
+        }
+        QuerySessionHistoryMessageResponseV1 response = new QuerySessionHistoryMessageResponseV1();
+        if (object.containsKey("size")) {
+            response.setSize(object.getInteger("size"));
+        }
+        if (object.containsKey("msgs")) {
+            response.setMsgs(object.getString("msgs"));
+        }
+        return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
+    }
+
+    @Override
+    public Result<QueryTeamHistoryMessageResponseV1> queryTeamHistoryMessage(QueryTeamHistoryMessageRequestV1 request) throws YunxinSdkException {
+        Map<String, String> paramMap = YunxinParamUtils.convert(request);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.QUERY_TEAM_MSG, paramMap);
+        JSONObject object = JSONObject.parseObject(apiResponse.getData());
+        int code = object.getIntValue("code");
+        if (code != 200) {
+            return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), object.getString("desc"), null);
+        }
+        QueryTeamHistoryMessageResponseV1 response = new QueryTeamHistoryMessageResponseV1();
+        if (object.containsKey("size")) {
+            response.setSize(object.getInteger("size"));
+        }
+        if (object.containsKey("msgs")) {
+            response.setMsgs(object.getString("msgs"));
+        }
+        return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
+    }
+
+    @Override
+    public Result<QueryChatroomHistoryMessageResponseV1> queryChatroomHistoryMessage(QueryChatroomHistoryMessageRequestV1 request) throws YunxinSdkException {
+        Map<String, String> paramMap = YunxinParamUtils.convert(request);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.QUERY_CHATROOM_MSG, paramMap);
+        JSONObject object = JSONObject.parseObject(apiResponse.getData());
+        int code = object.getIntValue("code");
+        if (code != 200) {
+            return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), object.getString("desc"), null);
+        }
+        QueryChatroomHistoryMessageResponseV1 response = new QueryChatroomHistoryMessageResponseV1();
+        if (object.containsKey("size")) {
+            response.setSize(object.getInteger("size"));
+        }
+        if (object.containsKey("msgs")) {
+            response.setMsgs(object.getString("msgs"));
+        }
+        return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
+    }
+
+    @Override
+    public Result<DeleteChatroomHistoryMessageResponseV1> deleteChatroomHistoryMessage(DeleteChatroomHistoryMessageRequestV1 request) throws YunxinSdkException {
+        Map<String, String> paramMap = YunxinParamUtils.convert(request);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.DELETE_CHATROOM_HISTORY_MESSAGE, paramMap);
+        JSONObject object = JSONObject.parseObject(apiResponse.getData());
+        int code = object.getIntValue("code");
+        if (code != 200) {
+            return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), object.getString("desc"), null);
+        }
+        DeleteChatroomHistoryMessageResponseV1 response = new DeleteChatroomHistoryMessageResponseV1();
+        if (object.containsKey("data")) {
+            response = JSON.parseObject(object.getString("data"), DeleteChatroomHistoryMessageResponseV1.class);
+        }
+        return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
+    }
+
+    @Override
+    public Result<QuerySessionListResponseV1> querySessionList(QuerySessionListRequestV1 request) throws YunxinSdkException {
+        Map<String, String> paramMap = YunxinParamUtils.convert(request);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.QUERY_SESSION_LIST, paramMap);
+        JSONObject object = JSONObject.parseObject(apiResponse.getData());
+        int code = object.getIntValue("code");
+        if (code != 200) {
+            return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), object.getString("desc"), null);
+        }
+        QuerySessionListResponseV1 response = new QuerySessionListResponseV1();
+        if (object.containsKey("data")) {
+            response = JSON.parseObject(object.getString("data"), QuerySessionListResponseV1.class);
+        }
+        return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
+    }
+
+    @Override
+    public Result<QueryBroadcastHistoryMessageByIdResponseV1> queryBroadcastHistoryMessageById(QueryBroadcastHistoryMessageByIdRequestV1 request) throws YunxinSdkException {
+        Map<String, String> paramMap = YunxinParamUtils.convert(request);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.QUERY_BROADCAST_MSG_BY_ID, paramMap);
+        JSONObject object = JSONObject.parseObject(apiResponse.getData());
+        int code = object.getIntValue("code");
+        if (code != 200) {
+            return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), object.getString("desc"), null);
+        }
+        QueryBroadcastHistoryMessageByIdResponseV1 response = new QueryBroadcastHistoryMessageByIdResponseV1();
+        if (object.containsKey("msg")) {
+            response.setMsg(object.getString("msg"));
+        }
+        return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
+    }
+
+    @Override
+    public Result<QueryBroadcastHistoryMessageResponseV1> queryBroadcastHistoryMessage(QueryBroadcastHistoryMessageRequestV1 request) throws YunxinSdkException {
+        Map<String, String> paramMap = YunxinParamUtils.convert(request);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.QUERY_BROADCAST_MSG, paramMap);
+        JSONObject object = JSONObject.parseObject(apiResponse.getData());
+        int code = object.getIntValue("code");
+        if (code != 200) {
+            return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), object.getString("desc"), null);
+        }
+        QueryBroadcastHistoryMessageResponseV1 response = new QueryBroadcastHistoryMessageResponseV1();
+        if (object.containsKey("msgs")) {
+            response.setMsgs(object.getString("msgs"));
+        }
+        return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
+    }
+
+    @Override
+    public Result<QueryUserEventsResponseV1> queryUserEvents(QueryUserEventsRequestV1 request) throws YunxinSdkException {
+        Map<String, String> paramMap = YunxinParamUtils.convert(request);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.QUERY_USER_EVENTS, paramMap);
+        JSONObject object = JSONObject.parseObject(apiResponse.getData());
+        int code = object.getIntValue("code");
+        if (code != 200) {
+            return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), object.getString("desc"), null);
+        }
+        QueryUserEventsResponseV1 response = new QueryUserEventsResponseV1();
+        if (object.containsKey("size")) {
+            response.setSize(object.getInteger("size"));
+        }
+        if (object.containsKey("events")) {
+            response.setEvents(object.getString("events"));
+        }
+        return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
+    }
+
+}

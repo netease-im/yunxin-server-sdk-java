@@ -16,6 +16,7 @@ import com.netease.nim.im.server.sdk.core.trace.YunxinTraceId;
 import com.netease.nim.im.server.sdk.core.trace.TraceIdUtils;
 import com.netease.nim.im.server.sdk.core.utils.CheckSumBuilder;
 import com.netease.nim.im.server.sdk.core.utils.ExceptionUtils;
+import com.netease.nim.im.server.sdk.core.version.YunxinApiSdkVersion;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -220,5 +221,6 @@ public class YunxinHttpClient implements HttpClient {
         } else if (apiVersion == ApiVersion.V2) {
             builder.addHeader(X_CUSTOM_TRACE_ID, traceId);
         }
+        builder.addHeader("User-Agent", "yunxin-im-server-sdk/" + YunxinApiSdkVersion.version);
     }
 }

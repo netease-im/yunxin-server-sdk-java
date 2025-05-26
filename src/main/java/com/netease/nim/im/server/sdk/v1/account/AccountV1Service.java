@@ -29,7 +29,7 @@ public class AccountV1Service implements IAccountV1Service {
     @Override
     public Result<CreateAccountResponseV1> createAccount(CreateAccountRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api("/user/create.action", paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(AccountUrlContext.CREATE_ACCOUNT, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -42,7 +42,7 @@ public class AccountV1Service implements IAccountV1Service {
     @Override
     public Result<UpdateTokenResponseV1> updateToken(UpdateTokenRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api("/user/update.action", paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(AccountUrlContext.UPDATE_TOKEN, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -54,7 +54,7 @@ public class AccountV1Service implements IAccountV1Service {
     @Override
     public Result<RefreshTokenResponseV1> refreshToken(RefreshTokenRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api("/user/refreshToken.action", paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(AccountUrlContext.REFRESH_TOKEN, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -67,7 +67,7 @@ public class AccountV1Service implements IAccountV1Service {
     @Override
     public Result<BlockAccountResponseV1> block(BlockAccountRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api("/user/block.action", paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(AccountUrlContext.BLOCK_ACCOUNT, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -79,7 +79,7 @@ public class AccountV1Service implements IAccountV1Service {
     @Override
     public Result<UnBlockAccountResponseV1> unblock(UnBlockAccountRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api("/user/unblock.action", paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(AccountUrlContext.UNBLOCK_ACCOUNT, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -91,7 +91,7 @@ public class AccountV1Service implements IAccountV1Service {
     @Override
     public Result<MuteAccountResponseV1> mute(MuteAccountRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api("/user/mute.action", paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(AccountUrlContext.MUTE_ACCOUNT, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -103,7 +103,7 @@ public class AccountV1Service implements IAccountV1Service {
     @Override
     public Result<MuteModuleResponseV1> muteModule(MuteModuleRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api("/user/muteModule.action", paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(AccountUrlContext.MUTE_MODULE, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -116,7 +116,7 @@ public class AccountV1Service implements IAccountV1Service {
     @Override
     public Result<SetDonnopResponseV1> setDonnop(SetDonnopRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api("/user/setDonnop.action", paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(AccountUrlContext.SET_DONNOP, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -129,7 +129,7 @@ public class AccountV1Service implements IAccountV1Service {
     public Result<QueryAccountOnlineStatusResponseV1> queryOnlineStatus(QueryAccountOnlineStatusRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("accids", JSONArray.toJSONString(request.getAccids()));
-        YunxinApiResponse apiResponse = httpClient.executeV1Api("/user/userOnlineStatus.action", paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(AccountUrlContext.QUERY_ONLINE_STATUS, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -176,7 +176,7 @@ public class AccountV1Service implements IAccountV1Service {
         if (request.getMuteStatus() != null) {
             paramMap.put("muteStatus", String.valueOf(request.getMuteStatus()));
         }
-        YunxinApiResponse apiResponse = httpClient.executeV1Api("/user/getUinfos.action", paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(AccountUrlContext.QUERY_USER_INFOS, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -191,5 +191,17 @@ public class AccountV1Service implements IAccountV1Service {
         }
         response.setUserInfoList(userInfoList);
         return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
+    }
+
+    @Override
+    public Result<UpdateUinfoResponseV1> updateUinfo(UpdateUinfoRequestV1 request) throws YunxinSdkException {
+        Map<String, String> paramMap = YunxinParamUtils.convert(request);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(AccountUrlContext.UPDATE_UINFO, paramMap);
+        JSONObject object = JSONObject.parseObject(apiResponse.getData());
+        int code = object.getIntValue("code");
+        if (code != 200) {
+            return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), object.getString("desc"), null);
+        }
+        return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, null);
     }
 }
