@@ -97,22 +97,9 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
         if (request.getInviteAccountIds() == null || request.getInviteAccountIds().isEmpty()) {
             throw new IllegalArgumentException("Invite account IDs list cannot be null or empty");
         }
-        
-        if (request.getInviteAccountIds().size() > 200) {
-            throw new IllegalArgumentException("Cannot invite more than 200 accounts in a single request");
-        }
-        
+
         if (request.getMsg() == null || request.getMsg().isEmpty()) {
             throw new IllegalArgumentException("Invitation message cannot be null or empty");
-        }
-        
-        if (request.getMsg().length() > 150) {
-            throw new IllegalArgumentException("Invitation message cannot exceed 150 characters");
-        }
-        
-        // Validate extension field length if provided
-        if (request.getExtension() != null && request.getExtension().length() > 512) {
-            throw new IllegalArgumentException("Extension field cannot exceed 512 characters");
         }
         
         // Convert the request to JSON string
@@ -177,15 +164,6 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
         
         if (request.getKickAccountIds() == null || request.getKickAccountIds().isEmpty()) {
             throw new IllegalArgumentException("Kick account IDs list cannot be null or empty");
-        }
-        
-        if (request.getKickAccountIds().size() > 10) {
-            throw new IllegalArgumentException("Cannot kick more than 10 accounts in a single request");
-        }
-        
-        // Validate extension field length if provided
-        if (request.getExtension() != null && request.getExtension().length() > 512) {
-            throw new IllegalArgumentException("Extension field cannot exceed 512 characters");
         }
         
         // Set up query parameters - using query parameters instead of request body for DELETE request
@@ -254,11 +232,6 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
         
         if (request.getTeamType() != 1 && request.getTeamType() != 2) {
             throw new IllegalArgumentException("Invalid team type: must be 1 (Advanced team) or 2 (Super team)");
-        }
-        
-        // Validate extension field length if provided
-        if (request.getExtension() != null && request.getExtension().length() > 512) {
-            throw new IllegalArgumentException("Extension field cannot exceed 512 characters");
         }
         
         // Set up query parameters - using query parameters instead of request body for DELETE request
@@ -344,11 +317,6 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
             throw new IllegalArgumentException("Invalid message notify state: must be 0, 1, or 2");
         }
         
-        // Validate extension field length if provided
-        if (request.getExtension() != null && request.getExtension().length() > 512) {
-            throw new IllegalArgumentException("Extension field cannot exceed 512 characters");
-        }
-        
         // Replace the path parameter in the URL
         String endpoint = TeamMemberUrlContextV2.UPDATE_TEAM_MEMBER.replace("{account_id}", request.getAccountId());
         
@@ -430,10 +398,6 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
             throw new IllegalArgumentException("Chat ban account IDs list cannot be null or empty");
         }
         
-        if (request.getChatBanAccountIds().size() > 10) {
-            throw new IllegalArgumentException("Cannot mute/unmute more than 10 accounts in a single request");
-        }
-        
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
         
@@ -488,13 +452,6 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
         
         if (request.getTeamType() != 1 && request.getTeamType() != 2) {
             throw new IllegalArgumentException("Invalid team type: must be 1 (Advanced team) or 2 (Super team)");
-        }
-        
-        // Validate limit if provided
-        if (request.getLimit() != null) {
-            if (request.getLimit() <= 0 || request.getLimit() > 100) {
-                throw new IllegalArgumentException("Limit must be between 1 and 100");
-            }
         }
         
         // Validate needReturnMemberInfo if provided

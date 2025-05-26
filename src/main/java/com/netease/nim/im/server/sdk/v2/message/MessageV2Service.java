@@ -434,9 +434,7 @@ public class MessageV2Service implements IMessageV2Service {
             throw new IllegalArgumentException("Message server IDs list cannot be null or empty");
         }
         
-        if (request.getMessageServerIds().size() > 50) {
-            throw new IllegalArgumentException("Cannot mark more than 50 messages as read in a single request");
-        }
+
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
@@ -610,16 +608,7 @@ public class MessageV2Service implements IMessageV2Service {
                 throw new IllegalArgumentException("Maximum of 5 sender account IDs allowed");
             }
         }
-        
-        // Validate keyword list (max 5)
-        if (request.getKeywordList() != null && request.getKeywordList().length > 5) {
-            throw new IllegalArgumentException("Maximum of 5 keywords allowed");
-        }
-        
-        // Validate limit (max 100)
-        if (request.getLimit() != null && (request.getLimit() <= 0 || request.getLimit() > 100)) {
-            throw new IllegalArgumentException("Limit must be between 1 and 100");
-        }
+
         
         // Create query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -884,10 +873,7 @@ public class MessageV2Service implements IMessageV2Service {
         if (request.getDescending() != null) {
             queryParams.put("descending", request.getDescending().toString());
         }
-        
-        // Log the constructed parameters for debugging
-        System.out.println("Querying thread messages with parameters: " + JSONObject.toJSONString(queryParams));
-        
+
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
@@ -1066,9 +1052,7 @@ public class MessageV2Service implements IMessageV2Service {
             throw new IllegalArgumentException("Messages list cannot be null or empty");
         }
         
-        if (request.getMessages().size() > 20) {
-            throw new IllegalArgumentException("Can query up to 20 messages in a single request");
-        }
+
         
         // Validate each message in the list
         for (BatchQueryQuickCommentsRequestV2.Message message : request.getMessages()) {

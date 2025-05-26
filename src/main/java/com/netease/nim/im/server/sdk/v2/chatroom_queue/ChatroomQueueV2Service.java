@@ -73,11 +73,6 @@ public class ChatroomQueueV2Service implements IChatroomQueueV2Service {
             throw new IllegalArgumentException("Chatroom ID cannot be null");
         }
         
-        // Validate queue size limit if specified
-        if (request.getQueueSizeLimit() != null && (request.getQueueSizeLimit() < 0 || request.getQueueSizeLimit() > 1000)) {
-            throw new IllegalArgumentException("Queue size limit must be between 0 and 1000");
-        }
-        
         // Prepare request body
         JSONObject requestBody = new JSONObject();
         
@@ -433,11 +428,7 @@ public class ChatroomQueueV2Service implements IChatroomQueueV2Service {
         if (request.getRoomId() == null) {
             throw new IllegalArgumentException("Chatroom ID cannot be null");
         }
-        
-        // Validate element key if provided
-        if (request.getElementKey() != null && request.getElementKey().length() > 128) {
-            throw new IllegalArgumentException("Element key length must not exceed 128 characters");
-        }
+
         
         // Prepare request body
         JSONObject requestBody = new JSONObject();

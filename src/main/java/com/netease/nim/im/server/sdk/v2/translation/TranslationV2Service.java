@@ -51,10 +51,6 @@ public class TranslationV2Service implements ITranslationV2Service {
             throw new IllegalArgumentException("Source text cannot be null or empty");
         }
         
-        if (request.getSourceText().length() > 5000) {
-            throw new IllegalArgumentException("Source text exceeds maximum length of 5000 characters");
-        }
-        
         if (request.getTargetLanguage() == null || request.getTargetLanguage().isEmpty()) {
             throw new IllegalArgumentException("Target language cannot be null or empty");
         }

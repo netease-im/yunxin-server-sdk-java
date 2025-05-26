@@ -172,9 +172,7 @@ public class ConversationV2Service implements IConversationV2Service {
             throw new IllegalArgumentException("Conversation IDs list cannot be null or empty");
         }
         
-        if (conversationIds.size() > 100) {
-            throw new IllegalArgumentException("Maximum 100 conversation IDs can be specified in a single request");
-        }
+
         
         // Each ID is joined with commas
         String conversationIdsParam = String.join(",", conversationIds);
@@ -249,11 +247,6 @@ public class ConversationV2Service implements IConversationV2Service {
         if (conversationIds == null || conversationIds.isEmpty()) {
             throw new IllegalArgumentException("Conversation IDs list cannot be null or empty");
         }
-        
-        if (conversationIds.size() > 100) {
-            throw new IllegalArgumentException("Maximum 100 conversation IDs can be specified in a single request");
-        }
-        
         // Each ID is joined with commas
         String conversationIdsParam = String.join(",", conversationIds);
         
@@ -507,10 +500,7 @@ public class ConversationV2Service implements IConversationV2Service {
             if (conversationIds == null || conversationIds.isEmpty()) {
                 throw new IllegalArgumentException("Conversation IDs list cannot be null or empty when performing conversation operations");
             }
-            
-            if (conversationIds.size() > 100) {
-                throw new IllegalArgumentException("Maximum 100 conversation IDs can be specified in a single request");
-            }
+
         }
         
         // Replace the path parameter in the URL
@@ -731,10 +721,6 @@ public class ConversationV2Service implements IConversationV2Service {
         List<String> receiverIds = request.getReceiverIds();
         if (receiverIds == null || receiverIds.isEmpty()) {
             throw new IllegalArgumentException("Receiver IDs list cannot be null or empty");
-        }
-        
-        if (receiverIds.size() > 100) {
-            throw new IllegalArgumentException("Maximum 100 receiver IDs can be specified in a single request");
         }
         
         if (request.getMessage() == null) {

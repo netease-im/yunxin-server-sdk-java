@@ -45,17 +45,9 @@ public class SubscriptionV2Service implements ISubscriptionV2Service {
         if (request.getDuration() == null) {
             throw new IllegalArgumentException("Duration cannot be null");
         }
-        
-        if (request.getDuration() < 60 || request.getDuration() > 2592000) {
-            throw new IllegalArgumentException("Duration must be between 60 and 2592000 seconds (30 days)");
-        }
-        
+
         if (request.getAccountIds() == null || request.getAccountIds().isEmpty()) {
             throw new IllegalArgumentException("Account IDs list cannot be null or empty");
-        }
-        
-        if (request.getAccountIds().size() > 100) {
-            throw new IllegalArgumentException("Maximum 100 accounts can be subscribed in a single request");
         }
         
         // Create URL with path parameter
@@ -89,12 +81,7 @@ public class SubscriptionV2Service implements ISubscriptionV2Service {
         if (request.getSubscriberAccountId() == null || request.getSubscriberAccountId().isEmpty()) {
             throw new IllegalArgumentException("Subscriber account ID cannot be null or empty");
         }
-        
-        // If accountIds is provided, validate it doesn't exceed limit
-        if (request.getAccountIds() != null && request.getAccountIds().size() > 100) {
-            throw new IllegalArgumentException("Maximum 100 accounts can be unsubscribed in a single request");
-        }
-        
+
         // Create URL with path parameter
         String url = SubscriptionUrlContextV2.UNSUBSCRIBE_USER_STATUS.replace(
                 "{account_id}", request.getSubscriberAccountId());
@@ -126,11 +113,7 @@ public class SubscriptionV2Service implements ISubscriptionV2Service {
         if (request.getAccountIds() == null || request.getAccountIds().isEmpty()) {
             throw new IllegalArgumentException("Account IDs list cannot be null or empty");
         }
-        
-        if (request.getAccountIds().size() > 100) {
-            throw new IllegalArgumentException("Maximum 100 accounts can be queried in a single request");
-        }
-        
+
         // Create URL with path parameter
         String url = SubscriptionUrlContextV2.QUERY_USER_STATUS_SUBSCRIPTION.replace(
                 "{account_id}", request.getSubscriberAccountId());
