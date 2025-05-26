@@ -90,4 +90,12 @@ public interface IAccountV1Service {
      * @throws YunxinSdkException exception
      */
     Result<QueryUserInfosResponseV1> queryUserInfos(QueryUserInfosRequestV1 request) throws YunxinSdkException;
+
+    /**
+     * update uinfo
+     * @param request request
+     * @return result
+     * @throws YunxinSdkException exception
+     */
+    Result<UpdateUinfoResponseV1> updateUinfo(UpdateUinfoRequestV1 request) throws YunxinSdkException;
 }

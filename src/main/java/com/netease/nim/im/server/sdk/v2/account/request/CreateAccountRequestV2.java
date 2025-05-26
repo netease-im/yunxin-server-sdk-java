@@ -131,7 +131,7 @@ public class CreateAccountRequestV2 {
         private String mobile;
 
         @JSONField(name = "gender")
-        private String gender;
+        private Integer gender;
 
         @JSONField(name = "extension")
         private String extension;
@@ -187,11 +187,11 @@ public class CreateAccountRequestV2 {
             this.mobile = mobile;
         }
 
-        public String getGender() {
+        public Integer getGender() {
             return gender;
         }
 
-        public void setGender(String gender) {
+        public void setGender(Integer gender) {
             this.gender = gender;
         }
 
