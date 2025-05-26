@@ -391,12 +391,7 @@ public class ChatroomMessageV2Service implements IChatroomMessageV2Service {
             throw new IllegalArgumentException("Notification enabled cannot be null");
         }
         
-        // Validate notification extension if specified for recall operation
-        if (Boolean.TRUE.equals(request.getNotificationEnabled()) && 
-            request.getNotificationExtension() != null && 
-            request.getNotificationExtension().length() > 1024) {
-            throw new IllegalArgumentException("Notification extension cannot exceed 1024 characters");
-        }
+
         
         // Replace path parameters in the URL
         String endpoint = ChatroomMessageUrlContextV2.RECALL_OR_DELETE_CHATROOM_MESSAGE
@@ -463,11 +458,7 @@ public class ChatroomMessageV2Service implements IChatroomMessageV2Service {
         if (request.getLimit() == null) {
             throw new IllegalArgumentException("Limit cannot be null");
         }
-        
-        if (request.getLimit() <= 0 || request.getLimit() > 100) {
-            throw new IllegalArgumentException("Limit must be between 1 and 100");
-        }
-        
+
         // Replace path parameter in the URL
         String endpoint = ChatroomMessageUrlContextV2.QUERY_CHATROOM_HISTORY_MESSAGES.replace("{room_id}", request.getRoomId().toString());
         

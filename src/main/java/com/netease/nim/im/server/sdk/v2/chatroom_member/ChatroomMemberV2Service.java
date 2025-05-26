@@ -108,18 +108,7 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
         if (request.getMemberRole() == null) {
             throw new IllegalArgumentException("Member role cannot be null");
         }
-        
-        // Validate member role value
-        Integer roleValue = request.getMemberRole();
-        if (roleValue != 0 && roleValue != 2 && roleValue != 3) {
-            throw new IllegalArgumentException("Member role must be 0 (regular member), 2 (administrator), or 3 (guest)");
-        }
-        
-        // Validate notification extension length if provided
-        if (request.getNotificationExtension() != null && request.getNotificationExtension().length() > 2048) {
-            throw new IllegalArgumentException("Notification extension cannot exceed 2048 characters");
-        }
-        
+
         // Replace the path parameter in the URL
         String endpoint = ChatroomMemberUrlContextV2.SET_MEMBER_ROLE.replace("{account_id}", accountId);
         
@@ -168,15 +157,7 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
             throw new IllegalArgumentException("Chatroom ID cannot be null");
         }
         
-        // Validate extension field length if provided
-        if (request.getExtension() != null && request.getExtension().length() > 4096) {
-            throw new IllegalArgumentException("Extension cannot exceed 4096 characters");
-        }
-        
-        // Validate notification extension length if provided
-        if (request.getNotificationExtension() != null && request.getNotificationExtension().length() > 2048) {
-            throw new IllegalArgumentException("Notification extension cannot exceed 2048 characters");
-        }
+
         
         // Replace the path parameter in the URL
         String endpoint = ChatroomMemberUrlContextV2.UPDATE_ONLINE_MEMBER_INFO.replace("{account_id}", accountId);
@@ -238,11 +219,7 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
             throw new IllegalArgumentException("Cannot ban/unban yourself");
         }
         
-        // Validate notification extension length if provided
-        if (request.getNotificationExtension() != null && request.getNotificationExtension().length() > 2048) {
-            throw new IllegalArgumentException("Notification extension cannot exceed 2048 characters");
-        }
-        
+
         // Replace the path parameter in the URL
         String endpoint = ChatroomMemberUrlContextV2.TOGGLE_CHAT_BAN.replace("{account_id}", accountId);
         
@@ -294,11 +271,7 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
         if (request.getTags() == null || request.getTags().isEmpty()) {
             throw new IllegalArgumentException("Tags cannot be null or empty");
         }
-        
-        // Validate notification extension length if provided
-        if (request.getNotifyExtension() != null && request.getNotifyExtension().length() > 2048) {
-            throw new IllegalArgumentException("Notification extension cannot exceed 2048 characters");
-        }
+
         
         // Replace the path parameter in the URL
         String endpoint = ChatroomMemberUrlContextV2.MODIFY_MEMBER_TAGS.replace("{account_id}", accountId);
@@ -390,11 +363,7 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
         if (request.getLimit() == null) {
             throw new IllegalArgumentException("Limit cannot be null");
         }
-        
-        // Validate limit value (as per API documentation)
-        if (request.getLimit() <= 0 || request.getLimit() > 100) {
-            throw new IllegalArgumentException("Limit must be between 1 and 100");
-        }
+
         
         // Replace the path parameter in the URL
         String endpoint = ChatroomMemberUrlContextV2.LIST_TAG_MEMBERS.replace("{room_id}", request.getRoomId().toString());
@@ -465,16 +434,8 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
             if (request.getChatBannedDuration() == null) {
                 throw new IllegalArgumentException("Chat banned duration is required when banning a member");
             }
-            
-            if (request.getChatBannedDuration() <= 0 || request.getChatBannedDuration() > 2592000) {
-                throw new IllegalArgumentException("Chat banned duration must be positive and not exceed 2592000 seconds (30 days)");
-            }
         }
-        
-        // Validate notification extension length if provided
-        if (request.getNotificationExtension() != null && request.getNotificationExtension().length() > 2048) {
-            throw new IllegalArgumentException("Notification extension cannot exceed 2048 characters");
-        }
+
         
         // Replace the path parameter in the URL
         String endpoint = ChatroomMemberUrlContextV2.TOGGLE_TEMP_CHAT_BAN.replace("{account_id}", request.getAccountId());
@@ -535,11 +496,7 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
         if (accountId.equals(request.getOperatorAccountId())) {
             throw new IllegalArgumentException("Cannot block/unblock yourself");
         }
-        
-        // Validate notification extension length if provided
-        if (request.getNotificationExtension() != null && request.getNotificationExtension().length() > 2048) {
-            throw new IllegalArgumentException("Notification extension cannot exceed 2048 characters");
-        }
+
         
         // Replace the path parameter in the URL
         String endpoint = ChatroomMemberUrlContextV2.TOGGLE_BLOCKED.replace("{account_id}", accountId);
@@ -657,12 +614,7 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
                 throw new IllegalArgumentException("Chat banned duration must be positive and not exceed 2592000 seconds (30 days)");
             }
         }
-        
-        // Validate notification extension length if provided
-        if (request.getNotificationExtension() != null && request.getNotificationExtension().length() > 2048) {
-            throw new IllegalArgumentException("Notification extension cannot exceed 2048 characters");
-        }
-        
+
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
         
@@ -700,10 +652,6 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
         
         if (request.getAccountIds() == null || request.getAccountIds().isEmpty()) {
             throw new IllegalArgumentException("Account IDs list cannot be null or empty");
-        }
-        
-        if (request.getAccountIds().size() > 200) {
-            throw new IllegalArgumentException("Cannot query more than 200 account IDs at once");
         }
         
         // Replace the path parameter in the URL
@@ -754,25 +702,11 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
             throw new IllegalArgumentException("Virtual members list cannot be null or empty");
         }
         
-        if (request.getVirtualMembers().size() > 200) {
-            throw new IllegalArgumentException("Cannot add more than 200 virtual members at once");
-        }
-        
         // Validate each virtual member has a valid account ID
         for (AddVirtualMembersRequestV2.VirtualMemberInfoV2 member : request.getVirtualMembers()) {
             if (member.getAccountId() == null || member.getAccountId().isEmpty()) {
                 throw new IllegalArgumentException("Account ID of virtual member cannot be null or empty");
             }
-            
-            // Validate extension field length if provided
-            if (member.getExtension() != null && member.getExtension().length() > 4096) {
-                throw new IllegalArgumentException("Extension cannot exceed 4096 characters");
-            }
-        }
-        
-        // Validate notification extension length if provided
-        if (request.getNotificationExtension() != null && request.getNotificationExtension().length() > 2048) {
-            throw new IllegalArgumentException("Notification extension cannot exceed 2048 characters");
         }
         
         // Convert the request to JSON string
@@ -813,10 +747,7 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
         if (request.getAccountIds() == null || request.getAccountIds().isEmpty()) {
             throw new IllegalArgumentException("Account IDs list cannot be null or empty");
         }
-        
-        if (request.getAccountIds().size() > 100) {
-            throw new IllegalArgumentException("Cannot delete more than 100 virtual members at once");
-        }
+
         
         // Validate each account ID
         for (String accountId : request.getAccountIds()) {

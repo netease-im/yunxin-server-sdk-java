@@ -82,37 +82,6 @@ public class ChatroomV2Service implements IChatroomV2Service {
             throw new IllegalArgumentException("Room name cannot be null or empty");
         }
         
-        // Validate room name length
-        if (request.getRoomName().length() > 128) {
-            throw new IllegalArgumentException("Room name cannot exceed 128 characters");
-        }
-        
-        // Validate announcement length if provided
-        if (request.getAnnouncement() != null && request.getAnnouncement().length() > 4096) {
-            throw new IllegalArgumentException("Announcement cannot exceed 4096 characters");
-        }
-        
-        // Validate live URL length if provided
-        if (request.getLiveUrl() != null && request.getLiveUrl().length() > 1024) {
-            throw new IllegalArgumentException("Live URL cannot exceed 1024 characters");
-        }
-        
-        // Validate extension length if provided
-        if (request.getExtension() != null && request.getExtension().length() > 4096) {
-            throw new IllegalArgumentException("Extension cannot exceed 4096 characters");
-        }
-        
-        // Validate delay close policy if provided
-        if (request.getDelayClosePolicy() != null && 
-                (request.getDelayClosePolicy() < 0 || request.getDelayClosePolicy() > 2)) {
-            throw new IllegalArgumentException("Delay close policy must be 0, 1, or 2");
-        }
-        
-        // Validate delay seconds if provided
-        if (request.getDelaySeconds() != null && request.getDelaySeconds() > 7 * 24 * 3600) {
-            throw new IllegalArgumentException("Delay seconds cannot exceed 7 days (604800 seconds)");
-        }
-        
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
         
@@ -159,15 +128,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         if (request.getClientIp() == null || request.getClientIp().isEmpty()) {
             throw new IllegalArgumentException("Client IP cannot be null or empty");
         }
-        
-        // Validate optional parameters
-        if (request.getClientType() != null && (request.getClientType() < 1 || request.getClientType() > 3)) {
-            throw new IllegalArgumentException("Client type must be 1, 2, or 3");
-        }
-        
-        if (request.getIpType() != null && (request.getIpType() < 0 || request.getIpType() > 2)) {
-            throw new IllegalArgumentException("IP type must be 0, 1, or 2");
-        }
+
         
         // Replace the path parameter in the URL
         String endpoint = ChatroomUrlContextV2.GET_CHATROOM_ADDRESS.replace("{room_id}", request.getRoomId().toString());
@@ -269,28 +230,6 @@ public class ChatroomV2Service implements IChatroomV2Service {
         if (roomId == null) {
             throw new IllegalArgumentException("Chatroom ID cannot be null");
         }
-        
-        // Validate field lengths if provided
-        if (request.getRoomName() != null && request.getRoomName().length() > 128) {
-            throw new IllegalArgumentException("Room name cannot exceed 128 characters");
-        }
-        
-        if (request.getAnnouncement() != null && request.getAnnouncement().length() > 4096) {
-            throw new IllegalArgumentException("Announcement cannot exceed 4096 characters");
-        }
-        
-        if (request.getLiveUrl() != null && request.getLiveUrl().length() > 1024) {
-            throw new IllegalArgumentException("Live URL cannot exceed 1024 characters");
-        }
-        
-        if (request.getExtension() != null && request.getExtension().length() > 4096) {
-            throw new IllegalArgumentException("Extension cannot exceed 4096 characters");
-        }
-        
-        if (request.getNotificationExtension() != null && request.getNotificationExtension().length() > 2048) {
-            throw new IllegalArgumentException("Notification extension cannot exceed 2048 characters");
-        }
-        
         // Replace the path parameter in the URL
         String endpoint = ChatroomUrlContextV2.UPDATE_CHATROOM_INFO.replace("{room_id}", roomId.toString());
         
@@ -344,17 +283,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         if (request.getValid() == null) {
             throw new IllegalArgumentException("Valid status cannot be null");
         }
-        
-        // Validate optional parameters if provided
-        if (request.getDelayClosePolicy() != null && 
-                (request.getDelayClosePolicy() < 0 || request.getDelayClosePolicy() > 2)) {
-            throw new IllegalArgumentException("Delay close policy must be 0, 1, or 2");
-        }
-        
-        if (request.getDelaySeconds() != null && request.getDelaySeconds() > 7 * 24 * 3600) {
-            throw new IllegalArgumentException("Delay seconds cannot exceed 7 days (604800 seconds)");
-        }
-        
+
         // Replace the path parameter in the URL
         String endpoint = ChatroomUrlContextV2.UPDATE_CHATROOM_STATUS.replace("{room_id}", roomId.toString());
         
@@ -407,11 +336,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
             throw new IllegalArgumentException("Chat banned status cannot be null");
         }
         
-        // Validate notification extension length if provided
-        if (request.getNotificationExtension() != null && request.getNotificationExtension().length() > 2048) {
-            throw new IllegalArgumentException("Notification extension cannot exceed 2048 characters");
-        }
-        
+
         // Replace the path parameter in the URL
         String endpoint = ChatroomUrlContextV2.TOGGLE_CHATROOM_MUTE.replace("{room_id}", roomId.toString());
         
@@ -544,12 +469,6 @@ public class ChatroomV2Service implements IChatroomV2Service {
         if (request.getLimit() == null) {
             throw new IllegalArgumentException("Limit cannot be null");
         }
-        
-        // Validate limit value
-        if (request.getLimit() <= 0 || request.getLimit() > 100) {
-            throw new IllegalArgumentException("Limit must be between 1 and 100");
-        }
-        
         // Replace the path parameter in the URL
         String endpoint = ChatroomUrlContextV2.LIST_ONLINE_MEMBERS.replace("{room_id}", request.getRoomId().toString());
         

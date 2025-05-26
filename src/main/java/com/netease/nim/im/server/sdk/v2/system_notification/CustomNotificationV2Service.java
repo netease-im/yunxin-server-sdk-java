@@ -58,28 +58,6 @@ public class CustomNotificationV2Service implements ICustomNotificationV2Service
             throw new IllegalArgumentException("Sound file name cannot exceed 30 characters");
         }
         
-        if (request.getPushConfig() != null) {
-            if (request.getPushConfig().getPushContent() != null && 
-                request.getPushConfig().getPushContent().length() > 500) {
-                throw new IllegalArgumentException("Push content cannot exceed 500 characters");
-            }
-            
-            if (request.getPushConfig().getPushPayload() != null && 
-                request.getPushConfig().getPushPayload().length() > 2048) {
-                throw new IllegalArgumentException("Push payload cannot exceed 2048 characters");
-            }
-            
-            if (request.getPushConfig().getPushForcepushContent() != null && 
-                request.getPushConfig().getPushForcepushContent().length() > 500) {
-                throw new IllegalArgumentException("Force push content cannot exceed 500 characters");
-            }
-            
-            if (request.getPushConfig().getPushForcepushIds() != null && 
-                request.getPushConfig().getPushForcepushIds().size() > 100) {
-                throw new IllegalArgumentException("Cannot force push to more than 100 accounts");
-            }
-        }
-        
         // Convert to JSON string using JSONField annotations
         String jsonRequestBody = JSON.toJSONString(request);
         
@@ -106,40 +84,9 @@ public class CustomNotificationV2Service implements ICustomNotificationV2Service
         if (request.getReceiverIds() == null || request.getReceiverIds().isEmpty()) {
             throw new IllegalArgumentException("Receiver IDs cannot be null or empty");
         }
-        
-        if (request.getReceiverIds().size() > 500) {
-            throw new IllegalArgumentException("Cannot send to more than 500 receivers");
-        }
-        
+
         if (request.getContent() == null || request.getContent().isEmpty()) {
             throw new IllegalArgumentException("Content cannot be null or empty");
-        }
-        
-        // Validate optional parameters
-        if (request.getSound() != null && request.getSound().length() > 30) {
-            throw new IllegalArgumentException("Sound file name cannot exceed 30 characters");
-        }
-        
-        if (request.getPushConfig() != null) {
-            if (request.getPushConfig().getPushContent() != null && 
-                request.getPushConfig().getPushContent().length() > 500) {
-                throw new IllegalArgumentException("Push content cannot exceed 500 characters");
-            }
-            
-            if (request.getPushConfig().getPushPayload() != null && 
-                request.getPushConfig().getPushPayload().length() > 2048) {
-                throw new IllegalArgumentException("Push payload cannot exceed 2048 characters");
-            }
-            
-            if (request.getPushConfig().getPushForcepushContent() != null && 
-                request.getPushConfig().getPushForcepushContent().length() > 500) {
-                throw new IllegalArgumentException("Force push content cannot exceed 500 characters");
-            }
-            
-            if (request.getPushConfig().getPushForcepushIds() != null && 
-                request.getPushConfig().getPushForcepushIds().size() > 100) {
-                throw new IllegalArgumentException("Cannot force push to more than 100 accounts");
-            }
         }
         
         // Convert to JSON string using JSONField annotations

@@ -172,12 +172,7 @@ public class TeamV2Service implements ITeamV2Service {
         if (request.getTeamType() != 1 && request.getTeamType() != 2) {
             throw new IllegalArgumentException("Invalid team type: must be 1 (Advanced team) or 2 (Super team)");
         }
-        
-        // Validate extension field length if provided
-        if (request.getExtension() != null && request.getExtension().length() > 512) {
-            throw new IllegalArgumentException("Extension field cannot exceed 512 characters");
-        }
-        
+
         // Replace the path parameter in the URL
         String endpoint = TeamUrlContextV2.DISBAND_TEAM.replace("{team_id}", request.getTeamId());
         
@@ -229,13 +224,7 @@ public class TeamV2Service implements ITeamV2Service {
         if (request.getTeamType() != 1 && request.getTeamType() != 2) {
             throw new IllegalArgumentException("Invalid team type: must be 1 (Advanced team) or 2 (Super team)");
         }
-        
-        // Validate team IDs count based on team type
-        int maxTeams = request.getTeamType() == 1 ? 30 : 20; // 30 for advanced teams, 20 for super teams
-        if (request.getTeamIds().size() > maxTeams) {
-            throw new IllegalArgumentException("Too many team IDs. Maximum " + maxTeams + " teams allowed for team type " + request.getTeamType());
-        }
-        
+
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("team_type", request.getTeamType().toString());
@@ -304,11 +293,6 @@ public class TeamV2Service implements ITeamV2Service {
             throw new IllegalArgumentException("Invalid leave parameter: must be 1 (Leave) or 2 (Stay as a regular member)");
         }
         
-        // Validate extension field length if provided
-        if (request.getExtension() != null && request.getExtension().length() > 512) {
-            throw new IllegalArgumentException("Extension field cannot exceed 512 characters");
-        }
-        
         // Replace the path parameter in the URL
         String endpoint = TeamUrlContextV2.TRANSFER_OWNER.replace("{team_id}", request.getTeamId());
         
@@ -370,15 +354,7 @@ public class TeamV2Service implements ITeamV2Service {
         if (request.getManagers() == null || request.getManagers().isEmpty()) {
             throw new IllegalArgumentException("Managers list cannot be null or empty");
         }
-        
-        if (request.getManagers().size() > 10) {
-            throw new IllegalArgumentException("Cannot add more than 10 managers in a single request");
-        }
-        
-        // Validate extension field length if provided
-        if (request.getExtension() != null && request.getExtension().length() > 512) {
-            throw new IllegalArgumentException("Extension field cannot exceed 512 characters");
-        }
+
         
         // Replace the path parameter in the URL
         String endpoint = TeamUrlContextV2.ADD_MANAGER.replace("{team_id}", request.getTeamId());
@@ -442,16 +418,8 @@ public class TeamV2Service implements ITeamV2Service {
         if (request.getManagers() == null || request.getManagers().isEmpty()) {
             throw new IllegalArgumentException("Managers list cannot be null or empty");
         }
-        
-        if (request.getManagers().size() > 10) {
-            throw new IllegalArgumentException("Cannot remove more than 10 managers in a single request");
-        }
-        
-        // Validate extension field length if provided
-        if (request.getExtension() != null && request.getExtension().length() > 512) {
-            throw new IllegalArgumentException("Extension field cannot exceed 512 characters");
-        }
-        
+
+
         // Replace the path parameter in the URL
         String endpoint = TeamUrlContextV2.REMOVE_MANAGER.replace("{team_id}", request.getTeamId());
         
@@ -598,10 +566,6 @@ public class TeamV2Service implements ITeamV2Service {
             throw new IllegalArgumentException("Invalid chat banned type: must be 0 (All), 1 (Banned), or 2 (Not banned)");
         }
         
-        if (request.getLimit() != null && (request.getLimit() <= 0 || request.getLimit() > 100)) {
-            throw new IllegalArgumentException("Invalid limit: must be between 1 and 100");
-        }
-        
         // Replace the path parameter in the URL
         String endpoint = TeamUrlContextV2.LIST_TEAM_MEMBERS.replace("{team_id}", request.getTeamId());
         
@@ -735,11 +699,6 @@ public class TeamV2Service implements ITeamV2Service {
         if (request.getTeamType() != 1) {
             throw new IllegalArgumentException("Invalid team type: must be 1 (Advanced team). " +
                     "Currently, this API only supports Advanced Teams.");
-        }
-        
-        // Validate team IDs count
-        if (request.getTeamIds().size() > 100) {
-            throw new IllegalArgumentException("Too many team IDs. Maximum 100 teams allowed in a single request.");
         }
         
         // Set up query parameters
