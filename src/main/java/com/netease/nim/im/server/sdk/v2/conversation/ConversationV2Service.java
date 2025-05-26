@@ -438,11 +438,7 @@ public class ConversationV2Service implements IConversationV2Service {
         if (request.getName() == null || request.getName().isEmpty()) {
             throw new IllegalArgumentException("Conversation group name cannot be null or empty");
         }
-        
-        // If conversation IDs are specified, validate the limit
-        if (request.getConversationIds() != null && request.getConversationIds().size() > 100) {
-            throw new IllegalArgumentException("Maximum 100 conversation IDs can be specified in a single request");
-        }
+
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);

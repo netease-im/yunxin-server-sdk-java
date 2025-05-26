@@ -604,9 +604,6 @@ public class MessageV2Service implements IMessageV2Service {
         // Validate sender account IDs (max 5)
         if (request.getSenderAccountIds() != null && !request.getSenderAccountIds().isEmpty()) {
             String[] senderIds = request.getSenderAccountIds().split(",");
-            if (senderIds.length > 5) {
-                throw new IllegalArgumentException("Maximum of 5 sender account IDs allowed");
-            }
         }
 
         
@@ -686,10 +683,7 @@ public class MessageV2Service implements IMessageV2Service {
         if (request.getLimit() == null) {
             throw new IllegalArgumentException("Limit cannot be null");
         }
-        
-        if (request.getLimit() <= 0 || request.getLimit() > 100) {
-            throw new IllegalArgumentException("Limit must be between 1 and 100");
-        }
+
         
         // Replace path parameter in the URL
         String endpoint = MessageUrlContextV2.QUERY_CONVERSATION_MESSAGES
@@ -824,10 +818,6 @@ public class MessageV2Service implements IMessageV2Service {
         
         if (request.getLimit() == null) {
             throw new IllegalArgumentException("Limit cannot be null");
-        }
-        
-        if (request.getLimit() <= 0 || request.getLimit() > 100) {
-            throw new IllegalArgumentException("Limit must be between 1 and 100");
         }
         
         if (request.getConversationType() == null) {

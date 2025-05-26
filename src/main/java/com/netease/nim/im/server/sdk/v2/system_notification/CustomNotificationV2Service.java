@@ -52,11 +52,7 @@ public class CustomNotificationV2Service implements ICustomNotificationV2Service
         if (request.getContent() == null || request.getContent().isEmpty()) {
             throw new IllegalArgumentException("Content cannot be null or empty");
         }
-        
-        // Validate optional parameters
-        if (request.getSound() != null && request.getSound().length() > 30) {
-            throw new IllegalArgumentException("Sound file name cannot exceed 30 characters");
-        }
+
         
         // Convert to JSON string using JSONField annotations
         String jsonRequestBody = JSON.toJSONString(request);
