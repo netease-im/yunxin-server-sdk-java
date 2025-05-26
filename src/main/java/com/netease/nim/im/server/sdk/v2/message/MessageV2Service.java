@@ -604,9 +604,6 @@ public class MessageV2Service implements IMessageV2Service {
         // Validate sender account IDs (max 5)
         if (request.getSenderAccountIds() != null && !request.getSenderAccountIds().isEmpty()) {
             String[] senderIds = request.getSenderAccountIds().split(",");
-            if (senderIds.length > 5) {
-                throw new IllegalArgumentException("Maximum of 5 sender account IDs allowed");
-            }
         }
 
         

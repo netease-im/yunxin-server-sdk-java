@@ -225,11 +225,7 @@ public class ChatroomMessageV2Service implements IChatroomMessageV2Service {
         if (request.getMessages() == null || request.getMessages().isEmpty()) {
             throw new IllegalArgumentException("Messages list cannot be null or empty");
         }
-        
-        if (request.getMessages().size() > 20) {
-            throw new IllegalArgumentException("Maximum 20 messages can be sent in a single batch request");
-        }
-        
+
         // Validate each message in the batch
         for (int i = 0; i < request.getMessages().size(); i++) {
             BatchSendChatroomMessagesRequestV2.MessageBody message = request.getMessages().get(i);
