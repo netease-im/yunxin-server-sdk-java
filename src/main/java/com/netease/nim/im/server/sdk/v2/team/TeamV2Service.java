@@ -436,31 +436,7 @@ public class TeamV2Service implements ITeamV2Service {
         
         return ResultUtils.convert(apiResponse, RemoveTeamManagersResponseV2.class);
     }
-    
-    /**
-     * Get team information
-     * 
-     * This method retrieves detailed information about a team, including its
-     * properties and configuration.
-     * 
-     * Required parameters:
-     * - teamId: The ID of the team to query
-     * - teamType: The team type (1 for advanced team, 2 for super team)
-     * 
-     * @param teamId the ID of the team to query
-     * @param teamType the team type (1 for advanced team, 2 for super team)
-     * @return result containing the team information
-     * @throws YunxinSdkException exception on network error
-     * @throws IllegalArgumentException if required parameters are missing or invalid
-     * @deprecated Use {@link #getTeamInfo(GetTeamInfoRequestV2)} instead
-     */
-    @Override
-    @Deprecated
-    public Result<GetTeamInfoResponseV2> getTeamInfo(String teamId, Integer teamType) throws YunxinSdkException {
-        // Create a request object and delegate to the new method
-        GetTeamInfoRequestV2 request = new GetTeamInfoRequestV2(teamId, teamType);
-        return getTeamInfo(request);
-    }
+
     
     /**
      * Get team information
