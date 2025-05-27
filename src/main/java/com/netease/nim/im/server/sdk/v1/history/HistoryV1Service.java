@@ -1,15 +1,19 @@
 package com.netease.nim.im.server.sdk.v1.history;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.netease.nim.im.server.sdk.core.Result;
 import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
 import com.netease.nim.im.server.sdk.core.YunxinApiResponse;
 import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.v1.annotation.YunxinParamUtils;
+import com.netease.nim.im.server.sdk.v1.history.model.Message;
 import com.netease.nim.im.server.sdk.v1.history.request.*;
 import com.netease.nim.im.server.sdk.v1.history.response.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class HistoryV1Service implements IHistoryV1Service {
@@ -34,7 +38,9 @@ public class HistoryV1Service implements IHistoryV1Service {
             response.setSize(object.getInteger("size"));
         }
         if (object.containsKey("msgs")) {
-            response.setMsgs(object.getString("msgs"));
+            String msgsStr = object.getString("msgs");
+            List<Message> messages = parseMessages(msgsStr);
+            response.setMsgs(messages);
         }
         return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
     }
@@ -53,7 +59,9 @@ public class HistoryV1Service implements IHistoryV1Service {
             response.setSize(object.getInteger("size"));
         }
         if (object.containsKey("msgs")) {
-            response.setMsgs(object.getString("msgs"));
+            String msgsStr = object.getString("msgs");
+            List<Message> messages = parseMessages(msgsStr);
+            response.setMsgs(messages);
         }
         return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
     }
@@ -72,9 +80,30 @@ public class HistoryV1Service implements IHistoryV1Service {
             response.setSize(object.getInteger("size"));
         }
         if (object.containsKey("msgs")) {
-            response.setMsgs(object.getString("msgs"));
+            String msgsStr = object.getString("msgs");
+            List<Message> messages = parseMessages(msgsStr);
+            response.setMsgs(messages);
         }
         return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
+    }
+
+    /**
+     * Parse JSON string into a list of Message objects
+     * 
+     * @param msgsStr JSON string representation of messages array
+     * @return List of Message objects
+     */
+    private List<Message> parseMessages(String msgsStr) {
+        List<Message> messages = new ArrayList<>();
+        if (msgsStr != null && !msgsStr.isEmpty()) {
+            JSONArray msgsArray = JSONArray.parseArray(msgsStr);
+            for (int i = 0; i < msgsArray.size(); i++) {
+                JSONObject msgObject = msgsArray.getJSONObject(i);
+                Message message = Message.fromJson(msgObject);
+                messages.add(message);
+            }
+        }
+        return messages;
     }
 
     @Override
@@ -136,7 +165,9 @@ public class HistoryV1Service implements IHistoryV1Service {
         }
         QueryBroadcastHistoryMessageResponseV1 response = new QueryBroadcastHistoryMessageResponseV1();
         if (object.containsKey("msgs")) {
-            response.setMsgs(object.getString("msgs"));
+            String msgsStr = object.getString("msgs");
+            List<Message> messages = parseMessages(msgsStr);
+            response.setMsgs(messages);
         }
         return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
     }

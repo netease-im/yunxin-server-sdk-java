@@ -125,24 +125,7 @@ public interface ITeamV2Service {
      * @throws YunxinSdkException exception on network error
      */
     Result<RemoveTeamManagersResponseV2> removeManagers(RemoveTeamManagersRequestV2 request) throws YunxinSdkException;
-    
-    /**
-     * Get team information
-     * 
-     * API: GET https://open.yunxinapi.com/im/v2.1/teams/{team_id}
-     * 
-     * This method retrieves detailed information about a team, including its
-     * properties and configuration.
-     * 
-     * @param teamId the ID of the team to query
-     * @param teamType the team type (1 for advanced team, 2 for super team)
-     * @return result containing the team information
-     * @throws YunxinSdkException exception on network error
-     * @deprecated Use {@link #getTeamInfo(GetTeamInfoRequestV2)} instead
-     */
-    @Deprecated
-    Result<GetTeamInfoResponseV2> getTeamInfo(String teamId, Integer teamType) throws YunxinSdkException;
-    
+
     /**
      * Get team information
      * 
