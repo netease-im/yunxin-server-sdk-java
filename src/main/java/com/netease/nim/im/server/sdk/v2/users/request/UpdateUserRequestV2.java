@@ -2,6 +2,8 @@ package com.netease.nim.im.server.sdk.v2.users.request;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 
+import java.util.List;
+
 /**
  * Request class for updating user information
  */
@@ -170,4 +172,86 @@ public class UpdateUserRequestV2 {
     public void setAntispamConfiguration(AntispamConfigurationV2 antispamConfiguration) {
         this.antispamConfiguration = antispamConfiguration;
     }
-} 
+
+    /**
+     * Antispam business ID mapping
+     */
+    public static class AntispamBusinessIdMapV2 {
+
+        /**
+         * Text detection type
+         */
+        public static final Integer TYPE_TEXT = 1;
+
+        /**
+         * Image detection type
+         */
+        public static final Integer TYPE_IMAGE = 2;
+
+        @JSONField(name = "type")
+        private Integer type;
+
+        @JSONField(name = "business_id")
+        private String businessId;
+
+        public Integer getType() {
+            return type;
+        }
+
+        /**
+         * Set the detection type
+         * @param type 1: text, 2: image
+         */
+        public void setType(Integer type) {
+            this.type = type;
+        }
+
+        public String getBusinessId() {
+            return businessId;
+        }
+
+        /**
+         * Set the business ID for antispam detection
+         * @param businessId antispam business ID
+         */
+        public void setBusinessId(String businessId) {
+            this.businessId = businessId;
+        }
+    }
+
+    /**
+     * Antispam configuration
+     */
+    public static class AntispamConfigurationV2 {
+
+        @JSONField(name = "enabled")
+        private Boolean enabled;
+
+        @JSONField(name = "business_id_map")
+        private List<AntispamBusinessIdMapV2> businessIdMap;
+
+        public Boolean getEnabled() {
+            return enabled;
+        }
+
+        /**
+         * Set whether to enable antispam
+         * @param enabled true to enable, false to disable
+         */
+        public void setEnabled(Boolean enabled) {
+            this.enabled = enabled;
+        }
+
+        public List<AntispamBusinessIdMapV2> getBusinessIdMap() {
+            return businessIdMap;
+        }
+
+        /**
+         * Set the business ID mapping list
+         * @param businessIdMap list of business ID mappings
+         */
+        public void setBusinessIdMap(List<AntispamBusinessIdMapV2> businessIdMap) {
+            this.businessIdMap = businessIdMap;
+        }
+    }
+}

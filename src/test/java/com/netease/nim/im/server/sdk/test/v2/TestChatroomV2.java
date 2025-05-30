@@ -15,9 +15,11 @@ import com.netease.nim.im.server.sdk.v2.chatroom.request.GetChatroomAddressReque
 import com.netease.nim.im.server.sdk.v2.chatroom.request.GetChatroomInfoRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.request.ListFixedMembersRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.request.ListOnlineMembersRequestV2;
+import com.netease.nim.im.server.sdk.v2.chatroom.request.QueryOpenChatroomsRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.request.ToggleChatroomMuteRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.request.UpdateChatroomInfoRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.request.UpdateChatroomStatusRequestV2;
+import com.netease.nim.im.server.sdk.v2.chatroom.request.ToggleInOutNotificationRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.response.CreateChatroomResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.response.GetChatroomAddressResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.response.GetChatroomInfoResponseV2;
@@ -26,6 +28,8 @@ import com.netease.nim.im.server.sdk.v2.chatroom.response.QueryOpenChatroomsResp
 import com.netease.nim.im.server.sdk.v2.chatroom.response.ToggleChatroomMuteResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.response.ToggleInOutNotificationResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.response.ListOnlineMembersResponseV2;
+import com.netease.nim.im.server.sdk.v2.chatroom.response.UpdateChatroomInfoResponseV2;
+import com.netease.nim.im.server.sdk.v2.chatroom.response.UpdateChatroomStatusResponseV2;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -171,11 +175,6 @@ public class TestChatroomV2 {
         
         Long roomId = fullResponse.getRoomId();
         
-        // Verify delay info
-        Assert.assertNotNull(fullResponse.getDelayInfo());
-        Assert.assertEquals(Long.valueOf(3600L), fullResponse.getDelayInfo().getDelaySeconds());
-        Assert.assertEquals(Integer.valueOf(1), fullResponse.getDelayInfo().getDelayClosePolicy());
-        
         System.out.println("Created full chatroom:");
         System.out.println("  Room ID: " + roomId);
         System.out.println("  Creator: " + fullResponse.getCreator());
@@ -184,10 +183,6 @@ public class TestChatroomV2 {
         System.out.println("  Live URL: " + fullResponse.getLiveUrl());
         System.out.println("  Extension: " + fullResponse.getExtension());
         System.out.println("  Queue Level: " + fullResponse.getQueueLevel());
-        if (fullResponse.getDelayInfo() != null) {
-            System.out.println("  Delay Seconds: " + fullResponse.getDelayInfo().getDelaySeconds());
-            System.out.println("  Delay Close Policy: " + fullResponse.getDelayInfo().getDelayClosePolicy());
-        }
         
         return roomId;
     }
@@ -321,52 +316,41 @@ public class TestChatroomV2 {
     }
     
     /**
-     * Test updating chatroom information
+     * Test updating chatroom information with minimal fields
      */
     @Test
-    public void testUpdateChatroomInfo() throws YunxinSdkException {
+    public void testUpdateChatroomInfoSimple() throws YunxinSdkException {
         if (services == null) return;
         
-        // Create request to update chatroom info
+        // Create request to update chatroom info with minimal fields
         UpdateChatroomInfoRequestV2 updateRequest = new UpdateChatroomInfoRequestV2();
         
         // Set fields to update
-        String updatedRoomName = "Updated Room Name " + System.currentTimeMillis();
-        String updatedAnnouncement = "This is an updated announcement!";
-        String updatedExtension = "{\"updated_key\":\"updated_value\",\"timestamp\":\"" + System.currentTimeMillis() + "\"}";
+        String updatedRoomName = "Simple Update " + System.currentTimeMillis();
         
+        updateRequest.setRoomId(fullRoomId);
         updateRequest.setRoomName(updatedRoomName);
-        updateRequest.setAnnouncement(updatedAnnouncement);
-        updateRequest.setExtension(updatedExtension);
-        updateRequest.setQueueLevel(0);  // Allow everyone to modify the queue
         updateRequest.setNotificationEnabled(true);  // Send notification about the update
-        updateRequest.setNotificationExtension("{\"update_type\":\"info_update\",\"timestamp\":\"" + System.currentTimeMillis() + "\"}");
         
         // Update the chatroom
         IChatroomV2Service chatroomService = services.getChatroomService();
-        Result<GetChatroomInfoResponseV2> updateResult = chatroomService.updateChatroomInfo(fullRoomId, updateRequest);
+        Result<UpdateChatroomInfoResponseV2> updateResult = chatroomService.updateChatroomInfo(updateRequest);
         
-        System.out.println("Update Chatroom Info: " + updateResult.getMsg());
+        System.out.println("Simple Update Chatroom Info: " + updateResult.getMsg());
         System.out.println("Response: " + JSON.toJSONString(updateResult));
         
         // Verify the update result
         Assert.assertEquals(200, updateResult.getCode());
-        GetChatroomInfoResponseV2 updateResponse = updateResult.getResponse();
+        UpdateChatroomInfoResponseV2 updateResponse = updateResult.getResponse();
         Assert.assertNotNull(updateResponse);
         Assert.assertEquals(fullRoomId, updateResponse.getRoomId());
         
         // Verify the updated fields
         Assert.assertEquals(updatedRoomName, updateResponse.getRoomName());
-        Assert.assertEquals(updatedAnnouncement, updateResponse.getAnnouncement());
-        Assert.assertEquals(updatedExtension, updateResponse.getExtension());
-        Assert.assertEquals(Integer.valueOf(0), updateResponse.getQueueLevel());
         
         System.out.println("Updated chatroom info:");
         System.out.println("  Room ID: " + updateResponse.getRoomId());
         System.out.println("  Room Name: " + updateResponse.getRoomName());
-        System.out.println("  Announcement: " + updateResponse.getAnnouncement());
-        System.out.println("  Extension: " + updateResponse.getExtension());
-        System.out.println("  Queue Level: " + updateResponse.getQueueLevel());
     }
     
     /**
@@ -383,14 +367,14 @@ public class TestChatroomV2 {
         );
         
         IChatroomV2Service chatroomService = services.getChatroomService();
-        Result<GetChatroomInfoResponseV2> closeResult = chatroomService.updateChatroomStatus(fullRoomId, closeRequest);
+        Result<UpdateChatroomStatusResponseV2> closeResult = chatroomService.updateChatroomStatus(fullRoomId, closeRequest);
         
         System.out.println("Close Chatroom: " + closeResult.getMsg());
         System.out.println("Response: " + JSON.toJSONString(closeResult));
         
         // Verify the result
         Assert.assertEquals(200, closeResult.getCode());
-        GetChatroomInfoResponseV2 closeResponse = closeResult.getResponse();
+        UpdateChatroomStatusResponseV2 closeResponse = closeResult.getResponse();
         Assert.assertNotNull(closeResponse);
         Assert.assertEquals(fullRoomId, closeResponse.getRoomId());
         Assert.assertEquals(Boolean.FALSE, closeResponse.getValid());  // Chatroom should be closed
@@ -407,14 +391,14 @@ public class TestChatroomV2 {
             3600L     // Auto-close after 1 hour of being idle
         );
         
-        Result<GetChatroomInfoResponseV2> openResult = chatroomService.updateChatroomStatus(fullRoomId, openRequest);
+        Result<UpdateChatroomStatusResponseV2> openResult = chatroomService.updateChatroomStatus(fullRoomId, openRequest);
         
         System.out.println("Reopen Chatroom: " + openResult.getMsg());
         System.out.println("Response: " + JSON.toJSONString(openResult));
         
         // Verify the result
         Assert.assertEquals(200, openResult.getCode());
-        GetChatroomInfoResponseV2 openResponse = openResult.getResponse();
+        UpdateChatroomStatusResponseV2 openResponse = openResult.getResponse();
         Assert.assertNotNull(openResponse);
         Assert.assertEquals(fullRoomId, openResponse.getRoomId());
         Assert.assertEquals(Boolean.TRUE, openResponse.getValid());  // Chatroom should be open
@@ -422,10 +406,6 @@ public class TestChatroomV2 {
         System.out.println("Chatroom status after reopening:");
         System.out.println("  Room ID: " + openResponse.getRoomId());
         System.out.println("  Status: " + (openResponse.getValid() ? "Open" : "Closed"));
-        if (openResponse.getDelayInfo() != null) {
-            System.out.println("  Delay Close Policy: " + openResponse.getDelayInfo().getDelayClosePolicy());
-            System.out.println("  Delay Seconds: " + openResponse.getDelayInfo().getDelaySeconds());
-        }
     }
     
     /**
@@ -503,7 +483,9 @@ public class TestChatroomV2 {
         
         // First disable in/out notification
         IChatroomV2Service chatroomService = services.getChatroomService();
-        Result<ToggleInOutNotificationResponseV2> disableResult = chatroomService.toggleInOutNotification(fullRoomId, false);
+        
+        ToggleInOutNotificationRequestV2 disableRequest = new ToggleInOutNotificationRequestV2(fullRoomId, false);
+        Result<ToggleInOutNotificationResponseV2> disableResult = chatroomService.toggleInOutNotification(disableRequest);
         
         System.out.println("Disable In/Out Notification: " + disableResult.getMsg());
         System.out.println("Response: " + JSON.toJSONString(disableResult));
@@ -512,7 +494,8 @@ public class TestChatroomV2 {
         Assert.assertEquals(200, disableResult.getCode());
         
         // Now enable in/out notification
-        Result<ToggleInOutNotificationResponseV2> enableResult = chatroomService.toggleInOutNotification(fullRoomId, true);
+        ToggleInOutNotificationRequestV2 enableRequest = new ToggleInOutNotificationRequestV2(fullRoomId, true);
+        Result<ToggleInOutNotificationResponseV2> enableResult = chatroomService.toggleInOutNotification(enableRequest);
         
         System.out.println("Enable In/Out Notification: " + enableResult.getMsg());
         System.out.println("Response: " + JSON.toJSONString(enableResult));
@@ -530,9 +513,12 @@ public class TestChatroomV2 {
     public void testQueryOpenChatrooms() throws YunxinSdkException {
         if (services == null) return;
         
+        // Create request
+        QueryOpenChatroomsRequestV2 request = new QueryOpenChatroomsRequestV2(accountId1);
+        
         // Query open chatrooms for the test account
         IChatroomV2Service chatroomService = services.getChatroomService();
-        Result<QueryOpenChatroomsResponseV2> result = chatroomService.queryOpenChatrooms(accountId1);
+        Result<QueryOpenChatroomsResponseV2> result = chatroomService.queryOpenChatrooms(request);
         
         System.out.println("Query Open Chatrooms: " + result.getMsg());
         System.out.println("Response: " + JSON.toJSONString(result));

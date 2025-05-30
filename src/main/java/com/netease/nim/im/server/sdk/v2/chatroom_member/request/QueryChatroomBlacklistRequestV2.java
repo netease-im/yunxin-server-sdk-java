@@ -5,6 +5,9 @@ package com.netease.nim.im.server.sdk.v2.chatroom_member.request;
  * 
  * This class represents the request parameters for the API to query the list of
  * blocked users in a chatroom.
+ * 
+ * The API defaults to returning only 100 blacklisted users. To retrieve more,
+ * contact Yunxin technical support. The maximum can be extended to 1000 accounts.
  */
 public class QueryChatroomBlacklistRequestV2 {
     
@@ -14,32 +17,18 @@ public class QueryChatroomBlacklistRequestV2 {
     private Long roomId;
     
     /**
-     * Offset for pagination (starting from 0)
-     */
-    private Integer offset;
-    
-    /**
-     * Limit for pagination (number of records to return)
-     */
-    private Integer limit;
-    
-    /**
      * Default constructor
      */
     public QueryChatroomBlacklistRequestV2() {
     }
     
     /**
-     * Constructor with roomId, offset, and limit
+     * Constructor with roomId
      * 
      * @param roomId the ID of the chatroom
-     * @param offset the offset for pagination (starting from 0)
-     * @param limit the maximum number of records to return
      */
-    public QueryChatroomBlacklistRequestV2(Long roomId, Integer offset, Integer limit) {
+    public QueryChatroomBlacklistRequestV2(Long roomId) {
         this.roomId = roomId;
-        this.offset = offset;
-        this.limit = limit;
     }
     
     /**
@@ -58,41 +47,5 @@ public class QueryChatroomBlacklistRequestV2 {
      */
     public void setRoomId(Long roomId) {
         this.roomId = roomId;
-    }
-    
-    /**
-     * Get the offset for pagination
-     * 
-     * @return the offset
-     */
-    public Integer getOffset() {
-        return offset;
-    }
-    
-    /**
-     * Set the offset for pagination
-     * 
-     * @param offset the offset to set
-     */
-    public void setOffset(Integer offset) {
-        this.offset = offset;
-    }
-    
-    /**
-     * Get the limit for pagination
-     * 
-     * @return the limit
-     */
-    public Integer getLimit() {
-        return limit;
-    }
-    
-    /**
-     * Set the limit for pagination
-     * 
-     * @param limit the limit to set
-     */
-    public void setLimit(Integer limit) {
-        this.limit = limit;
     }
 } 

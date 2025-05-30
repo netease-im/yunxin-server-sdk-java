@@ -37,40 +37,4 @@ public class ConversationUrlContextV2 {
      * Stick top conversation endpoint
      */
     static final String STICK_TOP_CONVERSATION = "/im/v2/conversations/{conversation_id}/actions/stick_top_conversation";
-    /**
-     * Get conversation overview endpoint for an account
-     */
-    static final String OVERVIEWS_CONVERSATION = "/im/v2/conversation_overviews/{account_id}";
-    /**
-     * Clear conversation unread count endpoint
-     */
-    static final String CLEAR_CONVERSATION_UNREAD = "/im/v2/conversations/{conversation_id}/actions/clear_conversation_unread";
-    /**
-     * Create conversation group endpoint
-     */
-    static final String CREATE_CONVERSATION_GROUP = "/im/v2/conversation_groups";
-    /**
-     * Update conversation group endpoint
-     */
-    static final String UPDATE_CONVERSATION_GROUP = "/im/v2/conversation_groups/{group_id}";
-    /**
-     * Delete conversation group endpoint
-     */
-    static final String DELETE_CONVERSATION_GROUP = "/im/v2/conversation_groups/{group_id}";
-    /**
-     * Get conversation group endpoint
-     */
-    static final String GET_CONVERSATION_GROUP = "/im/v2/conversation_groups/{group_id}";
-    /**
-     * Batch get conversation groups endpoint
-     */
-    static final String BATCH_GET_CONVERSATION_GROUPS = "/im/v2/conversation_groups/actions/group_ids";
-    /**
-     * List all conversation groups endpoint
-     */
-    static final String LIST_ALL_CONVERSATION_GROUPS = "/im/v2/conversation_groups";
-    /**
-     * Batch send P2P message endpoint
-     */
-    static final String BATCH_SEND_P2P_MESSAGE = "/im/v2/conversations/messages";
 }

@@ -65,10 +65,9 @@ public class UpdateConversationResponseV2 {
     
     /**
      * Last message in the conversation
-     * This field is empty for recalled messages
      */
     @JSONField(name = "last_message")
-    private Object lastMessage;
+    private LastMessage lastMessage;
     
     /**
      * Recalled message notification
@@ -110,7 +109,181 @@ public class UpdateConversationResponseV2 {
     private Long lastReadTime;
     
     /**
-     * Recalled message information
+     * Message information
+     */
+    public static class LastMessage {
+        /**
+         * Server message ID
+         */
+        @JSONField(name = "message_server_id")
+        private Long messageServerId;
+        
+        /**
+         * Message sender account ID
+         */
+        @JSONField(name = "sender_id")
+        private String senderId;
+        
+        /**
+         * Conversation type
+         * 1: P2P chat
+         * 2: Advanced team chat
+         * 3: Super team chat
+         */
+        @JSONField(name = "conversation_type")
+        private Integer conversationType;
+        
+        /**
+         * Message receiver account ID
+         */
+        @JSONField(name = "receiver_id")
+        private String receiverId;
+        
+        /**
+         * Team ID (either team_id or receiver_id will be returned, not both)
+         */
+        @JSONField(name = "team_id")
+        private Long teamId;
+        
+        /**
+         * Message type
+         * 0: Text
+         * 1: Image
+         * 2: Voice
+         * 3: Video
+         * 4: Location
+         * 5: Notification
+         * 6: File
+         * 10: Tip
+         * 11: Robot
+         * 100: Custom
+         */
+        @JSONField(name = "message_type")
+        private Integer messageType;
+        
+        /**
+         * Custom message subtype
+         */
+        @JSONField(name = "sub_type")
+        private Integer subType;
+        
+        /**
+         * Message creation timestamp
+         */
+        @JSONField(name = "create_time")
+        private Long createTime;
+        
+        /**
+         * Text content or description of multimedia message (can be used for cloud-based keyword search)
+         */
+        @JSONField(name = "text")
+        private String text;
+        
+        /**
+         * Multimedia message attributes or custom message content
+         */
+        @JSONField(name = "attachment")
+        private Object attachment;
+        
+        /**
+         * Third-party extension field provided when sending the message
+         */
+        @JSONField(name = "extension")
+        private String extension;
+        
+        // Getters and setters
+        
+        public Long getMessageServerId() {
+            return messageServerId;
+        }
+        
+        public void setMessageServerId(Long messageServerId) {
+            this.messageServerId = messageServerId;
+        }
+        
+        public String getSenderId() {
+            return senderId;
+        }
+        
+        public void setSenderId(String senderId) {
+            this.senderId = senderId;
+        }
+        
+        public Integer getConversationType() {
+            return conversationType;
+        }
+        
+        public void setConversationType(Integer conversationType) {
+            this.conversationType = conversationType;
+        }
+        
+        public String getReceiverId() {
+            return receiverId;
+        }
+        
+        public void setReceiverId(String receiverId) {
+            this.receiverId = receiverId;
+        }
+        
+        public Long getTeamId() {
+            return teamId;
+        }
+        
+        public void setTeamId(Long teamId) {
+            this.teamId = teamId;
+        }
+        
+        public Integer getMessageType() {
+            return messageType;
+        }
+        
+        public void setMessageType(Integer messageType) {
+            this.messageType = messageType;
+        }
+        
+        public Integer getSubType() {
+            return subType;
+        }
+        
+        public void setSubType(Integer subType) {
+            this.subType = subType;
+        }
+        
+        public Long getCreateTime() {
+            return createTime;
+        }
+        
+        public void setCreateTime(Long createTime) {
+            this.createTime = createTime;
+        }
+        
+        public String getText() {
+            return text;
+        }
+        
+        public void setText(String text) {
+            this.text = text;
+        }
+        
+        public Object getAttachment() {
+            return attachment;
+        }
+        
+        public void setAttachment(Object attachment) {
+            this.attachment = attachment;
+        }
+        
+        public String getExtension() {
+            return extension;
+        }
+        
+        public void setExtension(String extension) {
+            this.extension = extension;
+        }
+    }
+    
+    /**
+     * Recalled message notification
      */
     public static class RevokeMessage {
         
@@ -256,11 +429,11 @@ public class UpdateConversationResponseV2 {
         this.messageState = messageState;
     }
     
-    public Object getLastMessage() {
+    public LastMessage getLastMessage() {
         return lastMessage;
     }
     
-    public void setLastMessage(Object lastMessage) {
+    public void setLastMessage(LastMessage lastMessage) {
         this.lastMessage = lastMessage;
     }
     

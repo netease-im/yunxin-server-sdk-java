@@ -9,8 +9,6 @@ import com.netease.nim.im.server.sdk.v2.account.IAccountV2Service;
 import com.netease.nim.im.server.sdk.v2.account.request.CreateAccountRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.response.CreateAccountResponseV2;
 import com.netease.nim.im.server.sdk.v2.users.IUserV2Service;
-import com.netease.nim.im.server.sdk.v2.users.request.AntispamBusinessIdMapV2;
-import com.netease.nim.im.server.sdk.v2.users.request.AntispamConfigurationV2;
 import com.netease.nim.im.server.sdk.v2.users.request.BatchGetUsersRequestV2;
 import com.netease.nim.im.server.sdk.v2.users.request.GetUserOnlineStatusRequestV2;
 import com.netease.nim.im.server.sdk.v2.users.request.GetUserRequestV2;
@@ -20,7 +18,6 @@ import com.netease.nim.im.server.sdk.v2.users.response.GetUserOnlineStatusRespon
 import com.netease.nim.im.server.sdk.v2.users.response.GetUserResponseV2;
 import com.netease.nim.im.server.sdk.v2.users.response.UpdateUserResponseV2;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -134,20 +131,20 @@ public class TestUserV2 {
         request.setExtension("{\"hobby\":\"reading\",\"location\":\"Beijing\"}");
         
         // Set antispam configuration
-        AntispamConfigurationV2 antispamConfig = new AntispamConfigurationV2();
+        UpdateUserRequestV2.AntispamConfigurationV2 antispamConfig = new UpdateUserRequestV2.AntispamConfigurationV2();
         antispamConfig.setEnabled(true);
         
-        List<AntispamBusinessIdMapV2> businessIdMap = new ArrayList<>();
+        List<UpdateUserRequestV2.AntispamBusinessIdMapV2> businessIdMap = new ArrayList<>();
         
         // Add text detection
-        AntispamBusinessIdMapV2 textDetection = new AntispamBusinessIdMapV2();
-        textDetection.setType(AntispamBusinessIdMapV2.TYPE_TEXT);
+        UpdateUserRequestV2.AntispamBusinessIdMapV2 textDetection = new UpdateUserRequestV2.AntispamBusinessIdMapV2();
+        textDetection.setType(UpdateUserRequestV2.AntispamBusinessIdMapV2.TYPE_TEXT);
         textDetection.setBusinessId("textscan123");
         businessIdMap.add(textDetection);
         
         // Add image detection
-        AntispamBusinessIdMapV2 imageDetection = new AntispamBusinessIdMapV2();
-        imageDetection.setType(AntispamBusinessIdMapV2.TYPE_IMAGE);
+        UpdateUserRequestV2.AntispamBusinessIdMapV2 imageDetection = new UpdateUserRequestV2.AntispamBusinessIdMapV2();
+        imageDetection.setType(UpdateUserRequestV2.AntispamBusinessIdMapV2.TYPE_IMAGE);
         imageDetection.setBusinessId("imagescan456");
         businessIdMap.add(imageDetection);
         

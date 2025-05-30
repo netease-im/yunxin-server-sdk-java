@@ -149,7 +149,10 @@ public class HistoryV1Service implements IHistoryV1Service {
         }
         QueryBroadcastHistoryMessageByIdResponseV1 response = new QueryBroadcastHistoryMessageByIdResponseV1();
         if (object.containsKey("msg")) {
-            response.setMsg(object.getString("msg"));
+            JSONObject msgJson = object.getJSONObject("msg");
+            QueryBroadcastHistoryMessageByIdResponseV1.BroadcastMessage broadcastMsg = 
+                JSON.parseObject(msgJson.toJSONString(), QueryBroadcastHistoryMessageByIdResponseV1.BroadcastMessage.class);
+            response.setMsg(broadcastMsg);
         }
         return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
     }
@@ -165,9 +168,17 @@ public class HistoryV1Service implements IHistoryV1Service {
         }
         QueryBroadcastHistoryMessageResponseV1 response = new QueryBroadcastHistoryMessageResponseV1();
         if (object.containsKey("msgs")) {
-            String msgsStr = object.getString("msgs");
-            List<Message> messages = parseMessages(msgsStr);
-            response.setMsgs(messages);
+            JSONArray msgsArray = object.getJSONArray("msgs");
+            List<QueryBroadcastHistoryMessageResponseV1.BroadcastMessage> broadcastMsgs = new ArrayList<>();
+            
+            for (int i = 0; i < msgsArray.size(); i++) {
+                JSONObject msgObject = msgsArray.getJSONObject(i);
+                QueryBroadcastHistoryMessageResponseV1.BroadcastMessage broadcastMsg = 
+                    JSON.parseObject(msgObject.toJSONString(), QueryBroadcastHistoryMessageResponseV1.BroadcastMessage.class);
+                broadcastMsgs.add(broadcastMsg);
+            }
+            
+            response.setMsgs(broadcastMsgs);
         }
         return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
     }

@@ -11,6 +11,7 @@ import com.netease.nim.im.server.sdk.v2.account.request.CreateAccountRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.request.DisableAccountRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.request.GetAccountDetailsRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.request.KickAccountRequestV2;
+import com.netease.nim.im.server.sdk.v2.account.request.RefreshTokenRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.request.SetPushConfigRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.request.UpdateAccountRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.response.BatchQueryAccountsResponseV2;
@@ -18,6 +19,7 @@ import com.netease.nim.im.server.sdk.v2.account.response.CreateAccountResponseV2
 import com.netease.nim.im.server.sdk.v2.account.response.DisableAccountResponseV2;
 import com.netease.nim.im.server.sdk.v2.account.response.GetAccountDetailsResponseV2;
 import com.netease.nim.im.server.sdk.v2.account.response.KickAccountResponseV2;
+import com.netease.nim.im.server.sdk.v2.account.response.RefreshTokenResponseV2;
 import com.netease.nim.im.server.sdk.v2.account.response.SetPushConfigResponseV2;
 import com.netease.nim.im.server.sdk.v2.account.response.UpdateAccountResponseV2;
 import com.netease.nim.im.server.sdk.v2.util.ResultUtils;
@@ -172,5 +174,20 @@ public class AccountV2Service implements IAccountV2Service {
             data.toString()
         );
         return ResultUtils.convert(apiResponse, KickAccountResponseV2.class);
+    }
+    
+    @Override
+    public Result<RefreshTokenResponseV2> refreshToken(RefreshTokenRequestV2 request) throws YunxinSdkException {
+        // Replace placeholder in the URL with the accountId
+        String path = AccountUrlContextV2.REFRESH_TOKEN.replace("{account_id}", request.getAccountId());
+        
+        YunxinApiResponse apiResponse = httpClient.executeV2Api(
+            HttpMethod.PATCH, 
+            AccountUrlContextV2.REFRESH_TOKEN, 
+            path, 
+            null, 
+            null
+        );
+        return ResultUtils.convert(apiResponse, RefreshTokenResponseV2.class);
     }
 }

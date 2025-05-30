@@ -6,6 +6,7 @@ import com.netease.nim.im.server.sdk.v2.chatroom_member.request.AddVirtualMember
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.BatchQueryChatroomMembersRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.ListTaggedMembersRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.ModifyMemberTagsRequestV2;
+import com.netease.nim.im.server.sdk.v2.chatroom_member.request.QueryChatBannedRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.QueryChatroomBlacklistRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.QueryTaggedMembersCountRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.QueryVirtualMembersRequestV2;
@@ -20,6 +21,7 @@ import com.netease.nim.im.server.sdk.v2.chatroom_member.response.AddVirtualMembe
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.BatchQueryChatroomMembersResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.ListTaggedMembersResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.ModifyMemberTagsResponseV2;
+import com.netease.nim.im.server.sdk.v2.chatroom_member.response.QueryChatBannedResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.QueryChatroomBlacklistResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.QueryTaggedMembersCountResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.QueryVirtualMembersResponseV2;
@@ -312,4 +314,19 @@ public interface IChatroomMemberV2Service {
      * @throws IllegalArgumentException if required parameters are missing or invalid
      */
     Result<QueryVirtualMembersResponseV2> queryVirtualMembers(QueryVirtualMembersRequestV2 request) throws YunxinSdkException;
+    
+    /**
+     * Query chat banned members in a chatroom
+     * 
+     * API: GET https://open.yunxinapi.com/im/v2/room_members/{room_id}/actions/chat_banned
+     * 
+     * This method retrieves a list of members who are banned from chatting in a chatroom.
+     * Chat banned members can still enter and view the chatroom but cannot send messages.
+     * 
+     * @param request request containing the chatroom ID
+     * @return result containing the list of chat banned members
+     * @throws YunxinSdkException if a network or server error occurs
+     * @throws IllegalArgumentException if required parameters are missing or invalid
+     */
+    Result<QueryChatBannedResponseV2> queryChatBanned(QueryChatBannedRequestV2 request) throws YunxinSdkException;
 } 

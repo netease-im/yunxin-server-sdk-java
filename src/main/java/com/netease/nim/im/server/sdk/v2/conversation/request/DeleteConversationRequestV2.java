@@ -39,11 +39,9 @@ public class DeleteConversationRequestV2 {
      * Set the conversation ID (required for URL path)
      * 
      * @param conversationId conversation ID to set
-     * @return this instance for chaining
      */
-    public DeleteConversationRequestV2 setConversationId(String conversationId) {
+    public void setConversationId(String conversationId) {
         this.conversationId = conversationId;
-        return this;
     }
 
     /**
@@ -59,10 +57,8 @@ public class DeleteConversationRequestV2 {
      * Set whether to clear message history
      * 
      * @param clearMessage true to delete message history, false to keep it
-     * @return this instance for chaining
      */
-    public DeleteConversationRequestV2 setClearMessage(Boolean clearMessage) {
+    public void setClearMessage(Boolean clearMessage) {
         this.clearMessage = clearMessage;
-        return this;
     }
 } 

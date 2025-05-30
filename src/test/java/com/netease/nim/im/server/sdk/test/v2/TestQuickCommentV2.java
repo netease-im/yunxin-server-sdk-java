@@ -19,13 +19,8 @@ import com.netease.nim.im.server.sdk.v2.message.response.BatchQueryQuickComments
 import com.netease.nim.im.server.sdk.v2.message.response.DeleteQuickCommentResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.response.SendMessageResponseV2;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * Test class for the quick comment functionality

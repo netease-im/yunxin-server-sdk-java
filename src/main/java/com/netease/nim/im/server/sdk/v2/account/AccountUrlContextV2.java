@@ -6,27 +6,32 @@ package com.netease.nim.im.server.sdk.v2.account;
 public class AccountUrlContextV2 {
     
     /**
-     * Base account endpoint
+     * Accounts endpoint
      */
     static final String ACCOUNTS = "/im/v2/accounts";
     
     /**
-     * Account endpoint with account ID parameter
+     * Account with ID endpoint template
      */
     static final String ACCOUNT_WITH_ID = "/im/v2/accounts/{account_id}";
     
     /**
-     * Disable account endpoint
+     * Set push config endpoint template
+     */
+    static final String SET_PUSH_CONFIG = "/im/v2/accounts/{account_id}/configuration/push";
+    
+    /**
+     * Disable account endpoint template
      */
     static final String DISABLE_ACCOUNT = "/im/v2/accounts/{account_id}/actions/disable";
     
     /**
-     * Set push configuration endpoint
-     */
-    static final String SET_PUSH_CONFIG = "/im/v2/accounts/{account_id}/actions/push_config";
-    
-    /**
-     * Path for kicking account devices offline
+     * Kick account endpoint template
      */
     static final String KICK_ACCOUNT = "/im/v2/accounts/{account_id}/actions/kick";
+    
+    /**
+     * Refresh token URL pattern
+     */
+    static final String REFRESH_TOKEN = "/im/v2/accounts/{account_id}/actions/refresh_token";
 } 

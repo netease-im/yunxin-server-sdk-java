@@ -6,7 +6,6 @@ import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
 import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.test.YunxinApiHttpClientInit;
 import com.netease.nim.im.server.sdk.v2.YunxinV2ApiServices;
-import com.netease.nim.im.server.sdk.v2.account.IAccountV2Service;
 import com.netease.nim.im.server.sdk.v2.account.request.CreateAccountRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.response.CreateAccountResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.IChatroomV2Service;
@@ -14,6 +13,7 @@ import com.netease.nim.im.server.sdk.v2.chatroom.request.CreateChatroomRequestV2
 import com.netease.nim.im.server.sdk.v2.chatroom.response.CreateChatroomResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.IChatroomMemberV2Service;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.ListTaggedMembersRequestV2;
+import com.netease.nim.im.server.sdk.v2.chatroom_member.request.QueryChatBannedRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.QueryChatroomBlacklistRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.QueryTaggedMembersCountRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.SetMemberRoleRequestV2;
@@ -24,7 +24,6 @@ import com.netease.nim.im.server.sdk.v2.chatroom_member.request.ToggleTempChatBa
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.BatchQueryChatroomMembersRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.ListTaggedMembersResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.QueryChatBannedResponseV2;
-import com.netease.nim.im.server.sdk.v2.chatroom_member.response.QueryChatroomBanListResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.QueryChatroomBlacklistResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.QueryTaggedMembersCountResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.SetMemberRoleResponseV2;
@@ -32,7 +31,6 @@ import com.netease.nim.im.server.sdk.v2.chatroom_member.response.ToggleBlockedRe
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.ToggleChatBanResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.ToggleTaggedMembersChatBanResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.ToggleTempChatBanResponseV2;
-import com.netease.nim.im.server.sdk.v2.chatroom_member.response.UpdateOnlineMemberInfoResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.BatchQueryChatroomMembersResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.AddVirtualMembersRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.ClearVirtualMembersRequestV2;
@@ -135,6 +133,9 @@ public class TestChatroomMemberV2 {
 
             // Virtual members operations
             testVirtualMembersOperations();
+
+            // Test query chat banned members
+            testQueryChatBannedMembers();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -243,22 +244,7 @@ public class TestChatroomMemberV2 {
         System.out.println("Role operations completed successfully");
     }
     
-    /**
-     * Test ban and unban operations for chatroom members
-     */
-    @Test
-    public void testChatroomMemberBanOperations() throws YunxinSdkException {
-        if (services == null) return;
 
-        // First, ensure the member is in the chatroom
-        ensureMemberInChatroom(roomId, memberId);
-        // Ban a member from chatting (by creator)
-        testBanMemberFromChatting(roomId, memberId, creatorId, true);
-        // Unban a member from chatting (by creator)
-        testBanMemberFromChatting(roomId, memberId, creatorId, false);
-
-        System.out.println("Ban/unban operations completed successfully");
-    }
     
     /**
      * Test member tags operations
@@ -289,7 +275,30 @@ public class TestChatroomMemberV2 {
         // Block a member (by creator)
         testBlockMemberFromChatroom(roomId, memberId, creatorId, true);
         
-        // Query the chatroom blacklist
+        // Immediately query the chatroom blacklist after blocking
+        System.out.println("\n==== Querying Blacklist Immediately After Block Operation ====");
+        QueryChatroomBlacklistRequestV2 request = new QueryChatroomBlacklistRequestV2(roomId);
+        IChatroomMemberV2Service memberService = services.getChatroomMemberService();
+        Result<QueryChatroomBlacklistResponseV2> result = memberService.queryChatroomBlacklist(request);
+        System.out.println(result.getResponse());
+        System.out.println("Query Chatroom Blacklist: " + result.getMsg());
+        Assert.assertEquals(200, result.getCode());
+        
+        // Verify the blocked member is in the blacklist
+        QueryChatroomBlacklistResponseV2 response = result.getResponse();
+        if (response != null && response.getItems() != null) {
+            boolean memberFound = false;
+            for (QueryChatroomBlacklistResponseV2.BlacklistMemberInfoV2 member : response.getItems()) {
+                if (member.getAccountId().equals(memberId)) {
+                    memberFound = true;
+                    System.out.println("Verified blocked member found in blacklist: " + memberId);
+                    break;
+                }
+            }
+            Assert.assertTrue("Blocked member should be in the blacklist", memberFound);
+        }
+        
+        // Regular query to test the API method
         testQueryChatroomBlacklist(roomId);
         
         // Unblock a member (by creator)
@@ -612,11 +621,7 @@ public class TestChatroomMemberV2 {
     private static void testQueryChatroomBlacklist(Long roomId) throws YunxinSdkException {
 
         // Create request for querying chatroom blacklist
-        QueryChatroomBlacklistRequestV2 request = new QueryChatroomBlacklistRequestV2(
-            roomId,  // Chatroom ID
-            0,       // Offset starting from 0
-            20       // Limit (max 20 members per page)
-        );
+        QueryChatroomBlacklistRequestV2 request = new QueryChatroomBlacklistRequestV2(roomId);
         
         // Query chatroom blacklist
         IChatroomMemberV2Service memberService = services.getChatroomMemberService();
@@ -630,9 +635,9 @@ public class TestChatroomMemberV2 {
         
         // Print blacklist members
         QueryChatroomBlacklistResponseV2 response = result.getResponse();
-        if (response != null && response.getMembers() != null) {
-            System.out.println("Total blacklist members: " + response.getMembers().size());
-            for (QueryChatroomBlacklistResponseV2.BlacklistMemberInfoV2 member : response.getMembers()) {
+        if (response != null && response.getItems() != null) {
+            System.out.println("Total blacklist members: " + response.getItems().size());
+            for (QueryChatroomBlacklistResponseV2.BlacklistMemberInfoV2 member : response.getItems()) {
                 System.out.println("Blacklist member: " + member.getAccountId() + " (Nick: " + member.getRoomNick() + ")");
             }
         }
@@ -749,10 +754,21 @@ public class TestChatroomMemberV2 {
     private static void testAddVirtualMembers() throws YunxinSdkException {
         // Create virtual members to add
         List<AddVirtualMembersRequestV2.VirtualMemberInfoV2> virtualMembers = new ArrayList<>();
+        List<String> virtualAccountIds = new ArrayList<>();
         
+        System.out.println("\n==== Creating Virtual Member Accounts ====");
+        
+        // First create the virtual member accounts in the system
         for (int i = 1; i <= 5; i++) {
+            String accountId = "virtual_" + i + "_" + System.currentTimeMillis();
+            virtualAccountIds.add(accountId);
+            
+            // Create the account
+            createAccount(accountId, "Virtual Member " + i);
+            
+            // Create virtual member info
             AddVirtualMembersRequestV2.VirtualMemberInfoV2 member = new AddVirtualMembersRequestV2.VirtualMemberInfoV2();
-            member.setAccountId("virtual_" + i + "_" + System.currentTimeMillis());
+            member.setAccountId(accountId);
             member.setRoomNick("Virtual Member " + i);
             member.setRoomAvatar("http://example.com/virtual_avatar" + i + ".jpg");
             member.setExtension("{\"virtual_id\":" + i + "}");
@@ -760,9 +776,9 @@ public class TestChatroomMemberV2 {
             
             // Store the first virtual member ID for later use in delete
             if (i == 1) {
-                virtualMemberId1 = member.getAccountId();
+                virtualMemberId1 = accountId;
             } else if (i == 2) {
-                virtualMemberId2 = member.getAccountId();
+                virtualMemberId2 = accountId;
             }
         }
         
@@ -926,6 +942,64 @@ public class TestChatroomMemberV2 {
         
         System.out.println("Clear virtual members completed successfully");
     }
+
+    /**
+     * Test querying chat banned members in a chatroom
+     */
+    @Test
+    public void testQueryChatBannedMembers() throws YunxinSdkException {
+        if (services == null) return;
+        
+        System.out.println("\n==== Testing Query Chat Banned Members ====");
+        
+        // First ban a member to ensure there's at least one banned member
+        testBanMemberFromChatting(roomId, memberId, roomCreator, true);
+        
+        // Create request for querying chat banned members
+        QueryChatBannedRequestV2 request = new QueryChatBannedRequestV2(roomId);
+        
+        // Query chat banned members
+        IChatroomMemberV2Service memberService = services.getChatroomMemberService();
+        Result<QueryChatBannedResponseV2> result = memberService.queryChatBanned(request);
+        System.out.println(result.getResponse());
+        System.out.println("Query Chat Banned Members: " + result.getMsg());
+        System.out.println("Response: " + JSON.toJSONString(result));
+        
+        // Verify the result
+        Assert.assertEquals(200, result.getCode());
+        QueryChatBannedResponseV2 response = result.getResponse();
+        Assert.assertNotNull(response);
+        
+        // Print banned members
+        if (response.getItems() != null && !response.getItems().isEmpty()) {
+            System.out.println("Chat banned members in chatroom " + roomId + ":");
+            for (QueryChatBannedResponseV2.BannedMember member : response.getItems()) {
+                System.out.println("  Account ID: " + member.getAccountId());
+                System.out.println("  Nickname: " + member.getRoomNick());
+                System.out.println("  Avatar: " + member.getRoomAvatar());
+                System.out.println("  ----------------");
+            }
+            
+            // Verify that our banned member is in the list
+            boolean bannedMemberFound = false;
+            for (QueryChatBannedResponseV2.BannedMember member : response.getItems()) {
+                if (member.getAccountId().equals(memberId)) {
+                    bannedMemberFound = true;
+                    break;
+                }
+            }
+            
+            Assert.assertTrue("Banned member should be in the list", bannedMemberFound);
+        } else {
+            System.out.println("No chat banned members found in chatroom " + roomId);
+        }
+        
+        // Clean up - unban the member
+        testBanMemberFromChatting(roomId, memberId, roomCreator, false);
+        
+        System.out.println("Query chat banned members test completed successfully");
+    }
+
     /**
      * Helper method to create a test account
      *

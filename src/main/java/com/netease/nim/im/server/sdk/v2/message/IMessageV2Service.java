@@ -3,12 +3,13 @@ package com.netease.nim.im.server.sdk.v2.message;
 import com.netease.nim.im.server.sdk.core.Result;
 import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.v2.message.request.AddQuickCommentRequestV2;
-import com.netease.nim.im.server.sdk.v2.message.request.BatchQueryMessagesRequestV2;
+import com.netease.nim.im.server.sdk.v2.message.request.BatchQueryMessagesByIdRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.BatchQueryQuickCommentsRequestV2;
+import com.netease.nim.im.server.sdk.v2.message.request.BatchSendP2PMessageRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.DeleteConversationMessagesRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.DeleteQuickCommentRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.ModifyMessageRequestV2;
-import com.netease.nim.im.server.sdk.v2.message.request.QueryConversationMessagesRequestV2;
+import com.netease.nim.im.server.sdk.v2.message.request.QueryMessagesByPageRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.QueryMessageRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.QueryTeamReadReceiptRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.QueryThreadMessagesRequestV2;
@@ -18,12 +19,13 @@ import com.netease.nim.im.server.sdk.v2.message.request.SendP2PReadReceiptReques
 import com.netease.nim.im.server.sdk.v2.message.request.SendTeamReadReceiptRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.WithdrawMessageRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.response.AddQuickCommentResponseV2;
-import com.netease.nim.im.server.sdk.v2.message.response.BatchQueryMessagesResponseV2;
+import com.netease.nim.im.server.sdk.v2.message.response.BatchQueryMessagesByIdResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.response.BatchQueryQuickCommentsResponseV2;
+import com.netease.nim.im.server.sdk.v2.message.response.BatchSendP2PMessageResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.response.DeleteConversationMessagesResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.response.DeleteQuickCommentResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.response.ModifyMessageResponseV2;
-import com.netease.nim.im.server.sdk.v2.message.response.QueryConversationMessagesResponseV2;
+import com.netease.nim.im.server.sdk.v2.message.response.QueryMessagesByPageResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.response.QueryMessageResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.response.QueryTeamReadReceiptResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.response.QueryThreadMessagesResponseV2;
@@ -48,6 +50,20 @@ public interface IMessageV2Service {
      * @throws YunxinSdkException exception on network error
      */
     Result<SendMessageResponseV2> sendMessage(SendMessageRequestV2 request) throws YunxinSdkException;
+    
+    /**
+     * Batch send P2P messages to multiple receivers
+     * 
+     * API: POST https://open.yunxinapi.com/im/v2/conversations/messages
+     * 
+     * This method allows sending the same message to multiple receivers in one API call.
+     * Up to 100 receivers can be specified in a single request.
+     * 
+     * @param request request containing sender ID, list of receiver IDs, message content, and configuration
+     * @return result containing lists of successfully sent messages and failed messages
+     * @throws YunxinSdkException exception on network error
+     */
+    Result<BatchSendP2PMessageResponseV2> batchSendP2PMessage(BatchSendP2PMessageRequestV2 request) throws YunxinSdkException;
     
     /**
      * Modify (update) a previously sent message
@@ -198,7 +214,6 @@ public interface IMessageV2Service {
      * Note:
      * - When searching with keywords, notification messages (type 5) cannot be searched.
      * - To search for non-text messages, the content must be included in the text field when constructing the message.
-     * - Maximum of 5 senders and 5 keywords can be specified.
      * - Maximum of 100 results can be returned per query.
      * 
      * @param request request containing search criteria
@@ -227,8 +242,8 @@ public interface IMessageV2Service {
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if request parameters are invalid
      */
-    Result<QueryConversationMessagesResponseV2> queryConversationMessages(
-            QueryConversationMessagesRequestV2 request) throws YunxinSdkException;
+    Result<QueryMessagesByPageResponseV2> queryConversationMessages(
+            QueryMessagesByPageRequestV2 request) throws YunxinSdkException;
     
     /**
      * Batch query messages by message IDs
@@ -243,8 +258,8 @@ public interface IMessageV2Service {
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if request parameters are invalid
      */
-    Result<BatchQueryMessagesResponseV2> batchQueryMessages(
-            BatchQueryMessagesRequestV2 request) throws YunxinSdkException;
+    Result<BatchQueryMessagesByIdResponseV2> batchQueryMessages(
+            BatchQueryMessagesByIdRequestV2 request) throws YunxinSdkException;
             
     /**
      * Query thread messages

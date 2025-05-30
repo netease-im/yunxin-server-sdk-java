@@ -38,6 +38,7 @@ public class Message {
      * 4：地理位置消息
      * 5：通知消息
      * 6：文件消息
+     * 10：提示消息
      * 100+：自定义消息
      */
     private Integer type;
@@ -154,6 +155,9 @@ public class Message {
                 break;
             case 6:
                 message = jsonObject.to(FileMessage.class);
+                break;
+            case 10:
+                message = jsonObject.to(TipMessage.class);
                 break;
             default:
                 if (type >= 100) {

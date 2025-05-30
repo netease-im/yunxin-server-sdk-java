@@ -11,7 +11,9 @@ import com.netease.nim.im.server.sdk.v2.chatroom.request.GetChatroomAddressReque
 import com.netease.nim.im.server.sdk.v2.chatroom.request.GetChatroomInfoRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.request.ListFixedMembersRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.request.ListOnlineMembersRequestV2;
+import com.netease.nim.im.server.sdk.v2.chatroom.request.QueryOpenChatroomsRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.request.ToggleChatroomMuteRequestV2;
+import com.netease.nim.im.server.sdk.v2.chatroom.request.ToggleInOutNotificationRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.request.UpdateChatroomInfoRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.request.UpdateChatroomStatusRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.response.CreateChatroomResponseV2;
@@ -22,6 +24,8 @@ import com.netease.nim.im.server.sdk.v2.chatroom.response.ListOnlineMembersRespo
 import com.netease.nim.im.server.sdk.v2.chatroom.response.QueryOpenChatroomsResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.response.ToggleChatroomMuteResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.response.ToggleInOutNotificationResponseV2;
+import com.netease.nim.im.server.sdk.v2.chatroom.response.UpdateChatroomInfoResponseV2;
+import com.netease.nim.im.server.sdk.v2.chatroom.response.UpdateChatroomStatusResponseV2;
 import com.netease.nim.im.server.sdk.v2.util.ResultUtils;
 
 import java.util.HashMap;
@@ -218,20 +222,19 @@ public class ChatroomV2Service implements IChatroomV2Service {
      * - Chatroom names, announcements, and extensions are subject to anti-spam checks.
      * - You can optionally send a notification about the update to chatroom members.
      * 
-     * @param roomId the ID of the chatroom to update
-     * @param request request containing the fields to update
+     * @param request request containing the room ID and fields to update
      * @return result containing the updated chatroom information
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if roomId is null or invalid, or if any fields exceed their length limits
      */
     @Override
-    public Result<GetChatroomInfoResponseV2> updateChatroomInfo(Long roomId, UpdateChatroomInfoRequestV2 request) throws YunxinSdkException {
+    public Result<UpdateChatroomInfoResponseV2> updateChatroomInfo(UpdateChatroomInfoRequestV2 request) throws YunxinSdkException {
         // Validate required parameters
-        if (roomId == null) {
+        if (request.getRoomId() == null) {
             throw new IllegalArgumentException("Chatroom ID cannot be null");
         }
         // Replace the path parameter in the URL
-        String endpoint = ChatroomUrlContextV2.UPDATE_CHATROOM_INFO.replace("{room_id}", roomId.toString());
+        String endpoint = ChatroomUrlContextV2.UPDATE_CHATROOM_INFO.replace("{room_id}", request.getRoomId().toString());
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
@@ -245,7 +248,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
             requestBody
         );
         
-        return ResultUtils.convert(apiResponse, GetChatroomInfoResponseV2.class);
+        return ResultUtils.convert(apiResponse, UpdateChatroomInfoResponseV2.class);
     }
 
     /**
@@ -270,7 +273,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
      * @throws IllegalArgumentException if roomId is null or invalid, or if required parameters are missing
      */
     @Override
-    public Result<GetChatroomInfoResponseV2> updateChatroomStatus(Long roomId, UpdateChatroomStatusRequestV2 request) throws YunxinSdkException {
+    public Result<UpdateChatroomStatusResponseV2> updateChatroomStatus(Long roomId, UpdateChatroomStatusRequestV2 request) throws YunxinSdkException {
         // Validate required parameters
         if (roomId == null) {
             throw new IllegalArgumentException("Chatroom ID cannot be null");
@@ -299,7 +302,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
             requestBody
         );
         
-        return ResultUtils.convert(apiResponse, GetChatroomInfoResponseV2.class);
+        return ResultUtils.convert(apiResponse, UpdateChatroomStatusResponseV2.class);
     }
 
     /**
@@ -369,29 +372,28 @@ public class ChatroomV2Service implements IChatroomV2Service {
      * - User disconnecting from the chatroom
      * - User entering the chatroom
      * 
-     * @param roomId the ID of the chatroom to toggle in/out notification
-     * @param inOutNotification whether to enable (true) or disable (false) entry/exit notifications
+     * @param request request containing the room ID and in/out notification flag
      * @return result indicating success or failure
      * @throws YunxinSdkException if a network or server error occurs
-     * @throws IllegalArgumentException if roomId is null or inOutNotification is null
+     * @throws IllegalArgumentException if required parameters are missing or invalid
      */
     @Override
-    public Result<ToggleInOutNotificationResponseV2> toggleInOutNotification(Long roomId, Boolean inOutNotification) throws YunxinSdkException {
+    public Result<ToggleInOutNotificationResponseV2> toggleInOutNotification(ToggleInOutNotificationRequestV2 request) throws YunxinSdkException {
         // Validate required parameters
-        if (roomId == null) {
+        if (request.getRoomId() == null) {
             throw new IllegalArgumentException("Chatroom ID cannot be null");
         }
         
-        if (inOutNotification == null) {
+        if (request.getInOutNotification() == null) {
             throw new IllegalArgumentException("In/out notification status cannot be null");
         }
         
         // Replace the path parameter in the URL
-        String endpoint = ChatroomUrlContextV2.TOGGLE_IN_OUT_NOTIFICATION.replace("{room_id}", roomId.toString());
+        String endpoint = ChatroomUrlContextV2.TOGGLE_IN_OUT_NOTIFICATION.replace("{room_id}", request.getRoomId().toString());
         
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("in_out_notification", inOutNotification.toString());
+        queryParams.put("in_out_notification", request.getInOutNotification().toString());
         
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
@@ -413,21 +415,21 @@ public class ChatroomV2Service implements IChatroomV2Service {
      * This method retrieves a list of open chatrooms created by a specific account.
      * A chatroom is considered "open" when its status is set to valid.
      * 
-     * @param creatorAccountId the account ID of the chatroom creator
+     * @param request request containing the creator account ID
      * @return result containing a list of open chatroom IDs
      * @throws YunxinSdkException if a network or server error occurs
-     * @throws IllegalArgumentException if creatorAccountId is null or empty
+     * @throws IllegalArgumentException if required parameters are missing or invalid
      */
     @Override
-    public Result<QueryOpenChatroomsResponseV2> queryOpenChatrooms(String creatorAccountId) throws YunxinSdkException {
+    public Result<QueryOpenChatroomsResponseV2> queryOpenChatrooms(QueryOpenChatroomsRequestV2 request) throws YunxinSdkException {
         // Validate required parameters
-        if (creatorAccountId == null || creatorAccountId.isEmpty()) {
+        if (request.getCreatorAccountId() == null || request.getCreatorAccountId().isEmpty()) {
             throw new IllegalArgumentException("Creator account ID cannot be null or empty");
         }
         
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("creator_account_id", creatorAccountId);
+        queryParams.put("creator_account_id", request.getCreatorAccountId());
         
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
@@ -440,7 +442,6 @@ public class ChatroomV2Service implements IChatroomV2Service {
         
         return ResultUtils.convert(apiResponse, QueryOpenChatroomsResponseV2.class);
     }
-    
     /**
      * List online chatroom members
      * 

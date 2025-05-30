@@ -7,8 +7,9 @@ import java.util.List;
 /**
  * Response for querying open chatrooms
  * 
- * This class encapsulates the response for retrieving a list of open chatrooms created by a specific account.
- * The response contains a list of chatroom IDs that are currently in the open state.
+ * API: GET https://open.yunxinapi.com/im/v2/chatrooms/actions/opend_chatrooms
+ * 
+ * This class encapsulates the response for querying open chatrooms created by a specific account.
  */
 public class QueryOpenChatroomsResponseV2 {
     
@@ -25,18 +26,9 @@ public class QueryOpenChatroomsResponseV2 {
     }
     
     /**
-     * Constructor with items
-     * 
-     * @param items the list of open chatroom IDs
-     */
-    public QueryOpenChatroomsResponseV2(List<String> items) {
-        this.items = items;
-    }
-    
-    /**
      * Get the list of open chatroom IDs
      * 
-     * @return the list of open chatroom IDs
+     * @return List of open chatroom IDs
      */
     public List<String> getItems() {
         return items;
@@ -45,7 +37,7 @@ public class QueryOpenChatroomsResponseV2 {
     /**
      * Set the list of open chatroom IDs
      * 
-     * @param items the list of open chatroom IDs
+     * @param items List of open chatroom IDs
      */
     public void setItems(List<String> items) {
         this.items = items;

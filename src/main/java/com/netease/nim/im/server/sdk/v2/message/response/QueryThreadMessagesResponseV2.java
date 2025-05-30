@@ -73,13 +73,7 @@ public class QueryThreadMessagesResponseV2 {
         private Long modifyTime;             // Message modification time
         
         @JSONField(name = "thread_config")
-        private Object threadConfig;         // Thread message configuration
-        
-        @JSONField(name = "thread_root")
-        private ThreadMessage threadRoot;    // Thread root message
-        
-        @JSONField(name = "thread_reply")
-        private ThreadMessage threadReply;   // Thread reply message
+        private ThreadConfig threadConfig;    // Thread message configuration
         
         // Getters and Setters
         
@@ -195,95 +189,124 @@ public class QueryThreadMessagesResponseV2 {
             this.modifyTime = modifyTime;
         }
         
-        public Object getThreadConfig() {
+        public ThreadConfig getThreadConfig() {
             return threadConfig;
         }
         
-        public void setThreadConfig(Object threadConfig) {
+        public void setThreadConfig(ThreadConfig threadConfig) {
             this.threadConfig = threadConfig;
         }
-        
+    }
+    
+    /**
+     * Class representing thread configuration
+     */
+    public static class ThreadConfig {
+        /**
+         * Thread root message information
+         */
+        @JSONField(name = "thread_root")
+        private ThreadMessage threadRoot;
+
+        /**
+         * Reply message information
+         */
+        @JSONField(name = "thread_reply")
+        private ThreadMessage threadReply;
+
         public ThreadMessage getThreadRoot() {
             return threadRoot;
         }
-        
+
         public void setThreadRoot(ThreadMessage threadRoot) {
             this.threadRoot = threadRoot;
         }
-        
+
         public ThreadMessage getThreadReply() {
             return threadReply;
         }
-        
+
         public void setThreadReply(ThreadMessage threadReply) {
             this.threadReply = threadReply;
         }
     }
     
     /**
-     * Class representing a thread message reference
+     * Inner class for thread message information
      */
     public static class ThreadMessage {
-        
+        /**
+         * Sender ID
+         */
         @JSONField(name = "sender_id")
-        private String senderId;             // Thread message sender ID
-        
+        private String senderId;
+
+        /**
+         * Receiver ID
+         */
         @JSONField(name = "receiver_id")
-        private String receiverId;           // Thread message receiver ID
-        
+        private String receiverId;
+
+        /**
+         * Message creation time
+         */
         @JSONField(name = "create_time")
-        private Long createTime;             // Thread message creation time
-        
+        private Long createTime;
+
+        /**
+         * Server message ID
+         */
         @JSONField(name = "message_server_id")
-        private String messageServerId;      // Thread message server ID
-        
+        private String messageServerId;
+
+        /**
+         * Client message ID
+         */
         @JSONField(name = "message_client_id")
-        private String messageClientId;      // Thread message client ID
-        
-        // Getters and Setters
-        
+        private String messageClientId;
+
         public String getSenderId() {
             return senderId;
         }
-        
+
         public void setSenderId(String senderId) {
             this.senderId = senderId;
         }
-        
+
         public String getReceiverId() {
             return receiverId;
         }
-        
+
         public void setReceiverId(String receiverId) {
             this.receiverId = receiverId;
         }
-        
+
         public Long getCreateTime() {
             return createTime;
         }
-        
+
         public void setCreateTime(Long createTime) {
             this.createTime = createTime;
         }
-        
+
         public String getMessageServerId() {
             return messageServerId;
         }
-        
+
         public void setMessageServerId(String messageServerId) {
             this.messageServerId = messageServerId;
         }
-        
+
         public String getMessageClientId() {
             return messageClientId;
         }
-        
+
         public void setMessageClientId(String messageClientId) {
             this.messageClientId = messageClientId;
         }
     }
     
-    // Getters and Setters
+    // Getters and Setters for main class
     
     public Boolean getHasMore() {
         return hasMore;

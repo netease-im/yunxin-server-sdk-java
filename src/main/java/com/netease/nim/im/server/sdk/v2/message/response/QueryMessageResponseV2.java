@@ -62,82 +62,109 @@ public class QueryMessageResponseV2 {
     
     // Inner classes for thread configuration
     
+    /**
+     * Class representing thread configuration
+     */
     public static class ThreadConfig {
+        /**
+         * Thread root message information
+         */
         @JSONField(name = "thread_root")
-        private ThreadMessage threadRoot;    // Thread root message
-        
+        private ThreadMessage threadRoot;
+
+        /**
+         * Reply message information
+         */
         @JSONField(name = "thread_reply")
-        private ThreadMessage threadReply;   // Thread reply message
-        
+        private ThreadMessage threadReply;
+
         public ThreadMessage getThreadRoot() {
             return threadRoot;
         }
-        
+
         public void setThreadRoot(ThreadMessage threadRoot) {
             this.threadRoot = threadRoot;
         }
-        
+
         public ThreadMessage getThreadReply() {
             return threadReply;
         }
-        
+
         public void setThreadReply(ThreadMessage threadReply) {
             this.threadReply = threadReply;
         }
     }
     
+    /**
+     * Inner class for thread message information
+     */
     public static class ThreadMessage {
+        /**
+         * Sender ID
+         */
         @JSONField(name = "sender_id")
-        private String senderId;            // Message sender account ID
-        
+        private String senderId;
+
+        /**
+         * Receiver ID
+         */
         @JSONField(name = "receiver_id")
-        private String receiverId;          // Message receiver account ID
-        
+        private String receiverId;
+
+        /**
+         * Message creation time
+         */
         @JSONField(name = "create_time")
-        private Long createTime;            // Message creation timestamp
-        
+        private Long createTime;
+
+        /**
+         * Server message ID
+         */
         @JSONField(name = "message_server_id")
-        private String messageServerId;     // Server message ID
-        
+        private String messageServerId;
+
+        /**
+         * Client message ID
+         */
         @JSONField(name = "message_client_id")
-        private String messageClientId;     // Client message ID
-        
+        private String messageClientId;
+
         public String getSenderId() {
             return senderId;
         }
-        
+
         public void setSenderId(String senderId) {
             this.senderId = senderId;
         }
-        
+
         public String getReceiverId() {
             return receiverId;
         }
-        
+
         public void setReceiverId(String receiverId) {
             this.receiverId = receiverId;
         }
-        
+
         public Long getCreateTime() {
             return createTime;
         }
-        
+
         public void setCreateTime(Long createTime) {
             this.createTime = createTime;
         }
-        
+
         public String getMessageServerId() {
             return messageServerId;
         }
-        
+
         public void setMessageServerId(String messageServerId) {
             this.messageServerId = messageServerId;
         }
-        
+
         public String getMessageClientId() {
             return messageClientId;
         }
-        
+
         public void setMessageClientId(String messageClientId) {
             this.messageClientId = messageClientId;
         }

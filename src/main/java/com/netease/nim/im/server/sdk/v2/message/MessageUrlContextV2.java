@@ -11,6 +11,11 @@ public class MessageUrlContextV2 {
     static final String SEND_MESSAGE = "/im/v2/conversations/{conversation_id}/messages";
     
     /**
+     * Batch send P2P messages endpoint
+     */
+    static final String BATCH_SEND_P2P_MESSAGE = "/im/v2/conversations/messages";
+    
+    /**
      * Modify (update) message endpoint
      */
     static final String MODIFY_MESSAGE = "/im/v2/messages/actions/modifyMsg";

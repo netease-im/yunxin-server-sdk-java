@@ -32,11 +32,9 @@ public class AddBlockContactRequestV2 {
     /**
      * Set the account ID (required)
      * @param accountId the account ID to set
-     * @return this request for chaining
      */
-    public AddBlockContactRequestV2 setAccountId(String accountId) {
+    public void setAccountId(String accountId) {
         this.accountId = accountId;
-        return this;
     }
     
     /**
@@ -50,7 +48,6 @@ public class AddBlockContactRequestV2 {
     /**
      * Set the contact account ID (required)
      * @param contactAccountId the contact account ID to set
-     * @return this request for chaining
      */
     public AddBlockContactRequestV2 setContactAccountId(String contactAccountId) {
         this.contactAccountId = contactAccountId;

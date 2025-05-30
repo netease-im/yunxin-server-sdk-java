@@ -7,12 +7,13 @@ import com.netease.nim.im.server.sdk.core.YunxinApiResponse;
 import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.core.http.HttpMethod;
 import com.netease.nim.im.server.sdk.v2.message.request.AddQuickCommentRequestV2;
-import com.netease.nim.im.server.sdk.v2.message.request.BatchQueryMessagesRequestV2;
+import com.netease.nim.im.server.sdk.v2.message.request.BatchQueryMessagesByIdRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.BatchQueryQuickCommentsRequestV2;
+import com.netease.nim.im.server.sdk.v2.message.request.BatchSendP2PMessageRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.DeleteConversationMessagesRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.DeleteQuickCommentRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.ModifyMessageRequestV2;
-import com.netease.nim.im.server.sdk.v2.message.request.QueryConversationMessagesRequestV2;
+import com.netease.nim.im.server.sdk.v2.message.request.QueryMessagesByPageRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.QueryMessageRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.QueryTeamReadReceiptRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.QueryThreadMessagesRequestV2;
@@ -22,12 +23,13 @@ import com.netease.nim.im.server.sdk.v2.message.request.SendP2PReadReceiptReques
 import com.netease.nim.im.server.sdk.v2.message.request.SendTeamReadReceiptRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.request.WithdrawMessageRequestV2;
 import com.netease.nim.im.server.sdk.v2.message.response.AddQuickCommentResponseV2;
-import com.netease.nim.im.server.sdk.v2.message.response.BatchQueryMessagesResponseV2;
+import com.netease.nim.im.server.sdk.v2.message.response.BatchQueryMessagesByIdResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.response.BatchQueryQuickCommentsResponseV2;
+import com.netease.nim.im.server.sdk.v2.message.response.BatchSendP2PMessageResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.response.DeleteConversationMessagesResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.response.DeleteQuickCommentResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.response.ModifyMessageResponseV2;
-import com.netease.nim.im.server.sdk.v2.message.response.QueryConversationMessagesResponseV2;
+import com.netease.nim.im.server.sdk.v2.message.response.QueryMessagesByPageResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.response.QueryMessageResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.response.QueryTeamReadReceiptResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.response.QueryThreadMessagesResponseV2;
@@ -122,6 +124,71 @@ public class MessageV2Service implements IMessageV2Service {
         );
         
         return ResultUtils.convert(apiResponse, SendMessageResponseV2.class);
+    }
+    
+    /**
+     * Batch send P2P messages to multiple receivers
+     * 
+     * This method allows sending the same message to multiple receivers in one API call.
+     * Up to 100 receivers can be specified in a single request.
+     * 
+     * @param request request containing sender ID, list of receiver IDs, message content, and configuration
+     * @return result containing lists of successfully sent messages and failed messages
+     * @throws YunxinSdkException if a network or server error occurs
+     * @throws IllegalArgumentException if required parameters are missing or invalid
+     */
+    @Override
+    public Result<BatchSendP2PMessageResponseV2> batchSendP2PMessage(BatchSendP2PMessageRequestV2 request) throws YunxinSdkException {
+        // Validate request
+        if (request.getSenderId() == null || request.getSenderId().isEmpty()) {
+            throw new IllegalArgumentException("Sender ID cannot be null or empty");
+        }
+        
+        if (request.getReceiverIds() == null || request.getReceiverIds().isEmpty()) {
+            throw new IllegalArgumentException("Receiver IDs list cannot be null or empty");
+        }
+        
+        if (request.getReceiverIds().size() > 100) {
+            throw new IllegalArgumentException("Maximum 100 receivers allowed in a single request");
+        }
+        
+        if (request.getMessage() == null) {
+            throw new IllegalArgumentException("Message body cannot be null");
+        }
+        
+        if (request.getMessage().getMessageType() == null) {
+            throw new IllegalArgumentException("Message type cannot be null");
+        }
+        
+        // For text and tip messages, validate text content
+        if ((request.getMessage().getMessageType() == 0 || request.getMessage().getMessageType() == 10) 
+                && (request.getMessage().getText() == null || request.getMessage().getText().isEmpty())) {
+            throw new IllegalArgumentException("Text content is required for text and tip messages");
+        }
+        
+        // For custom messages, validate attachment and subtype
+        if (request.getMessage().getMessageType() == 100) {
+            if (request.getMessage().getAttachment() == null) {
+                throw new IllegalArgumentException("Attachment is required for custom messages");
+            }
+            
+            if (request.getMessage().getSubType() == null) {
+                throw new IllegalArgumentException("Subtype is required for custom messages");
+            }
+        }
+        
+        // Convert the request to JSON string
+        String requestBody = JSONObject.toJSONString(request);
+        
+        YunxinApiResponse apiResponse = httpClient.executeV2Api(
+            HttpMethod.POST,
+            MessageUrlContextV2.BATCH_SEND_P2P_MESSAGE,
+            MessageUrlContextV2.BATCH_SEND_P2P_MESSAGE,
+            null, // No query parameters
+            requestBody
+        );
+        
+        return ResultUtils.convert(apiResponse, BatchSendP2PMessageResponseV2.class);
     }
     
     /**
@@ -664,8 +731,8 @@ public class MessageV2Service implements IMessageV2Service {
     }
     
     @Override
-    public Result<QueryConversationMessagesResponseV2> queryConversationMessages(
-            QueryConversationMessagesRequestV2 request) throws YunxinSdkException {
+    public Result<QueryMessagesByPageResponseV2> queryConversationMessages(
+            QueryMessagesByPageRequestV2 request) throws YunxinSdkException {
         
         // Validate required parameters
         if (request.getConversationId() == null || request.getConversationId().isEmpty()) {
@@ -728,7 +795,7 @@ public class MessageV2Service implements IMessageV2Service {
             null // No request body for GET
         );
         
-        return ResultUtils.convert(apiResponse, QueryConversationMessagesResponseV2.class);
+        return ResultUtils.convert(apiResponse, QueryMessagesByPageResponseV2.class);
     }
     
     /**
@@ -745,8 +812,8 @@ public class MessageV2Service implements IMessageV2Service {
      * @throws IllegalArgumentException if request parameters are invalid
      */
     @Override
-    public Result<BatchQueryMessagesResponseV2> batchQueryMessages(
-            BatchQueryMessagesRequestV2 request) throws YunxinSdkException {
+    public Result<BatchQueryMessagesByIdResponseV2> batchQueryMessages(
+            BatchQueryMessagesByIdRequestV2 request) throws YunxinSdkException {
         
         // Validate required parameters
         if (request.getConversationId() == null || request.getConversationId().isEmpty()) {
@@ -758,7 +825,7 @@ public class MessageV2Service implements IMessageV2Service {
         }
         
         // Check if each message in the list has required parameters
-        for (BatchQueryMessagesRequestV2.MessageQuery message : request.getMessages()) {
+        for (BatchQueryMessagesByIdRequestV2.MessageQuery message : request.getMessages()) {
             if (message.getMessageServerId() == null) {
                 throw new IllegalArgumentException("Message server ID cannot be null for any message in the list");
             }
@@ -787,7 +854,7 @@ public class MessageV2Service implements IMessageV2Service {
             requestBody
         );
         
-        return ResultUtils.convert(apiResponse, BatchQueryMessagesResponseV2.class);
+        return ResultUtils.convert(apiResponse, BatchQueryMessagesByIdResponseV2.class);
     }
     
     /**

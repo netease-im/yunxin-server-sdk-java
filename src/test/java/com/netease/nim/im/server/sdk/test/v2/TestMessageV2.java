@@ -1,7 +1,6 @@
 package com.netease.nim.im.server.sdk.test.v2;
 
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
 import com.netease.nim.im.server.sdk.core.Result;
 import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
 import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
@@ -11,8 +10,6 @@ import com.netease.nim.im.server.sdk.v2.account.IAccountV2Service;
 import com.netease.nim.im.server.sdk.v2.account.request.CreateAccountRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.response.CreateAccountResponseV2;
 import com.netease.nim.im.server.sdk.v2.conversation.IConversationV2Service;
-import com.netease.nim.im.server.sdk.v2.conversation.request.BatchSendP2PMessageRequestV2;
-import com.netease.nim.im.server.sdk.v2.conversation.response.BatchSendP2PMessageResponseV2;
 import com.netease.nim.im.server.sdk.v2.message.IMessageV2Service;
 import com.netease.nim.im.server.sdk.v2.message.request.*;
 import com.netease.nim.im.server.sdk.v2.message.response.*;
@@ -299,13 +296,13 @@ public class TestMessageV2 {
         String text = "Batch text message test at " + System.currentTimeMillis();
         
         // Create the request using the helper method
-        BatchSendP2PMessageRequestV2 request = BatchSendP2PMessageRequestV2.createTextMessage(accountId1, receiverIds, text);
+        BatchSendP2PMessageRequestV2 request = createTextMessage(accountId1, receiverIds, text);
         
         // Set need message detail to true to get full message details in response
         request.setNeedMessageDetail(true);
         
         // Call the API
-        Result<BatchSendP2PMessageResponseV2> result = conversationService.batchSendP2PMessage(request);
+        Result<BatchSendP2PMessageResponseV2> result = messageService.batchSendP2PMessage(request);
         
         System.out.println("batchSendTextMessage: " + result.getMsg());
         System.out.println("Response: " + JSON.toJSONString(result));
@@ -328,14 +325,14 @@ public class TestMessageV2 {
         attachment.put("timestamp", String.valueOf(System.currentTimeMillis()));
         
         // Create the request using the helper method
-        BatchSendP2PMessageRequestV2 request = BatchSendP2PMessageRequestV2.createCustomMessage(
+        BatchSendP2PMessageRequestV2 request = createCustomMessage(
                 accountId1, receiverIds, subType, attachment);
         
         // Set need message detail to true to get full message details in response
         request.setNeedMessageDetail(true);
         
         // Call the API
-        Result<BatchSendP2PMessageResponseV2> result = conversationService.batchSendP2PMessage(request);
+        Result<BatchSendP2PMessageResponseV2> result = messageService.batchSendP2PMessage(request);
         
         System.out.println("batchSendCustomMessage: " + result.getMsg());
         System.out.println("Response: " + JSON.toJSONString(result));
@@ -572,19 +569,19 @@ public class TestMessageV2 {
             }
             
             // Create message query list
-            List<BatchQueryMessagesRequestV2.MessageQuery> messageQueries = new ArrayList<>();
+            List<BatchQueryMessagesByIdRequestV2.MessageQuery> messageQueries = new ArrayList<>();
             for (int i = 0; i < messageIds.size(); i++) {
-                BatchQueryMessagesRequestV2.MessageQuery query = new BatchQueryMessagesRequestV2.MessageQuery();
+                BatchQueryMessagesByIdRequestV2.MessageQuery query = new BatchQueryMessagesByIdRequestV2.MessageQuery();
                 query.setMessageServerId(messageIds.get(i));
                 query.setCreateTime(messageTimes.get(i));
                 messageQueries.add(query);
             }
             
             // Create request
-            BatchQueryMessagesRequestV2 request = new BatchQueryMessagesRequestV2(conversationId, messageQueries);
+            BatchQueryMessagesByIdRequestV2 request = new BatchQueryMessagesByIdRequestV2(conversationId, messageQueries);
             
             // Execute query
-            Result<BatchQueryMessagesResponseV2> result = messageService.batchQueryMessages(request);
+            Result<BatchQueryMessagesByIdResponseV2> result = messageService.batchQueryMessages(request);
             
             System.out.println("Batch query response: " + JSON.toJSONString(result));
             
@@ -615,25 +612,25 @@ public class TestMessageV2 {
             SendMessageResponseV2 sendResponse = sendResult.getResponse();
             
             // Create message query list with valid and invalid IDs
-            List<BatchQueryMessagesRequestV2.MessageQuery> messageQueries = new ArrayList<>();
+            List<BatchQueryMessagesByIdRequestV2.MessageQuery> messageQueries = new ArrayList<>();
             
             // Add valid message
-            BatchQueryMessagesRequestV2.MessageQuery validQuery = new BatchQueryMessagesRequestV2.MessageQuery();
+            BatchQueryMessagesByIdRequestV2.MessageQuery validQuery = new BatchQueryMessagesByIdRequestV2.MessageQuery();
             validQuery.setMessageServerId(sendResponse.getMessageServerId());
             validQuery.setCreateTime(sendResponse.getCreateTime());
             messageQueries.add(validQuery);
             
             // Add invalid message with non-existent ID
-            BatchQueryMessagesRequestV2.MessageQuery invalidQuery = new BatchQueryMessagesRequestV2.MessageQuery();
+            BatchQueryMessagesByIdRequestV2.MessageQuery invalidQuery = new BatchQueryMessagesByIdRequestV2.MessageQuery();
             invalidQuery.setMessageServerId(999999999L); // Non-existent ID
             invalidQuery.setCreateTime(System.currentTimeMillis());
             messageQueries.add(invalidQuery);
             
             // Create request
-            BatchQueryMessagesRequestV2 request = new BatchQueryMessagesRequestV2(conversationId, messageQueries);
+            BatchQueryMessagesByIdRequestV2 request = new BatchQueryMessagesByIdRequestV2(conversationId, messageQueries);
             
             // Execute query
-            Result<BatchQueryMessagesResponseV2> result = messageService.batchQueryMessages(request);
+            Result<BatchQueryMessagesByIdResponseV2> result = messageService.batchQueryMessages(request);
             
             System.out.println("Batch query with invalid ID response: " + JSON.toJSONString(result));
             
@@ -917,13 +914,14 @@ public class TestMessageV2 {
         // Check success list
         if (response.getSuccessList() != null && !response.getSuccessList().isEmpty()) {
             System.out.println("Successfully sent messages: " + response.getSuccessList().size());
-            
             for (BatchSendP2PMessageResponseV2.SuccessItem item : response.getSuccessList()) {
                 System.out.println("Message sent to: " + item.getReceiverId());
                 
                 // Common validations
                 Assert.assertEquals(senderId, item.getSenderId());
                 Assert.assertTrue(receiverIds.contains(item.getReceiverId()));
+                
+                // Validate message fields directly on item
                 Assert.assertEquals(messageType, item.getMessageType());
                 Assert.assertNotNull(item.getMessageServerId());
                 Assert.assertNotNull(item.getCreateTime());
@@ -1050,7 +1048,7 @@ public class TestMessageV2 {
      */
     private void testBasicConversationQuery(String conversationId, long startTime, long endTime) throws YunxinSdkException {
         // Create request with all required parameters
-        QueryConversationMessagesRequestV2 request = new QueryConversationMessagesRequestV2(
+        QueryMessagesByPageRequestV2 request = new QueryMessagesByPageRequestV2(
                 conversationId,
                 startTime,
                 endTime,
@@ -1058,7 +1056,7 @@ public class TestMessageV2 {
         );
         
         // Execute query
-        Result<QueryConversationMessagesResponseV2> result = messageService.queryConversationMessages(request);
+        Result<QueryMessagesByPageResponseV2> result = messageService.queryConversationMessages(request);
         
         System.out.println("Basic query response: " + JSON.toJSONString(result));
         
@@ -1075,7 +1073,7 @@ public class TestMessageV2 {
      */
     private void testConversationPagination(String conversationId, long startTime, long endTime) throws YunxinSdkException {
         // First page query with small limit
-        QueryConversationMessagesRequestV2 request = new QueryConversationMessagesRequestV2(
+        QueryMessagesByPageRequestV2 request = new QueryMessagesByPageRequestV2(
                 conversationId,
                 startTime,
                 endTime,
@@ -1083,7 +1081,7 @@ public class TestMessageV2 {
         );
         
         // Execute query for first page
-        Result<QueryConversationMessagesResponseV2> result = messageService.queryConversationMessages(request);
+        Result<QueryMessagesByPageResponseV2> result = messageService.queryConversationMessages(request);
         
         System.out.println("First page query response: " + JSON.toJSONString(result));
         
@@ -1099,7 +1097,7 @@ public class TestMessageV2 {
                 && result.getResponse().getNextToken() != null) {
             
             // Second page query
-            QueryConversationMessagesRequestV2 nextRequest = new QueryConversationMessagesRequestV2(
+            QueryMessagesByPageRequestV2 nextRequest = new QueryMessagesByPageRequestV2(
                     conversationId,
                     startTime,
                     endTime,
@@ -1108,7 +1106,7 @@ public class TestMessageV2 {
             nextRequest.setPageToken(result.getResponse().getNextToken());
             
             // Execute query for second page
-            Result<QueryConversationMessagesResponseV2> nextResult = messageService.queryConversationMessages(nextRequest);
+            Result<QueryMessagesByPageResponseV2> nextResult = messageService.queryConversationMessages(nextRequest);
             
             System.out.println("Second page query response: " + JSON.toJSONString(nextResult));
             
@@ -1128,7 +1126,7 @@ public class TestMessageV2 {
      */
     private void testConversationSortingOrder(String conversationId, long startTime, long endTime) throws YunxinSdkException {
         // Test ascending order (descending=true)
-        QueryConversationMessagesRequestV2 ascRequest = new QueryConversationMessagesRequestV2(
+        QueryMessagesByPageRequestV2 ascRequest = new QueryMessagesByPageRequestV2(
                 conversationId,
                 startTime,
                 endTime,
@@ -1137,7 +1135,7 @@ public class TestMessageV2 {
         ascRequest.setDescending(true); // Ascending order by time
         
         // Execute query with ascending order
-        Result<QueryConversationMessagesResponseV2> ascResult = messageService.queryConversationMessages(ascRequest);
+        Result<QueryMessagesByPageResponseV2> ascResult = messageService.queryConversationMessages(ascRequest);
         
         System.out.println("Ascending order query response: " + JSON.toJSONString(ascResult));
         
@@ -1149,7 +1147,7 @@ public class TestMessageV2 {
         displayConversationQueryResults(ascResult.getResponse(), "ascending order by time");
         
         // Test descending order (descending=false)
-        QueryConversationMessagesRequestV2 descRequest = new QueryConversationMessagesRequestV2(
+        QueryMessagesByPageRequestV2 descRequest = new QueryMessagesByPageRequestV2(
                 conversationId,
                 startTime,
                 endTime,
@@ -1158,7 +1156,7 @@ public class TestMessageV2 {
         descRequest.setDescending(false); // Descending order by time
         
         // Execute query with descending order
-        Result<QueryConversationMessagesResponseV2> descResult = messageService.queryConversationMessages(descRequest);
+        Result<QueryMessagesByPageResponseV2> descResult = messageService.queryConversationMessages(descRequest);
         
         System.out.println("Descending order query response: " + JSON.toJSONString(descResult));
         
@@ -1175,7 +1173,7 @@ public class TestMessageV2 {
      */
     private void testFilterConversationByMessageType(String conversationId, long startTime, long endTime) throws YunxinSdkException {
         // Query only text messages (type 0)
-        QueryConversationMessagesRequestV2 request = new QueryConversationMessagesRequestV2(
+        QueryMessagesByPageRequestV2 request = new QueryMessagesByPageRequestV2(
                 conversationId,
                 startTime,
                 endTime,
@@ -1184,7 +1182,7 @@ public class TestMessageV2 {
         request.setMessageType("0"); // Only text messages
         
         // Execute query with message type filter
-        Result<QueryConversationMessagesResponseV2> result = messageService.queryConversationMessages(request);
+        Result<QueryMessagesByPageResponseV2> result = messageService.queryConversationMessages(request);
         
         System.out.println("Message type filter query response: " + JSON.toJSONString(result));
         
@@ -1199,12 +1197,12 @@ public class TestMessageV2 {
     /**
      * Display conversation query results in a readable format
      */
-    private void displayConversationQueryResults(QueryConversationMessagesResponseV2 response, String queryType) {
+    private void displayConversationQueryResults(QueryMessagesByPageResponseV2 response, String queryType) {
         if (response.getItems() != null && !response.getItems().isEmpty()) {
             System.out.println("Found " + response.getItems().size() + " messages for " + queryType);
             
                 int count = 1;
-            for (QueryConversationMessagesResponseV2.MessageItem item : response.getItems()) {
+            for (QueryMessagesByPageResponseV2.MessageItem item : response.getItems()) {
                     System.out.println("Message " + count + ":");
                     System.out.println("  ID: " + item.getMessageServerId());
                     System.out.println("  Sender: " + item.getSenderId());
@@ -1355,13 +1353,13 @@ public class TestMessageV2 {
     /**
      * Display batch query results in a readable format
      */
-    private void displayBatchQueryResults(BatchQueryMessagesResponseV2 response) {
+    private void displayBatchQueryResults(BatchQueryMessagesByIdResponseV2 response) {
         // Display successful messages
         if (response.getSuccessList() != null && !response.getSuccessList().isEmpty()) {
             System.out.println("Successfully queried " + response.getSuccessList().size() + " messages:");
             
             int count = 1;
-            for (BatchQueryMessagesResponseV2.SuccessMessage message : response.getSuccessList()) {
+            for (BatchQueryMessagesByIdResponseV2.SuccessMessage message : response.getSuccessList()) {
                 System.out.println("Message " + count + ":");
                 System.out.println("  ID: " + message.getMessageServerId());
                 System.out.println("  Sender: " + message.getSenderId());
@@ -1379,7 +1377,7 @@ public class TestMessageV2 {
             System.out.println("Failed to query " + response.getFailedList().size() + " messages:");
             
             int count = 1;
-            for (BatchQueryMessagesResponseV2.FailedMessage message : response.getFailedList()) {
+            for (BatchQueryMessagesByIdResponseV2.FailedMessage message : response.getFailedList()) {
                 System.out.println("Failed Message " + count + ":");
                 System.out.println("  ID: " + message.getMessageServerId());
                 System.out.println("  Time: " + new Date(message.getCreateTime()));
@@ -1388,5 +1386,129 @@ public class TestMessageV2 {
                 count++;
             }
         }
+    }
+
+    /**
+     * Helper method to create a text message request for batch sending
+     * 
+     * @param senderId sender account ID
+     * @param receiverIds list of receiver account IDs
+     * @param text text content
+     * @return BatchSendP2PMessageRequestV2 instance
+     */
+    public static BatchSendP2PMessageRequestV2 createTextMessage(String senderId, List<String> receiverIds, String text) {
+        BatchSendP2PMessageRequestV2 request = new BatchSendP2PMessageRequestV2();
+        request.setSenderId(senderId);
+        request.setReceiverIds(receiverIds);
+        
+        BatchSendP2PMessageRequestV2.Message message = new BatchSendP2PMessageRequestV2.Message();
+        message.setMessageType(0); // Text message
+        message.setText(text);
+        request.setMessage(message);
+        
+        return request;
+    }
+    
+    /**
+     * Helper method to create a custom message request for batch sending
+     * 
+     * @param senderId sender account ID
+     * @param receiverIds list of receiver account IDs
+     * @param subType custom message subtype
+     * @param attachment custom message content
+     * @return BatchSendP2PMessageRequestV2 instance
+     */
+    public static BatchSendP2PMessageRequestV2 createCustomMessage(String senderId, List<String> receiverIds, 
+                                                                  Integer subType, Object attachment) {
+        BatchSendP2PMessageRequestV2 request = new BatchSendP2PMessageRequestV2();
+        request.setSenderId(senderId);
+        request.setReceiverIds(receiverIds);
+        
+        BatchSendP2PMessageRequestV2.Message message = new BatchSendP2PMessageRequestV2.Message();
+        message.setMessageType(100); // Custom message
+        message.setSubType(subType);
+        message.setAttachment(attachment);
+        request.setMessage(message);
+        
+        return request;
+    }
+
+    /**
+     * Test sending team read receipt
+     */
+    @Test
+    public void testSendTeamReadReceipt() throws YunxinSdkException {
+        if (services == null) return;
+        
+        System.out.println("\n==== Testing Team Read Receipt ====");
+        
+        // First create a team
+        String teamName = "Team Read Receipt Test " + System.currentTimeMillis();
+        String teamId = createAdvancedTeam(teamName);
+        if (teamId == null) {
+            System.out.println("Failed to create team for team read receipt test");
+            return;
+        }
+        
+        // Send a test message to the team
+        String conversationId = accountId1 + "|2|" + teamId;
+        String messageText = "Test message for read receipt at " + System.currentTimeMillis();
+        
+        SendMessageRequestV2 messageRequest = SendMessageRequestV2.createTextMessage(conversationId, messageText);
+        
+        // Add team option with mark as read enabled
+        SendMessageRequestV2.TeamOption teamOption = new SendMessageRequestV2.TeamOption();
+        teamOption.setMarkAsRead(true);
+        messageRequest.setTeamOption(teamOption);
+        
+        // Send the message
+        Result<SendMessageResponseV2> messageResult = messageService.sendMessage(messageRequest);
+        if (messageResult.getCode() != 200 || messageResult.getResponse() == null) {
+            System.out.println("Failed to send team message for read receipt test: " + messageResult.getMsg());
+            return;
+        }
+        
+        // Get message ID
+        Long messageServerId = messageResult.getResponse().getMessageServerId();
+        System.out.println("Sent message with ID: " + messageServerId);
+        
+        // Wait for message to be processed
+        try {
+            System.out.println("Waiting for message to be processed...");
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        // Create read receipt request
+        SendTeamReadReceiptRequestV2 request = new SendTeamReadReceiptRequestV2();
+        request.setFromAccountId(accountId2); // Message receiver marks it as read
+        request.setTeamId(teamId);
+        request.setMessageServerIds(Arrays.asList(messageServerId));
+        
+        // Send the read receipt
+        Result<SendTeamReadReceiptResponseV2> result = messageService.sendTeamReadReceipt(request);
+        
+        System.out.println("Send team read receipt response: " + JSON.toJSONString(result));
+        
+        // Verify result
+        Assert.assertEquals(200, result.getCode());
+        SendTeamReadReceiptResponseV2 response = result.getResponse();
+        
+        if (response != null) {
+            // Check success list
+            if (response.getSuccessList() != null && !response.getSuccessList().isEmpty()) {
+                System.out.println("Successfully marked " + response.getSuccessList().size() + " messages as read");
+                Assert.assertTrue("Message ID should be in success list", 
+                    response.getSuccessList().contains(messageServerId));
+            }
+            
+            // Check failed list
+            if (response.getFailedList() != null && !response.getFailedList().isEmpty()) {
+                System.out.println("Failed to mark " + response.getFailedList().size() + " messages as read");
+            }
+        }
+        
+        System.out.println("Team read receipt test completed");
     }
 } 

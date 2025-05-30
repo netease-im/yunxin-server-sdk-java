@@ -3,9 +3,13 @@ package com.netease.nim.im.server.sdk.v2.chatroom.request;
 import com.alibaba.fastjson2.annotation.JSONField;
 
 /**
- * Request for opening/closing a chatroom
+ * Request for updating chatroom status (open/close)
  * 
- * This class encapsulates the parameters required to open or close a chatroom.
+ * API: PATCH https://open.yunxinapi.com/im/v2/chatrooms/{room_id}/actions/update_status
+ * 
+ * This class encapsulates the parameters required to update a chatroom's status.
+ * After creation, a chatroom is open by default. The creator can close it to prevent
+ * users from joining, or reopen it later. This interface can also set auto-close policies.
  */
 public class UpdateChatroomStatusRequestV2 {
 
@@ -16,30 +20,27 @@ public class UpdateChatroomStatusRequestV2 {
     private String operatorAccountId;
     
     /**
-     * Whether the chatroom is open
-     * true (default): Open
-     * false: Closed
+     * Chatroom status
+     * true: open, false: closed
      */
     @JSONField(name = "valid")
     private Boolean valid;
     
     /**
-     * Chatroom auto-close policy
+     * Auto-close policy
      * 0: Don't auto-close
-     * 1: Close after a fixed time (regardless of whether users are still in the chatroom)
-     * 2: Close after the chatroom has been idle (no users) for a fixed time
+     * 1: Close after fixed time (regardless of users)
+     * 2: Close after being idle for a fixed time (when no users)
      * 
-     * Note: To use the auto-close feature, it must be enabled in the Yunxin console first.
+     * Note: To use this feature, it must be enabled in the Yunxin console first.
      */
     @JSONField(name = "delay_close_policy")
     private Integer delayClosePolicy;
     
     /**
-     * Delay seconds for auto-close
-     * Maximum value: 7 days (604800 seconds)
-     * 
-     * This parameter is only effective when delay_close_policy is 1 or 2.
-     * If not provided, the delay time configured in the console will be used.
+     * Time in seconds after which the chatroom will be closed
+     * Only effective when delay_close_policy is 1 or 2
+     * Maximum value: 7x24x3600 seconds (7 days)
      */
     @JSONField(name = "delay_seconds")
     private Long delaySeconds;
@@ -53,8 +54,8 @@ public class UpdateChatroomStatusRequestV2 {
     /**
      * Constructor with required parameters
      * 
-     * @param operatorAccountId The account ID of the operator (must be the chatroom creator)
-     * @param valid Whether the chatroom is open
+     * @param operatorAccountId The operator account ID (must be the chatroom creator)
+     * @param valid The chatroom status (true: open, false: closed)
      */
     public UpdateChatroomStatusRequestV2(String operatorAccountId, Boolean valid) {
         this.operatorAccountId = operatorAccountId;
@@ -64,10 +65,10 @@ public class UpdateChatroomStatusRequestV2 {
     /**
      * Constructor with all parameters
      * 
-     * @param operatorAccountId The account ID of the operator (must be the chatroom creator)
-     * @param valid Whether the chatroom is open
-     * @param delayClosePolicy The chatroom auto-close policy
-     * @param delaySeconds The delay seconds for auto-close
+     * @param operatorAccountId The operator account ID (must be the chatroom creator)
+     * @param valid The chatroom status (true: open, false: closed)
+     * @param delayClosePolicy The auto-close policy
+     * @param delaySeconds The time in seconds after which the chatroom will be closed
      */
     public UpdateChatroomStatusRequestV2(String operatorAccountId, Boolean valid, Integer delayClosePolicy, Long delaySeconds) {
         this.operatorAccountId = operatorAccountId;
@@ -95,54 +96,54 @@ public class UpdateChatroomStatusRequestV2 {
     }
     
     /**
-     * Get whether the chatroom is open
+     * Get the chatroom status
      * 
-     * @return Whether the chatroom is open
+     * @return The chatroom status
      */
     public Boolean getValid() {
         return valid;
     }
     
     /**
-     * Set whether the chatroom is open
+     * Set the chatroom status
      * 
-     * @param valid Whether the chatroom is open
+     * @param valid The chatroom status (true: open, false: closed)
      */
     public void setValid(Boolean valid) {
         this.valid = valid;
     }
     
     /**
-     * Get the chatroom auto-close policy
+     * Get the auto-close policy
      * 
-     * @return The chatroom auto-close policy
+     * @return The auto-close policy
      */
     public Integer getDelayClosePolicy() {
         return delayClosePolicy;
     }
     
     /**
-     * Set the chatroom auto-close policy
+     * Set the auto-close policy
      * 
-     * @param delayClosePolicy The chatroom auto-close policy
+     * @param delayClosePolicy The auto-close policy (0: Don't auto-close, 1: Fixed time close, 2: Idle time close)
      */
     public void setDelayClosePolicy(Integer delayClosePolicy) {
         this.delayClosePolicy = delayClosePolicy;
     }
     
     /**
-     * Get the delay seconds for auto-close
+     * Get the delay seconds
      * 
-     * @return The delay seconds for auto-close
+     * @return The delay seconds
      */
     public Long getDelaySeconds() {
         return delaySeconds;
     }
     
     /**
-     * Set the delay seconds for auto-close
+     * Set the delay seconds
      * 
-     * @param delaySeconds The delay seconds for auto-close
+     * @param delaySeconds The time in seconds after which the chatroom will be closed
      */
     public void setDelaySeconds(Long delaySeconds) {
         this.delaySeconds = delaySeconds;

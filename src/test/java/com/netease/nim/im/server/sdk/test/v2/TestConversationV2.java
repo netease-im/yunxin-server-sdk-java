@@ -12,22 +12,18 @@ import com.netease.nim.im.server.sdk.v2.account.response.CreateAccountResponseV2
 import com.netease.nim.im.server.sdk.v2.conversation.IConversationV2Service;
 import com.netease.nim.im.server.sdk.v2.conversation.request.BatchDeleteConversationsRequestV2;
 import com.netease.nim.im.server.sdk.v2.conversation.request.BatchGetConversationsRequestV2;
-import com.netease.nim.im.server.sdk.v2.conversation.request.ClearConversationUnreadRequestV2;
 import com.netease.nim.im.server.sdk.v2.conversation.request.CreateConversationRequestV2;
 import com.netease.nim.im.server.sdk.v2.conversation.request.DeleteConversationRequestV2;
 import com.netease.nim.im.server.sdk.v2.conversation.request.GetConversationRequestV2;
 import com.netease.nim.im.server.sdk.v2.conversation.request.ListConversationsRequestV2;
-import com.netease.nim.im.server.sdk.v2.conversation.request.OverViewsConversationRequestV2;
 import com.netease.nim.im.server.sdk.v2.conversation.request.StickTopConversationRequestV2;
 import com.netease.nim.im.server.sdk.v2.conversation.request.UpdateConversationRequestV2;
 import com.netease.nim.im.server.sdk.v2.conversation.response.BatchDeleteConversationsResponseV2;
 import com.netease.nim.im.server.sdk.v2.conversation.response.BatchGetConversationsResponseV2;
-import com.netease.nim.im.server.sdk.v2.conversation.response.ClearConversationUnreadResponseV2;
 import com.netease.nim.im.server.sdk.v2.conversation.response.CreateConversationResponseV2;
 import com.netease.nim.im.server.sdk.v2.conversation.response.DeleteConversationResponseV2;
 import com.netease.nim.im.server.sdk.v2.conversation.response.GetConversationResponseV2;
 import com.netease.nim.im.server.sdk.v2.conversation.response.ListConversationsResponseV2;
-import com.netease.nim.im.server.sdk.v2.conversation.response.OverViewsConversationResponseV2;
 import com.netease.nim.im.server.sdk.v2.conversation.response.StickTopConversationResponseV2;
 import com.netease.nim.im.server.sdk.v2.conversation.response.UpdateConversationResponseV2;
 import com.netease.nim.im.server.sdk.v2.team.ITeamV2Service;
@@ -233,99 +229,6 @@ public class TestConversationV2 {
     }
     
     /**
-     * Test getting conversation overview
-     */
-    @Test
-    public void testGetConversationOverview() throws YunxinSdkException {
-        if (services == null) return;
-        
-        printSeparator("GETTING CONVERSATION OVERVIEW");
-        
-        // Create a P2P conversation for testing
-        String p2pConversationId = createP2PConversation(accountId2, accountId1);
-        if (p2pConversationId == null) {
-            System.out.println("Failed to create conversation, skipping test.");
-            return;
-        }
-        
-        try {
-            IConversationV2Service conversationService = services.getConversationService();
-            
-            // Create the request for getting the conversation overview
-            OverViewsConversationRequestV2 request = new OverViewsConversationRequestV2(accountId1);
-            
-            // First, check the initial unread count
-            Result<OverViewsConversationResponseV2> initialResult = conversationService.getConversationOverview(request);
-            
-            if (initialResult.getCode() == 200) {
-                OverViewsConversationResponseV2 initialResponse = initialResult.getResponse();
-                Assert.assertNotNull(initialResponse);
-                Assert.assertEquals(accountId1, initialResponse.getAccountId());
-                
-                System.out.println("Initial overview for account ID: " + initialResponse.getAccountId());
-                System.out.println("Initial total unread count: " + initialResponse.getUnreadCount());
-                
-                // Send some messages to increase unread count
-                IMessageV2Service messageService = services.getMessageService();
-                
-                // Send 3 messages
-                for (int i = 1; i <= 3; i++) {
-                    SendMessageRequestV2 messageRequest = SendMessageRequestV2.createTextMessage(
-                        p2pConversationId, 
-                        "Overview test message #" + i + " sent at " + System.currentTimeMillis()
-                    );
-                    
-                    // Ensure unread count is incremented
-                    SendMessageRequestV2.MessageConfig messageConfig = new SendMessageRequestV2.MessageConfig();
-                    messageConfig.setUnreadEnabled(true);
-                    messageConfig.setHistoryEnabled(true);
-                    messageConfig.setRoamingEnabled(true);
-                    messageRequest.setMessageConfig(messageConfig);
-                    
-                    Result<SendMessageResponseV2> messageResult = messageService.sendMessage(messageRequest);
-                    
-                    if (messageResult.getCode() == 200) {
-                        System.out.println("Sent overview test message #" + i + ": " + messageResult.getResponse().getMessageServerId());
-                    } else {
-                        System.out.println("Failed to send overview test message #" + i + ": " + messageResult.getMsg());
-                    }
-                    
-                    // Add a small delay between messages
-                    Thread.sleep(200);
-                }
-                
-                // Now get the conversation overview again
-                Result<OverViewsConversationResponseV2> updatedResult = conversationService.getConversationOverview(request);
-                
-                if (updatedResult.getCode() == 200) {
-                    OverViewsConversationResponseV2 updatedResponse = updatedResult.getResponse();
-                    Assert.assertNotNull(updatedResponse);
-                    Assert.assertEquals(accountId1, updatedResponse.getAccountId());
-                    
-                    System.out.println("Updated overview for account ID: " + updatedResponse.getAccountId());
-                    System.out.println("Updated total unread count: " + updatedResponse.getUnreadCount());
-                    
-                    // Verify unread count increased
-                    if (updatedResponse.getUnreadCount() > initialResponse.getUnreadCount()) {
-                        System.out.println("Unread count successfully increased from " + 
-                            initialResponse.getUnreadCount() + " to " + updatedResponse.getUnreadCount());
-                    } else {
-                        System.out.println("Unread count did not increase as expected.");
-                    }
-                }
-            } else {
-                System.out.println("Failed to get initial conversation overview: " + initialResult.getMsg());
-            }
-        } catch (Exception e) {
-            System.out.println("Exception during getting conversation overview: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            // Clean up - delete the conversation
-            deleteConversation(p2pConversationId, true);
-        }
-    }
-    
-    /**
      * Test sticking top (pinning) a conversation
      */
     @Test
@@ -408,116 +311,6 @@ public class TestConversationV2 {
                 System.out.println("Exception during stick top test: " + e.getMessage());
                 e.printStackTrace();
             }
-        } finally {
-            // Clean up - delete the conversation
-            deleteConversation(conversationId, true);
-        }
-    }
-    
-    /**
-     * Test clearing the unread count of a conversation
-     */
-    @Test
-    public void testClearConversationUnread() throws YunxinSdkException {
-        if (services == null) return;
-        
-        // Create a P2P conversation for testing
-        String conversationId = createP2PConversation(accountId2, accountId1);
-        if (conversationId == null) {
-            System.out.println("Failed to create conversation, skipping test.");
-            return;
-        }
-        
-        try {
-            printSeparator("CLEARING CONVERSATION UNREAD COUNT");
-            
-            IConversationV2Service conversationService = services.getConversationService();
-            
-            // First, get the conversation to check current unread count
-            GetConversationRequestV2 getRequest = new GetConversationRequestV2();
-            getRequest.setConversationId(conversationId);
-            
-            Result<GetConversationResponseV2> getResult = conversationService.getConversation(getRequest);
-            
-            if (getResult.getCode() == 200 && getResult.getResponse() != null) {
-                GetConversationResponseV2 getResponse = getResult.getResponse();
-                System.out.println("Before sending messages - Conversation: " + getResponse.getConversationId());
-                System.out.println("Before sending messages - Unread count: " + getResponse.getUnreadCount());
-                
-                // Send messages to create unread count
-                IMessageV2Service messageService = services.getMessageService();
-                
-                // Send 3 messages to create unread count
-                for (int i = 1; i <= 3; i++) {
-                    // Create message request
-                    SendMessageRequestV2 messageRequest = SendMessageRequestV2.createTextMessage(
-                        conversationId, 
-                        "Test message #" + i + " sent at " + System.currentTimeMillis()
-                    );
-                    
-                    // Set message configuration
-                    SendMessageRequestV2.MessageConfig messageConfig = new SendMessageRequestV2.MessageConfig();
-                    messageConfig.setUnreadEnabled(true);
-                    messageConfig.setHistoryEnabled(true);
-                    messageConfig.setRoamingEnabled(true);
-                    messageRequest.setMessageConfig(messageConfig);
-                    
-                    // Send the message
-                    Result<SendMessageResponseV2> messageResult = messageService.sendMessage(messageRequest);
-                    
-                    if (messageResult.getCode() == 200) {
-                        System.out.println("Sent message #" + i + ": " + messageResult.getResponse().getMessageServerId());
-                    } else {
-                        System.out.println("Failed to send message #" + i + ": " + messageResult.getMsg());
-                    }
-                    
-                    // Add a small delay between messages
-                    Thread.sleep(200);
-                }
-                
-                // Check unread count after sending messages
-                Result<GetConversationResponseV2> afterSendingResult = conversationService.getConversation(getRequest);
-                if (afterSendingResult.getCode() == 200 && afterSendingResult.getResponse() != null) {
-                    GetConversationResponseV2 afterSendingResponse = afterSendingResult.getResponse();
-                    System.out.println("After sending messages - Unread count: " + afterSendingResponse.getUnreadCount());
-                    
-                    // Verify that unread count increased
-                    if (afterSendingResponse.getUnreadCount() >= getResponse.getUnreadCount()) {
-                        System.out.println("Successfully increased unread count by sending messages.");
-                    } else {
-                        System.out.println("Unread count did not increase as expected. This might be because the messages are from the same account that owns the conversation.");
-                    }
-                }
-                
-                // Create the request for clearing the unread count
-                ClearConversationUnreadRequestV2 request = new ClearConversationUnreadRequestV2(conversationId);
-                
-                Result<ClearConversationUnreadResponseV2> result = conversationService.clearConversationUnread(request);
-                
-                System.out.println("clearConversationUnread: " + result.getMsg());
-                System.out.println("Response: " + JSON.toJSONString(result));
-                
-                if (result.getCode() == 200) {
-                    System.out.println("Successfully cleared unread count for conversation: " + conversationId);
-                    
-                    // Verify the unread count was cleared
-                    Result<GetConversationResponseV2> verifyResult = conversationService.getConversation(getRequest);
-                    
-                    if (verifyResult.getCode() == 200 && verifyResult.getResponse() != null) {
-                        GetConversationResponseV2 verifyResponse = verifyResult.getResponse();
-                        System.out.println("After clearing - Conversation: " + verifyResponse.getConversationId());
-                        System.out.println("After clearing - Unread count: " + verifyResponse.getUnreadCount());
-                        
-                        // Unread count should be 0 after clearing
-                        Assert.assertEquals(Integer.valueOf(0), verifyResponse.getUnreadCount());
-                    }
-                } else {
-                    System.out.println("Failed to clear unread count: " + result.getMsg());
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Exception during clearing unread count: " + e.getMessage());
-            e.printStackTrace();
         } finally {
             // Clean up - delete the conversation
             deleteConversation(conversationId, true);

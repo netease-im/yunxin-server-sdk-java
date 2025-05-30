@@ -17,13 +17,11 @@ import com.netease.nim.im.server.sdk.v2.friend.request.ListFriendsRequestV2;
 import com.netease.nim.im.server.sdk.v2.friend.request.UpdateFriendRequestV2;
 import com.netease.nim.im.server.sdk.v2.friend.response.AddFriendResponseV2;
 import com.netease.nim.im.server.sdk.v2.friend.response.DeleteFriendResponseV2;
-import com.netease.nim.im.server.sdk.v2.friend.response.FriendItemV2;
 import com.netease.nim.im.server.sdk.v2.friend.response.GetFriendResponseV2;
 import com.netease.nim.im.server.sdk.v2.friend.response.HandleFriendAdditionResponseV2;
 import com.netease.nim.im.server.sdk.v2.friend.response.ListFriendsResponseV2;
 import com.netease.nim.im.server.sdk.v2.friend.response.UpdateFriendResponseV2;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -314,10 +312,10 @@ public class TestFriendV2 {
         }
         
         // Print friend list
-        List<FriendItemV2> friends = response.getItems();
+        List<ListFriendsResponseV2.FriendItemV2> friends = response.getItems();
         if (friends != null) {
             System.out.println("Found " + friends.size() + " friends:");
-            for (FriendItemV2 friend : friends) {
+            for (ListFriendsResponseV2.FriendItemV2 friend : friends) {
                 System.out.println(" - Friend account: " + friend.getFriendAccountId());
                 if (friend.getAlias() != null) {
                     System.out.println("   Alias: " + friend.getAlias());
@@ -342,7 +340,7 @@ public class TestFriendV2 {
             Result<ListFriendsResponseV2> nextResult = friendService.listFriends(nextRequest);
             
             if (nextResult.getCode() == 200 && nextResult.getResponse() != null) {
-                List<FriendItemV2> nextFriends = nextResult.getResponse().getItems();
+                List<ListFriendsResponseV2.FriendItemV2> nextFriends = nextResult.getResponse().getItems();
                 if (nextFriends != null) {
                     System.out.println("Next page has " + nextFriends.size() + " more friends");
                 }

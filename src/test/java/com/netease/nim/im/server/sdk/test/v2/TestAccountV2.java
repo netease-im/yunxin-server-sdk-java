@@ -11,6 +11,7 @@ import com.netease.nim.im.server.sdk.v2.account.request.CreateAccountRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.request.DisableAccountRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.request.GetAccountDetailsRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.request.KickAccountRequestV2;
+import com.netease.nim.im.server.sdk.v2.account.request.RefreshTokenRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.request.SetPushConfigRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.request.UpdateAccountRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.response.BatchQueryAccountsResponseV2;
@@ -18,6 +19,7 @@ import com.netease.nim.im.server.sdk.v2.account.response.CreateAccountResponseV2
 import com.netease.nim.im.server.sdk.v2.account.response.DisableAccountResponseV2;
 import com.netease.nim.im.server.sdk.v2.account.response.GetAccountDetailsResponseV2;
 import com.netease.nim.im.server.sdk.v2.account.response.KickAccountResponseV2;
+import com.netease.nim.im.server.sdk.v2.account.response.RefreshTokenResponseV2;
 import com.netease.nim.im.server.sdk.v2.account.response.SetPushConfigResponseV2;
 import com.netease.nim.im.server.sdk.v2.account.response.UpdateAccountResponseV2;
 import org.junit.Assert;
@@ -94,6 +96,12 @@ public class TestAccountV2 {
     public void testKickAccount() throws YunxinSdkException {
         if (services == null) return;
         kickAccount();
+    }
+    
+    @Test
+    public void testRefreshToken() throws YunxinSdkException {
+        if (services == null) return;
+        refreshToken(accountId);
     }
     
     /**
@@ -332,6 +340,36 @@ public class TestAccountV2 {
         KickAccountResponseV2 response = result.getResponse();
         if (response.getSuccessList() != null && !response.getSuccessList().isEmpty()) {
             System.out.println("Successfully kicked devices: " + response.getSuccessList().size());
+        }
+    }
+    
+    /**
+     * Test refresh token operation
+     * 
+     * @param accountId The account ID to refresh token for
+     * @throws YunxinSdkException if an error occurs
+     */
+    private static void refreshToken(String accountId) throws YunxinSdkException {
+        RefreshTokenRequestV2 request = new RefreshTokenRequestV2();
+        request.setAccountId(accountId);
+        
+        IAccountV2Service accountService = services.getAccountService();
+        Result<RefreshTokenResponseV2> result = accountService.refreshToken(request);
+        System.out.println("refreshToken:" + result.getMsg());
+        
+        // Assertions
+        Assert.assertEquals(200, result.getCode());
+        Assert.assertNotNull(result.getResponse());
+        Assert.assertEquals(accountId, result.getResponse().getAccountId());
+        Assert.assertNotNull(result.getResponse().getToken());
+        
+        // Print the new token
+        System.out.println("New token: " + result.getResponse().getToken());
+        
+        // Check configuration if available
+        RefreshTokenResponseV2.Configuration config = result.getResponse().getConfiguration();
+        if (config != null) {
+            System.out.println("Account enabled: " + config.getEnabled());
         }
     }
 } 

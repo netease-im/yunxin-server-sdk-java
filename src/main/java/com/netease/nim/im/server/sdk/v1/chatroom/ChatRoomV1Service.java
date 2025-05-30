@@ -8,11 +8,9 @@ import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
 import com.netease.nim.im.server.sdk.core.YunxinApiResponse;
 import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.v1.annotation.YunxinParamUtils;
-import com.netease.nim.im.server.sdk.v1.chatroom.reponse.*;
+import com.netease.nim.im.server.sdk.v1.chatroom.response.*;
 import com.netease.nim.im.server.sdk.v1.chatroom.request.*;
-import com.netease.nim.im.server.sdk.v1.team.response.QueryTeamResponseV1;
 
-import java.util.List;
 import java.util.Map;
 
 /**
