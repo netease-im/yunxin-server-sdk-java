@@ -42,9 +42,8 @@ public class ListBlockContactsRequestV2 {
      * @param accountId the account ID to set
      * @return this request for chaining
      */
-    public ListBlockContactsRequestV2 setAccountId(String accountId) {
+    public void  setAccountId(String accountId) {
         this.accountId = accountId;
-        return this;
     }
     
     /**
@@ -78,8 +77,7 @@ public class ListBlockContactsRequestV2 {
      * @param limit the limit to set
      * @return this request for chaining
      */
-    public ListBlockContactsRequestV2 setLimit(Integer limit) {
+    public void setLimit(Integer limit) {
         this.limit = limit;
-        return this;
     }
 } 

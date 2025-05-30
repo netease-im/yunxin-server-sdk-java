@@ -17,6 +17,10 @@ import com.netease.nim.im.server.sdk.v2.chatroom_queue.ChatroomQueueV2Service;
 import com.netease.nim.im.server.sdk.v2.chatroom_queue.IChatroomQueueV2Service;
 import com.netease.nim.im.server.sdk.v2.conversation.ConversationV2Service;
 import com.netease.nim.im.server.sdk.v2.conversation.IConversationV2Service;
+import com.netease.nim.im.server.sdk.v2.conversation_group.ConversationGroupV2Service;
+import com.netease.nim.im.server.sdk.v2.conversation_group.IConversationGroupV2Service;
+import com.netease.nim.im.server.sdk.v2.conversation_unread.ConversationUnreadV2Service;
+import com.netease.nim.im.server.sdk.v2.conversation_unread.IConversationUnreadV2Service;
 import com.netease.nim.im.server.sdk.v2.system_notification.CustomNotificationV2Service;
 import com.netease.nim.im.server.sdk.v2.system_notification.ICustomNotificationV2Service;
 import com.netease.nim.im.server.sdk.v2.friend.FriendV2Service;
@@ -52,6 +56,8 @@ public class YunxinV2ApiServices {
     private final IChatroomQueueV2Service chatroomQueueService;
     private final IMessageV2Service messageService;
     private final IConversationV2Service conversationService;
+    private final IConversationGroupV2Service conversationGroupService;
+    private final IConversationUnreadV2Service conversationUnreadService;
     private final IMuteV2Service muteService;
     private final IBlockV2Service blockService;
     private final IBroadcastV2Service broadcastService;
@@ -71,6 +77,8 @@ public class YunxinV2ApiServices {
         this.chatroomQueueService = new ChatroomQueueV2Service(yunxinApiHttpClient);
         this.messageService = new MessageV2Service(yunxinApiHttpClient);
         this.conversationService = new ConversationV2Service(yunxinApiHttpClient);
+        this.conversationGroupService = new ConversationGroupV2Service(yunxinApiHttpClient);
+        this.conversationUnreadService = new ConversationUnreadV2Service(yunxinApiHttpClient);
         this.muteService = new MuteV2Service(yunxinApiHttpClient);
         this.blockService = new BlockV2Service(yunxinApiHttpClient);
         this.broadcastService = new BroadcastV2Service(yunxinApiHttpClient);
@@ -121,6 +129,14 @@ public class YunxinV2ApiServices {
     
     public IConversationV2Service getConversationService() {
         return conversationService;
+    }
+    
+    public IConversationGroupV2Service getConversationGroupService() {
+        return conversationGroupService;
+    }
+    
+    public IConversationUnreadV2Service getConversationUnreadService() {
+        return conversationUnreadService;
     }
     
     public IMuteV2Service getMuteService() {

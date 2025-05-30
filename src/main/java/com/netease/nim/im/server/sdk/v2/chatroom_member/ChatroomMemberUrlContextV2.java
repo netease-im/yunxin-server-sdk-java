@@ -84,4 +84,9 @@ public class ChatroomMemberUrlContextV2 {
      * Query virtual members in chatroom endpoint
      */
     static final String QUERY_VIRTUAL_MEMBERS = "/im/v2/room_members/actions/virtual_members";
+    
+    /**
+     * Query chat banned members endpoint
+     */
+    static final String QUERY_CHAT_BANNED = "/im/v2/room_members/{room_id}/actions/chat_banned";
 } 

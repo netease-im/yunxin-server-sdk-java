@@ -9,6 +9,7 @@ import com.netease.nim.im.server.sdk.v2.account.request.GetAccountDetailsRequest
 import com.netease.nim.im.server.sdk.v2.account.request.KickAccountRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.request.SetPushConfigRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.request.UpdateAccountRequestV2;
+import com.netease.nim.im.server.sdk.v2.account.request.RefreshTokenRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.response.BatchQueryAccountsResponseV2;
 import com.netease.nim.im.server.sdk.v2.account.response.CreateAccountResponseV2;
 import com.netease.nim.im.server.sdk.v2.account.response.DisableAccountResponseV2;
@@ -16,6 +17,7 @@ import com.netease.nim.im.server.sdk.v2.account.response.GetAccountDetailsRespon
 import com.netease.nim.im.server.sdk.v2.account.response.KickAccountResponseV2;
 import com.netease.nim.im.server.sdk.v2.account.response.SetPushConfigResponseV2;
 import com.netease.nim.im.server.sdk.v2.account.response.UpdateAccountResponseV2;
+import com.netease.nim.im.server.sdk.v2.account.response.RefreshTokenResponseV2;
 
 /**
  * Created by caojiajun on 2024/12/11
@@ -78,4 +80,13 @@ public interface IAccountV2Service {
      * @throws YunxinSdkException exception on network error
      */
     Result<KickAccountResponseV2> kickAccount(KickAccountRequestV2 request) throws YunxinSdkException;
+
+    /**
+     * Refresh token for an account
+     * 
+     * @param request refresh token request
+     * @return Result with refresh token response
+     * @throws YunxinSdkException if an error occurs
+     */
+    Result<RefreshTokenResponseV2> refreshToken(RefreshTokenRequestV2 request) throws YunxinSdkException;
 }

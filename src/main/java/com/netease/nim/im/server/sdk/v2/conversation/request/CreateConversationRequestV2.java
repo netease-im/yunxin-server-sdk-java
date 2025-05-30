@@ -37,11 +37,9 @@ public class CreateConversationRequestV2 {
     /**
      * Set the conversation ID (required)
      * @param conversationId the conversation ID to set
-     * @return this request for chaining
      */
-    public CreateConversationRequestV2 setConversationId(String conversationId) {
+    public void setConversationId(String conversationId) {
         this.conversationId = conversationId;
-        return this;
     }
     
     /**

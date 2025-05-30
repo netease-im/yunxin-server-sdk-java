@@ -2,7 +2,7 @@ package com.netease.nim.im.server.sdk.v1.chatroom;
 
 import com.netease.nim.im.server.sdk.core.Result;
 import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
-import com.netease.nim.im.server.sdk.v1.chatroom.reponse.*;
+import com.netease.nim.im.server.sdk.v1.chatroom.response.*;
 import com.netease.nim.im.server.sdk.v1.chatroom.request.*;
 
 /**

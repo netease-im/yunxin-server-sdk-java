@@ -11,6 +11,12 @@ import java.util.List;
 public class UpdateChatroomInfoRequestV2 {
 
     /**
+     * Chatroom ID
+     */
+    @JSONField(name = "room_id")
+    private Long roomId;
+    
+    /**
      * Chatroom name
      * Maximum length: 128 characters
      * Subject to anti-spam checks
@@ -198,6 +204,24 @@ public class UpdateChatroomInfoRequestV2 {
         public void setBusinessId(String businessId) {
             this.businessId = businessId;
         }
+    }
+    
+    /**
+     * Get the chatroom ID
+     * 
+     * @return The chatroom ID
+     */
+    public Long getRoomId() {
+        return roomId;
+    }
+    
+    /**
+     * Set the chatroom ID
+     * 
+     * @param roomId The chatroom ID
+     */
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
     }
     
     /**

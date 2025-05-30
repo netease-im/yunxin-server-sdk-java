@@ -4,35 +4,18 @@ import com.alibaba.fastjson2.annotation.JSONField;
 import java.util.List;
 
 /**
- * Response for querying chat-banned members in a chatroom
- * This represents members who are banned from chatting but still in the chatroom
+ * Response for querying the list of banned members in a chatroom
+ * 
+ * This class encapsulates the response containing the list of banned members in a chatroom.
  */
 public class QueryChatBannedResponseV2 {
-    
+
     /**
-     * Total number of chat-banned members in the chatroom
+     * List of banned members
      */
-    @JSONField(name = "total")
-    private Integer total;
-    
-    /**
-     * Page number for pagination
-     */
-    @JSONField(name = "current_page")
-    private Integer currentPage;
-    
-    /**
-     * Number of items per page
-     */
-    @JSONField(name = "page_size")
-    private Integer pageSize;
-    
-    /**
-     * List of chat-banned members
-     */
-    @JSONField(name = "banned_members")
-    private List<ChatBannedMemberInfoV2> bannedMembers;
-    
+    @JSONField(name = "items")
+    private List<BannedMember> items;
+
     /**
      * Default constructor
      */
@@ -40,306 +23,103 @@ public class QueryChatBannedResponseV2 {
     }
 
     /**
-     * Get total count of chat-banned members
-     * 
-     * @return total count
+     * Get the list of banned members
+     *
+     * @return the list of banned members
      */
-    public Integer getTotal() {
-        return total;
+    public List<BannedMember> getItems() {
+        return items;
     }
 
     /**
-     * Set total count of chat-banned members
-     * 
-     * @param total total count
+     * Set the list of banned members
+     *
+     * @param items the list of banned members
      */
-    public void setTotal(Integer total) {
-        this.total = total;
+    public void setItems(List<BannedMember> items) {
+        this.items = items;
     }
 
     /**
-     * Get current page number
-     * 
-     * @return current page number
+     * Class representing a banned member in a chatroom
      */
-    public Integer getCurrentPage() {
-        return currentPage;
-    }
-
-    /**
-     * Set current page number
-     * 
-     * @param currentPage current page number
-     */
-    public void setCurrentPage(Integer currentPage) {
-        this.currentPage = currentPage;
-    }
-
-    /**
-     * Get page size
-     * 
-     * @return page size
-     */
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    /**
-     * Set page size
-     * 
-     * @param pageSize page size
-     */
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    /**
-     * Get list of chat-banned members
-     * 
-     * @return list of chat-banned members
-     */
-    public List<ChatBannedMemberInfoV2> getBannedMembers() {
-        return bannedMembers;
-    }
-
-    /**
-     * Set list of chat-banned members
-     * 
-     * @param bannedMembers list of chat-banned members
-     */
-    public void setBannedMembers(List<ChatBannedMemberInfoV2> bannedMembers) {
-        this.bannedMembers = bannedMembers;
-    }
-    
-    /**
-     * Information about a member banned from chatting
-     */
-    public static class ChatBannedMemberInfoV2 {
-        
+    public static class BannedMember {
         /**
-         * Account ID of the chat-banned member
+         * Member account ID
          */
         @JSONField(name = "account_id")
         private String accountId;
-        
+
         /**
          * Member nickname in the chatroom
          */
-        @JSONField(name = "nick")
-        private String nick;
-        
+        @JSONField(name = "room_nick")
+        private String roomNick;
+
         /**
-         * Member avatar URL
+         * Member avatar in the chatroom
          */
-        @JSONField(name = "avatar")
-        private String avatar;
-        
-        /**
-         * Member role in the chatroom
-         * 1: Owner/Creator
-         * 2: Administrator
-         * 3: Regular member
-         * 10: Guest
-         */
-        @JSONField(name = "member_role")
-        private Integer memberRole;
-        
-        /**
-         * Join time of the member (Unix timestamp in seconds)
-         */
-        @JSONField(name = "join_time")
-        private Long joinTime;
-        
-        /**
-         * Time when the member was banned from chatting (Unix timestamp in seconds)
-         */
-        @JSONField(name = "chat_banned_time")
-        private Long chatBannedTime;
-        
-        /**
-         * Ban operator account ID
-         */
-        @JSONField(name = "operator_account_id")
-        private String operatorAccountId;
-        
-        /**
-         * Whether this is a temporary chat ban
-         */
-        @JSONField(name = "is_temporary")
-        private Boolean isTemporary;
-        
-        /**
-         * Mute (chat ban) duration in seconds, only set if isTemporary is true
-         */
-        @JSONField(name = "mute_duration")
-        private Long muteDuration;
-        
+        @JSONField(name = "room_avatar")
+        private String roomAvatar;
+
         /**
          * Default constructor
          */
-        public ChatBannedMemberInfoV2() {
+        public BannedMember() {
         }
 
         /**
-         * Get account ID
-         * 
-         * @return account ID
+         * Get the member account ID
+         *
+         * @return the member account ID
          */
         public String getAccountId() {
             return accountId;
         }
 
         /**
-         * Set account ID
-         * 
-         * @param accountId account ID
+         * Set the member account ID
+         *
+         * @param accountId the member account ID
          */
         public void setAccountId(String accountId) {
             this.accountId = accountId;
         }
 
         /**
-         * Get member nickname
-         * 
-         * @return member nickname
+         * Get the member nickname in the chatroom
+         *
+         * @return the member nickname in the chatroom
          */
-        public String getNick() {
-            return nick;
+        public String getRoomNick() {
+            return roomNick;
         }
 
         /**
-         * Set member nickname
-         * 
-         * @param nick member nickname
+         * Set the member nickname in the chatroom
+         *
+         * @param roomNick the member nickname in the chatroom
          */
-        public void setNick(String nick) {
-            this.nick = nick;
+        public void setRoomNick(String roomNick) {
+            this.roomNick = roomNick;
         }
 
         /**
-         * Get member avatar URL
-         * 
-         * @return member avatar URL
+         * Get the member avatar in the chatroom
+         *
+         * @return the member avatar in the chatroom
          */
-        public String getAvatar() {
-            return avatar;
+        public String getRoomAvatar() {
+            return roomAvatar;
         }
 
         /**
-         * Set member avatar URL
-         * 
-         * @param avatar member avatar URL
+         * Set the member avatar in the chatroom
+         *
+         * @param roomAvatar the member avatar in the chatroom
          */
-        public void setAvatar(String avatar) {
-            this.avatar = avatar;
-        }
-
-        /**
-         * Get member role
-         * 
-         * @return member role
-         */
-        public Integer getMemberRole() {
-            return memberRole;
-        }
-
-        /**
-         * Set member role
-         * 
-         * @param memberRole member role
-         */
-        public void setMemberRole(Integer memberRole) {
-            this.memberRole = memberRole;
-        }
-
-        /**
-         * Get join time
-         * 
-         * @return join time
-         */
-        public Long getJoinTime() {
-            return joinTime;
-        }
-
-        /**
-         * Set join time
-         * 
-         * @param joinTime join time
-         */
-        public void setJoinTime(Long joinTime) {
-            this.joinTime = joinTime;
-        }
-
-        /**
-         * Get chat ban time
-         * 
-         * @return chat ban time
-         */
-        public Long getChatBannedTime() {
-            return chatBannedTime;
-        }
-
-        /**
-         * Set chat ban time
-         * 
-         * @param chatBannedTime chat ban time
-         */
-        public void setChatBannedTime(Long chatBannedTime) {
-            this.chatBannedTime = chatBannedTime;
-        }
-
-        /**
-         * Get ban operator account ID
-         * 
-         * @return ban operator account ID
-         */
-        public String getOperatorAccountId() {
-            return operatorAccountId;
-        }
-
-        /**
-         * Set ban operator account ID
-         * 
-         * @param operatorAccountId ban operator account ID
-         */
-        public void setOperatorAccountId(String operatorAccountId) {
-            this.operatorAccountId = operatorAccountId;
-        }
-
-        /**
-         * Get whether this is a temporary chat ban
-         * 
-         * @return whether this is a temporary chat ban
-         */
-        public Boolean getIsTemporary() {
-            return isTemporary;
-        }
-
-        /**
-         * Set whether this is a temporary chat ban
-         * 
-         * @param isTemporary whether this is a temporary chat ban
-         */
-        public void setIsTemporary(Boolean isTemporary) {
-            this.isTemporary = isTemporary;
-        }
-
-        /**
-         * Get mute (chat ban) duration in seconds
-         * 
-         * @return mute duration
-         */
-        public Long getMuteDuration() {
-            return muteDuration;
-        }
-
-        /**
-         * Set mute (chat ban) duration in seconds
-         * 
-         * @param muteDuration mute duration
-         */
-        public void setMuteDuration(Long muteDuration) {
-            this.muteDuration = muteDuration;
+        public void setRoomAvatar(String roomAvatar) {
+            this.roomAvatar = roomAvatar;
         }
     }
 } 

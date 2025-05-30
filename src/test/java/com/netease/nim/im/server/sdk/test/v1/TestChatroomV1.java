@@ -9,7 +9,7 @@ import com.netease.nim.im.server.sdk.v1.account.IAccountV1Service;
 import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequestV1;
 import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponseV1;
 import com.netease.nim.im.server.sdk.v1.chatroom.IChatRoomV1Service;
-import com.netease.nim.im.server.sdk.v1.chatroom.reponse.*;
+import com.netease.nim.im.server.sdk.v1.chatroom.response.*;
 import com.netease.nim.im.server.sdk.v1.chatroom.request.*;
 import org.junit.Assert;
 import org.junit.BeforeClass;

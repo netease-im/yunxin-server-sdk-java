@@ -62,9 +62,10 @@ public class TestBlockV2 {
     public void testAddBlockContact() throws YunxinSdkException {
         if (services == null) return;
         
-        AddBlockContactRequestV2 request = new AddBlockContactRequestV2()
-            .setAccountId(accountId)
-            .setContactAccountId(contactAccountId);
+        AddBlockContactRequestV2 request = new AddBlockContactRequestV2();
+        request.setAccountId(accountId);
+        request.setContactAccountId(contactAccountId);
+
         
         Result<AddBlockContactResponseV2> result = blockService.addBlockContact(request);
         
@@ -80,11 +81,11 @@ public class TestBlockV2 {
         
         // First ensure there's a blocked contact by adding one
         testAddBlockContact();
-        
-        ListBlockContactsRequestV2 request = new ListBlockContactsRequestV2()
-            .setAccountId(accountId)
-            .setLimit(10);
-        
+
+        ListBlockContactsRequestV2 request = new ListBlockContactsRequestV2();
+        request.setAccountId(accountId);
+        request.setLimit(10);
+
         Result<ListBlockContactsResponseV2> result = blockService.listBlockContacts(request);
         
         System.out.println("listBlockContacts: " + result.getMsg());
@@ -141,9 +142,9 @@ public class TestBlockV2 {
         testRemoveBlockContact();
         
         // Now verify it's not in the list anymore
-        ListBlockContactsRequestV2 request = new ListBlockContactsRequestV2()
-            .setAccountId(accountId)
-            .setLimit(100);
+        ListBlockContactsRequestV2 request = new ListBlockContactsRequestV2();
+        request.setAccountId(accountId);
+        request.setLimit(100);
         
         Result<ListBlockContactsResponseV2> result = blockService.listBlockContacts(request);
         

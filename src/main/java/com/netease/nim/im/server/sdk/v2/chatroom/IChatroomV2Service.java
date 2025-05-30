@@ -7,7 +7,9 @@ import com.netease.nim.im.server.sdk.v2.chatroom.request.GetChatroomAddressReque
 import com.netease.nim.im.server.sdk.v2.chatroom.request.GetChatroomInfoRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.request.ListFixedMembersRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.request.ListOnlineMembersRequestV2;
+import com.netease.nim.im.server.sdk.v2.chatroom.request.QueryOpenChatroomsRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.request.ToggleChatroomMuteRequestV2;
+import com.netease.nim.im.server.sdk.v2.chatroom.request.ToggleInOutNotificationRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.request.UpdateChatroomInfoRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.request.UpdateChatroomStatusRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.response.CreateChatroomResponseV2;
@@ -18,6 +20,8 @@ import com.netease.nim.im.server.sdk.v2.chatroom.response.ListOnlineMembersRespo
 import com.netease.nim.im.server.sdk.v2.chatroom.response.QueryOpenChatroomsResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.response.ToggleChatroomMuteResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom.response.ToggleInOutNotificationResponseV2;
+import com.netease.nim.im.server.sdk.v2.chatroom.response.UpdateChatroomInfoResponseV2;
+import com.netease.nim.im.server.sdk.v2.chatroom.response.UpdateChatroomStatusResponseV2;
 
 /**
  * Interface for Chatroom V2 operations
@@ -92,13 +96,12 @@ public interface IChatroomV2Service {
      * - Chatroom names, announcements, and extensions are subject to anti-spam checks.
      * - You can optionally send a notification about the update to chatroom members.
      * 
-     * @param roomId the ID of the chatroom to update
-     * @param request request containing the fields to update
+     * @param request request containing the room ID and the fields to update
      * @return result containing the updated chatroom information
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if roomId is null or invalid, or if any fields exceed their length limits
      */
-    Result<GetChatroomInfoResponseV2> updateChatroomInfo(Long roomId, UpdateChatroomInfoRequestV2 request) throws YunxinSdkException;
+    Result<UpdateChatroomInfoResponseV2> updateChatroomInfo(UpdateChatroomInfoRequestV2 request) throws YunxinSdkException;
     
     /**
      * Update chatroom status (open/close)
@@ -121,7 +124,7 @@ public interface IChatroomV2Service {
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if roomId is null or invalid, or if required parameters are missing
      */
-    Result<GetChatroomInfoResponseV2> updateChatroomStatus(Long roomId, UpdateChatroomStatusRequestV2 request) throws YunxinSdkException;
+    Result<UpdateChatroomStatusResponseV2> updateChatroomStatus(Long roomId, UpdateChatroomStatusRequestV2 request) throws YunxinSdkException;
     
     /**
      * Toggle chatroom mute status (global mute)
@@ -158,13 +161,12 @@ public interface IChatroomV2Service {
      * - User disconnecting from the chatroom
      * - User entering the chatroom
      * 
-     * @param roomId the ID of the chatroom to toggle in/out notification
-     * @param inOutNotification whether to enable (true) or disable (false) entry/exit notifications
+     * @param request request containing the room ID and in/out notification flag
      * @return result indicating success or failure
      * @throws YunxinSdkException if a network or server error occurs
-     * @throws IllegalArgumentException if roomId is null or inOutNotification is null
+     * @throws IllegalArgumentException if required parameters are missing or invalid
      */
-    Result<ToggleInOutNotificationResponseV2> toggleInOutNotification(Long roomId, Boolean inOutNotification) throws YunxinSdkException;
+    Result<ToggleInOutNotificationResponseV2> toggleInOutNotification(ToggleInOutNotificationRequestV2 request) throws YunxinSdkException;
     
     /**
      * Query open chatrooms
@@ -174,13 +176,17 @@ public interface IChatroomV2Service {
      * This method retrieves a list of open chatrooms created by a specific account.
      * A chatroom is considered "open" when its status is set to valid.
      * 
-     * @param creatorAccountId the account ID of the chatroom creator
+     * @param request request containing the creator account ID
      * @return result containing a list of open chatroom IDs
      * @throws YunxinSdkException if a network or server error occurs
-     * @throws IllegalArgumentException if creatorAccountId is null or empty
+     * @throws IllegalArgumentException if required parameters are missing or invalid
      */
-    Result<QueryOpenChatroomsResponseV2> queryOpenChatrooms(String creatorAccountId) throws YunxinSdkException;
+    Result<QueryOpenChatroomsResponseV2> queryOpenChatrooms(QueryOpenChatroomsRequestV2 request) throws YunxinSdkException;
     
+    /**
+     * Query open chatrooms (legacy method)
+     * 
+
     /**
      * List online chatroom members
      * 

@@ -42,11 +42,9 @@ public class BatchDeleteConversationsRequestV2 {
      * Set the list of conversation IDs (required)
      * 
      * @param conversationIds list of conversation IDs to set
-     * @return this instance for chaining
      */
-    public BatchDeleteConversationsRequestV2 setConversationIds(List<String> conversationIds) {
+    public void setConversationIds(List<String> conversationIds) {
         this.conversationIds = conversationIds;
-        return this;
     }
 
     /**
@@ -62,10 +60,8 @@ public class BatchDeleteConversationsRequestV2 {
      * Set whether to clear message history
      * 
      * @param clearMessage true to delete message history, false to keep it
-     * @return this instance for chaining
      */
-    public BatchDeleteConversationsRequestV2 setClearMessage(Boolean clearMessage) {
+    public void setClearMessage(Boolean clearMessage) {
         this.clearMessage = clearMessage;
-        return this;
     }
 } 

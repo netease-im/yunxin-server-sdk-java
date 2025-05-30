@@ -105,6 +105,12 @@ public class SendMessageRequestV2 {
     @JSONField(name = "extension")
     private String extension;
 
+    /**
+     * AI digital human configuration parameters
+     */
+    @JSONField(name = "ai_params")
+    private AIParams aiParams;
+
     // Inner classes for nested objects
 
     /**
@@ -881,6 +887,164 @@ public class SendMessageRequestV2 {
     }
 
     /**
+     * AI digital human configuration parameters
+     */
+    public static class AIParams {
+        /**
+         * Digital human account ID, corresponding to pre-configured digital human in console
+         */
+        @JSONField(name = "account")
+        private String account;
+        
+        /**
+         * Content of query request sent to digital human
+         * If empty and the message is a text message, the text field from the message is extracted
+         * If empty and not a text message, error 107336 is returned
+         */
+        @JSONField(name = "content")
+        private AIContent content;
+        
+        /**
+         * List of messages for digital human to trace back
+         */
+        @JSONField(name = "messages")
+        private List<AIMessage> messages;
+        
+        /**
+         * Variables used to fill placeholders in prompts
+         * Required if variables are defined in the prompt
+         */
+        @JSONField(name = "prompt_variables")
+        private Object promptVariables;
+        
+        /**
+         * Model-related configuration parameters, different models have different configuration types
+         */
+        @JSONField(name = "config")
+        private Object config;
+        
+        public String getAccount() {
+            return account;
+        }
+        
+        public void setAccount(String account) {
+            this.account = account;
+        }
+        
+        public AIContent getContent() {
+            return content;
+        }
+        
+        public void setContent(AIContent content) {
+            this.content = content;
+        }
+        
+        public List<AIMessage> getMessages() {
+            return messages;
+        }
+        
+        public void setMessages(List<AIMessage> messages) {
+            this.messages = messages;
+        }
+        
+        public Object getPromptVariables() {
+            return promptVariables;
+        }
+        
+        public void setPromptVariables(Object promptVariables) {
+            this.promptVariables = promptVariables;
+        }
+        
+        public Object getConfig() {
+            return config;
+        }
+        
+        public void setConfig(Object config) {
+            this.config = config;
+        }
+    }
+    
+    /**
+     * AI query content
+     */
+    public static class AIContent {
+        /**
+         * Message content
+         */
+        @JSONField(name = "msg")
+        private String msg;
+        
+        /**
+         * Message type, currently only supports 0 for text
+         */
+        @JSONField(name = "type")
+        private Integer type;
+        
+        public String getMsg() {
+            return msg;
+        }
+        
+        public void setMsg(String msg) {
+            this.msg = msg;
+        }
+        
+        public Integer getType() {
+            return type;
+        }
+        
+        public void setType(Integer type) {
+            this.type = type;
+        }
+    }
+    
+    /**
+     * AI message for conversation history
+     */
+    public static class AIMessage {
+        /**
+         * Message content
+         */
+        @JSONField(name = "msg")
+        private String msg;
+        
+        /**
+         * Message type
+         */
+        @JSONField(name = "type")
+        private Integer type;
+        
+        /**
+         * Role of the message sender, e.g., "user" or "assistant"
+         */
+        @JSONField(name = "role")
+        private String role;
+        
+        public String getMsg() {
+            return msg;
+        }
+        
+        public void setMsg(String msg) {
+            this.msg = msg;
+        }
+        
+        public Integer getType() {
+            return type;
+        }
+        
+        public void setType(Integer type) {
+            this.type = type;
+        }
+        
+        public String getRole() {
+            return role;
+        }
+        
+        public void setRole(String role) {
+            this.role = role;
+        }
+    }
+
+    /**
      * Helper method to create a text message request
      * 
      * @param conversationId The conversation ID
@@ -1042,5 +1206,13 @@ public class SendMessageRequestV2 {
 
     public void setExtension(String extension) {
         this.extension = extension;
+    }
+
+    public AIParams getAiParams() {
+        return aiParams;
+    }
+
+    public void setAiParams(AIParams aiParams) {
+        this.aiParams = aiParams;
     }
 } 

@@ -12,27 +12,27 @@ import java.util.List;
 public class QueryChatroomBlacklistResponseV2 {
     
     /**
-     * List of blocked members
+     * List of blocked items
      */
-    @JSONField(name = "data")
-    private List<BlacklistMemberInfoV2> members;
+    @JSONField(name = "items")
+    private List<BlacklistMemberInfoV2> items;
     
     /**
-     * Get the list of blocked members
+     * Get the list of blocked items
      * 
-     * @return the list of blocked members
+     * @return the list of blocked items
      */
-    public List<BlacklistMemberInfoV2> getMembers() {
-        return members;
+    public List<BlacklistMemberInfoV2> getItems() {
+        return items;
     }
     
     /**
-     * Set the list of blocked members
+     * Set the list of blocked items
      * 
-     * @param members the list of blocked members to set
+     * @param items the list of blocked items to set
      */
-    public void setMembers(List<BlacklistMemberInfoV2> members) {
-        this.members = members;
+    public void setItems(List<BlacklistMemberInfoV2> items) {
+        this.items = items;
     }
     
     /**
@@ -55,7 +55,7 @@ public class QueryChatroomBlacklistResponseV2 {
         /**
          * Avatar URL of the blocked member in the chatroom
          */
-        @JSONField(name = "room_avator")
+        @JSONField(name = "room_avatar")
         private String roomAvatar;
         
         /**

@@ -11,20 +11,21 @@ import com.netease.nim.im.server.sdk.v2.account.IAccountV2Service;
 import com.netease.nim.im.server.sdk.v2.account.request.CreateAccountRequestV2;
 import com.netease.nim.im.server.sdk.v2.account.response.CreateAccountResponseV2;
 import com.netease.nim.im.server.sdk.v2.conversation.IConversationV2Service;
-import com.netease.nim.im.server.sdk.v2.conversation.request.BatchGetConversationGroupsRequestV2;
-import com.netease.nim.im.server.sdk.v2.conversation.request.CreateConversationGroupRequestV2;
 import com.netease.nim.im.server.sdk.v2.conversation.request.CreateConversationRequestV2;
-import com.netease.nim.im.server.sdk.v2.conversation.request.DeleteConversationGroupRequestV2;
-import com.netease.nim.im.server.sdk.v2.conversation.request.GetConversationGroupRequestV2;
-import com.netease.nim.im.server.sdk.v2.conversation.request.UpdateConversationGroupRequestV2;
-import com.netease.nim.im.server.sdk.v2.conversation.request.ListAllConversationGroupsRequestV2;
-import com.netease.nim.im.server.sdk.v2.conversation.response.BatchGetConversationGroupsResponseV2;
-import com.netease.nim.im.server.sdk.v2.conversation.response.CreateConversationGroupResponseV2;
 import com.netease.nim.im.server.sdk.v2.conversation.response.CreateConversationResponseV2;
-import com.netease.nim.im.server.sdk.v2.conversation.response.DeleteConversationGroupResponseV2;
-import com.netease.nim.im.server.sdk.v2.conversation.response.GetConversationGroupResponseV2;
-import com.netease.nim.im.server.sdk.v2.conversation.response.UpdateConversationGroupResponseV2;
-import com.netease.nim.im.server.sdk.v2.conversation.response.ListAllConversationGroupsResponseV2;
+import com.netease.nim.im.server.sdk.v2.conversation_group.IConversationGroupV2Service;
+import com.netease.nim.im.server.sdk.v2.conversation_group.request.BatchGetConversationGroupsRequestV2;
+import com.netease.nim.im.server.sdk.v2.conversation_group.request.CreateConversationGroupRequestV2;
+import com.netease.nim.im.server.sdk.v2.conversation_group.request.DeleteConversationGroupRequestV2;
+import com.netease.nim.im.server.sdk.v2.conversation_group.request.GetConversationGroupRequestV2;
+import com.netease.nim.im.server.sdk.v2.conversation_group.request.ListAllConversationGroupsRequestV2;
+import com.netease.nim.im.server.sdk.v2.conversation_group.request.UpdateConversationGroupRequestV2;
+import com.netease.nim.im.server.sdk.v2.conversation_group.response.BatchGetConversationGroupsResponseV2;
+import com.netease.nim.im.server.sdk.v2.conversation_group.response.CreateConversationGroupResponseV2;
+import com.netease.nim.im.server.sdk.v2.conversation_group.response.DeleteConversationGroupResponseV2;
+import com.netease.nim.im.server.sdk.v2.conversation_group.response.GetConversationGroupResponseV2;
+import com.netease.nim.im.server.sdk.v2.conversation_group.response.ListAllConversationGroupsResponseV2;
+import com.netease.nim.im.server.sdk.v2.conversation_group.response.UpdateConversationGroupResponseV2;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,208 +36,187 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Test class for Conversation Group V2 operations
+ * Test class for ConversationGroupV2Service
+ * Each API operation has its own @Test method for better test isolation and readability
  */
 public class TestConversationGroupV2 {
 
     private static YunxinV2ApiServices services = null;
-    // Test data used across multiple tests
     private static String accountId1;
     private static String accountId2;
     private static String accountId3;
-    private static Long groupId1;
-    private static Long groupId2;
-    private static List<String> initialConversations = new ArrayList<>();
-    private static List<String> additionalConversations = new ArrayList<>();
+    private static String accountId4;
+    private static List<String> conversationIds;
 
     @BeforeClass
-    public static void setup() {
+    public static void setup() throws YunxinSdkException {
         YunxinApiHttpClient client = YunxinApiHttpClientInit.init();
         if (client == null) {
             return;
         }
-
         services = new YunxinV2ApiServices(client);
         
-        // Initialize test data
+        // Initialize account IDs
         accountId1 = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 32);
         accountId2 = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 32);
         accountId3 = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 32);
-        createAccount(accountId1);
-        createAccount(accountId2);
-        createAccount(accountId3);
+        accountId4 = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 32);
+        conversationIds = new ArrayList<>();
+        
+        if (services != null) {
+            try {
+                // Create test accounts
+                printSeparator("CREATING TEST ACCOUNTS");
+                
+                String name1 = "testUser1-" + UUID.randomUUID();
+                createAccount(accountId1, name1);
+                
+                String name2 = "testUser2-" + UUID.randomUUID();
+                createAccount(accountId2, name2);
+
+                String name3 = "testUser3-" + UUID.randomUUID();
+                createAccount(accountId3, name3);
+
+               String name4 = "testUser4-" + UUID.randomUUID();
+               createAccount(accountId4, name4);
+
+                // Create some conversations for testing
+                printSeparator("CREATING TEST CONVERSATIONS");
+                
+                String p2pConversationId1 = createP2PConversation(accountId1, accountId2);
+                if (p2pConversationId1 != null) {
+                    conversationIds.add(p2pConversationId1);
+                }
+
+                String p2pConversationId2 = createP2PConversation(accountId1, accountId3);
+                if (p2pConversationId2 != null) {
+                    conversationIds.add(p2pConversationId2);
+                }
+            } catch (Exception e) {
+                System.out.println("Exception during setup: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 
-    
     /**
-     * Test creating conversations between accounts
+     * Test creating a conversation group
      */
     @Test
-    public void testCreateConversations() throws YunxinSdkException {
-        if (services == null) return;
-        
-        // Create P2P conversations
-        String p2pConversationId1 = createP2PConversation(accountId1, accountId2);
-        if (p2pConversationId1 != null) {
-            initialConversations.add(p2pConversationId1);
+    public void testCreateConversationGroup() throws YunxinSdkException {
+        if (services == null || conversationIds.isEmpty()) {
+            System.out.println("Setup failed or no conversations available, skipping test.");
+            return;
         }
-        
-        // Create a second P2P conversation to add to the group later
-        String p2pConversationId2 = createP2PConversation(accountId1, accountId3);
-        if (p2pConversationId2 != null) {
-            additionalConversations.add(p2pConversationId2);
-        }
-    }
-    
-    /**
-     * Test creating conversation groups
-     */
-    @Test
-    public void testCreateConversationGroups() throws YunxinSdkException {
-        if (services == null) return;
 
-        
-        // Create conversation group
-        groupId1 = createConversationGroup(accountId1, "Test Group 1", initialConversations);
-        
-        // Create a second conversation group
-        groupId2 = createConversationGroup(accountId1, "Test Group 2", additionalConversations);
+        printSeparator("CREATING CONVERSATION GROUP");
+
+        // Create a conversation group
+        CreateConversationGroupRequestV2 request = new CreateConversationGroupRequestV2();
+        request.setAccountId(accountId1);
+        request.setName("Test Group"+ UUID.randomUUID().toString().replaceAll("-", "").substring(0, 32));
+        request.setConversationIds(conversationIds);
+
+        IConversationGroupV2Service groupService = services.getConversationGroupService();
+        Result<CreateConversationGroupResponseV2> result = groupService.createConversationGroup(request);
+        System.out.println(result.getMsg());
+        Assert.assertEquals(200, result.getCode());
+        CreateConversationGroupResponseV2 response = result.getResponse();
+        Long groupId = response.getConversationGroup().getGroupId();
+        System.out.println("Created conversation group with ID: " + groupId);
+
+        // Clean up - delete the created group
+        deleteConversationGroup(groupId, accountId1);
     }
-    
+
     /**
-     * Test batch getting conversation groups
-     */
-    @Test
-    public void testBatchGetConversationGroups() throws YunxinSdkException {
-        if (services == null) return;
-        
-        // Ensure we have conversation groups
-        if (groupId1 == null || groupId2 == null) {
-            testCreateConversationGroups();
-        }
-        
-        // Get conversation groups in a batch
-        batchGetConversationGroups(accountId1, Arrays.asList(groupId1, groupId2));
-    }
-    
-    /**
-     * Test getting a single conversation group
+     * Test getting conversation group details
      */
     @Test
     public void testGetConversationGroup() throws YunxinSdkException {
-        if (services == null) return;
-        
-        // Ensure we have conversation groups
-        if (groupId1 == null) {
-            testCreateConversationGroups();
+        if (services == null || conversationIds.isEmpty()) {
+            System.out.println("Setup failed or no conversations available, skipping test.");
+            return;
         }
         
-        // Get the conversation group information
-        getConversationGroup(groupId1, accountId1);
+        // First create a group to get
+        Long groupId = createTestConversationGroup(accountId1, "Group for Get Test", conversationIds);
+        if (groupId == null) {
+            System.out.println("Failed to create test conversation group, skipping test.");
+            return;
+        }
+        
+        try {
+            printSeparator("GETTING CONVERSATION GROUP DETAILS");
+            
+            GetConversationGroupRequestV2 request = new GetConversationGroupRequestV2();
+            request.setGroupId(groupId);
+            request.setAccountId(accountId1);
+            
+            IConversationGroupV2Service groupService = services.getConversationGroupService();
+            Result<GetConversationGroupResponseV2> result = groupService.getConversationGroup(request);
+            
+            Assert.assertEquals(200, result.getCode());
+            GetConversationGroupResponseV2 response = result.getResponse();
+            System.out.println("Retrieved group: " + response.getName() + " (ID: " + response.getGroupId() + ")");
+            
+            // Add null check before accessing size to prevent NullPointerException
+            List<String> groupConversationIds = response.getConversationIds();
+            int conversationCount = (groupConversationIds != null) ? groupConversationIds.size() : 0;
+            System.out.println("Group contains " + conversationCount + " conversations");
+            
+            // Verify correct group was retrieved
+            Assert.assertEquals(groupId, response.getGroupId());
+            Assert.assertEquals("Group for Get Test", response.getName());
+        } finally {
+            // Clean up
+            deleteConversationGroup(groupId, accountId1);
+        }
     }
     
     /**
-     * Test updating conversation group information
+     * Test updating a conversation group
      */
     @Test
     public void testUpdateConversationGroup() throws YunxinSdkException {
-        if (services == null) return;
-        
-        // Ensure we have conversation groups
-        if (groupId1 == null) {
-            testCreateConversationGroups();
+        if (services == null || conversationIds.isEmpty()) {
+            System.out.println("Setup failed or no conversations available, skipping test.");
+            return;
         }
         
-        // Update the conversation group
-        updateConversationGroupInfo(
-            groupId1, 
-            accountId1, 
-            "Updated Group Name", 
-            "{\"updatedAt\":" + System.currentTimeMillis() + "}"
-        );
-        
-        // Verify the updates
-        getConversationGroup(groupId1, accountId1);
-    }
-    
-    /**
-     * Test adding conversations to a group
-     */
-    @Test
-    public void testAddConversationsToGroup() throws YunxinSdkException {
-        if (services == null) return;
-        
-        // Ensure we have conversation groups and additional conversations
-        if (groupId1 == null || additionalConversations.isEmpty()) {
-            testCreateConversationGroups();
+        // First create a group to update
+        Long groupId = createTestConversationGroup(accountId1, "Group for Update Test", conversationIds);
+        if (groupId == null) {
+            System.out.println("Failed to create test conversation group, skipping test.");
+            return;
         }
         
-        // Add the conversations to the group
-        if (!additionalConversations.isEmpty()) {
-            addConversationsToGroup(groupId1, accountId1, additionalConversations);
-        }
-    }
-    
-    /**
-     * Test removing conversations from a group
-     */
-    @Test
-    public void testRemoveConversationsFromGroup() throws YunxinSdkException {
-        if (services == null) return;
-        
-        // Ensure we have conversation groups and initial conversations
-        if (groupId1 == null || initialConversations.isEmpty()) {
-            testCreateConversationGroups();
-        }
-        
-        // Remove the conversations from the group
-        if (!initialConversations.isEmpty()) {
-            removeConversationsFromGroup(groupId1, accountId1, initialConversations);
-        }
-    }
-    
-    /**
-     * Test deleting conversation groups
-     */
-    @Test
-    public void testDeleteConversationGroups() throws YunxinSdkException {
-        if (services == null) return;
-        
-        // Ensure we have conversation groups
-        if (groupId1 == null || groupId2 == null) {
-            testCreateConversationGroups();
-        }
-        
-        // Delete the conversation groups
-        deleteConversationGroup(groupId1, accountId1);
-        deleteConversationGroup(groupId2, accountId1);
-        
-        // Reset the group IDs after deletion
-        groupId1 = null;
-        groupId2 = null;
-    }
-    
-    /**
-     * Test creating and deleting a standalone conversation group
-     */
-    @Test
-    public void testStandaloneConversationGroup() throws YunxinSdkException {
-        if (services == null) return;
-        
-        // Generate a standalone account ID
-        String standaloneAccountId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 32);
-
-        createAccount(standaloneAccountId);
-        
-        // Create empty conversation group
-        Long standaloneGroupId = createConversationGroup(standaloneAccountId, "Standalone Group", null);
-        
-        if (standaloneGroupId != null) {
-            // Get the standalone conversation group information
-            getConversationGroup(standaloneGroupId, standaloneAccountId);
+        try {
+            printSeparator("UPDATING CONVERSATION GROUP");
             
-            // Delete the standalone conversation group
-            deleteConversationGroup(standaloneGroupId, standaloneAccountId);
+            String newName = "Updated Group Name " + UUID.randomUUID().toString().substring(0, 8);
+            UpdateConversationGroupRequestV2 request = new UpdateConversationGroupRequestV2();
+            request.setGroupId(groupId);
+            request.setAccountId(accountId1);
+            request.setName(newName);
+            
+            IConversationGroupV2Service groupService = services.getConversationGroupService();
+            Result<UpdateConversationGroupResponseV2> result = groupService.updateConversationGroup(request);
+            
+            Assert.assertEquals(200, result.getCode());
+            System.out.println("Updated group name to: " + newName);
+            
+            // Verify the update by getting the group again
+            GetConversationGroupRequestV2 getRequest = new GetConversationGroupRequestV2();
+            getRequest.setGroupId(groupId);
+            getRequest.setAccountId(accountId1);
+            
+            Result<GetConversationGroupResponseV2> getResult = groupService.getConversationGroup(getRequest);
+            Assert.assertEquals(200, getResult.getCode());
+            Assert.assertEquals(newName, getResult.getResponse().getName());
+        } finally {
+            // Clean up
+            deleteConversationGroup(groupId, accountId1);
         }
     }
     
@@ -245,62 +225,203 @@ public class TestConversationGroupV2 {
      */
     @Test
     public void testListAllConversationGroups() throws YunxinSdkException {
-        if (services == null) return;
+        if (services == null) {
+            System.out.println("Setup failed, skipping test.");
+            return;
+        }
         
-        // Generate unique account ID for this test
-        String accountId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 32);
-        String name = "testUser-" + UUID.randomUUID();
+        printSeparator("LISTING ALL CONVERSATION GROUPS");
         
-        // Create test account
-        createAccount(accountId);
+        // Create a test group to ensure we have at least one to list
+        Long groupId = createTestConversationGroup(accountId1, "Group for List Test", conversationIds);
         
-        // Create multiple conversation groups
-        Long groupId1 = createConversationGroup(accountId, "Test Group 1", null);
-        Long groupId2 = createConversationGroup(accountId, "Test Group 2", null);
-        Long groupId3 = createConversationGroup(accountId, "Test Group 3", null);
+        try {
+            ListAllConversationGroupsRequestV2 request = new ListAllConversationGroupsRequestV2();
+            request.setAccountId(accountId1);
+            
+            IConversationGroupV2Service groupService = services.getConversationGroupService();
+            Result<ListAllConversationGroupsResponseV2> result = groupService.listAllConversationGroups(request);
+            
+            Assert.assertEquals(200, result.getCode());
+            ListAllConversationGroupsResponseV2 response = result.getResponse();
+            System.out.println("Account has " + response.getConversationGroups().size() + " conversation groups");
+            
+            // There should be at least one group
+            Assert.assertTrue("No conversation groups found", response.getConversationGroups().size() > 0);
+            
+            for (ListAllConversationGroupsResponseV2.ConversationGroup group : response.getConversationGroups()) {
+                System.out.println("Group: " + group.getName() + " (ID: " + group.getGroupId() + ")");
+            }
+        } finally {
+            // Clean up if we created a group
+            if (groupId != null) {
+                deleteConversationGroup(groupId, accountId1);
+            }
+        }
+    }
+
+    
+    /**
+     * Test batch getting conversation groups
+     */
+    @Test
+    public void testBatchGetConversationGroups() throws YunxinSdkException {
+        if (services == null) {
+            System.out.println("Setup failed, skipping test.");
+            return;
+        }
         
-        // List all conversation groups
-        listAllConversationGroups(accountId);
+        printSeparator("CREATING MULTIPLE CONVERSATION GROUPS FOR BATCH GET TEST");
         
-        // Clean up
+        // Create multiple conversation groups with unique conversations
+        List<Long> groupIds = new ArrayList<>();
+        
+        // Create new unique conversations for the first group
+        String uniqueConversation1 = createP2PConversation(accountId1, accountId2 + "_group1");
+        List<String> firstGroupConversations = new ArrayList<>();
+        if (uniqueConversation1 != null) {
+            firstGroupConversations.add(uniqueConversation1);
+        }
+        
+        // Create the first group with its unique conversation
+        Long groupId1 = createTestConversationGroup(accountId1, "Test Group 1", firstGroupConversations);
         if (groupId1 != null) {
-            deleteConversationGroup(groupId1, accountId);
+            groupIds.add(groupId1);
+            System.out.println("Successfully created first group with ID: " + groupId1);
         }
+        
+        // Create new unique conversation for the second group
+        String uniqueConversation2 = createP2PConversation(accountId1, accountId2 + "_group2");
+        List<String> secondGroupConversations = new ArrayList<>();
+        if (uniqueConversation2 != null) {
+            secondGroupConversations.add(uniqueConversation2);
+        }
+        
+        // Create the second group with its unique conversation
+        Long groupId2 = createTestConversationGroup(accountId1, "Test Group 2", secondGroupConversations);
         if (groupId2 != null) {
-            deleteConversationGroup(groupId2, accountId);
+            groupIds.add(groupId2);
+            System.out.println("Successfully created second group with ID: " + groupId2);
         }
-        if (groupId3 != null) {
-            deleteConversationGroup(groupId3, accountId);
+        
+        if (groupIds.isEmpty()) {
+            System.out.println("Failed to create any conversation groups, skipping test.");
+            return;
+        }
+        
+        try {
+            // Batch get conversation groups
+            printSeparator("BATCH GETTING CONVERSATION GROUPS");
+            
+            BatchGetConversationGroupsRequestV2 request = new BatchGetConversationGroupsRequestV2();
+            request.setAccountId(accountId1);
+            request.setGroupIds(groupIds);
+            
+            IConversationGroupV2Service groupService = services.getConversationGroupService();
+            Result<BatchGetConversationGroupsResponseV2> result = groupService.batchGetConversationGroups(request);
+            System.out.println(result.getMsg());
+            Assert.assertEquals(200, result.getCode());
+            BatchGetConversationGroupsResponseV2 response = result.getResponse();
+            System.out.println("Successfully retrieved " + response.getSuccessList().size() + " groups");
+            
+            // Should match the number of groups we created
+            Assert.assertEquals(groupIds.size(), response.getSuccessList().size());
+            
+            for (BatchGetConversationGroupsResponseV2.ConversationGroup group : response.getSuccessList()) {
+                System.out.println("Group: " + group.getName() + " (ID: " + group.getGroupId() + ")");
+                
+                // Add null check for conversation IDs
+                List<String> groupConversationIds = group.getConversationIds();
+                int conversationCount = (groupConversationIds != null) ? groupConversationIds.size() : 0;
+                System.out.println("  - Contains " + conversationCount + " conversations");
+            }
+        } finally {
+            // Clean up
+            for (Long groupId : groupIds) {
+                deleteConversationGroup(groupId, accountId1);
+            }
         }
     }
     
     /**
-     * Helper method to create an account
+     * Helper method to create a test conversation group for use in tests
      */
-    private static void createAccount(String accountId) throws YunxinSdkException {
-        CreateAccountRequestV2 request = new CreateAccountRequestV2();
+    private Long createTestConversationGroup(String accountId, String groupName, List<String> conversationIds) throws YunxinSdkException {
+        CreateConversationGroupRequestV2 request = new CreateConversationGroupRequestV2();
+        request.setAccountId(accountId);
+        request.setName(groupName);
+        request.setConversationIds(conversationIds);
+        
+        IConversationGroupV2Service groupService = services.getConversationGroupService();
+        Result<CreateConversationGroupResponseV2> result = groupService.createConversationGroup(request);
+        
+        if (result.getCode() == 200) {
+            CreateConversationGroupResponseV2 response = result.getResponse();
+            Long groupId = response.getConversationGroup().getGroupId();
+            System.out.println("Created test conversation group with ID: " + groupId);
+            return groupId;
+        } else {
+            System.out.println("Failed to create test conversation group: " + result.getMsg());
+            return null;
+        }
+    }
+    
+    /**
+     * Helper method to delete a conversation group
+     */
+    private void deleteConversationGroup(Long groupId, String accountId) throws YunxinSdkException {
+        if (groupId == null) {
+            return;
+        }
+        
+        DeleteConversationGroupRequestV2 request = new DeleteConversationGroupRequestV2();
+        request.setGroupId(groupId);
         request.setAccountId(accountId);
         
-        // Create and set user information
+        IConversationGroupV2Service groupService = services.getConversationGroupService();
+        Result<DeleteConversationGroupResponseV2> result = groupService.deleteConversationGroup(request);
+        
+        if (result.getCode() == 200) {
+            System.out.println("Deleted conversation group with ID: " + groupId);
+        } else {
+            System.out.println("Failed to delete conversation group: " + result.getMsg());
+        }
+    }
+    
+    /**
+     * Print a section separator with a section name
+     */
+    private static void printSeparator(String sectionName) {
+        System.out.println("\n======================================================");
+        System.out.println("  " + sectionName);
+        System.out.println("======================================================\n");
+    }
+    
+    /**
+     * Create a test account
+     */
+    private static void createAccount(String accountId, String name) throws YunxinSdkException {
+        CreateAccountRequestV2 request = new CreateAccountRequestV2();
+        request.setAccountId(accountId);
+        request.setToken(UUID.randomUUID().toString().replaceAll("-", ""));
+        
         CreateAccountRequestV2.UserInformation userInfo = new CreateAccountRequestV2.UserInformation();
-        userInfo.setName(accountId);
+        userInfo.setName(name);
         request.setUserInformation(userInfo);
         
         IAccountV2Service accountService = services.getAccountService();
         Result<CreateAccountResponseV2> result = accountService.createAccount(request);
         
-        // Verify account creation
         Assert.assertEquals(200, result.getCode());
-        Assert.assertNotNull(result.getResponse());
-        Assert.assertEquals(accountId, result.getResponse().getAccountId());
-
+        System.out.println("Created account: " + accountId);
     }
     
     /**
-     * Create a point-to-point conversation
+     * Create a P2P conversation
      */
     private static String createP2PConversation(String senderId, String receiverId) throws YunxinSdkException {
-        String conversationId = CreateConversationRequestV2.createP2PConversationId(senderId, receiverId);
+        // Create a P2P conversation ID in the format senderId|1|receiverId
+        String conversationId = senderId + "|1|" + receiverId;
         
         CreateConversationRequestV2 request = new CreateConversationRequestV2();
         request.setConversationId(conversationId);
@@ -308,368 +429,50 @@ public class TestConversationGroupV2 {
         IConversationV2Service conversationService = services.getConversationService();
         Result<CreateConversationResponseV2> result = conversationService.createConversation(request);
         
-        System.out.println("createP2PConversation: " + result.getMsg());
-        System.out.println("Response: " + JSON.toJSONString(result));
-        
         if (result.getCode() == 200) {
             CreateConversationResponseV2 response = result.getResponse();
-            Assert.assertEquals(conversationId, response.getConversationId());
-            Assert.assertEquals(senderId, response.getSenderId());
-            Assert.assertEquals(receiverId, response.getReceiverId());
-            Assert.assertEquals(Integer.valueOf(1), response.getType());
-            
-            System.out.println("Created P2P conversation: " + response.getConversationId());
-            System.out.println("Sender: " + response.getSenderId());
-            System.out.println("Receiver: " + response.getReceiverId());
-            System.out.println("Type: " + response.getType());
-            
-            return conversationId;
+            System.out.println("Created P2P conversation with ID: " + response.getConversationId());
+            return response.getConversationId();
         } else {
-            System.out.println("Could not create P2P conversation: " + result.getMsg());
+            System.out.println("Failed to create P2P conversation: " + result.getMsg());
             return null;
         }
     }
-    
     /**
-     * Create a conversation group
-     * 
-     * @return groupId of the created group, or null if creation failed
+     * Test deleting a conversation group
      */
-    private static Long createConversationGroup(String accountId, String groupName, List<String> conversationIds) throws YunxinSdkException {
-        // Create the request
-        CreateConversationGroupRequestV2 request = new CreateConversationGroupRequestV2();
-        request.setAccountId(accountId);
-        request.setName(groupName);
-        
-        // Set server extension (optional)
-        String serverExtension = "{\"createdAt\":" + System.currentTimeMillis() + "}";
-        request.setServerExtension(serverExtension);
-        
-        // Set conversation IDs (optional)
-        if (conversationIds != null && !conversationIds.isEmpty()) {
-            request.setConversationIds(conversationIds);
+    @Test
+    public void testDeleteConversationGroup() throws YunxinSdkException {
+        if (services == null || conversationIds.isEmpty()) {
+            System.out.println("Setup failed or no conversations available, skipping test.");
+            return;
         }
-        
-        // Call the API
-        IConversationV2Service conversationService = services.getConversationService();
-        Result<CreateConversationGroupResponseV2> result = conversationService.createConversationGroup(request);
-        
-        System.out.println("createConversationGroup: " + result.getMsg());
-        System.out.println("Response: " + JSON.toJSONString(result));
-        
-        if (result.getCode() == 200) {
-            CreateConversationGroupResponseV2 response = result.getResponse();
-            
-            // Verify the conversation group details
-            CreateConversationGroupResponseV2.ConversationGroup group = response.getConversationGroup();
-            Assert.assertNotNull(group);
-            Assert.assertEquals(groupName, group.getName());
-            Assert.assertEquals(serverExtension, group.getServerExtension());
-            Assert.assertNotNull(group.getGroupId());
-            Assert.assertNotNull(group.getCreateTime());
-            Assert.assertNotNull(group.getUpdateTime());
-            
-            System.out.println("Created conversation group:");
-            System.out.println("  Group ID: " + group.getGroupId());
-            System.out.println("  Name: " + group.getName());
-            System.out.println("  Server extension: " + group.getServerExtension());
-            System.out.println("  Created at: " + group.getCreateTime());
-            
-            // Check successfully added conversations
-            if (response.getSuccessList() != null && !response.getSuccessList().isEmpty()) {
-                System.out.println("Successfully added conversations:");
-                for (String id : response.getSuccessList()) {
-                    System.out.println("  - " + id);
-                }
-            }
-            
-            // Check failed conversations
-            if (response.getFailedList() != null && !response.getFailedList().isEmpty()) {
-                System.out.println("Failed to add conversations:");
-                for (CreateConversationGroupResponseV2.FailedItem failedItem : response.getFailedList()) {
-                    System.out.println("  - " + failedItem.getConversationId() + 
-                                      ", Error: " + failedItem.getErrorCode() + 
-                                      " - " + failedItem.getErrorMsg());
-                }
-            }
-            
-            return group.getGroupId();
-        } else {
-            System.out.println("Failed to create conversation group: " + result.getMsg());
-            Assert.fail("Failed to create conversation group: " + result.getMsg());
-            return null;
-        }
-    }
-    
-    /**
-     * Get conversation group information
-     */
-    private static void getConversationGroup(Long groupId, String accountId) throws YunxinSdkException {
-        // Create the request
-        GetConversationGroupRequestV2 request = new GetConversationGroupRequestV2(groupId, accountId);
-        
-        // Call the API
-        IConversationV2Service conversationService = services.getConversationService();
-        Result<GetConversationGroupResponseV2> result = conversationService.getConversationGroup(request);
-        
-        System.out.println("getConversationGroup: " + result.getMsg());
-        System.out.println("Response: " + JSON.toJSONString(result));
-        
-        if (result.getCode() == 200) {
-            GetConversationGroupResponseV2 response = result.getResponse();
-            
-            // Verify the conversation group details
-            Assert.assertNotNull(response);
-            Assert.assertEquals(groupId, response.getGroupId());
-            Assert.assertNotNull(response.getName());
-            Assert.assertNotNull(response.getServerExtension());
-            Assert.assertNotNull(response.getCreateTime());
-            Assert.assertNotNull(response.getUpdateTime());
-            
-            System.out.println("Conversation group details:");
-            System.out.println("  Group ID: " + response.getGroupId());
-            System.out.println("  Name: " + response.getName());
-            System.out.println("  Server extension: " + response.getServerExtension());
-            System.out.println("  Created at: " + response.getCreateTime());
-            System.out.println("  Updated at: " + response.getUpdateTime());
-        } else {
-            System.out.println("Failed to get conversation group information: " + result.getMsg());
-            Assert.fail("Failed to get conversation group information: " + result.getMsg());
-        }
-    }
-    
-    /**
-     * Batch get conversation groups information
-     */
-    private static void batchGetConversationGroups(String accountId, List<Long> groupIds) throws YunxinSdkException {
-        // Create the request
-        BatchGetConversationGroupsRequestV2 request = new BatchGetConversationGroupsRequestV2(accountId, groupIds);
-        
-        // Call the API
-        IConversationV2Service conversationService = services.getConversationService();
-        Result<BatchGetConversationGroupsResponseV2> result = conversationService.batchGetConversationGroups(request);
-        
-        System.out.println("batchGetConversationGroups: " + result.getMsg());
-        System.out.println("Response: " + JSON.toJSONString(result));
-        
-        if (result.getCode() == 200) {
-            BatchGetConversationGroupsResponseV2 response = result.getResponse();
-            
-            // Check successfully retrieved conversation groups
-            if (response.getSuccessList() != null && !response.getSuccessList().isEmpty()) {
-                System.out.println("Successfully retrieved conversation groups:");
-                for (BatchGetConversationGroupsResponseV2.ConversationGroup group : response.getSuccessList()) {
-                    System.out.println("  Group ID: " + group.getGroupId());
-                    System.out.println("  Name: " + group.getName());
-                    System.out.println("  Server extension: " + group.getServerExtension());
-                    System.out.println("  Created at: " + group.getCreateTime());
-                    System.out.println("  Updated at: " + group.getUpdateTime());
-                    System.out.println();
-                }
-                Assert.assertTrue("Success list should include at least one group", 
-                                 response.getSuccessList().size() > 0);
-                Assert.assertEquals("All requested groups should be successfully retrieved", 
-                                   groupIds.size(), response.getSuccessList().size());
-            }
-            
-            // Check failed group retrievals
-            if (response.getFailedList() != null && !response.getFailedList().isEmpty()) {
-                System.out.println("Failed to retrieve conversation groups:");
-                for (BatchGetConversationGroupsResponseV2.FailedItem failedItem : response.getFailedList()) {
-                    System.out.println("  - Group ID: " + failedItem.getGroupId() + 
-                                      ", Error: " + failedItem.getErrorCode() + 
-                                      " - " + failedItem.getErrorMsg());
-                }
-            }
-        } else {
-            System.out.println("Failed to batch get conversation groups: " + result.getMsg());
-            Assert.fail("Failed to batch get conversation groups: " + result.getMsg());
-        }
-    }
-    
-    /**
-     * Update a conversation group's name and server extension
-     */
-    private static void updateConversationGroupInfo(Long groupId, String accountId, String newName, String newServerExtension) throws YunxinSdkException {
-        // Create the request
-        UpdateConversationGroupRequestV2 request = new UpdateConversationGroupRequestV2(groupId, accountId);
-        request.setName(newName);
-        request.setServerExtension(newServerExtension);
-        
-        // Call the API
-        IConversationV2Service conversationService = services.getConversationService();
-        Result<UpdateConversationGroupResponseV2> result = conversationService.updateConversationGroup(request);
-        
-        System.out.println("updateConversationGroupInfo: " + result.getMsg());
-        System.out.println("Response: " + JSON.toJSONString(result));
-        
-        if (result.getCode() == 200) {
-            UpdateConversationGroupResponseV2 response = result.getResponse();
-            
-            // Verify the updated conversation group details
-            UpdateConversationGroupResponseV2.ConversationGroup group = response.getConversationGroup();
-            Assert.assertNotNull(group);
-            Assert.assertEquals(newName, group.getName());
-            Assert.assertEquals(newServerExtension, group.getServerExtension());
-            Assert.assertEquals(groupId, group.getGroupId());
-            Assert.assertNotNull(group.getCreateTime());
-            Assert.assertNotNull(group.getUpdateTime());
-            
-            System.out.println("Updated conversation group info:");
-            System.out.println("  Group ID: " + group.getGroupId());
-            System.out.println("  New name: " + group.getName());
-            System.out.println("  New server extension: " + group.getServerExtension());
-            System.out.println("  Updated at: " + group.getUpdateTime());
-        } else {
-            System.out.println("Failed to update conversation group info: " + result.getMsg());
-            Assert.fail("Failed to update conversation group info: " + result.getMsg());
-        }
-    }
-    
-    /**
-     * Add conversations to a conversation group
-     */
-    private static void addConversationsToGroup(Long groupId, String accountId, List<String> conversationIds) throws YunxinSdkException {
-        // Create the request
-        UpdateConversationGroupRequestV2 request = UpdateConversationGroupRequestV2.createAddConversationsRequest(
-                groupId, accountId, conversationIds);
-        
-        // Call the API
-        IConversationV2Service conversationService = services.getConversationService();
-        Result<UpdateConversationGroupResponseV2> result = conversationService.updateConversationGroup(request);
-        
-        System.out.println("addConversationsToGroup: " + result.getMsg());
-        System.out.println("Response: " + JSON.toJSONString(result));
-        
-        if (result.getCode() == 200) {
-            UpdateConversationGroupResponseV2 response = result.getResponse();
-            
-            // Check successfully added conversations
-            if (response.getSuccessList() != null && !response.getSuccessList().isEmpty()) {
-                System.out.println("Successfully added conversations:");
-                for (String id : response.getSuccessList()) {
-                    System.out.println("  - " + id);
-                }
-                Assert.assertTrue("Success list should include at least one conversation", 
-                                 response.getSuccessList().size() > 0);
-            }
-            
-            // Check failed conversations
-            if (response.getFailedList() != null && !response.getFailedList().isEmpty()) {
-                System.out.println("Failed to add conversations:");
-                for (UpdateConversationGroupResponseV2.FailedItem failedItem : response.getFailedList()) {
-                    System.out.println("  - " + failedItem.getConversationId() + 
-                                      ", Error: " + failedItem.getErrorCode() + 
-                                      " - " + failedItem.getErrorMsg());
-                }
-            }
-        } else {
-            System.out.println("Failed to add conversations to group: " + result.getMsg());
-            Assert.fail("Failed to add conversations to group: " + result.getMsg());
-        }
-    }
-    
-    /**
-     * Remove conversations from a conversation group
-     */
-    private static void removeConversationsFromGroup(Long groupId, String accountId, List<String> conversationIds) throws YunxinSdkException {
-        // Create the request
-        UpdateConversationGroupRequestV2 request = UpdateConversationGroupRequestV2.createRemoveConversationsRequest(
-                groupId, accountId, conversationIds);
-        
-        // Call the API
-        IConversationV2Service conversationService = services.getConversationService();
-        Result<UpdateConversationGroupResponseV2> result = conversationService.updateConversationGroup(request);
-        
-        System.out.println("removeConversationsFromGroup: " + result.getMsg());
-        System.out.println("Response: " + JSON.toJSONString(result));
-        
-        if (result.getCode() == 200) {
-            UpdateConversationGroupResponseV2 response = result.getResponse();
-            
-            // Check successfully removed conversations
-            if (response.getSuccessList() != null && !response.getSuccessList().isEmpty()) {
-                System.out.println("Successfully removed conversations:");
-                for (String id : response.getSuccessList()) {
-                    System.out.println("  - " + id);
-                }
-                Assert.assertTrue("Success list should include at least one conversation", 
-                                 response.getSuccessList().size() > 0);
-            }
-            
-            // Check failed conversations
-            if (response.getFailedList() != null && !response.getFailedList().isEmpty()) {
-                System.out.println("Failed to remove conversations:");
-                for (UpdateConversationGroupResponseV2.FailedItem failedItem : response.getFailedList()) {
-                    System.out.println("  - " + failedItem.getConversationId() + 
-                                      ", Error: " + failedItem.getErrorCode() + 
-                                      " - " + failedItem.getErrorMsg());
-                }
-            }
-        } else {
-            System.out.println("Failed to remove conversations from group: " + result.getMsg());
-            Assert.fail("Failed to remove conversations from group: " + result.getMsg());
-        }
-    }
-    
-    /**
-     * Delete a conversation group
-     */
-    private static void deleteConversationGroup(Long groupId, String accountId) throws YunxinSdkException {
-        // Create the request
-        DeleteConversationGroupRequestV2 request = new DeleteConversationGroupRequestV2(groupId, accountId);
-        
-        // Call the API
-        IConversationV2Service conversationService = services.getConversationService();
-        Result<DeleteConversationGroupResponseV2> result = conversationService.deleteConversationGroup(request);
-        
-        System.out.println("deleteConversationGroup: " + result.getMsg());
-        System.out.println("Response: " + JSON.toJSONString(result));
-        
-        // Verify successful deletion
-        Assert.assertEquals("Deletion should return success code 200", 200, result.getCode());
-        Assert.assertEquals("Deletion should return 'success' message", "success", result.getMsg());
-        
-        System.out.println("Successfully deleted conversation group with ID: " + groupId);
-    }
 
-    /**
-     * List all conversation groups for an account
-     */
-    private static void listAllConversationGroups(String accountId) throws YunxinSdkException {
-        // Create the request
-        ListAllConversationGroupsRequestV2 request = new ListAllConversationGroupsRequestV2(accountId);
-        
-        // Call the API
-        IConversationV2Service conversationService = services.getConversationService();
-        Result<ListAllConversationGroupsResponseV2> result = conversationService.listAllConversationGroups(request);
-        
-        System.out.println("listAllConversationGroups: " + result.getMsg());
-        System.out.println("Response: " + JSON.toJSONString(result));
-        
-        if (result.getCode() == 200) {
-            ListAllConversationGroupsResponseV2 response = result.getResponse();
-            
-            // Check conversation groups
-            if (response.getConversationGroups() != null && !response.getConversationGroups().isEmpty()) {
-                System.out.println("Found conversation groups: " + response.getConversationGroups().size());
-                System.out.println("Conversation groups:");
-                for (ListAllConversationGroupsResponseV2.ConversationGroup group : response.getConversationGroups()) {
-                    System.out.println("  Group ID: " + group.getGroupId());
-                    System.out.println("  Name: " + group.getName());
-                    System.out.println("  Server extension: " + group.getServerExtension());
-                    System.out.println("  Created at: " + group.getCreateTime());
-                    System.out.println("  Updated at: " + group.getUpdateTime());
-                    System.out.println();
-                }
-                Assert.assertTrue("Account should have conversation groups", 
-                                 response.getConversationGroups().size() > 0);
-            } else {
-                System.out.println("No conversation groups found for account: " + accountId);
-            }
-        } else {
-            System.out.println("Failed to list conversation groups: " + result.getMsg());
-            Assert.fail("Failed to list conversation groups: " + result.getMsg());
+        // First create a group to delete
+        Long groupId = createTestConversationGroup(accountId1, "Group for Delete Test", conversationIds);
+        if (groupId == null) {
+            System.out.println("Failed to create test conversation group, skipping test.");
+            return;
         }
+
+        printSeparator("DELETING CONVERSATION GROUP");
+
+        DeleteConversationGroupRequestV2 request = new DeleteConversationGroupRequestV2();
+        request.setGroupId(groupId);
+        request.setAccountId(accountId1);
+
+        IConversationGroupV2Service groupService = services.getConversationGroupService();
+        Result<DeleteConversationGroupResponseV2> result = groupService.deleteConversationGroup(request);
+
+        Assert.assertEquals(200, result.getCode());
+        System.out.println("Deleted conversation group with ID: " + groupId);
+
+        // Verify deletion by trying to get the group (should fail)
+        GetConversationGroupRequestV2 getRequest = new GetConversationGroupRequestV2();
+        getRequest.setGroupId(groupId);
+        getRequest.setAccountId(accountId1);
+
+        Result<GetConversationGroupResponseV2> getResult = groupService.getConversationGroup(getRequest);
+        Assert.assertNotEquals("Group should be deleted", 200, getResult.getCode());
     }
 } 

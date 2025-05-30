@@ -39,11 +39,9 @@ public class UpdateConversationRequestV2 {
      * Set the conversation ID (required for URL path)
      * 
      * @param conversationId conversation ID to set
-     * @return this instance for chaining
      */
-    public UpdateConversationRequestV2 setConversationId(String conversationId) {
+    public void setConversationId(String conversationId) {
         this.conversationId = conversationId;
-        return this;
     }
 
     /**
@@ -59,10 +57,8 @@ public class UpdateConversationRequestV2 {
      * Sets the server extension field
      * 
      * @param serverExtension server extension to set
-     * @return this instance for chaining
      */
-    public UpdateConversationRequestV2 setServerExtension(String serverExtension) {
+    public void setServerExtension(String serverExtension) {
         this.serverExtension = serverExtension;
-        return this;
     }
 }

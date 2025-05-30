@@ -12,6 +12,7 @@ import com.netease.nim.im.server.sdk.v2.chatroom_member.request.ClearVirtualMemb
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.DeleteVirtualMembersRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.ListTaggedMembersRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.ModifyMemberTagsRequestV2;
+import com.netease.nim.im.server.sdk.v2.chatroom_member.request.QueryChatBannedRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.QueryChatroomBlacklistRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.QueryTaggedMembersCountRequestV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.request.QueryVirtualMembersRequestV2;
@@ -27,6 +28,7 @@ import com.netease.nim.im.server.sdk.v2.chatroom_member.response.ClearVirtualMem
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.DeleteVirtualMembersResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.ListTaggedMembersResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.ModifyMemberTagsResponseV2;
+import com.netease.nim.im.server.sdk.v2.chatroom_member.response.QueryChatBannedResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.QueryChatroomBlacklistResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.QueryTaggedMembersCountResponseV2;
 import com.netease.nim.im.server.sdk.v2.chatroom_member.response.QueryVirtualMembersResponseV2;
@@ -39,6 +41,7 @@ import com.netease.nim.im.server.sdk.v2.chatroom_member.response.UpdateOnlineMem
 import com.netease.nim.im.server.sdk.v2.util.ResultUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -536,37 +539,24 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
             throw new IllegalArgumentException("Chatroom ID cannot be null");
         }
         
-        // Validate pagination parameters
-        if (request.getOffset() != null && request.getOffset() < 0) {
-            throw new IllegalArgumentException("Offset cannot be negative");
-        }
-        
-        if (request.getLimit() != null && request.getLimit() <= 0) {
-            throw new IllegalArgumentException("Limit must be greater than 0");
-        }
-        
         // Replace the path parameter in the URL
         String endpoint = ChatroomMemberUrlContextV2.QUERY_CHATROOM_BLACKLIST.replace("{room_id}", request.getRoomId().toString());
-        
-        // Set query parameters
-        Map<String, String> queryParams = new HashMap<>();
-        if (request.getOffset() != null) {
-            queryParams.put("offset", request.getOffset().toString());
-        }
-        if (request.getLimit() != null) {
-            queryParams.put("limit", request.getLimit().toString());
-        }
+
         
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
             ChatroomMemberUrlContextV2.QUERY_CHATROOM_BLACKLIST,
             endpoint,
-            queryParams,
+            null,
             null // No request body for GET request
         );
-        
-        return ResultUtils.convert(apiResponse, QueryChatroomBlacklistResponseV2.class);
+        JSONObject json = JSONObject.parseObject(apiResponse.getData());
+        List<QueryChatroomBlacklistResponseV2.BlacklistMemberInfoV2> data = json.getList("data", QueryChatroomBlacklistResponseV2.BlacklistMemberInfoV2.class);
+        QueryChatroomBlacklistResponseV2 queryChatroomBlacklistResponseV2=new QueryChatroomBlacklistResponseV2();
+        queryChatroomBlacklistResponseV2.setItems(data);
+        Result<QueryChatroomBlacklistResponseV2> result = new Result<>(apiResponse.getEndpoint(),json.getIntValue("code"),json.getString("msg"),apiResponse.getTraceId(),queryChatroomBlacklistResponseV2);
+        return result;
     }
 
     /**
@@ -847,7 +837,51 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
             queryParams,
             null // No request body for GET request
         );
-        
-        return ResultUtils.convert(apiResponse, QueryVirtualMembersResponseV2.class);
+        JSONObject json = JSONObject.parseObject(apiResponse.getData());
+        List<QueryVirtualMembersResponseV2.VirtualMemberInfoV2> data = json.getList("data", QueryVirtualMembersResponseV2.VirtualMemberInfoV2.class);
+        QueryVirtualMembersResponseV2 queryVirtualMembersResponseV2=new QueryVirtualMembersResponseV2();
+        queryVirtualMembersResponseV2.setItems(data);
+        Result<QueryVirtualMembersResponseV2> result = new Result<>(apiResponse.getEndpoint(),json.getIntValue("code"),json.getString("msg"),apiResponse.getTraceId(),queryVirtualMembersResponseV2);
+        return result;
     }
-} 
+
+    /**
+     * Query chat banned members in a chatroom
+     * 
+     * API: GET https://open.yunxinapi.com/im/v2/room_members/{room_id}/actions/chat_banned
+     * 
+     * This method retrieves a list of members who are banned from chatting in a chatroom.
+     * Chat banned members can still enter and view the chatroom but cannot send messages.
+     * 
+     * @param request request containing the chatroom ID
+     * @return result containing the list of chat banned members
+     * @throws YunxinSdkException if a network or server error occurs
+     * @throws IllegalArgumentException if required parameters are missing or invalid
+     */
+    @Override
+    public Result<QueryChatBannedResponseV2> queryChatBanned(QueryChatBannedRequestV2 request) throws YunxinSdkException {
+        // Validate required parameters
+        if (request.getRoomId() == null) {
+            throw new IllegalArgumentException("Chatroom ID cannot be null");
+        }
+        
+        // Replace the path parameter in the URL
+        String endpoint = ChatroomMemberUrlContextV2.QUERY_CHAT_BANNED.replace("{room_id}", request.getRoomId().toString());
+        
+        // Execute API call
+        YunxinApiResponse apiResponse = httpClient.executeV2Api(
+            HttpMethod.GET,
+            ChatroomMemberUrlContextV2.QUERY_CHAT_BANNED,
+            endpoint,
+            null, // No query parameters
+            null  // No request body for GET request
+        );
+        JSONObject json = JSONObject.parseObject(apiResponse.getData());
+        List<QueryChatBannedResponseV2.BannedMember> data = json.getList("data", QueryChatBannedResponseV2.BannedMember.class);
+        QueryChatBannedResponseV2 queryChatBannedResponseV2=new QueryChatBannedResponseV2();
+
+        queryChatBannedResponseV2.setItems(data);
+        Result<QueryChatBannedResponseV2> result = new Result<>(apiResponse.getEndpoint(),json.getIntValue("code"),json.getString("msg"),apiResponse.getTraceId(),queryChatBannedResponseV2);
+        return result;
+    }
+}

@@ -11,7 +11,7 @@ import com.netease.nim.im.server.sdk.v1.account.IAccountV1Service;
 import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequestV1;
 import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponseV1;
 import com.netease.nim.im.server.sdk.v1.chatroom.IChatRoomV1Service;
-import com.netease.nim.im.server.sdk.v1.chatroom.reponse.CreateChatroomResponseV1;
+import com.netease.nim.im.server.sdk.v1.chatroom.response.CreateChatroomResponseV1;
 import com.netease.nim.im.server.sdk.v1.chatroom.request.CreateChatroomRequestV1;
 import com.netease.nim.im.server.sdk.v1.chatroom_message.IChatroomMessageV1Service;
 import com.netease.nim.im.server.sdk.v1.chatroom_message.request.SendChatroomMsgRequestV1;
@@ -24,7 +24,7 @@ import com.netease.nim.im.server.sdk.v1.history.model.FileMessage;
 import com.netease.nim.im.server.sdk.v1.history.model.LocationMessage;
 import com.netease.nim.im.server.sdk.v1.history.model.AudioMessage;
 import com.netease.nim.im.server.sdk.v1.history.model.VideoMessage;
-import com.netease.nim.im.server.sdk.v1.history.model.CustomMessage;
+import com.netease.nim.im.server.sdk.v1.history.model.TipMessage;
 import com.netease.nim.im.server.sdk.v1.history.request.*;
 import com.netease.nim.im.server.sdk.v1.history.response.*;
 import com.netease.nim.im.server.sdk.v1.message.IMessageV1Service;
@@ -34,14 +34,11 @@ import com.netease.nim.im.server.sdk.v1.message.response.BroadcastMessageRespons
 import com.netease.nim.im.server.sdk.v1.message.response.SendMessageResponseV1;
 import com.netease.nim.im.server.sdk.v1.team.ITeamV1Service;
 import com.netease.nim.im.server.sdk.v1.team.request.CreateTeamRequestV1;
-import com.netease.nim.im.server.sdk.v1.team.request.UpdateTeamRequestV1;
 import com.netease.nim.im.server.sdk.v1.team.response.CreateTeamResponseV1;
-import com.netease.nim.im.server.sdk.v1.team.response.UpdateTeamResponseV1;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -162,6 +159,7 @@ public class TestHistoryV1 {
             sendLocationTeamMessage(accid1, tid);
             sendFileTeamMessage(accid1, tid);
             sendCustomTeamMessage(accid1, tid);
+            sendTipTeamMessage(accid1, tid);
             // 等待消息处理
             Thread.sleep(5000L);
             
@@ -354,6 +352,20 @@ public class TestHistoryV1 {
             
             Result<QueryBroadcastHistoryMessageByIdResponseV1> result = historyV1Service.queryBroadcastHistoryMessageById(request);
             System.out.println("**queryBroadcastHistoryMessageById**" + JSON.toJSONString(result));
+            
+            if (result.isSuccess() && result.getResponse() != null && result.getResponse().getMsg() != null) {
+                QueryBroadcastHistoryMessageByIdResponseV1.BroadcastMessage msg = result.getResponse().getMsg();
+                System.out.println("广播消息详情:");
+                System.out.println("广播ID: " + msg.getBroadcastId());
+                System.out.println("消息内容: " + msg.getBody());
+                System.out.println("创建时间: " + msg.getCreateTime());
+                System.out.println("过期时间: " + msg.getExpireTime());
+                System.out.println("是否存离线: " + msg.getIsOffline());
+                if (msg.getTargetOs() != null) {
+                    System.out.println("目标平台: " + String.join(", ", msg.getTargetOs()));
+                }
+            }
+            
             Assert.assertTrue(result.getCode() + ":" + result.getMsg(), result.isSuccess());
         } catch (Exception e) {
             System.err.println("Error querying broadcast history by ID: " + e.getMessage());
@@ -376,11 +388,20 @@ public class TestHistoryV1 {
 
             // 输出消息详情，用于验证消息模型
             if (result.isSuccess() && result.getResponse() != null && result.getResponse().getMsgs() != null) {
-                List<Message> messages = result.getResponse().getMsgs();
+                List<QueryBroadcastHistoryMessageResponseV1.BroadcastMessage> messages = result.getResponse().getMsgs();
                 System.out.println("Retrieved " + messages.size() + " broadcast messages");
-                for (Message message : messages) {
-                    System.out.println("Broadcast message type: " + message.getType() + ", from: " + message.getFrom());
-                    System.out.println("Broadcast message body: " + JSON.toJSONString(message.getBody()));
+                
+                for (QueryBroadcastHistoryMessageResponseV1.BroadcastMessage message : messages) {
+                    System.out.println("广播消息详情:");
+                    System.out.println("广播ID: " + message.getBroadcastId());
+                    System.out.println("消息内容: " + message.getBody());
+                    System.out.println("创建时间: " + message.getCreateTime());
+                    System.out.println("过期时间: " + message.getExpireTime());
+                    System.out.println("是否存离线: " + message.getIsOffline());
+                    if (message.getTargetOs() != null) {
+                        System.out.println("目标平台: " + String.join(", ", message.getTargetOs()));
+                    }
+                    System.out.println("------------------------------");
                 }
             }
             
@@ -725,6 +746,30 @@ public class TestHistoryV1 {
     }
 
     /**
+     * 发送提示消息到群组
+     */
+    private static SendMessageResponseV1 sendTipTeamMessage(String fromAccid, Long tid) throws YunxinSdkException {
+        SendMessageRequestV1 request = new SendMessageRequestV1();
+        request.setFrom(fromAccid);
+        request.setOpe(1); // 1表示群消息
+        request.setTo(String.valueOf(tid));
+        request.setType(10); // 提示消息
+
+        // 提示消息体
+        JSONObject body = new JSONObject();
+        body.put("msg", "这是一条提示消息，请注意查看");
+        request.setBody(body.toJSONString());
+
+        // 推送选项
+        request.setPushcontent("新消息: 提示");
+        
+        Result<SendMessageResponseV1> result = messageV1Service.sendMessage(request);
+        System.out.println("**sendTipTeamMessage**" + JSON.toJSONString(result));
+        Assert.assertTrue(result.getCode() + ":" + result.getMsg(), result.isSuccess());
+        return result.getResponse();
+    }
+
+    /**
      * 查询群聊历史消息并按类型输出
      */
     private static void queryTeamHistoryMessagesByType(Long tid, String accid) {
@@ -987,6 +1032,26 @@ public class TestHistoryV1 {
                                 }
                             } catch (Exception e) {
                                 System.out.println("解析文件消息出错: " + e.getMessage());
+                                System.out.println("原始消息内容: " + JSON.toJSONString(message.getBody()));
+                            }
+                            break;
+                            
+                        case 10: // 提示消息
+                            try {
+                                Object bodyObj = message.getBody();
+                                if (bodyObj instanceof TipMessage.Body) {
+                                    TipMessage.Body tipBody = (TipMessage.Body) bodyObj;
+                                    System.out.println("提示消息: " + tipBody.getMsg());
+                                } else {
+                                    // Convert JSON to proper body object
+                                    JSONObject jsonBody = bodyObj instanceof JSONObject ? 
+                                        (JSONObject) bodyObj : 
+                                        JSONObject.parseObject(JSON.toJSONString(bodyObj));
+                                    
+                                    System.out.println("提示消息: " + jsonBody.getString("msg"));
+                                }
+                            } catch (Exception e) {
+                                System.out.println("解析提示消息出错: " + e.getMessage());
                                 System.out.println("原始消息内容: " + JSON.toJSONString(message.getBody()));
                             }
                             break;
