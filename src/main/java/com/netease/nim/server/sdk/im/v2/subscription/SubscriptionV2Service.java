@@ -51,7 +51,7 @@ public class SubscriptionV2Service implements ISubscriptionV2Service {
         }
         
         // Create URL with path parameter
-        String url = SubscriptionUrlContextV2.SUBSCRIBE_USER_STATUS.replace(
+        String url = SubscriptionV2UrlContext.SUBSCRIBE_USER_STATUS.replace(
                 "{account_id}", request.getSubscriberAccountId());
         
         // Create query parameters
@@ -64,7 +64,7 @@ public class SubscriptionV2Service implements ISubscriptionV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = yunxinApiHttpClient.executeV2Api(
             HttpMethod.POST,
-            SubscriptionUrlContextV2.SUBSCRIBE_USER_STATUS,
+            SubscriptionV2UrlContext.SUBSCRIBE_USER_STATUS,
             url,
             queryParams,
             jsonRequestBody
@@ -83,7 +83,7 @@ public class SubscriptionV2Service implements ISubscriptionV2Service {
         }
 
         // Create URL with path parameter
-        String url = SubscriptionUrlContextV2.UNSUBSCRIBE_USER_STATUS.replace(
+        String url = SubscriptionV2UrlContext.UNSUBSCRIBE_USER_STATUS.replace(
                 "{account_id}", request.getSubscriberAccountId());
         
         // Convert request body to JSON string
@@ -92,7 +92,7 @@ public class SubscriptionV2Service implements ISubscriptionV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = yunxinApiHttpClient.executeV2Api(
             HttpMethod.DELETE,
-            SubscriptionUrlContextV2.UNSUBSCRIBE_USER_STATUS,
+            SubscriptionV2UrlContext.UNSUBSCRIBE_USER_STATUS,
             url,
             null,
             jsonRequestBody
@@ -115,7 +115,7 @@ public class SubscriptionV2Service implements ISubscriptionV2Service {
         }
 
         // Create URL with path parameter
-        String url = SubscriptionUrlContextV2.QUERY_USER_STATUS_SUBSCRIPTION.replace(
+        String url = SubscriptionV2UrlContext.QUERY_USER_STATUS_SUBSCRIPTION.replace(
                 "{account_id}", request.getSubscriberAccountId());
         
         // Convert request body to JSON string
@@ -124,7 +124,7 @@ public class SubscriptionV2Service implements ISubscriptionV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = yunxinApiHttpClient.executeV2Api(
             HttpMethod.PATCH,
-            SubscriptionUrlContextV2.QUERY_USER_STATUS_SUBSCRIPTION,
+            SubscriptionV2UrlContext.QUERY_USER_STATUS_SUBSCRIPTION,
             url,
             null,
             jsonRequestBody

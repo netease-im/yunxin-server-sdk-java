@@ -33,8 +33,8 @@ public class ConversationGroupV2Service implements IConversationGroupV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST, 
-            ConversationGroupUrlContextV2.CREATE_CONVERSATION_GROUP, 
-            ConversationGroupUrlContextV2.CREATE_CONVERSATION_GROUP, 
+            ConversationGroupV2UrlContext.CREATE_CONVERSATION_GROUP,
+            ConversationGroupV2UrlContext.CREATE_CONVERSATION_GROUP,
             null, 
             requestBody
         );
@@ -44,14 +44,14 @@ public class ConversationGroupV2Service implements IConversationGroupV2Service {
     @Override
     public Result<UpdateConversationGroupResponseV2> updateConversationGroup(UpdateConversationGroupRequestV2 request) throws YunxinSdkException {
         // Replace placeholder in the URL with the groupId
-        String path = ConversationGroupUrlContextV2.UPDATE_CONVERSATION_GROUP.replace("{group_id}", String.valueOf(request.getGroupId()));
+        String path = ConversationGroupV2UrlContext.UPDATE_CONVERSATION_GROUP.replace("{group_id}", String.valueOf(request.getGroupId()));
         
         // Convert request to JSON string
         String requestBody = JSON.toJSONString(request);
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH, 
-            ConversationGroupUrlContextV2.UPDATE_CONVERSATION_GROUP, 
+            ConversationGroupV2UrlContext.UPDATE_CONVERSATION_GROUP,
             path, 
             null, 
             requestBody
@@ -62,7 +62,7 @@ public class ConversationGroupV2Service implements IConversationGroupV2Service {
     @Override
     public Result<DeleteConversationGroupResponseV2> deleteConversationGroup(DeleteConversationGroupRequestV2 request) throws YunxinSdkException {
         // Replace placeholder in the URL with the groupId
-        String path = ConversationGroupUrlContextV2.DELETE_CONVERSATION_GROUP.replace("{group_id}", String.valueOf(request.getGroupId()));
+        String path = ConversationGroupV2UrlContext.DELETE_CONVERSATION_GROUP.replace("{group_id}", String.valueOf(request.getGroupId()));
         
         // For DELETE request, put the account_id in the query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -70,7 +70,7 @@ public class ConversationGroupV2Service implements IConversationGroupV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.DELETE, 
-            ConversationGroupUrlContextV2.DELETE_CONVERSATION_GROUP, 
+            ConversationGroupV2UrlContext.DELETE_CONVERSATION_GROUP,
             path, 
             queryParams, 
             null
@@ -81,7 +81,7 @@ public class ConversationGroupV2Service implements IConversationGroupV2Service {
     @Override
     public Result<GetConversationGroupResponseV2> getConversationGroup(GetConversationGroupRequestV2 request) throws YunxinSdkException {
         // Replace placeholder in the URL with the groupId
-        String path = ConversationGroupUrlContextV2.GET_CONVERSATION_GROUP.replace("{group_id}", String.valueOf(request.getGroupId()));
+        String path = ConversationGroupV2UrlContext.GET_CONVERSATION_GROUP.replace("{group_id}", String.valueOf(request.getGroupId()));
         
         // For GET request, put the account_id in the query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -89,7 +89,7 @@ public class ConversationGroupV2Service implements IConversationGroupV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET, 
-            ConversationGroupUrlContextV2.GET_CONVERSATION_GROUP, 
+            ConversationGroupV2UrlContext.GET_CONVERSATION_GROUP,
             path, 
             queryParams, 
             null
@@ -109,8 +109,8 @@ public class ConversationGroupV2Service implements IConversationGroupV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET, 
-            ConversationGroupUrlContextV2.BATCH_GET_CONVERSATION_GROUPS, 
-            ConversationGroupUrlContextV2.BATCH_GET_CONVERSATION_GROUPS, 
+            ConversationGroupV2UrlContext.BATCH_GET_CONVERSATION_GROUPS,
+            ConversationGroupV2UrlContext.BATCH_GET_CONVERSATION_GROUPS,
             queryParams, 
             null
         );
@@ -125,8 +125,8 @@ public class ConversationGroupV2Service implements IConversationGroupV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET, 
-            ConversationGroupUrlContextV2.LIST_ALL_CONVERSATION_GROUPS, 
-            ConversationGroupUrlContextV2.LIST_ALL_CONVERSATION_GROUPS, 
+            ConversationGroupV2UrlContext.LIST_ALL_CONVERSATION_GROUPS,
+            ConversationGroupV2UrlContext.LIST_ALL_CONVERSATION_GROUPS,
             queryParams, 
             null
         );

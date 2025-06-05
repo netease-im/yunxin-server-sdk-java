@@ -26,7 +26,7 @@ public class HistoryV1Service implements IHistoryV1Service {
     @Override
     public Result<QuerySessionHistoryMessageResponseV1> querySessionHistoryMessage(QuerySessionHistoryMessageRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.QUERY_SESSION_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryV1UrlContext.QUERY_SESSION_MSG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -47,7 +47,7 @@ public class HistoryV1Service implements IHistoryV1Service {
     @Override
     public Result<QueryTeamHistoryMessageResponseV1> queryTeamHistoryMessage(QueryTeamHistoryMessageRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.QUERY_TEAM_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryV1UrlContext.QUERY_TEAM_MSG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -68,7 +68,7 @@ public class HistoryV1Service implements IHistoryV1Service {
     @Override
     public Result<QueryChatroomHistoryMessageResponseV1> queryChatroomHistoryMessage(QueryChatroomHistoryMessageRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.QUERY_CHATROOM_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryV1UrlContext.QUERY_CHATROOM_MSG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -119,7 +119,7 @@ public class HistoryV1Service implements IHistoryV1Service {
     @Override
     public Result<DeleteChatroomHistoryMessageResponseV1> deleteChatroomHistoryMessage(DeleteChatroomHistoryMessageRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.DELETE_CHATROOM_HISTORY_MESSAGE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryV1UrlContext.DELETE_CHATROOM_HISTORY_MESSAGE, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -135,7 +135,7 @@ public class HistoryV1Service implements IHistoryV1Service {
     @Override
     public Result<QuerySessionListResponseV1> querySessionList(QuerySessionListRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.QUERY_SESSION_LIST, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryV1UrlContext.QUERY_SESSION_LIST, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -151,7 +151,7 @@ public class HistoryV1Service implements IHistoryV1Service {
     @Override
     public Result<QueryBroadcastHistoryMessageByIdResponseV1> queryBroadcastHistoryMessageById(QueryBroadcastHistoryMessageByIdRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.QUERY_BROADCAST_MSG_BY_ID, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryV1UrlContext.QUERY_BROADCAST_MSG_BY_ID, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -170,7 +170,7 @@ public class HistoryV1Service implements IHistoryV1Service {
     @Override
     public Result<QueryBroadcastHistoryMessageResponseV1> queryBroadcastHistoryMessage(QueryBroadcastHistoryMessageRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.QUERY_BROADCAST_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryV1UrlContext.QUERY_BROADCAST_MSG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -196,7 +196,7 @@ public class HistoryV1Service implements IHistoryV1Service {
     @Override
     public Result<QueryUserEventsResponseV1> queryUserEvents(QueryUserEventsRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryUrlContext.QUERY_USER_EVENTS, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(HistoryV1UrlContext.QUERY_USER_EVENTS, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {

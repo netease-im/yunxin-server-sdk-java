@@ -1,6 +1,6 @@
 package com.netease.nim.server.sdk.im.v1.chatroom;
 
-public class ChatroomUrlContext {
+public class ChatroomV1UrlContext {
     // 创建聊天室
     static final String CREATE = "/chatroom/create.action";
     

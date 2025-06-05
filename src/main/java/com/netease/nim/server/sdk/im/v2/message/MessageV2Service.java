@@ -110,14 +110,14 @@ public class MessageV2Service implements IMessageV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = MessageUrlContextV2.SEND_MESSAGE.replace("{conversation_id}", conversationId);
+        String endpoint = MessageV2UrlContext.SEND_MESSAGE.replace("{conversation_id}", conversationId);
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            MessageUrlContextV2.SEND_MESSAGE,
+            MessageV2UrlContext.SEND_MESSAGE,
             endpoint,
             null, // No query parameters
             requestBody
@@ -182,8 +182,8 @@ public class MessageV2Service implements IMessageV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            MessageUrlContextV2.BATCH_SEND_P2P_MESSAGE,
-            MessageUrlContextV2.BATCH_SEND_P2P_MESSAGE,
+            MessageV2UrlContext.BATCH_SEND_P2P_MESSAGE,
+            MessageV2UrlContext.BATCH_SEND_P2P_MESSAGE,
             null, // No query parameters
             requestBody
         );
@@ -267,8 +267,8 @@ public class MessageV2Service implements IMessageV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            MessageUrlContextV2.MODIFY_MESSAGE,
-            MessageUrlContextV2.MODIFY_MESSAGE,
+            MessageV2UrlContext.MODIFY_MESSAGE,
+            MessageV2UrlContext.MODIFY_MESSAGE,
             null, // No query parameters
             requestBody
         );
@@ -313,7 +313,7 @@ public class MessageV2Service implements IMessageV2Service {
         }
         
         // Replace path parameters in the URL
-        String endpoint = MessageUrlContextV2.WITHDRAW_MESSAGE
+        String endpoint = MessageV2UrlContext.WITHDRAW_MESSAGE
                 .replace("{conversation_id}", request.getConversationId())
                 .replace("{message_server_id}", request.getMessageServerId().toString());
         
@@ -359,7 +359,7 @@ public class MessageV2Service implements IMessageV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.DELETE,
-            MessageUrlContextV2.WITHDRAW_MESSAGE,
+            MessageV2UrlContext.WITHDRAW_MESSAGE,
             endpoint,
             queryParams,
             null // No request body for DELETE
@@ -402,7 +402,7 @@ public class MessageV2Service implements IMessageV2Service {
         }
         
         // Replace path parameter in the URL
-        String endpoint = MessageUrlContextV2.DELETE_CONVERSATION_MESSAGES
+        String endpoint = MessageV2UrlContext.DELETE_CONVERSATION_MESSAGES
                 .replace("{conversation_id}", request.getConversationId());
         
         // Build query parameters
@@ -412,7 +412,7 @@ public class MessageV2Service implements IMessageV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.DELETE,
-            MessageUrlContextV2.DELETE_CONVERSATION_MESSAGES,
+            MessageV2UrlContext.DELETE_CONVERSATION_MESSAGES,
             endpoint,
             queryParams,
             null // No request body for DELETE
@@ -457,8 +457,8 @@ public class MessageV2Service implements IMessageV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            MessageUrlContextV2.SEND_P2P_READ_RECEIPT,
-            MessageUrlContextV2.SEND_P2P_READ_RECEIPT,
+            MessageV2UrlContext.SEND_P2P_READ_RECEIPT,
+            MessageV2UrlContext.SEND_P2P_READ_RECEIPT,
             null, // No query parameters
             requestBody
         );
@@ -509,8 +509,8 @@ public class MessageV2Service implements IMessageV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            MessageUrlContextV2.SEND_TEAM_READ_RECEIPT,
-            MessageUrlContextV2.SEND_TEAM_READ_RECEIPT,
+            MessageV2UrlContext.SEND_TEAM_READ_RECEIPT,
+            MessageV2UrlContext.SEND_TEAM_READ_RECEIPT,
             null, // No query parameters
             requestBody
         );
@@ -575,8 +575,8 @@ public class MessageV2Service implements IMessageV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            MessageUrlContextV2.QUERY_TEAM_READ_RECEIPT,
-            MessageUrlContextV2.QUERY_TEAM_READ_RECEIPT,
+            MessageV2UrlContext.QUERY_TEAM_READ_RECEIPT,
+            MessageV2UrlContext.QUERY_TEAM_READ_RECEIPT,
             queryParams,
             null // No request body for GET
         );
@@ -611,7 +611,7 @@ public class MessageV2Service implements IMessageV2Service {
         }
         
         // Replace path parameters in the URL
-        String endpoint = MessageUrlContextV2.QUERY_MESSAGE
+        String endpoint = MessageV2UrlContext.QUERY_MESSAGE
                 .replace("{conversation_id}", request.getConversationId())
                 .replace("{message_server_id}", request.getMessageServerId().toString());
         
@@ -641,7 +641,7 @@ public class MessageV2Service implements IMessageV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            MessageUrlContextV2.QUERY_MESSAGE,
+            MessageV2UrlContext.QUERY_MESSAGE,
             endpoint,
             queryParams,
             null // No request body for GET
@@ -721,8 +721,8 @@ public class MessageV2Service implements IMessageV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            MessageUrlContextV2.SEARCH_MESSAGES,
-            MessageUrlContextV2.SEARCH_MESSAGES,
+            MessageV2UrlContext.SEARCH_MESSAGES,
+            MessageV2UrlContext.SEARCH_MESSAGES,
             queryParams,
             null // No request body for GET request
         );
@@ -753,7 +753,7 @@ public class MessageV2Service implements IMessageV2Service {
 
         
         // Replace path parameter in the URL
-        String endpoint = MessageUrlContextV2.QUERY_CONVERSATION_MESSAGES
+        String endpoint = MessageV2UrlContext.QUERY_CONVERSATION_MESSAGES
                 .replace("{conversation_id}", request.getConversationId());
         
         // Build query parameters
@@ -789,7 +789,7 @@ public class MessageV2Service implements IMessageV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            MessageUrlContextV2.QUERY_CONVERSATION_MESSAGES,
+            MessageV2UrlContext.QUERY_CONVERSATION_MESSAGES,
             endpoint,
             queryParams,
             null // No request body for GET
@@ -835,7 +835,7 @@ public class MessageV2Service implements IMessageV2Service {
         }
         
         // Replace path parameter in the URL
-        String endpoint = MessageUrlContextV2.BATCH_QUERY_MESSAGES
+        String endpoint = MessageV2UrlContext.BATCH_QUERY_MESSAGES
                 .replace("{conversation_id}", request.getConversationId());
         
         // Convert the request to JSON string
@@ -848,7 +848,7 @@ public class MessageV2Service implements IMessageV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            MessageUrlContextV2.BATCH_QUERY_MESSAGES,
+            MessageV2UrlContext.BATCH_QUERY_MESSAGES,
             endpoint,
             null, // No query parameters
             requestBody
@@ -934,8 +934,8 @@ public class MessageV2Service implements IMessageV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            MessageUrlContextV2.QUERY_THREAD_MESSAGES,
-            MessageUrlContextV2.QUERY_THREAD_MESSAGES,
+            MessageV2UrlContext.QUERY_THREAD_MESSAGES,
+            MessageV2UrlContext.QUERY_THREAD_MESSAGES,
             queryParams,
             null // No request body for GET
         );
@@ -1007,8 +1007,8 @@ public class MessageV2Service implements IMessageV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH,
-            MessageUrlContextV2.ADD_QUICK_COMMENT,
-            MessageUrlContextV2.ADD_QUICK_COMMENT,
+            MessageV2UrlContext.ADD_QUICK_COMMENT,
+            MessageV2UrlContext.ADD_QUICK_COMMENT,
             null, // 无查询参数
             requestBody
         );
@@ -1078,8 +1078,8 @@ public class MessageV2Service implements IMessageV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.DELETE,
-            MessageUrlContextV2.DELETE_QUICK_COMMENT,
-            MessageUrlContextV2.DELETE_QUICK_COMMENT,
+            MessageV2UrlContext.DELETE_QUICK_COMMENT,
+            MessageV2UrlContext.DELETE_QUICK_COMMENT,
             null, // No query parameters
             requestBody
         );
@@ -1148,8 +1148,8 @@ public class MessageV2Service implements IMessageV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            MessageUrlContextV2.BATCH_QUERY_QUICK_COMMENTS,
-            MessageUrlContextV2.BATCH_QUERY_QUICK_COMMENTS,
+            MessageV2UrlContext.BATCH_QUERY_QUICK_COMMENTS,
+            MessageV2UrlContext.BATCH_QUERY_QUICK_COMMENTS,
             null, // No query parameters
             requestBody
         );

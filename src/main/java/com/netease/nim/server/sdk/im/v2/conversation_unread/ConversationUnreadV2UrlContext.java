@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v2.conversation_unread;
 /**
  * URL context for Conversation Unread V2 API endpoints
  */
-public class ConversationUnreadUrlContextV2 {
+public class ConversationUnreadV2UrlContext {
     
     /**
      * Get conversation overview endpoint for an account

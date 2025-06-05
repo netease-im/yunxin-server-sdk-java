@@ -34,7 +34,7 @@ public class UserV2Service implements IUserV2Service {
     @Override
     public Result<UpdateUserResponseV2> updateUser(UpdateUserRequestV2 request) throws YunxinSdkException {
         // Replace placeholder in the URL with the accountId
-        String path = UserUrlContextV2.UPDATE_USER.replace("{account_id}", request.getAccountId());
+        String path = UserV2UrlContext.UPDATE_USER.replace("{account_id}", request.getAccountId());
         
         // Make a copy of the request to avoid modifying the original
         JSONObject data = JSONObject.parseObject(JSONObject.toJSONString(request));
@@ -44,7 +44,7 @@ public class UserV2Service implements IUserV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH,
-            UserUrlContextV2.UPDATE_USER,
+            UserV2UrlContext.UPDATE_USER,
             path,
             null,
             data.toString()
@@ -56,11 +56,11 @@ public class UserV2Service implements IUserV2Service {
     @Override
     public Result<GetUserResponseV2> getUser(GetUserRequestV2 request) throws YunxinSdkException {
         // Replace placeholder in the URL with the accountId
-        String path = UserUrlContextV2.GET_USER.replace("{account_id}", request.getAccountId());
+        String path = UserV2UrlContext.GET_USER.replace("{account_id}", request.getAccountId());
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            UserUrlContextV2.GET_USER,
+            UserV2UrlContext.GET_USER,
             path,
             null,
             null
@@ -72,8 +72,7 @@ public class UserV2Service implements IUserV2Service {
     @Override
     public Result<BatchGetUsersResponseV2> batchGetUsers(BatchGetUsersRequestV2 request) throws YunxinSdkException {
         // Convert the list of account IDs to a comma-separated string
-        String accountIdsString = request.getAccountIds().stream()
-                .collect(Collectors.joining(","));
+        String accountIdsString = String.join(",", request.getAccountIds());
         
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -81,8 +80,8 @@ public class UserV2Service implements IUserV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            UserUrlContextV2.BATCH_GET_USERS,
-            UserUrlContextV2.BATCH_GET_USERS,
+            UserV2UrlContext.BATCH_GET_USERS,
+            UserV2UrlContext.BATCH_GET_USERS,
             queryParams,
             null
         );
@@ -97,8 +96,8 @@ public class UserV2Service implements IUserV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            UserUrlContextV2.GET_USERS_ONLINE_STATUS,
-            UserUrlContextV2.GET_USERS_ONLINE_STATUS,
+            UserV2UrlContext.GET_USERS_ONLINE_STATUS,
+            UserV2UrlContext.GET_USERS_ONLINE_STATUS,
             null,
             requestBody
         );

@@ -32,7 +32,7 @@ public class TranslationV1Service implements ITranslationV1Service {
     @Override
     public Result<TextTranslationResponse> translatorText(TextTranslationRequest request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TranslationUrlContext.TEXT_TRANSLATION, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TranslationV1UrlContext.TEXT_TRANSLATION, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {

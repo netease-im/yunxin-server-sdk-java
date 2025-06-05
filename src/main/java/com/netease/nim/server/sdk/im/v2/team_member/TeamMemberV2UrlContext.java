@@ -5,7 +5,7 @@ package com.netease.nim.server.sdk.im.v2.team_member;
  * 
  * This class holds the endpoint URLs for the Team Member V2 API operations.
  */
-public class TeamMemberUrlContextV2 {
+public class TeamMemberV2UrlContext {
     /**
      * Invite Team Members endpoint
      */

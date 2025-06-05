@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v2.system_notification;
 /**
  * URL context for custom notification API V2
  */
-public class CustomNotificationUrlContextV2 {
+public class CustomNotificationV2UrlContext {
 
     /**
      * URL for sending custom notifications

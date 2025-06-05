@@ -25,11 +25,11 @@ public class ConversationUnreadV2Service implements IConversationUnreadV2Service
     @Override
     public Result<OverViewsConversationResponseV2> getConversationOverview(OverViewsConversationRequestV2 request) throws YunxinSdkException {
         // Replace placeholder in the URL with the accountId
-        String path = ConversationUnreadUrlContextV2.OVERVIEWS_CONVERSATION.replace("{account_id}", request.getAccountId());
+        String path = ConversationUnreadV2UrlContext.OVERVIEWS_CONVERSATION.replace("{account_id}", request.getAccountId());
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET, 
-            ConversationUnreadUrlContextV2.OVERVIEWS_CONVERSATION, 
+            ConversationUnreadV2UrlContext.OVERVIEWS_CONVERSATION,
             path, 
             null, 
             null
@@ -40,11 +40,11 @@ public class ConversationUnreadV2Service implements IConversationUnreadV2Service
     @Override
     public Result<ClearConversationUnreadResponseV2> clearConversationUnread(ClearConversationUnreadRequestV2 request) throws YunxinSdkException {
         // Replace placeholder in the URL with the conversationId
-        String path = ConversationUnreadUrlContextV2.CLEAR_CONVERSATION_UNREAD.replace("{conversation_id}", request.getConversationId());
+        String path = ConversationUnreadV2UrlContext.CLEAR_CONVERSATION_UNREAD.replace("{conversation_id}", request.getConversationId());
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH, 
-            ConversationUnreadUrlContextV2.CLEAR_CONVERSATION_UNREAD, 
+            ConversationUnreadV2UrlContext.CLEAR_CONVERSATION_UNREAD,
             path, 
             null, 
             null

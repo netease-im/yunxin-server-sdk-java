@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v2.friend;
 /**
  * URL context for Friend V2 API endpoints
  */
-public class FriendUrlContextV2 {
+public class FriendV2UrlContext {
     
     /**
      * Base friend endpoint

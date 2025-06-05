@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v2.translation;
 /**
  * URL context for Translation V2 API endpoints
  */
-public class TranslationUrlContextV2 {
+public class TranslationV2UrlContext {
     
     /**
      * Translate text endpoint

@@ -40,7 +40,7 @@ public class EventSubscribeV1Service implements IEventSubscribeV1Service {
         }
         
         // Add timeout parameter to prevent long-running requests
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(EventSubscribeUrlContext.ADD_EVENT_SUBSCRIBE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(EventSubscribeV1UrlContext.ADD_EVENT_SUBSCRIBE, paramMap);
         
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
@@ -67,7 +67,7 @@ public class EventSubscribeV1Service implements IEventSubscribeV1Service {
             paramMap.put("publisherAccids", JSON.toJSONString(request.getPublisherAccids()));
         }
         
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(EventSubscribeUrlContext.QUERY_EVENT_SUBSCRIBE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(EventSubscribeV1UrlContext.QUERY_EVENT_SUBSCRIBE, paramMap);
         
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
@@ -94,7 +94,7 @@ public class EventSubscribeV1Service implements IEventSubscribeV1Service {
             paramMap.put("publisherAccids", JSON.toJSONString(request.getPublisherAccids()));
         }
         
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(EventSubscribeUrlContext.DELETE_EVENT_SUBSCRIBE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(EventSubscribeV1UrlContext.DELETE_EVENT_SUBSCRIBE, paramMap);
         
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
@@ -115,7 +115,7 @@ public class EventSubscribeV1Service implements IEventSubscribeV1Service {
     public Result<BatchDeleteEventSubscribeResponseV1> batchDeleteEventSubscribe(BatchDeleteEventSubscribeRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
         
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(EventSubscribeUrlContext.BATCH_DELETE_EVENT_SUBSCRIBE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(EventSubscribeV1UrlContext.BATCH_DELETE_EVENT_SUBSCRIBE, paramMap);
         
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");

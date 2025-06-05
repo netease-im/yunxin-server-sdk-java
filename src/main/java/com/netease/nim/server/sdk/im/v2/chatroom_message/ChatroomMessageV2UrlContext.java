@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v2.chatroom_message;
 /**
  * URL context for Chatroom Message V2 API endpoints
  */
-public class ChatroomMessageUrlContextV2 {
+public class ChatroomMessageV2UrlContext {
     
     /**
      * Send chatroom message endpoint

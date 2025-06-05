@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v2.chatroom_queue;
 /**
  * URL context for Chatroom Queue V2 API endpoints
  */
-public class ChatroomQueueUrlContextV2 {
+public class ChatroomQueueV2UrlContext {
     
     /**
      * Initialize chatroom queue endpoint

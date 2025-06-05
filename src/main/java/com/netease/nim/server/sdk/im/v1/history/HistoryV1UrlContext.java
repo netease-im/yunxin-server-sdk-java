@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v1.history;
 /**
  * URL路径常量类，用于所有历史记录相关的API请求
  */
-public class HistoryUrlContext {
+public class HistoryV1UrlContext {
     // 查询单聊云端历史记录
     static final String QUERY_SESSION_MSG = "/history/querySessionMsg.action";
     

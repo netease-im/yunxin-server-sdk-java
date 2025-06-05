@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v2.mute;
 /**
  * URL context for Mute V2 API endpoints
  */
-public class MuteUrlContextV2 {
+public class MuteV2UrlContext {
     
     /**
      * Add mute contact endpoint

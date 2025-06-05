@@ -162,7 +162,7 @@ public class ChatroomMessageV2Service implements IChatroomMessageV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = ChatroomMessageUrlContextV2.SEND_CHATROOM_MESSAGE.replace("{room_id}", request.getRoomId().toString());
+        String endpoint = ChatroomMessageV2UrlContext.SEND_CHATROOM_MESSAGE.replace("{room_id}", request.getRoomId().toString());
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
@@ -170,7 +170,7 @@ public class ChatroomMessageV2Service implements IChatroomMessageV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            ChatroomMessageUrlContextV2.SEND_CHATROOM_MESSAGE,
+            ChatroomMessageV2UrlContext.SEND_CHATROOM_MESSAGE,
             endpoint,
             null, // No query parameters
             requestBody
@@ -286,8 +286,8 @@ public class ChatroomMessageV2Service implements IChatroomMessageV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            ChatroomMessageUrlContextV2.BATCH_SEND_CHATROOM_MESSAGES,
-            ChatroomMessageUrlContextV2.BATCH_SEND_CHATROOM_MESSAGES,
+            ChatroomMessageV2UrlContext.BATCH_SEND_CHATROOM_MESSAGES,
+            ChatroomMessageV2UrlContext.BATCH_SEND_CHATROOM_MESSAGES,
             null, // No query parameters
             requestBody
         );
@@ -390,7 +390,7 @@ public class ChatroomMessageV2Service implements IChatroomMessageV2Service {
 
         
         // Replace path parameters in the URL
-        String endpoint = ChatroomMessageUrlContextV2.RECALL_OR_DELETE_CHATROOM_MESSAGE
+        String endpoint = ChatroomMessageV2UrlContext.RECALL_OR_DELETE_CHATROOM_MESSAGE
                 .replace("{room_id}", request.getRoomId().toString())
                 .replace("{message_client_id}", request.getMessageClientId());
         
@@ -410,7 +410,7 @@ public class ChatroomMessageV2Service implements IChatroomMessageV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.DELETE,
-            ChatroomMessageUrlContextV2.RECALL_OR_DELETE_CHATROOM_MESSAGE,
+            ChatroomMessageV2UrlContext.RECALL_OR_DELETE_CHATROOM_MESSAGE,
             endpoint,
             queryParams,
             null // No request body for DELETE
@@ -456,7 +456,7 @@ public class ChatroomMessageV2Service implements IChatroomMessageV2Service {
         }
 
         // Replace path parameter in the URL
-        String endpoint = ChatroomMessageUrlContextV2.QUERY_CHATROOM_HISTORY_MESSAGES.replace("{room_id}", request.getRoomId().toString());
+        String endpoint = ChatroomMessageV2UrlContext.QUERY_CHATROOM_HISTORY_MESSAGES.replace("{room_id}", request.getRoomId().toString());
         
         // Prepare query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -478,7 +478,7 @@ public class ChatroomMessageV2Service implements IChatroomMessageV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            ChatroomMessageUrlContextV2.QUERY_CHATROOM_HISTORY_MESSAGES,
+            ChatroomMessageV2UrlContext.QUERY_CHATROOM_HISTORY_MESSAGES,
             endpoint,
             queryParams,
             null // No request body for GET

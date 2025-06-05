@@ -1,6 +1,6 @@
 package com.netease.nim.server.sdk.im.v1.super_team;
 
-public class SuperTeamUrlContext {
+public class SuperTeamV1UrlContext {
     //创建超大群
     static String CREATE_TEAM = "/superteam/create.action";
 

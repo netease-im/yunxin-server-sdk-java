@@ -34,7 +34,7 @@ public class FriendV1Service implements IFriendV1Service {
     @Override
     public Result<BaseFriendResponseV1> add(AddFriendRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(FriendUrlContext.ADD, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(FriendV1UrlContext.ADD, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -47,7 +47,7 @@ public class FriendV1Service implements IFriendV1Service {
     @Override
     public Result<BaseFriendResponseV1> update(UpdateFriendRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(FriendUrlContext.UPDATE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(FriendV1UrlContext.UPDATE, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -60,7 +60,7 @@ public class FriendV1Service implements IFriendV1Service {
     @Override
     public Result<BaseFriendResponseV1> delete(DeleteFriendRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(FriendUrlContext.DELETE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(FriendV1UrlContext.DELETE, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -73,7 +73,7 @@ public class FriendV1Service implements IFriendV1Service {
     @Override
     public Result<GetFriendListResponseV1> get(GetFriendListRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(FriendUrlContext.GET, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(FriendV1UrlContext.GET, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -91,7 +91,7 @@ public class FriendV1Service implements IFriendV1Service {
     @Override
     public Result<GetFriendRelationshipResponseV1> getByAccId(GetFriendRelationshipRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(FriendUrlContext.GET_BY_ACCID, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(FriendV1UrlContext.GET_BY_ACCID, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {

@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v1.account;
 /**
  * URL路径常量类，用于所有账户相关的API请求
  */
-public class AccountUrlContext {
+public class AccountV1UrlContext {
     // 创建账户
     static final String CREATE_ACCOUNT = "/user/create.action";
     

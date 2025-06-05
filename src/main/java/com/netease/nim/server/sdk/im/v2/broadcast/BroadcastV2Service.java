@@ -51,8 +51,8 @@ public class BroadcastV2Service implements IBroadcastV2Service {
         System.out.println(jsonRequestBody);
         YunxinApiResponse apiResponse = yunxinApiHttpClient.executeV2Api(
             HttpMethod.POST,
-            BroadcastUrlContextV2.BROADCAST_NOTIFICATION,
-            BroadcastUrlContextV2.BROADCAST_NOTIFICATION,
+            BroadcastV2UrlContext.BROADCAST_NOTIFICATION,
+            BroadcastV2UrlContext.BROADCAST_NOTIFICATION,
             null,
             jsonRequestBody
         );
@@ -70,13 +70,13 @@ public class BroadcastV2Service implements IBroadcastV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = BroadcastUrlContextV2.DELETE_BROADCAST_NOTIFICATION
+        String endpoint = BroadcastV2UrlContext.DELETE_BROADCAST_NOTIFICATION
                 .replace("{broadcast_id}", request.getBroadcastId());
         
         // Execute the API call
         YunxinApiResponse apiResponse = yunxinApiHttpClient.executeV2Api(
             HttpMethod.DELETE,
-            BroadcastUrlContextV2.DELETE_BROADCAST_NOTIFICATION,
+            BroadcastV2UrlContext.DELETE_BROADCAST_NOTIFICATION,
             endpoint,
             null, // No query parameters
             null  // No request body for DELETE
@@ -95,13 +95,13 @@ public class BroadcastV2Service implements IBroadcastV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = BroadcastUrlContextV2.QUERY_BROADCAST_NOTIFICATION
+        String endpoint = BroadcastV2UrlContext.QUERY_BROADCAST_NOTIFICATION
                 .replace("{broadcast_id}", request.getBroadcastId());
         
         // Execute the API call
         YunxinApiResponse apiResponse = yunxinApiHttpClient.executeV2Api(
             HttpMethod.GET,
-            BroadcastUrlContextV2.QUERY_BROADCAST_NOTIFICATION,
+            BroadcastV2UrlContext.QUERY_BROADCAST_NOTIFICATION,
             endpoint,
             null, // No query parameters
             null  // No request body for GET
@@ -132,8 +132,8 @@ public class BroadcastV2Service implements IBroadcastV2Service {
         // Execute the API call
         YunxinApiResponse apiResponse = yunxinApiHttpClient.executeV2Api(
             HttpMethod.GET,
-            BroadcastUrlContextV2.BROADCAST_NOTIFICATION,
-            BroadcastUrlContextV2.BROADCAST_NOTIFICATION,
+            BroadcastV2UrlContext.BROADCAST_NOTIFICATION,
+            BroadcastV2UrlContext.BROADCAST_NOTIFICATION,
             queryParams,
             null  // No request body for GET
         );
@@ -164,8 +164,8 @@ public class BroadcastV2Service implements IBroadcastV2Service {
         // Execute the API call
         YunxinApiResponse apiResponse = yunxinApiHttpClient.executeV2Api(
             HttpMethod.POST,
-            BroadcastUrlContextV2.CHATROOM_BROADCAST_NOTIFICATION,
-            BroadcastUrlContextV2.CHATROOM_BROADCAST_NOTIFICATION,
+            BroadcastV2UrlContext.CHATROOM_BROADCAST_NOTIFICATION,
+            BroadcastV2UrlContext.CHATROOM_BROADCAST_NOTIFICATION,
             null,
             jsonRequestBody
         );

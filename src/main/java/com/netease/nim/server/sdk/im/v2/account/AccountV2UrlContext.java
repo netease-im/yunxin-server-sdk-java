@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v2.account;
 /**
  * URL context for Account V2 API endpoints
  */
-public class AccountUrlContextV2 {
+public class AccountV2UrlContext {
     
     /**
      * Accounts endpoint

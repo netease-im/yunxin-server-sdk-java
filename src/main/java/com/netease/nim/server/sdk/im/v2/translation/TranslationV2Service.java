@@ -66,8 +66,8 @@ public class TranslationV2Service implements ITranslationV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = yunxinApiHttpClient.executeV2Api(
             HttpMethod.POST,
-            TranslationUrlContextV2.TRANSLATE_TEXT,
-            TranslationUrlContextV2.TRANSLATE_TEXT,
+            TranslationV2UrlContext.TRANSLATE_TEXT,
+            TranslationV2UrlContext.TRANSLATE_TEXT,
             null,
             jsonRequestBody
         );

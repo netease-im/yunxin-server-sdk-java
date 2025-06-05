@@ -107,8 +107,8 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            TeamMemberUrlContextV2.INVITE_TEAM_MEMBERS,
-            TeamMemberUrlContextV2.INVITE_TEAM_MEMBERS,
+            TeamMemberV2UrlContext.INVITE_TEAM_MEMBERS,
+            TeamMemberV2UrlContext.INVITE_TEAM_MEMBERS,
             null,
             requestBody
         );
@@ -180,8 +180,8 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.DELETE,
-            TeamMemberUrlContextV2.KICK_TEAM_MEMBERS,
-            TeamMemberUrlContextV2.KICK_TEAM_MEMBERS,
+            TeamMemberV2UrlContext.KICK_TEAM_MEMBERS,
+            TeamMemberV2UrlContext.KICK_TEAM_MEMBERS,
             queryParams,
             null
         );
@@ -247,8 +247,8 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.DELETE,
-            TeamMemberUrlContextV2.LEAVE_TEAM,
-            TeamMemberUrlContextV2.LEAVE_TEAM,
+            TeamMemberV2UrlContext.LEAVE_TEAM,
+            TeamMemberV2UrlContext.LEAVE_TEAM,
             queryParams,
             null
         );
@@ -318,7 +318,7 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = TeamMemberUrlContextV2.UPDATE_TEAM_MEMBER.replace("{account_id}", request.getAccountId());
+        String endpoint = TeamMemberV2UrlContext.UPDATE_TEAM_MEMBER.replace("{account_id}", request.getAccountId());
         
         // Remove accountId from the JSON body as it's in the URL path
         UpdateTeamMemberRequestV2 requestBodyObj = new UpdateTeamMemberRequestV2();
@@ -336,7 +336,7 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH,
-            TeamMemberUrlContextV2.UPDATE_TEAM_MEMBER,
+            TeamMemberV2UrlContext.UPDATE_TEAM_MEMBER,
             endpoint,
             null,
             requestBody
@@ -403,8 +403,8 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH,
-            TeamMemberUrlContextV2.BATCH_MUTE_TEAM_MEMBERS,
-            TeamMemberUrlContextV2.BATCH_MUTE_TEAM_MEMBERS,
+            TeamMemberV2UrlContext.BATCH_MUTE_TEAM_MEMBERS,
+            TeamMemberV2UrlContext.BATCH_MUTE_TEAM_MEMBERS,
             null,
             requestBody
         );
@@ -462,7 +462,7 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = TeamMemberUrlContextV2.JOINED_TEAMS.replace("{account_id}", request.getAccountId());
+        String endpoint = TeamMemberV2UrlContext.JOINED_TEAMS.replace("{account_id}", request.getAccountId());
         
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -482,7 +482,7 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            TeamMemberUrlContextV2.JOINED_TEAMS,
+            TeamMemberV2UrlContext.JOINED_TEAMS,
             endpoint,
             queryParams,
             null

@@ -1,6 +1,6 @@
 package com.netease.nim.server.sdk.im.v1.friend;
 
-public class FriendUrlContext {
+public class FriendV1UrlContext {
     //添加好友
     static String ADD = "/friend/add.action";
 

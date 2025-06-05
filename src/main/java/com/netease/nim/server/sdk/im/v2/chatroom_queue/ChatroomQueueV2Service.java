@@ -97,12 +97,12 @@ public class ChatroomQueueV2Service implements IChatroomQueueV2Service {
         }
         
         // Replace path parameter in the URL
-        String endpoint = ChatroomQueueUrlContextV2.INITIALIZE_CHATROOM_QUEUE.replace("{room_id}", request.getRoomId().toString());
+        String endpoint = ChatroomQueueV2UrlContext.INITIALIZE_CHATROOM_QUEUE.replace("{room_id}", request.getRoomId().toString());
         
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            ChatroomQueueUrlContextV2.INITIALIZE_CHATROOM_QUEUE,
+            ChatroomQueueV2UrlContext.INITIALIZE_CHATROOM_QUEUE,
             endpoint,
             null, // No query parameters
             requestBody.isEmpty() ? "{}" : requestBody.toString()
@@ -163,12 +163,12 @@ public class ChatroomQueueV2Service implements IChatroomQueueV2Service {
         }
         
         // Replace path parameter in the URL
-        String endpoint = ChatroomQueueUrlContextV2.QUERY_CHATROOM_QUEUE_ELEMENTS.replace("{room_id}", request.getRoomId().toString());
+        String endpoint = ChatroomQueueV2UrlContext.QUERY_CHATROOM_QUEUE_ELEMENTS.replace("{room_id}", request.getRoomId().toString());
         
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            ChatroomQueueUrlContextV2.QUERY_CHATROOM_QUEUE_ELEMENTS,
+            ChatroomQueueV2UrlContext.QUERY_CHATROOM_QUEUE_ELEMENTS,
             endpoint,
             null, // No query parameters
             requestBody.isEmpty() ? "{}" : requestBody.toString()
@@ -301,12 +301,12 @@ public class ChatroomQueueV2Service implements IChatroomQueueV2Service {
         }
         
         // Replace path parameter in the URL
-        String endpoint = ChatroomQueueUrlContextV2.UPDATE_CHATROOM_QUEUE.replace("{room_id}", request.getRoomId().toString());
+        String endpoint = ChatroomQueueV2UrlContext.UPDATE_CHATROOM_QUEUE.replace("{room_id}", request.getRoomId().toString());
         
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH,
-            ChatroomQueueUrlContextV2.UPDATE_CHATROOM_QUEUE,
+            ChatroomQueueV2UrlContext.UPDATE_CHATROOM_QUEUE,
             endpoint,
             null, // No query parameters
             requestBody.toString()
@@ -387,12 +387,12 @@ public class ChatroomQueueV2Service implements IChatroomQueueV2Service {
         }
         
         // Replace path parameter in the URL
-        String endpoint = ChatroomQueueUrlContextV2.DELETE_CHATROOM_QUEUE.replace("{room_id}", request.getRoomId().toString());
+        String endpoint = ChatroomQueueV2UrlContext.DELETE_CHATROOM_QUEUE.replace("{room_id}", request.getRoomId().toString());
         
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.DELETE,
-            ChatroomQueueUrlContextV2.DELETE_CHATROOM_QUEUE,
+            ChatroomQueueV2UrlContext.DELETE_CHATROOM_QUEUE,
             endpoint,
             null, // No query parameters
             requestBody.isEmpty() ? null : requestBody.toString()
@@ -481,12 +481,12 @@ public class ChatroomQueueV2Service implements IChatroomQueueV2Service {
         }
         
         // Replace path parameter in the URL
-        String endpoint = ChatroomQueueUrlContextV2.POLL_CHATROOM_QUEUE_ELEMENT.replace("{room_id}", request.getRoomId().toString());
+        String endpoint = ChatroomQueueV2UrlContext.POLL_CHATROOM_QUEUE_ELEMENT.replace("{room_id}", request.getRoomId().toString());
         
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH,
-            ChatroomQueueUrlContextV2.POLL_CHATROOM_QUEUE_ELEMENT,
+            ChatroomQueueV2UrlContext.POLL_CHATROOM_QUEUE_ELEMENT,
             endpoint,
             null, // No query parameters
             requestBody.isEmpty() ? "{}" : requestBody.toString()

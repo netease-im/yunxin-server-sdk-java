@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v2.chatroom_member;
 /**
  * URL context for Chatroom Member V2 API endpoints
  */
-public class ChatroomMemberUrlContextV2 {
+public class ChatroomMemberV2UrlContext {
     
     /**
      * Set chatroom member role endpoint

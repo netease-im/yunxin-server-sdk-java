@@ -27,7 +27,7 @@ public class MessageV1Service implements IMessageV1Service {
         if (request.getForcepushlist() != null && !request.getForcepushlist().isEmpty()) {
             paramMap.put("forcepushlist", JSON.toJSONString(request.getForcepushlist()));
         }
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageUrlContext.SEND_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageV1UrlContext.SEND_MSG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -47,7 +47,7 @@ public class MessageV1Service implements IMessageV1Service {
         if (request.getToAccids() != null && !request.getToAccids().isEmpty()) {
             paramMap.put("toAccids", JSON.toJSONString(request.getToAccids()));
         }
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageUrlContext.SEND_BATCH_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageV1UrlContext.SEND_BATCH_MSG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -72,7 +72,7 @@ public class MessageV1Service implements IMessageV1Service {
     @Override
     public Result<MarkReadMessageResponseV1> markReadMessage(MarkReadMessageRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageUrlContext.MARK_READ_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageV1UrlContext.MARK_READ_MSG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -88,7 +88,7 @@ public class MessageV1Service implements IMessageV1Service {
     @Override
     public Result<MarkReadTeamMessageResponseV1> markReadTeamMessage(MarkReadTeamMessageRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageUrlContext.MARK_READ_TEAM_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageV1UrlContext.MARK_READ_TEAM_MSG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -104,7 +104,7 @@ public class MessageV1Service implements IMessageV1Service {
     @Override
     public Result<RecallMessageResponseV1> recallMessage(RecallMessageRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageUrlContext.RECALL_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageV1UrlContext.RECALL_MSG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -120,7 +120,7 @@ public class MessageV1Service implements IMessageV1Service {
     @Override
     public Result<DeleteMessageOneWayResponseV1> deleteMessageOneWay(DeleteMessageOneWayRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageUrlContext.DEL_MSG_ONE_WAY, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageV1UrlContext.DEL_MSG_ONE_WAY, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -140,7 +140,7 @@ public class MessageV1Service implements IMessageV1Service {
         if (request.getTargetOs() != null && !request.getTargetOs().isEmpty()) {
             paramMap.put("targetOs", JSON.toJSONString(request.getTargetOs()));
         }
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageUrlContext.BROADCAST_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageV1UrlContext.BROADCAST_MSG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -179,7 +179,7 @@ public class MessageV1Service implements IMessageV1Service {
     @Override
     public Result<DeleteBroadcastMessageByIdResponseV1> deleteBroadcastMessageById(DeleteBroadcastMessageByIdRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageUrlContext.DEL_BROADCAST_MSG_BY_ID, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageV1UrlContext.DEL_BROADCAST_MSG_BY_ID, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -195,7 +195,7 @@ public class MessageV1Service implements IMessageV1Service {
     @Override
     public Result<UploadFileResponseV1> uploadFile(UploadFileRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageUrlContext.UPLOAD, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageV1UrlContext.UPLOAD, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -211,7 +211,7 @@ public class MessageV1Service implements IMessageV1Service {
     @Override
     public Result<DeleteFileResponseV1> deleteFile(DeleteFileRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageUrlContext.DELETE_FILE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageV1UrlContext.DELETE_FILE, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -227,7 +227,7 @@ public class MessageV1Service implements IMessageV1Service {
     @Override
     public Result<DeleteMessageResponseV1> deleteMessage(DeleteMessageRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageUrlContext.DEL_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageV1UrlContext.DEL_MSG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {
@@ -243,7 +243,7 @@ public class MessageV1Service implements IMessageV1Service {
     @Override
     public Result<DeleteRoamSessionResponseV1> deleteRoamSession(DeleteRoamSessionRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageUrlContext.DEL_ROAM_SESSION, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(MessageV1UrlContext.DEL_ROAM_SESSION, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue("code");
         if (code != 200) {

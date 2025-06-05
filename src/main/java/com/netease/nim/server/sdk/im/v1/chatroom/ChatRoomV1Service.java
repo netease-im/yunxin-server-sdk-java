@@ -36,7 +36,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<CreateChatroomResponseV1> createChatroom(CreateChatroomRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.CREATE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.CREATE, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -54,7 +54,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<UpdateChatroomResponseV1> updateChatroom(UpdateChatroomRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.UPDATE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.UPDATE, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -72,7 +72,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<QueryChatroomAddressResponseV1> queryChatroomAddress(QueryChatroomAddressRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.REQUEST_ADDR, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.REQUEST_ADDR, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -94,7 +94,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<QueryChatroomInfoResponseV1> queryChatroomInfo(QueryChatroomInfoRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.GET, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.GET, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -113,7 +113,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<QueryChatroomInfosResponseV1> queryChatroomInfos(QueryChatroomInfosRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.GET_BATCH, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.GET_BATCH, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -146,7 +146,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<ToggleCloseChatroomStatResponseV1> toggleCloseChatroomStat(ToggleCloseChatroomStatRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.TOGGLE_CLOSE_STAT, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.TOGGLE_CLOSE_STAT, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -165,7 +165,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<UpdateChatroomDelayClosePolicyResponseV1> updateDelayClosePolicy(UpdateChatroomDelayClosePolicyRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.UPDATE_DELAY_CLOSE_POLICY, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.UPDATE_DELAY_CLOSE_POLICY, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -184,7 +184,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<UpdateChatroomInOutNotificationResponseV1> updateChatroomInOutNotification(UpdateChatroomInOutNotificationRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.UPDATE_IN_OUT_NOTIFICATION, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.UPDATE_IN_OUT_NOTIFICATION, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -203,7 +203,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
             paramMap.put("roomid", String.valueOf(request.getRoomId()));
         }
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.KICK_MEMBER, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.KICK_MEMBER, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -220,7 +220,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<SetMemberRoleResponseV1> setMemberRole(SetMemberRoleRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.SET_MEMBER_ROLE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.SET_MEMBER_ROLE, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -239,7 +239,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<UpdateMyRoomRoleResponseV1> updateMyRoomRole(UpdateMyRoomRoleRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.UPDATE_MY_ROOM_ROLE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.UPDATE_MY_ROOM_ROLE, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -256,7 +256,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<QueryMembersByPageResponseV1> membersByPage(QueryMembersByPageRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.MEMBERS_BY_PAGE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.MEMBERS_BY_PAGE, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -283,7 +283,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<QueryMembersByRolesResponseV1> membersByRoles(QueryMembersByRolesRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.QUERY_MEMBERS_BY_ROLE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.QUERY_MEMBERS_BY_ROLE, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -310,7 +310,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<QueryMembersResponseV1> queryMembers(QueryMembersRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
         paramMap.put("accids", JSONArray.toJSONString(request.getAccids()));
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.QUERY_MEMBERS, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.QUERY_MEMBERS, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -337,7 +337,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<AddRobotResponseV1> addRobot(AddRobotRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
         paramMap.put("accids", JSONArray.toJSONString(request.getAccids()));
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.ADD_ROBOT, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.ADD_ROBOT, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -370,7 +370,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<RemoveRobotResponseV1> removeRobot(RemoveRobotRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
         paramMap.put("accids", JSONArray.toJSONString(request.getAccids()));
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.REMOVE_ROBOT, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.REMOVE_ROBOT, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -399,7 +399,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     @Override
     public Result<CleanRobotResponseV1> cleanRobot(CleanRobotRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.CLEAN_ROBOT, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.CLEAN_ROBOT, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -415,7 +415,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     @Override
     public Result<TemporaryMuteResponseV1> temporaryMute(TemporaryMuteRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.TEMPORARY_MUTE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.TEMPORARY_MUTE, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -431,7 +431,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     @Override
     public Result<MuteRoomResponseV1> muteRoom(MuteRoomRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.MUTE_ROOM, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.MUTE_ROOM, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -447,7 +447,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     @Override
     public Result<TagTemporaryMuteResponseV1> tagTemporaryMute(TagTemporaryMuteRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.TAG_MUTE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.TAG_MUTE, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -464,7 +464,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     @Override
     public Result<TagMembersCountResponseV1> tagMembersCount(TagMembersCountRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.TAG_COUNT, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.TAG_COUNT, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -481,7 +481,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     @Override
     public Result<TagMembersQueryResponseV1> tagMembersQuery(TagMembersQueryRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.TAG_QUERY, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.TAG_QUERY, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
 
@@ -507,7 +507,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<QueryTagHistoryMsgResponseV1> queryTagHistoryMsg(QueryTagHistoryMsgRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
         paramMap.put("tags", JSONArray.toJSONString(request.getTags()));
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.QUERY_TAG_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.QUERY_TAG_MSG, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -532,7 +532,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
         paramMap.put("tags", JSONArray.toJSONString(request.getTags()));
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.UPDATE_CHAT_ROOM_ROLE_TAG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.UPDATE_CHAT_ROOM_ROLE_TAG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -547,7 +547,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<QueryUserRoomIdsResponseV1> queryUserRoomIds(QueryUserRoomIdsRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.QUERY_USER_ROOM_IDS, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.QUERY_USER_ROOM_IDS, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -569,7 +569,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<QueueInitResponseV1> queueInit(QueueInitRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.QUEUE_INIT, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.QUEUE_INIT, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -588,7 +588,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<QueueDropResponseV1> queueDrop(QueueDropRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.QUEUE_DROP, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.QUEUE_DROP, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -607,7 +607,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<QueueOfferResponseV1> queueOffer(QueueOfferRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.QUEUE_OFFER, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.QUEUE_OFFER, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -631,7 +631,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
             paramMap.put("elements", JSONArray.toJSONString(request.getElements()));
         }
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.QUEUE_BATCH_OFFER, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.QUEUE_BATCH_OFFER, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -661,7 +661,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
             paramMap.put("elements", JSON.toJSONString(request.getElements()));
         }
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.QUEUE_BATCH_UPDATE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.QUEUE_BATCH_UPDATE, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -700,7 +700,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<QueueListResponseV1> queueList(QueueListRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.QUEUE_LIST, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.QUEUE_LIST, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -737,7 +737,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
     public Result<QueuePollResponseV1> queuePoll(QueuePollRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.QUEUE_POLL, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.QUEUE_POLL, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -774,7 +774,7 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
             paramMap.put("keys", JSONArray.toJSONString(request.getKeys()));
         }
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomUrlContext.QUEUE_GET, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(ChatroomV1UrlContext.QUEUE_GET, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);

@@ -5,7 +5,7 @@ package com.netease.nim.server.sdk.im.v2.team;
  * 
  * This class holds the endpoint URLs for the Team V2 API operations.
  */
-public class TeamUrlContextV2 {
+public class TeamV2UrlContext {
     /**
      * Create Team endpoint
      */

@@ -61,8 +61,8 @@ public class ConversationV2Service implements IConversationV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            ConversationUrlContextV2.CREATE_CONVERSATION,
-            ConversationUrlContextV2.CREATE_CONVERSATION,
+            ConversationV2UrlContext.CREATE_CONVERSATION,
+            ConversationV2UrlContext.CREATE_CONVERSATION,
             null,
             requestBody
         );
@@ -89,14 +89,14 @@ public class ConversationV2Service implements IConversationV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = ConversationUrlContextV2.UPDATE_CONVERSATION.replace("{conversation_id}", conversationId);
+        String endpoint = ConversationV2UrlContext.UPDATE_CONVERSATION.replace("{conversation_id}", conversationId);
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH,
-            ConversationUrlContextV2.UPDATE_CONVERSATION,
+            ConversationV2UrlContext.UPDATE_CONVERSATION,
             endpoint,
             null,
             requestBody
@@ -125,7 +125,7 @@ public class ConversationV2Service implements IConversationV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = ConversationUrlContextV2.DELETE_CONVERSATION.replace("{conversation_id}", conversationId);
+        String endpoint = ConversationV2UrlContext.DELETE_CONVERSATION.replace("{conversation_id}", conversationId);
         
         // Add query parameter if clearMessage is set
         Map<String, String> queryParams = null;
@@ -136,7 +136,7 @@ public class ConversationV2Service implements IConversationV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.DELETE,
-            ConversationUrlContextV2.DELETE_CONVERSATION,
+            ConversationV2UrlContext.DELETE_CONVERSATION,
             endpoint,
             queryParams,
             null // No request body for DELETE
@@ -180,8 +180,8 @@ public class ConversationV2Service implements IConversationV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.DELETE,
-            ConversationUrlContextV2.BATCH_DELETE_CONVERSATIONS,
-            ConversationUrlContextV2.BATCH_DELETE_CONVERSATIONS,
+            ConversationV2UrlContext.BATCH_DELETE_CONVERSATIONS,
+            ConversationV2UrlContext.BATCH_DELETE_CONVERSATIONS,
             queryParams,
             null // No request body for DELETE
         );
@@ -208,11 +208,11 @@ public class ConversationV2Service implements IConversationV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = ConversationUrlContextV2.GET_CONVERSATION.replace("{conversation_id}", conversationId);
+        String endpoint = ConversationV2UrlContext.GET_CONVERSATION.replace("{conversation_id}", conversationId);
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            ConversationUrlContextV2.GET_CONVERSATION,
+            ConversationV2UrlContext.GET_CONVERSATION,
             endpoint,
             null, // No query parameters
             null  // No request body for GET
@@ -248,8 +248,8 @@ public class ConversationV2Service implements IConversationV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            ConversationUrlContextV2.BATCH_GET_CONVERSATIONS,
-            ConversationUrlContextV2.BATCH_GET_CONVERSATIONS,
+            ConversationV2UrlContext.BATCH_GET_CONVERSATIONS,
+            ConversationV2UrlContext.BATCH_GET_CONVERSATIONS,
             queryParams,
             null // No request body for GET
         );
@@ -293,8 +293,8 @@ public class ConversationV2Service implements IConversationV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            ConversationUrlContextV2.LIST_CONVERSATIONS,
-            ConversationUrlContextV2.LIST_CONVERSATIONS,
+            ConversationV2UrlContext.LIST_CONVERSATIONS,
+            ConversationV2UrlContext.LIST_CONVERSATIONS,
             queryParams,
             null // No request body for GET
         );
@@ -326,7 +326,7 @@ public class ConversationV2Service implements IConversationV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = ConversationUrlContextV2.STICK_TOP_CONVERSATION.replace("{conversation_id}", conversationId);
+        String endpoint = ConversationV2UrlContext.STICK_TOP_CONVERSATION.replace("{conversation_id}", conversationId);
         
         // Create a request body with only the top_type field
         Map<String, Integer> requestBodyMap = new HashMap<>();
@@ -335,7 +335,7 @@ public class ConversationV2Service implements IConversationV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH,
-            ConversationUrlContextV2.STICK_TOP_CONVERSATION,
+            ConversationV2UrlContext.STICK_TOP_CONVERSATION,
             endpoint,
             null, // No query parameters
             requestBody

@@ -51,8 +51,8 @@ public class BlockV2Service implements IBlockV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            BlockUrlContextV2.ADD_BLOCK_CONTACT,
-            BlockUrlContextV2.ADD_BLOCK_CONTACT,
+            BlockV2UrlContext.ADD_BLOCK_CONTACT,
+            BlockV2UrlContext.ADD_BLOCK_CONTACT,
             null,
             requestBody
         );
@@ -72,7 +72,7 @@ public class BlockV2Service implements IBlockV2Service {
     @Override
     public Result<RemoveBlockContactResponseV2> removeBlockContact(RemoveBlockContactRequestV2 request) throws YunxinSdkException {
         // Replace placeholder in the URL with the accountId
-        String path = BlockUrlContextV2.REMOVE_BLOCK_CONTACT.replace("{account_id}", request.getAccountId());
+        String path = BlockV2UrlContext.REMOVE_BLOCK_CONTACT.replace("{account_id}", request.getAccountId());
         
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -80,7 +80,7 @@ public class BlockV2Service implements IBlockV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.DELETE,
-            BlockUrlContextV2.REMOVE_BLOCK_CONTACT,
+            BlockV2UrlContext.REMOVE_BLOCK_CONTACT,
             path,
             queryParams,
             null
@@ -115,8 +115,8 @@ public class BlockV2Service implements IBlockV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            BlockUrlContextV2.LIST_BLOCK_CONTACTS,
-            BlockUrlContextV2.LIST_BLOCK_CONTACTS,
+            BlockV2UrlContext.LIST_BLOCK_CONTACTS,
+            BlockV2UrlContext.LIST_BLOCK_CONTACTS,
             queryParams,
             null
         );

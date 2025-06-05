@@ -84,8 +84,8 @@ public class TeamV2Service implements ITeamV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            TeamUrlContextV2.CREATE_TEAM,
-            TeamUrlContextV2.CREATE_TEAM,
+            TeamV2UrlContext.CREATE_TEAM,
+            TeamV2UrlContext.CREATE_TEAM,
             null,
             requestBody
         );
@@ -118,7 +118,7 @@ public class TeamV2Service implements ITeamV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = TeamUrlContextV2.UPDATE_TEAM.replace("{team_id}", teamId.toString());
+        String endpoint = TeamV2UrlContext.UPDATE_TEAM.replace("{team_id}", teamId.toString());
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
@@ -173,14 +173,14 @@ public class TeamV2Service implements ITeamV2Service {
         }
 
         // Replace the path parameter in the URL
-        String endpoint = TeamUrlContextV2.DISBAND_TEAM.replace("{team_id}", request.getTeamId());
+        String endpoint = TeamV2UrlContext.DISBAND_TEAM.replace("{team_id}", request.getTeamId());
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.DELETE,
-            TeamUrlContextV2.DISBAND_TEAM,
+            TeamV2UrlContext.DISBAND_TEAM,
             endpoint,
             null,
             requestBody
@@ -231,8 +231,8 @@ public class TeamV2Service implements ITeamV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            TeamUrlContextV2.BATCH_QUERY_TEAMS,
-            TeamUrlContextV2.BATCH_QUERY_TEAMS,
+            TeamV2UrlContext.BATCH_QUERY_TEAMS,
+            TeamV2UrlContext.BATCH_QUERY_TEAMS,
             queryParams,
             null
         );
@@ -293,14 +293,14 @@ public class TeamV2Service implements ITeamV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = TeamUrlContextV2.TRANSFER_OWNER.replace("{team_id}", request.getTeamId());
+        String endpoint = TeamV2UrlContext.TRANSFER_OWNER.replace("{team_id}", request.getTeamId());
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH,
-            TeamUrlContextV2.TRANSFER_OWNER,
+            TeamV2UrlContext.TRANSFER_OWNER,
             endpoint,
             null,
             requestBody
@@ -356,14 +356,14 @@ public class TeamV2Service implements ITeamV2Service {
 
         
         // Replace the path parameter in the URL
-        String endpoint = TeamUrlContextV2.ADD_MANAGER.replace("{team_id}", request.getTeamId());
+        String endpoint = TeamV2UrlContext.ADD_MANAGER.replace("{team_id}", request.getTeamId());
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            TeamUrlContextV2.ADD_MANAGER,
+            TeamV2UrlContext.ADD_MANAGER,
             endpoint,
             null,
             requestBody
@@ -420,14 +420,14 @@ public class TeamV2Service implements ITeamV2Service {
 
 
         // Replace the path parameter in the URL
-        String endpoint = TeamUrlContextV2.REMOVE_MANAGER.replace("{team_id}", request.getTeamId());
+        String endpoint = TeamV2UrlContext.REMOVE_MANAGER.replace("{team_id}", request.getTeamId());
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.DELETE,
-            TeamUrlContextV2.REMOVE_MANAGER,
+            TeamV2UrlContext.REMOVE_MANAGER,
             endpoint,
             null,
             requestBody
@@ -472,7 +472,7 @@ public class TeamV2Service implements ITeamV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = TeamUrlContextV2.GET_TEAM_INFO.replace("{team_id}", request.getTeamId());
+        String endpoint = TeamV2UrlContext.GET_TEAM_INFO.replace("{team_id}", request.getTeamId());
         
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -480,7 +480,7 @@ public class TeamV2Service implements ITeamV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            TeamUrlContextV2.GET_TEAM_INFO,
+            TeamV2UrlContext.GET_TEAM_INFO,
             endpoint,
             queryParams,
             null
@@ -542,7 +542,7 @@ public class TeamV2Service implements ITeamV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = TeamUrlContextV2.LIST_TEAM_MEMBERS.replace("{team_id}", request.getTeamId());
+        String endpoint = TeamV2UrlContext.LIST_TEAM_MEMBERS.replace("{team_id}", request.getTeamId());
         
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -571,7 +571,7 @@ public class TeamV2Service implements ITeamV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            TeamUrlContextV2.LIST_TEAM_MEMBERS,
+            TeamV2UrlContext.LIST_TEAM_MEMBERS,
             endpoint,
             queryParams,
             null
@@ -620,7 +620,7 @@ public class TeamV2Service implements ITeamV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = TeamUrlContextV2.LIST_ONLINE_TEAM_MEMBERS.replace("{team_id}", request.getTeamId());
+        String endpoint = TeamV2UrlContext.LIST_ONLINE_TEAM_MEMBERS.replace("{team_id}", request.getTeamId());
         
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -628,7 +628,7 @@ public class TeamV2Service implements ITeamV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            TeamUrlContextV2.LIST_ONLINE_TEAM_MEMBERS,
+            TeamV2UrlContext.LIST_ONLINE_TEAM_MEMBERS,
             endpoint,
             queryParams,
             null
@@ -683,8 +683,8 @@ public class TeamV2Service implements ITeamV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            TeamUrlContextV2.BATCH_QUERY_TEAM_ONLINE_MEMBERS_COUNT,
-            TeamUrlContextV2.BATCH_QUERY_TEAM_ONLINE_MEMBERS_COUNT,
+            TeamV2UrlContext.BATCH_QUERY_TEAM_ONLINE_MEMBERS_COUNT,
+            TeamV2UrlContext.BATCH_QUERY_TEAM_ONLINE_MEMBERS_COUNT,
             queryParams,
             null
         );

@@ -59,8 +59,8 @@ public class CustomNotificationV2Service implements ICustomNotificationV2Service
         
         YunxinApiResponse apiResponse = yunxinApiHttpClient.executeV2Api(
             HttpMethod.POST,
-            CustomNotificationUrlContextV2.CUSTOM_NOTIFICATION,
-            CustomNotificationUrlContextV2.CUSTOM_NOTIFICATION,
+            CustomNotificationV2UrlContext.CUSTOM_NOTIFICATION,
+            CustomNotificationV2UrlContext.CUSTOM_NOTIFICATION,
             null,
             jsonRequestBody
         );
@@ -90,8 +90,8 @@ public class CustomNotificationV2Service implements ICustomNotificationV2Service
         
         YunxinApiResponse apiResponse = yunxinApiHttpClient.executeV2Api(
             HttpMethod.POST,
-            CustomNotificationUrlContextV2.BATCH_CUSTOM_NOTIFICATION,
-            CustomNotificationUrlContextV2.BATCH_CUSTOM_NOTIFICATION,
+            CustomNotificationV2UrlContext.BATCH_CUSTOM_NOTIFICATION,
+            CustomNotificationV2UrlContext.BATCH_CUSTOM_NOTIFICATION,
             null,
             jsonRequestBody
         );

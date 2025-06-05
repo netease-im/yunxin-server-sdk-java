@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v1.team;
 /**
  * URL路径常量类，用于所有群组相关的API请求
  */
-public class TeamUrlContext {
+public class TeamV1UrlContext {
     // 创建群
     static final String CREATE_TEAM = "/team/create.action";
     

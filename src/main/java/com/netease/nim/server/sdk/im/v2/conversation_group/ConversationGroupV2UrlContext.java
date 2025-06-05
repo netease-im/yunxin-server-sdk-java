@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v2.conversation_group;
 /**
  * URL context for Conversation Group V2 API endpoints
  */
-public class ConversationGroupUrlContextV2 {
+public class ConversationGroupV2UrlContext {
     
     /**
      * Create conversation group endpoint

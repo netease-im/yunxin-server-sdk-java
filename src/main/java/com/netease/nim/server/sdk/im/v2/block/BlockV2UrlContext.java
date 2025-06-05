@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v2.block;
 /**
  * URL context for Block V2 API endpoints
  */
-public class BlockUrlContextV2 {
+public class BlockV2UrlContext {
     
     /**
      * Add block contact endpoint

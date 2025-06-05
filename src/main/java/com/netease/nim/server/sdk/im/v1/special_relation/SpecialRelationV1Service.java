@@ -32,7 +32,7 @@ public class SpecialRelationV1Service implements ISpecialRelationV1Service {
     @Override
     public Result<SetSpecialRelationResponseV1> setSpecialRelation(SetSpecialRelationRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SpecialRelationUrlContext.ADD_TO_BLACKLIST, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SpecialRelationV1UrlContext.ADD_TO_BLACKLIST, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -45,7 +45,7 @@ public class SpecialRelationV1Service implements ISpecialRelationV1Service {
     @Override
     public Result<ListSpecialRelationResponseV1> listBlackAndMuteList(ListSpecialRelationRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SpecialRelationUrlContext.QUERY_BLACKLIST, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SpecialRelationV1UrlContext.QUERY_BLACKLIST, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {

@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v2.subscription;
 /**
  * URL context for user status subscription API V2
  */
-public class SubscriptionUrlContextV2 {
+public class SubscriptionV2UrlContext {
 
     /**
      * URL template for subscribing to user status events

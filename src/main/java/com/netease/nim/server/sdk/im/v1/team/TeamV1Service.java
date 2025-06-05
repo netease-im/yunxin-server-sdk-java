@@ -45,7 +45,7 @@ public class TeamV1Service implements ITeamV1Service {
             JSONArray jsonArray = (JSONArray) JSON.toJSON(request.getMembers());
             paramMap.put("members", jsonArray.toJSONString());
         }
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.CREATE_TEAM, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.CREATE_TEAM, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -65,7 +65,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<DismissTeamResponseV1> dismissTeam(DismissTeamRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.REMOVE_TEAM, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.REMOVE_TEAM, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -82,7 +82,7 @@ public class TeamV1Service implements ITeamV1Service {
             JSONArray jsonArray = (JSONArray) JSON.toJSON(request.getMembers());
             paramMap.put("members", jsonArray.toJSONString());
         }
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.ADD_TEAM_MEMBERS, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.ADD_TEAM_MEMBERS, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -105,7 +105,7 @@ public class TeamV1Service implements ITeamV1Service {
             JSONArray jsonArray = (JSONArray) JSON.toJSON(request.getMembers());
             paramMap.put("members", jsonArray.toJSONString());
         }
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.KICK_TEAM_MEMBERS, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.KICK_TEAM_MEMBERS, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -124,7 +124,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<UpdateTeamResponseV1> updateTeam(UpdateTeamRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.UPDATE_TEAM_INFO, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.UPDATE_TEAM_INFO, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -137,7 +137,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<QueryTeamResponseV1> queryTeam(QueryTeamRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.QUERY_TEAMS_INFO, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.QUERY_TEAMS_INFO, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -156,7 +156,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<ChangeOwnerTeamResponseV1> changeOwnerTeam(ChangeOwnerTeamRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.CHANGE_TEAM_OWNER, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.CHANGE_TEAM_OWNER, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -174,7 +174,7 @@ public class TeamV1Service implements ITeamV1Service {
             JSONArray jsonArray = (JSONArray) JSON.toJSON(request.getMembers());
             paramMap.put("members", jsonArray.toJSONString());
         }
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.ADD_TEAM_MANAGER, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.ADD_TEAM_MANAGER, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -192,7 +192,7 @@ public class TeamV1Service implements ITeamV1Service {
             JSONArray jsonArray = (JSONArray) JSON.toJSON(request.getMembers());
             paramMap.put("members", jsonArray.toJSONString());
         }
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.REMOVE_TEAM_MANAGER, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.REMOVE_TEAM_MANAGER, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -206,7 +206,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<JoinsTeamResponseV1> queryJoinedTeamListByAccId(JoinsTeamRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.JOIN_TEAMS, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.JOIN_TEAMS, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -225,7 +225,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<UpdateTeamNickResponseV1> updateTeamMemberNick(UpdateTeamNickRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.UPDATE_TEAM_MEMBER_INFO, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.UPDATE_TEAM_MEMBER_INFO, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -239,7 +239,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<LeaveTeamResponseV1> leaveTeam(LeaveTeamRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.LEAVE_TEAM, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.LEAVE_TEAM, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -253,7 +253,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<MuteTeamResponseV1> muteTeam(MuteTeamRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.UPDATE_MSG_NOTIFICATION, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.UPDATE_MSG_NOTIFICATION, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -267,7 +267,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<MuteTeamTargetMemberResponseV1> muteTeamTargetMember(MuteTeamTargetMemberRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.MUTE_TEAM_MEMBER, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.MUTE_TEAM_MEMBER, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -281,7 +281,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<MuteTeamAllMemberResponseV1> muteTeamAllMember(MuteTeamAllMemberRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.UNMUTE_TEAM_MEMBER, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.UNMUTE_TEAM_MEMBER, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -295,7 +295,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<QueryMuteTeamMembersResponseV1> queryMuteTeamMembers(QueryMuteTeamMembersRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.QUERY_TEAM_MUTE_LIST, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.QUERY_TEAM_MUTE_LIST, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -315,7 +315,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<QueryTeamInfoDetailsResponseV1> queryTeamInfoDetails(QueryTeamInfoDetailsRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.QUERY_TEAM_INFO, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.QUERY_TEAM_INFO, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -335,7 +335,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<QueryTeamMsgMarkReadInfoResponseV1> queryTeamMsgMarkReadInfo(QueryTeamMsgMarkReadInfoRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.GET_MARK_READ_INFO, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.GET_MARK_READ_INFO, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -355,7 +355,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<QueryAllJoinedTeamMemberInfoByAccIdResponseV1> queryAllJoinedTeamMemberInfoByAccId(QueryAllJoinedTeamMemberInfoByAccIdRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.LIST_MEMBER_INFO, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.LIST_MEMBER_INFO, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -375,7 +375,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<QueryOnlineTeamMemberResponseV1> queryOnlineTeamMember(QueryOnlineTeamMemberRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.LIST_ONLINE_USERS, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.LIST_ONLINE_USERS, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -418,7 +418,7 @@ public class TeamV1Service implements ITeamV1Service {
     @Override
     public Result<BatchQueryOnlineTeamMemberCountResponseV1> batchQueryOnlineTeamMemberCount(BatchQueryOnlineTeamMemberCountRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamUrlContext.LIST_ONLINE_USER_COUNT, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(TeamV1UrlContext.LIST_ONLINE_USER_COUNT, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {

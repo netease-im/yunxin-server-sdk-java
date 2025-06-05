@@ -51,8 +51,8 @@ public class FriendV2Service implements IFriendV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST, 
-            FriendUrlContextV2.FRIENDS, 
-            FriendUrlContextV2.FRIENDS, 
+            FriendV2UrlContext.FRIENDS,
+            FriendV2UrlContext.FRIENDS,
             queryParams, 
             data.toString()
         );
@@ -63,7 +63,7 @@ public class FriendV2Service implements IFriendV2Service {
     @Override
     public Result<DeleteFriendResponseV2> deleteFriend(DeleteFriendRequestV2 request) throws YunxinSdkException {
         // Replace placeholder in the URL with the accountId
-        String path = FriendUrlContextV2.DELETE_FRIEND.replace("{account_id}", request.getAccountId());
+        String path = FriendV2UrlContext.DELETE_FRIEND.replace("{account_id}", request.getAccountId());
         
         // Build query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -75,7 +75,7 @@ public class FriendV2Service implements IFriendV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.DELETE,
-            FriendUrlContextV2.DELETE_FRIEND,
+            FriendV2UrlContext.DELETE_FRIEND,
             path,
             queryParams,
             null
@@ -87,7 +87,7 @@ public class FriendV2Service implements IFriendV2Service {
     @Override
     public Result<UpdateFriendResponseV2> updateFriend(UpdateFriendRequestV2 request) throws YunxinSdkException {
         // Replace placeholder in the URL with the accountId
-        String path = FriendUrlContextV2.UPDATE_FRIEND.replace("{account_id}", request.getAccountId());
+        String path = FriendV2UrlContext.UPDATE_FRIEND.replace("{account_id}", request.getAccountId());
         
         // Make a copy of the request to avoid modifying the original
         JSONObject data = JSONObject.parseObject(JSONObject.toJSONString(request));
@@ -97,7 +97,7 @@ public class FriendV2Service implements IFriendV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH,
-            FriendUrlContextV2.UPDATE_FRIEND,
+            FriendV2UrlContext.UPDATE_FRIEND,
             path,
             null,
             data.toString()
@@ -121,8 +121,8 @@ public class FriendV2Service implements IFriendV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            FriendUrlContextV2.HANDLE_FRIEND_ADDITION,
-            FriendUrlContextV2.HANDLE_FRIEND_ADDITION,
+            FriendV2UrlContext.HANDLE_FRIEND_ADDITION,
+            FriendV2UrlContext.HANDLE_FRIEND_ADDITION,
             queryParams,
             data.toString()
         );
@@ -133,7 +133,7 @@ public class FriendV2Service implements IFriendV2Service {
     @Override
     public Result<GetFriendResponseV2> getFriend(GetFriendRequestV2 request) throws YunxinSdkException {
         // Replace placeholder in the URL with the accountId
-        String path = FriendUrlContextV2.GET_FRIEND.replace("{account_id}", request.getAccountId());
+        String path = FriendV2UrlContext.GET_FRIEND.replace("{account_id}", request.getAccountId());
         
         // Build query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -141,7 +141,7 @@ public class FriendV2Service implements IFriendV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            FriendUrlContextV2.GET_FRIEND,
+            FriendV2UrlContext.GET_FRIEND,
             path,
             queryParams,
             null
@@ -166,8 +166,8 @@ public class FriendV2Service implements IFriendV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            FriendUrlContextV2.LIST_FRIENDS,
-            FriendUrlContextV2.LIST_FRIENDS,
+            FriendV2UrlContext.LIST_FRIENDS,
+            FriendV2UrlContext.LIST_FRIENDS,
             queryParams,
             null
         );

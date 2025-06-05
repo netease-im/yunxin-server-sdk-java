@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v2.broadcast;
 /**
  * URL context for broadcast notification API V2
  */
-public class BroadcastUrlContextV2 {
+public class BroadcastV2UrlContext {
 
 
     /**

@@ -1,6 +1,6 @@
 package com.netease.nim.server.sdk.im.v1.chatroom_message;
 
-public class ChatroomMessageUrlContext {
+public class ChatroomMessageV1UrlContext {
     //发送聊天室消息
     static String SEND_MSG = "/chatroom/sendMsg.action";
 

@@ -92,8 +92,8 @@ public class ChatroomV2Service implements IChatroomV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            ChatroomUrlContextV2.CREATE_CHATROOM,
-            ChatroomUrlContextV2.CREATE_CHATROOM,
+            ChatroomV2UrlContext.CREATE_CHATROOM,
+            ChatroomV2UrlContext.CREATE_CHATROOM,
             null, // No query parameters
             requestBody
         );
@@ -135,7 +135,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
 
         
         // Replace the path parameter in the URL
-        String endpoint = ChatroomUrlContextV2.GET_CHATROOM_ADDRESS.replace("{room_id}", request.getRoomId().toString());
+        String endpoint = ChatroomV2UrlContext.GET_CHATROOM_ADDRESS.replace("{room_id}", request.getRoomId().toString());
         
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -153,7 +153,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            ChatroomUrlContextV2.GET_CHATROOM_ADDRESS,
+            ChatroomV2UrlContext.GET_CHATROOM_ADDRESS,
             endpoint,
             queryParams,
             null // No request body for GET request
@@ -184,7 +184,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = ChatroomUrlContextV2.GET_CHATROOM_INFO.replace("{room_id}", request.getRoomId().toString());
+        String endpoint = ChatroomV2UrlContext.GET_CHATROOM_INFO.replace("{room_id}", request.getRoomId().toString());
         
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -200,7 +200,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            ChatroomUrlContextV2.GET_CHATROOM_INFO,
+            ChatroomV2UrlContext.GET_CHATROOM_INFO,
             endpoint,
             queryParams,
             null // No request body for GET request
@@ -234,7 +234,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
             throw new IllegalArgumentException("Chatroom ID cannot be null");
         }
         // Replace the path parameter in the URL
-        String endpoint = ChatroomUrlContextV2.UPDATE_CHATROOM_INFO.replace("{room_id}", request.getRoomId().toString());
+        String endpoint = ChatroomV2UrlContext.UPDATE_CHATROOM_INFO.replace("{room_id}", request.getRoomId().toString());
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
@@ -242,7 +242,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH,
-            ChatroomUrlContextV2.UPDATE_CHATROOM_INFO,
+            ChatroomV2UrlContext.UPDATE_CHATROOM_INFO,
             endpoint,
             null, // No query parameters
             requestBody
@@ -288,7 +288,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         }
 
         // Replace the path parameter in the URL
-        String endpoint = ChatroomUrlContextV2.UPDATE_CHATROOM_STATUS.replace("{room_id}", roomId.toString());
+        String endpoint = ChatroomV2UrlContext.UPDATE_CHATROOM_STATUS.replace("{room_id}", roomId.toString());
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
@@ -296,7 +296,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH,
-            ChatroomUrlContextV2.UPDATE_CHATROOM_STATUS,
+            ChatroomV2UrlContext.UPDATE_CHATROOM_STATUS,
             endpoint,
             null, // No query parameters
             requestBody
@@ -341,7 +341,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         
 
         // Replace the path parameter in the URL
-        String endpoint = ChatroomUrlContextV2.TOGGLE_CHATROOM_MUTE.replace("{room_id}", roomId.toString());
+        String endpoint = ChatroomV2UrlContext.TOGGLE_CHATROOM_MUTE.replace("{room_id}", roomId.toString());
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
@@ -349,7 +349,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH,
-            ChatroomUrlContextV2.TOGGLE_CHATROOM_MUTE,
+            ChatroomV2UrlContext.TOGGLE_CHATROOM_MUTE,
             endpoint,
             null, // No query parameters
             requestBody
@@ -389,7 +389,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = ChatroomUrlContextV2.TOGGLE_IN_OUT_NOTIFICATION.replace("{room_id}", request.getRoomId().toString());
+        String endpoint = ChatroomV2UrlContext.TOGGLE_IN_OUT_NOTIFICATION.replace("{room_id}", request.getRoomId().toString());
         
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -398,7 +398,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH,
-            ChatroomUrlContextV2.TOGGLE_IN_OUT_NOTIFICATION,
+            ChatroomV2UrlContext.TOGGLE_IN_OUT_NOTIFICATION,
             endpoint,
             queryParams,
             null // No request body for this API
@@ -434,8 +434,8 @@ public class ChatroomV2Service implements IChatroomV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            ChatroomUrlContextV2.QUERY_OPEN_CHATROOMS,
-            ChatroomUrlContextV2.QUERY_OPEN_CHATROOMS,
+            ChatroomV2UrlContext.QUERY_OPEN_CHATROOMS,
+            ChatroomV2UrlContext.QUERY_OPEN_CHATROOMS,
             queryParams,
             null // No request body for GET request
         );
@@ -471,7 +471,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
             throw new IllegalArgumentException("Limit cannot be null");
         }
         // Replace the path parameter in the URL
-        String endpoint = ChatroomUrlContextV2.LIST_ONLINE_MEMBERS.replace("{room_id}", request.getRoomId().toString());
+        String endpoint = ChatroomV2UrlContext.LIST_ONLINE_MEMBERS.replace("{room_id}", request.getRoomId().toString());
         
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -485,7 +485,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            ChatroomUrlContextV2.LIST_ONLINE_MEMBERS,
+            ChatroomV2UrlContext.LIST_ONLINE_MEMBERS,
             endpoint,
             queryParams,
             null // No request body for GET request
@@ -515,7 +515,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         }
         
         // Replace the path parameter in the URL
-        String endpoint = ChatroomUrlContextV2.LIST_FIXED_MEMBERS.replace("{room_id}", request.getRoomId().toString());
+        String endpoint = ChatroomV2UrlContext.LIST_FIXED_MEMBERS.replace("{room_id}", request.getRoomId().toString());
         
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -527,7 +527,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         // Execute API call
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            ChatroomUrlContextV2.LIST_FIXED_MEMBERS,
+            ChatroomV2UrlContext.LIST_FIXED_MEMBERS,
             endpoint,
             queryParams,
             null // No request body for GET request

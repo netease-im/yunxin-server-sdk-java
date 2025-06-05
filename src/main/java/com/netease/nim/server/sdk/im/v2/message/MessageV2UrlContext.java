@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v2.message;
 /**
  * URL context for Message V2 API endpoints
  */
-public class MessageUrlContextV2 {
+public class MessageV2UrlContext {
     
     /**
      * Send message endpoint

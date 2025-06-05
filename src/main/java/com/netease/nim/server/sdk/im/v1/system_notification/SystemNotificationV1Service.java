@@ -39,7 +39,7 @@ public class SystemNotificationV1Service implements ISystemNotificationV1Service
             paramMap.put("forcePushList", JSONArray.toJSONString(request.getForcePushList()));
         }
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SystemNotificationUrlContext.SEND_ATTACH_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SystemNotificationV1UrlContext.SEND_ATTACH_MSG, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
@@ -70,7 +70,7 @@ public class SystemNotificationV1Service implements ISystemNotificationV1Service
             paramMap.put("toAccids", JSONArray.toJSONString(request.getToAccids()));
         }
 
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SystemNotificationUrlContext.SEND_BATCH_ATTACH_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SystemNotificationV1UrlContext.SEND_BATCH_ATTACH_MSG, paramMap);
 
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);

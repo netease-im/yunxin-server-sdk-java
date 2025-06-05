@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v1.message;
 /**
  * URL路径常量类，用于所有消息相关的API请求
  */
-public class MessageUrlContext {
+public class MessageV1UrlContext {
     // 发送普通消息
     static final String SEND_MSG = "/msg/sendMsg.action";
     

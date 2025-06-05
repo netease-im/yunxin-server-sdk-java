@@ -44,8 +44,8 @@ public class AccountV2Service implements IAccountV2Service {
         String data = JSONObject.toJSONString(request);
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST, 
-            AccountUrlContextV2.ACCOUNTS, 
-            AccountUrlContextV2.ACCOUNTS, 
+            AccountV2UrlContext.ACCOUNTS,
+            AccountV2UrlContext.ACCOUNTS,
             null, 
             data
         );
@@ -58,11 +58,11 @@ public class AccountV2Service implements IAccountV2Service {
         data.remove("account_id");
         
         // Replace placeholder in the URL with the accountId
-        String path = AccountUrlContextV2.ACCOUNT_WITH_ID.replace("{account_id}", request.getAccountId());
+        String path = AccountV2UrlContext.ACCOUNT_WITH_ID.replace("{account_id}", request.getAccountId());
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH, 
-            AccountUrlContextV2.ACCOUNT_WITH_ID, 
+            AccountV2UrlContext.ACCOUNT_WITH_ID,
             path, 
             null, 
             data.toString()
@@ -84,8 +84,8 @@ public class AccountV2Service implements IAccountV2Service {
         map.put("account_ids", builder.toString());
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET, 
-            AccountUrlContextV2.ACCOUNTS, 
-            AccountUrlContextV2.ACCOUNTS, 
+            AccountV2UrlContext.ACCOUNTS,
+            AccountV2UrlContext.ACCOUNTS,
             map, 
             null
         );
@@ -104,11 +104,11 @@ public class AccountV2Service implements IAccountV2Service {
         }
         
         // Replace placeholder in the URL with the accountId
-        String path = AccountUrlContextV2.DISABLE_ACCOUNT.replace("{account_id}", request.getAccountId());
+        String path = AccountV2UrlContext.DISABLE_ACCOUNT.replace("{account_id}", request.getAccountId());
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH, 
-            AccountUrlContextV2.DISABLE_ACCOUNT, 
+            AccountV2UrlContext.DISABLE_ACCOUNT,
             path, 
             null, 
             data.toString()
@@ -122,11 +122,11 @@ public class AccountV2Service implements IAccountV2Service {
         data.put("push_enabled_when_desktop_online", request.getPushEnabledWhenDesktopOnline());
         
         // Replace placeholder in the URL with the accountId
-        String path = AccountUrlContextV2.SET_PUSH_CONFIG.replace("{account_id}", request.getAccountId());
+        String path = AccountV2UrlContext.SET_PUSH_CONFIG.replace("{account_id}", request.getAccountId());
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH, 
-            AccountUrlContextV2.SET_PUSH_CONFIG, 
+            AccountV2UrlContext.SET_PUSH_CONFIG,
             path, 
             null, 
             data.toString()
@@ -137,11 +137,11 @@ public class AccountV2Service implements IAccountV2Service {
     @Override
     public Result<GetAccountDetailsResponseV2> getAccountDetails(GetAccountDetailsRequestV2 request) throws YunxinSdkException {
         // Replace placeholder in the URL with the accountId
-        String path = AccountUrlContextV2.ACCOUNT_WITH_ID.replace("{account_id}", request.getAccountId());
+        String path = AccountV2UrlContext.ACCOUNT_WITH_ID.replace("{account_id}", request.getAccountId());
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET, 
-            AccountUrlContextV2.ACCOUNT_WITH_ID, 
+            AccountV2UrlContext.ACCOUNT_WITH_ID,
             path, 
             null, 
             null
@@ -164,11 +164,11 @@ public class AccountV2Service implements IAccountV2Service {
         }
         
         // Replace placeholder in the URL with the accountId
-        String path = AccountUrlContextV2.KICK_ACCOUNT.replace("{account_id}", request.getAccountId());
+        String path = AccountV2UrlContext.KICK_ACCOUNT.replace("{account_id}", request.getAccountId());
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST, 
-            AccountUrlContextV2.KICK_ACCOUNT, 
+            AccountV2UrlContext.KICK_ACCOUNT,
             path, 
             null, 
             data.toString()
@@ -179,11 +179,11 @@ public class AccountV2Service implements IAccountV2Service {
     @Override
     public Result<RefreshTokenResponseV2> refreshToken(RefreshTokenRequestV2 request) throws YunxinSdkException {
         // Replace placeholder in the URL with the accountId
-        String path = AccountUrlContextV2.REFRESH_TOKEN.replace("{account_id}", request.getAccountId());
+        String path = AccountV2UrlContext.REFRESH_TOKEN.replace("{account_id}", request.getAccountId());
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.PATCH, 
-            AccountUrlContextV2.REFRESH_TOKEN, 
+            AccountV2UrlContext.REFRESH_TOKEN,
             path, 
             null, 
             null

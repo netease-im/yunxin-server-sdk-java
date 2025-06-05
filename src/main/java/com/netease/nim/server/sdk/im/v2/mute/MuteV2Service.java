@@ -35,8 +35,8 @@ public class MuteV2Service implements IMuteV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.POST,
-            MuteUrlContextV2.ADD_MUTE_CONTACT,
-            MuteUrlContextV2.ADD_MUTE_CONTACT,
+            MuteV2UrlContext.ADD_MUTE_CONTACT,
+            MuteV2UrlContext.ADD_MUTE_CONTACT,
             null,
             requestBody
         );
@@ -47,7 +47,7 @@ public class MuteV2Service implements IMuteV2Service {
     @Override
     public Result<RemoveMuteContactResponseV2> removeMuteContact(RemoveMuteContactRequestV2 request) throws YunxinSdkException {
         // Replace placeholder in the URL with the accountId
-        String path = MuteUrlContextV2.REMOVE_MUTE_CONTACT.replace("{account_id}", request.getAccountId());
+        String path = MuteV2UrlContext.REMOVE_MUTE_CONTACT.replace("{account_id}", request.getAccountId());
         
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
@@ -55,7 +55,7 @@ public class MuteV2Service implements IMuteV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.DELETE,
-            MuteUrlContextV2.REMOVE_MUTE_CONTACT,
+            MuteV2UrlContext.REMOVE_MUTE_CONTACT,
             path,
             queryParams,
             null
@@ -81,8 +81,8 @@ public class MuteV2Service implements IMuteV2Service {
         
         YunxinApiResponse apiResponse = httpClient.executeV2Api(
             HttpMethod.GET,
-            MuteUrlContextV2.LIST_MUTE_CONTACTS,
-            MuteUrlContextV2.LIST_MUTE_CONTACTS,
+            MuteV2UrlContext.LIST_MUTE_CONTACTS,
+            MuteV2UrlContext.LIST_MUTE_CONTACTS,
             queryParams,
             null
         );

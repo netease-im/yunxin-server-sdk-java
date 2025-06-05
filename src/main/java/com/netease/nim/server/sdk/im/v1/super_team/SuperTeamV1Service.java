@@ -41,7 +41,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
         if (request.getInviteAccids() != null && !request.getInviteAccids().isEmpty()) {
             paramMap.put("inviteAccids", JSON.toJSONString(request.getInviteAccids()));
         }
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.CREATE_TEAM, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.CREATE_TEAM, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -62,7 +62,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
     @Override
     public Result<SuperTeamInviteResponseV1> invite(SuperTeamInviteRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.INVITE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.INVITE, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -86,7 +86,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
             paramMap.put("managerAccids", JSON.toJSONString(request.getManagerAccids()));
         }
         
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.ADD_MANAGER, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.ADD_MANAGER, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -99,7 +99,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
     @Override
     public Result<SuperTeamChangeOwnerResponseV1> changeOwner(SuperTeamChangeOwnerRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.CHANGE_OWNER, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.CHANGE_OWNER, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -118,7 +118,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
             paramMap.put("managerAccids", JSON.toJSONString(request.getManagerAccids()));
         }
         
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.REMOVE_MANAGER, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.REMOVE_MANAGER, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -131,7 +131,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
     @Override
     public Result<SuperTeamMuteResponseV1> mute(SuperTeamMuteRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.MUTE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.MUTE, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -150,7 +150,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
             paramMap.put("muteAccids", JSON.toJSONString(request.getMuteAccids()));
         }
         
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.MUTE_TEAM_MEMBER, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.MUTE_TEAM_MEMBER, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -169,7 +169,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
             paramMap.put("kickAccids", JSON.toJSONString(request.getKickAccids()));
         }
         
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.KICK, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.KICK, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -182,7 +182,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
     @Override
     public Result<BaseSuperTeamResponseV1> leave(SuperTeamMemberLeaveRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.LEAVE, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.LEAVE, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -195,7 +195,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
     @Override
     public Result<BaseSuperTeamResponseV1> updateTeamNick(SuperTeamUpdateNickRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.UPDATE_TEAM_NICK, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.UPDATE_TEAM_NICK, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -208,7 +208,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
     @Override
     public Result<BaseSuperTeamResponseV1> updateTinfo(SuperTeamUpdateRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.UPDATE_TEAM_INFO, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.UPDATE_TEAM_INFO, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -221,7 +221,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
     @Override
     public Result<BaseSuperTeamResponseV1> updateTlist(SuperTeamUpdateMemberInfoRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.UPDATE_T_LIST, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.UPDATE_T_LIST, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -235,7 +235,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
     @Override
     public Result<SuperTeamDismissResponseV1> dismiss(SuperTeamDismissRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.DISMISS, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.DISMISS, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -248,7 +248,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
     @Override
     public Result<BaseSuperTeamResponseV1> changeLevel(SuperTeamChangeLevelRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.CHANGE_LEVEL, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.CHANGE_LEVEL, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -261,7 +261,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
     @Override
     public Result<GetSuperTeamResponseV1> getTinfos(GetSuperTeamRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.GET_TEAM_INFO, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.GET_TEAM_INFO, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -278,7 +278,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
     @Override
     public Result<GetSuperTeamMemberResponseV1> getTlists(GetSuperTeamMemberRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.GET_TEAM_MEMBER_LIST, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.GET_TEAM_MEMBER_LIST, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -295,7 +295,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
     @Override
     public Result<GetSuperTeamMuteMemberResponseV1> getMuteTlists(GetSuperTeamMuteMemberRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.GET_MUTE_MEMBER_LIST, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.GET_MUTE_MEMBER_LIST, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -312,7 +312,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
     @Override
     public Result<GetJoinSuperTeamResponseV1> joinTeams(GetJoinSuperTeamRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.JOIN_TEAMS, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.JOIN_TEAMS, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -329,7 +329,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
     @Override
     public Result<GetSuperTeamMessageResponseV1> queryHistoryMsg(GetSuperTeamMessageRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.QUERY_HISTORY_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.QUERY_HISTORY_MSG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -352,7 +352,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
         if (request.getMsgs() != null && !request.getMsgs().isEmpty()) {
             paramMap.put("msgs", JSON.toJSONString(request.getMsgs()));
         }
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.QUERY_HISTORY_MSG_BY_IDS, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.QUERY_HISTORY_MSG_BY_IDS, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -375,7 +375,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
             paramMap.put("forcePushList", JSON.toJSONString(request.getForcePushList()));
         }
         
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.SEND_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.SEND_MSG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -397,7 +397,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
             paramMap.put("forcePushList", JSON.toJSONString(request.getForcePushList()));
         }
         
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.SEND_ATTACH_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.SEND_ATTACH_MSG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {
@@ -410,7 +410,7 @@ public class SuperTeamV1Service implements ISuperTeamV1Service {
     @Override
     public Result<BaseSuperTeamResponseV1> recallMsg(RecallAttachSuperMessageRequestV1 request) throws YunxinSdkException {
         Map<String, String> paramMap = YunxinParamUtils.convert(request);
-        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamUrlContext.RECALL_MSG, paramMap);
+        YunxinApiResponse apiResponse = httpClient.executeV1Api(SuperTeamV1UrlContext.RECALL_MSG, paramMap);
         JSONObject object = JSONObject.parseObject(apiResponse.getData());
         int code = object.getIntValue(CODE);
         if (code != 200) {

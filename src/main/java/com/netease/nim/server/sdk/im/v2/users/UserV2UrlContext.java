@@ -3,13 +3,9 @@ package com.netease.nim.server.sdk.im.v2.users;
 /**
  * URL context for User V2 API endpoints
  */
-public class UserUrlContextV2 {
+public class UserV2UrlContext {
     
-    /**
-     * Base users endpoint
-     */
-    static final String USERS = "/im/v2/users";
-    
+
     /**
      * Update user endpoint
      */
