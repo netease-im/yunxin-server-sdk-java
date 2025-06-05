@@ -3,7 +3,7 @@ package com.netease.nim.server.sdk.im.v1.event_subscribe;
 /**
  * URL constants for event subscription API endpoints
  */
-public class EventSubscribeUrlContext {
+public class EventSubscribeV1UrlContext {
     /**
      * URL for adding event subscription
      */
