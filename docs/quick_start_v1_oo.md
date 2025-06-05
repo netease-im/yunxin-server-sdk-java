@@ -2,12 +2,12 @@
 
 ```java
 
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
-import com.netease.nim.im.server.sdk.core.Result;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiServices;
-import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequestV1;
-import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponseV1;
+import exception.core.com.netease.nim.server.sdk.YunxinSdkException;
+import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
+import core.com.netease.nim.server.sdk.Result;
+import v1.im.com.netease.nim.server.sdk.YunxinV1ApiServices;
+import request.account.v1.im.com.netease.nim.server.sdk.CreateAccountRequestV1;
+import response.account.v1.im.com.netease.nim.server.sdk.CreateAccountResponseV1;
 
 /**
  * Created by caojiajun on 2024/12/11

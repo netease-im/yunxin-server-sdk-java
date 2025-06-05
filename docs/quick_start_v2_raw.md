@@ -3,10 +3,10 @@
 ```java
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
-import com.netease.nim.im.server.sdk.core.YunxinApiResponse;
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
-import com.netease.nim.im.server.sdk.core.http.HttpMethod;
+import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
+import core.com.netease.nim.server.sdk.YunxinApiResponse;
+import exception.core.com.netease.nim.server.sdk.YunxinSdkException;
+import http.core.com.netease.nim.server.sdk.HttpMethod;
 
 import java.util.HashMap;
 import java.util.Map;

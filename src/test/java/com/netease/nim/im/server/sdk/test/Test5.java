@@ -1,6 +1,6 @@
 package com.netease.nim.im.server.sdk.test;
 
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
 
 /**
  * Created by caojiajun on 2024/12/10

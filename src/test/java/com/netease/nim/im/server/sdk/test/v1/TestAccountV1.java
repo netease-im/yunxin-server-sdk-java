@@ -1,12 +1,12 @@
 package com.netease.nim.im.server.sdk.test.v1;
 
-import com.netease.nim.im.server.sdk.core.Result;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.server.sdk.core.Result;
+import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
 import com.netease.nim.im.server.sdk.test.YunxinApiHttpClientInit;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiServices;
-import com.netease.nim.im.server.sdk.v1.account.IAccountV1Service;
-import com.netease.nim.im.server.sdk.v1.account.request.*;
-import com.netease.nim.im.server.sdk.v1.account.response.*;
+import com.netease.nim.server.sdk.im.v1.YunxinV1ApiServices;
+import com.netease.nim.server.sdk.im.v1.account.IAccountV1Service;
+import com.netease.nim.server.sdk.im.v1.account.request.*;
+import com.netease.nim.server.sdk.im.v1.account.response.*;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

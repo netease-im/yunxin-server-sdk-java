@@ -1,25 +1,25 @@
 package com.netease.nim.im.server.sdk.test.v1;
 
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONArray;
-import com.netease.nim.im.server.sdk.core.Result;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.server.sdk.core.Result;
+import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
 import com.netease.nim.im.server.sdk.test.YunxinApiHttpClientInit;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiServices;
-import com.netease.nim.im.server.sdk.v1.account.IAccountV1Service;
-import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequestV1;
-import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponseV1;
-import com.netease.nim.im.server.sdk.v1.message.IMessageV1Service;
-import com.netease.nim.im.server.sdk.v1.message.request.*;
-import com.netease.nim.im.server.sdk.v1.message.response.*;
-import com.netease.nim.im.server.sdk.v1.team.ITeamV1Service;
-import com.netease.nim.im.server.sdk.v1.team.request.CreateTeamRequestV1;
-import com.netease.nim.im.server.sdk.v1.team.response.CreateTeamResponseV1;
+import com.netease.nim.server.sdk.im.v1.YunxinV1ApiServices;
+import com.netease.nim.server.sdk.im.v1.account.IAccountV1Service;
+import com.netease.nim.server.sdk.im.v1.account.request.CreateAccountRequestV1;
+import com.netease.nim.server.sdk.im.v1.account.response.CreateAccountResponseV1;
+import com.netease.nim.server.sdk.im.v1.message.IMessageV1Service;
+import com.netease.nim.server.sdk.im.v1.message.request.*;
+import com.netease.nim.server.sdk.im.v1.message.response.*;
+import com.netease.nim.server.sdk.im.v1.team.ITeamV1Service;
+import com.netease.nim.server.sdk.im.v1.team.request.CreateTeamRequestV1;
+import com.netease.nim.server.sdk.im.v1.team.response.CreateTeamResponseV1;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -148,7 +148,7 @@ public class TestMessageV1 {
         request.setPayload("{\"payloadKey\":\"payloadValue\"}");
         request.setExt("Additional developer info");
         request.setForcepushall(false);
-        request.setForcepushlist("[\"user456\", \"user789\"]");
+        request.setForcepushlist(Arrays.asList("user456", "user789"));
         request.setForcepushcontent("Force push message content.");
         request.setUseYidun(1);
         request.setBid("businessId123");
@@ -175,9 +175,9 @@ public class TestMessageV1 {
     private static void sendBatchMessage(String fromAccid, String toAccid) {
         SendBatchMessageRequestV1 request = new SendBatchMessageRequestV1();
         request.setFromAccid(fromAccid);
-        JSONArray toAccids = new JSONArray();
-        toAccids.add(toAccid);
-        request.setToAccids(toAccids.toJSONString());
+        List<String> toAccidsList = new ArrayList<>();
+        toAccidsList.add(toAccid);
+        request.setToAccids(toAccidsList);
         request.setType(0);
         request.setBody("{\"msg\":\"哈哈哈\"}");
         request.setMsgDesc("This is a description for the message.");
@@ -213,9 +213,11 @@ public class TestMessageV1 {
         MarkReadTeamMessageRequestV1 request = new MarkReadTeamMessageRequestV1();
         request.setAccid(accid);
         request.setTid(tid);
-        JSONArray msgids = new JSONArray();
-        msgids.add(msgid);
-        request.setMsgids(msgids.toJSONString());
+        
+        // Create list of message IDs
+        List<Long> msgidsArray = new ArrayList<>();
+        msgidsArray.add(msgid);
+        request.setMsgids(msgidsArray);
         
         Result<MarkReadTeamMessageResponseV1> result = messageV1Service.markReadTeamMessage(request);
         System.out.println("**markReadTeamMessage**" + JSON.toJSONString(result));

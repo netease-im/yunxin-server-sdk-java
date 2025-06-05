@@ -12,10 +12,10 @@
 ```java
 
 import com.alibaba.fastjson2.JSONObject;
-import com.netease.nim.im.server.sdk.core.metrics.MetricsCallback;
-import com.netease.nim.im.server.sdk.core.metrics.PrometheusConverter;
-import com.netease.nim.im.server.sdk.core.metrics.Stats;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
+import metrics.core.com.netease.nim.server.sdk.MetricsCallback;
+import metrics.core.com.netease.nim.server.sdk.PrometheusConverter;
+import metrics.core.com.netease.nim.server.sdk.Stats;
+import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
 
 /**
  * Created by caojiajun on 2024/12/10

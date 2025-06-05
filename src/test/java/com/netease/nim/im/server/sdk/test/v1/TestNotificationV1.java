@@ -2,24 +2,24 @@ package com.netease.nim.im.server.sdk.test.v1;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.netease.nim.im.server.sdk.core.Result;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
+import com.netease.nim.server.sdk.core.Result;
+import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.test.YunxinApiHttpClientInit;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiServices;
-import com.netease.nim.im.server.sdk.v1.account.IAccountV1Service;
-import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequestV1;
-import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponseV1;
-import com.netease.nim.im.server.sdk.v1.team.ITeamV1Service;
-import com.netease.nim.im.server.sdk.v1.team.request.CreateTeamRequestV1;
-import com.netease.nim.im.server.sdk.v1.team.request.DismissTeamRequestV1;
-import com.netease.nim.im.server.sdk.v1.team.response.CreateTeamResponseV1;
-import com.netease.nim.im.server.sdk.v1.team.response.DismissTeamResponseV1;
-import com.netease.nim.im.server.sdk.v1.system_notification.ISystemNotificationV1Service;
-import com.netease.nim.im.server.sdk.v1.system_notification.request.SendAttachMsgRequestV1;
-import com.netease.nim.im.server.sdk.v1.system_notification.request.SendBatchAttachMsgRequestV1;
-import com.netease.nim.im.server.sdk.v1.system_notification.response.SendAttachMsgResponseV1;
-import com.netease.nim.im.server.sdk.v1.system_notification.response.SendBatchAttachMsgResponseV1;
+import com.netease.nim.server.sdk.im.v1.YunxinV1ApiServices;
+import com.netease.nim.server.sdk.im.v1.account.IAccountV1Service;
+import com.netease.nim.server.sdk.im.v1.account.request.CreateAccountRequestV1;
+import com.netease.nim.server.sdk.im.v1.account.response.CreateAccountResponseV1;
+import com.netease.nim.server.sdk.im.v1.team.ITeamV1Service;
+import com.netease.nim.server.sdk.im.v1.team.request.CreateTeamRequestV1;
+import com.netease.nim.server.sdk.im.v1.team.request.DismissTeamRequestV1;
+import com.netease.nim.server.sdk.im.v1.team.response.CreateTeamResponseV1;
+import com.netease.nim.server.sdk.im.v1.team.response.DismissTeamResponseV1;
+import com.netease.nim.server.sdk.im.v1.system_notification.ISystemNotificationV1Service;
+import com.netease.nim.server.sdk.im.v1.system_notification.request.SendAttachMsgRequestV1;
+import com.netease.nim.server.sdk.im.v1.system_notification.request.SendBatchAttachMsgRequestV1;
+import com.netease.nim.server.sdk.im.v1.system_notification.response.SendAttachMsgResponseV1;
+import com.netease.nim.server.sdk.im.v1.system_notification.response.SendBatchAttachMsgResponseV1;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -174,7 +174,7 @@ public class TestNotificationV1 {
             
             // 强制推送给指定用户
             request.setForcePushAll(false);
-            request.setForcePushList(JSONObject.toJSONString(Arrays.asList(accid2, accid3)));
+            request.setForcePushList(Arrays.asList(accid2, accid3));
             
             Result<SendAttachMsgResponseV1> result = notificationService.sendAttachMsg(request);
             Assert.assertTrue("Failed to send team message: " + result.getMsg(), result.isSuccess());

@@ -1,6 +1,6 @@
 package com.netease.nim.im.server.sdk.test;
 
-import com.netease.nim.im.server.sdk.core.endpoint.DynamicEndpointSelector;
+import com.netease.nim.server.sdk.core.endpoint.DynamicEndpointSelector;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -2,17 +2,17 @@ package com.netease.nim.im.server.sdk.test.v1;
 
 
 import com.alibaba.fastjson2.JSON;
-import com.netease.nim.im.server.sdk.core.Result;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
+import com.netease.nim.server.sdk.core.Result;
+import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.test.YunxinApiHttpClientInit;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiServices;
-import com.netease.nim.im.server.sdk.v1.account.IAccountV1Service;
-import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequestV1;
-import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponseV1;
-import com.netease.nim.im.server.sdk.v1.chatroom_message.IChatroomMessageV1Service;
-import com.netease.nim.im.server.sdk.v1.chatroom_message.request.*;
-import com.netease.nim.im.server.sdk.v1.chatroom_message.response.*;
+import com.netease.nim.server.sdk.im.v1.YunxinV1ApiServices;
+import com.netease.nim.server.sdk.im.v1.account.IAccountV1Service;
+import com.netease.nim.server.sdk.im.v1.account.request.CreateAccountRequestV1;
+import com.netease.nim.server.sdk.im.v1.account.response.CreateAccountResponseV1;
+import com.netease.nim.server.sdk.im.v1.chatroom_message.IChatroomMessageV1Service;
+import com.netease.nim.server.sdk.im.v1.chatroom_message.request.*;
+import com.netease.nim.server.sdk.im.v1.chatroom_message.response.*;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -192,7 +192,7 @@ public class TestChatroomMessageV1 {
             message.setLocZ(90.12 + i);
             messages.add(message);
         }
-        batchSendRequest.setMsgList(JSON.toJSONString(messages));
+        batchSendRequest.setMsgList(messages);
         Result<BatchSendChatroomMsgResponseV1> result = chatroomMessageService.batchSendMsg(batchSendRequest);
         Assert.assertTrue(result.getCode() + ":" + result.getMsg(), result.isSuccess());
         System.err.println("**BatchSendMsg**" + JSON.toJSONString(result.getResponse()));
@@ -217,7 +217,7 @@ public class TestChatroomMessageV1 {
         targetMsgRequest.setMsgId("msg-uuid-" + UUID.randomUUID().toString().replaceAll("-", "")); // Message ID (UUID)
         targetMsgRequest.setAttach("This is the message content."); // Message content
         targetMsgRequest.setFromAccid(fromAccid); // Sender's account ID
-        targetMsgRequest.setToAccids(JSON.toJSONString(Arrays.asList(toAccid1, toAccid2)));
+        targetMsgRequest.setToAccids(Arrays.asList(toAccid1, toAccid2));
         targetMsgRequest.setMsgType(0);
         targetMsgRequest.setSubType(1);
         targetMsgRequest.setResendFlag(0);
@@ -235,34 +235,70 @@ public class TestChatroomMessageV1 {
         System.err.println("**SendMsgToSomeone**" + JSON.toJSONString(result.getResponse()));
     }
 
+    /**
+     * Helper method for batch sending of targeted chatroom messages
+     */
     private static void batchSendMsgToSomeone() throws YunxinSdkException {
+        System.out.println("\n==== Testing Batch Send Chatroom Target Messages ====");
+        
         BatchChatroomTargetMsgRequestV1 batchChatroomRequest = new BatchChatroomTargetMsgRequestV1();
         batchChatroomRequest.setRoomId(roomId); // Chatroom ID
         batchChatroomRequest.setFromAccid(fromAccid); // Sender's account ID
-        batchChatroomRequest.setRoute(1); // Message routing
-        batchChatroomRequest.setUseYidun(1); // Use Yidun for security
+        batchChatroomRequest.setToAccids(Arrays.asList(toAccid1, toAccid2)); // Recipients' account IDs
+        batchChatroomRequest.setRoute(1); // Message routing: 1 = need to copy
+        batchChatroomRequest.setUseYidun(0); // Don't use Yidun security
         batchChatroomRequest.setYidunAntiCheating("{\"antiCheating\":\"data\"}"); // Anti-cheating parameters
         batchChatroomRequest.setYidunAntiSpamExt("{\"antiSpam\":\"data\"}"); // Anti-spam parameters
         batchChatroomRequest.setBid("business-id-123"); // Custom anti-spam business ID
         batchChatroomRequest.setAntispam(true); // Enable anti-spam
-        batchChatroomRequest.setAntispamCustom("{\"customSpam\":\"data\"}"); // Custom anti-spam content
+        batchChatroomRequest.setAntispamCustom("{\"type\":1,\"data\":\"custom content\"}"); // Custom anti-spam content
         batchChatroomRequest.setEnv("production"); // Environment name
 
+        // Create a list of messages
         List<BatchChatroomTargetMsgRequestV1.Message> messages = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             BatchChatroomTargetMsgRequestV1.Message message = new BatchChatroomTargetMsgRequestV1.Message();
             message.setMsgId(UUID.randomUUID().toString().replaceAll("-", ""));
-            message.setMsgType(0);
-            message.setAttach("This is message content " + i);
-            message.setExt("{\"key\":\"value\"}");
-            message.setSubType(1);
-            message.setResendFlag(0);
+            message.setMsgType(i % 2 == 0 ? 0 : 100); // Alternate between text and custom messages
+            message.setAttach(i % 2 == 0 ? "This is text message " + i : "{\"msg\":\"This is custom message " + i + "\"}");
+            message.setExt("{\"key" + i + "\":\"value" + i + "\"}");
+            message.setSubType(i + 1);
+            message.setResendFlag(i == 1 ? 1 : 0); // Set one message as a resend message
             messages.add(message);
         }
-        batchChatroomRequest.setMsgList(JSON.toJSONString(messages));
+        batchChatroomRequest.setMsgList(messages);
+        
+        System.out.println("Request details:");
+        System.out.println("  Room ID: " + batchChatroomRequest.getRoomId());
+        System.out.println("  From: " + batchChatroomRequest.getFromAccid());
+        System.out.println("  To: " + batchChatroomRequest.getToAccids());
+        System.out.println("  Messages: " + messages.size());
+        
         Result<BatchChatroomTargetMsgResponseV1> result = chatroomMessageService.batchSendMsgToSomeone(batchChatroomRequest);
         Assert.assertTrue(result.getCode() + ":" + result.getMsg(), result.isSuccess());
-        System.err.println("**BatchSendMsgToSomeone**" + JSON.toJSONString(result.getResponse()));
+        
+        System.out.println("Response details:");
+        System.out.println("  Code: " + result.getCode());
+        
+        if (result.getResponse().getFailList() != null && !result.getResponse().getFailList().isEmpty()) {
+            System.out.println("  Failed messages: " + result.getResponse().getFailList().size());
+            for (BatchChatroomTargetMsgResponseV1.FailedMessage failed : result.getResponse().getFailList()) {
+                System.out.println("    Message ID: " + failed.getClientMsgId() + ", Reason: " + failed.getReason());
+            }
+        } else {
+            System.out.println("  No failed messages");
+        }
+        
+        if (result.getResponse().getSuccessList() != null && !result.getResponse().getSuccessList().isEmpty()) {
+            System.out.println("  Successful messages: " + result.getResponse().getSuccessList().size());
+            for (ChatroomTargetMsgResponseV1 success : result.getResponse().getSuccessList()) {
+                System.out.println("    Message ID: " + success.getMsgidClient() + ", Time: " + success.getTime());
+            }
+        } else {
+            System.out.println("  No successful messages");
+        }
+        
+        System.out.println("==== Batch Send Chatroom Target Messages Test Completed ====\n");
     }
 
     private static void broadcast() throws YunxinSdkException {

@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="yunxin-im-server-sdk" />
+        <module name="yunxin-server-sdk" />
       </profile>
     </annotationProcessing>
   </component>

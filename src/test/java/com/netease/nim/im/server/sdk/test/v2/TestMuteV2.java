@@ -1,22 +1,21 @@
 package com.netease.nim.im.server.sdk.test.v2;
 
-import com.netease.nim.im.server.sdk.core.Result;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
+import com.netease.nim.server.sdk.core.Result;
+import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.test.YunxinApiHttpClientInit;
-import com.netease.nim.im.server.sdk.v2.YunxinV2ApiServices;
-import com.netease.nim.im.server.sdk.v2.account.IAccountV2Service;
-import com.netease.nim.im.server.sdk.v2.account.request.CreateAccountRequestV2;
-import com.netease.nim.im.server.sdk.v2.account.response.CreateAccountResponseV2;
-import com.netease.nim.im.server.sdk.v2.mute.IMuteV2Service;
-import com.netease.nim.im.server.sdk.v2.mute.request.AddMuteContactRequestV2;
-import com.netease.nim.im.server.sdk.v2.mute.request.ListMuteContactsRequestV2;
-import com.netease.nim.im.server.sdk.v2.mute.request.RemoveMuteContactRequestV2;
-import com.netease.nim.im.server.sdk.v2.mute.response.AddMuteContactResponseV2;
-import com.netease.nim.im.server.sdk.v2.mute.response.ListMuteContactsResponseV2;
-import com.netease.nim.im.server.sdk.v2.mute.response.RemoveMuteContactResponseV2;
+import com.netease.nim.server.sdk.im.v2.YunxinV2ApiServices;
+import com.netease.nim.server.sdk.im.v2.account.IAccountV2Service;
+import com.netease.nim.server.sdk.im.v2.account.request.CreateAccountRequestV2;
+import com.netease.nim.server.sdk.im.v2.account.response.CreateAccountResponseV2;
+import com.netease.nim.server.sdk.im.v2.mute.IMuteV2Service;
+import com.netease.nim.server.sdk.im.v2.mute.request.AddMuteContactRequestV2;
+import com.netease.nim.server.sdk.im.v2.mute.request.ListMuteContactsRequestV2;
+import com.netease.nim.server.sdk.im.v2.mute.request.RemoveMuteContactRequestV2;
+import com.netease.nim.server.sdk.im.v2.mute.response.AddMuteContactResponseV2;
+import com.netease.nim.server.sdk.im.v2.mute.response.ListMuteContactsResponseV2;
+import com.netease.nim.server.sdk.im.v2.mute.response.RemoveMuteContactResponseV2;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

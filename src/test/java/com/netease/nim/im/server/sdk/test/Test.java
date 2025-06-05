@@ -1,9 +1,10 @@
 package com.netease.nim.im.server.sdk.test;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
-import com.netease.nim.im.server.sdk.core.YunxinApiResponse;
+import com.netease.nim.server.sdk.core.exception.YunxinSdkException;
+import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.server.sdk.core.YunxinApiResponse;
+import com.netease.nim.server.sdk.core.BizName;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class Test {
         String appsecret = "xx";
         int timeoutMillis = 5000;
         //
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.MEETING, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .build();
 

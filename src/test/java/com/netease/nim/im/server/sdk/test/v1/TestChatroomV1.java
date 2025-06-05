@@ -1,16 +1,16 @@
 package com.netease.nim.im.server.sdk.test.v1;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.netease.nim.im.server.sdk.core.Result;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.server.sdk.core.Result;
+import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
 import com.netease.nim.im.server.sdk.test.YunxinApiHttpClientInit;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiServices;
-import com.netease.nim.im.server.sdk.v1.account.IAccountV1Service;
-import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequestV1;
-import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponseV1;
-import com.netease.nim.im.server.sdk.v1.chatroom.IChatRoomV1Service;
-import com.netease.nim.im.server.sdk.v1.chatroom.response.*;
-import com.netease.nim.im.server.sdk.v1.chatroom.request.*;
+import com.netease.nim.server.sdk.im.v1.YunxinV1ApiServices;
+import com.netease.nim.server.sdk.im.v1.account.IAccountV1Service;
+import com.netease.nim.server.sdk.im.v1.account.request.CreateAccountRequestV1;
+import com.netease.nim.server.sdk.im.v1.account.response.CreateAccountResponseV1;
+import com.netease.nim.server.sdk.im.v1.chatroom.IChatRoomV1Service;
+import com.netease.nim.server.sdk.im.v1.chatroom.request.*;
+import com.netease.nim.server.sdk.im.v1.chatroom.response.*;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

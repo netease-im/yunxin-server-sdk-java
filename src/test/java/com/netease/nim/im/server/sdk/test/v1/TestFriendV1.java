@@ -1,25 +1,23 @@
 package com.netease.nim.im.server.sdk.test.v1;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.netease.nim.im.server.sdk.core.Result;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
+import com.netease.nim.server.sdk.core.Result;
+import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.test.YunxinApiHttpClientInit;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiServices;
-import com.netease.nim.im.server.sdk.v1.account.IAccountV1Service;
-import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequestV1;
-import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponseV1;
-import com.netease.nim.im.server.sdk.v1.friend.IFriendV1Service;
-import com.netease.nim.im.server.sdk.v1.friend.request.*;
-import com.netease.nim.im.server.sdk.v1.friend.response.BaseFriendResponseV1;
-import com.netease.nim.im.server.sdk.v1.friend.response.GetFriendListResponseV1;
-import com.netease.nim.im.server.sdk.v1.friend.response.GetFriendRelationshipResponseV1;
+import com.netease.nim.server.sdk.im.v1.YunxinV1ApiServices;
+import com.netease.nim.server.sdk.im.v1.account.IAccountV1Service;
+import com.netease.nim.server.sdk.im.v1.account.request.CreateAccountRequestV1;
+import com.netease.nim.server.sdk.im.v1.account.response.CreateAccountResponseV1;
+import com.netease.nim.server.sdk.im.v1.friend.IFriendV1Service;
+import com.netease.nim.server.sdk.im.v1.friend.request.*;
+import com.netease.nim.server.sdk.im.v1.friend.response.BaseFriendResponseV1;
+import com.netease.nim.server.sdk.im.v1.friend.response.GetFriendListResponseV1;
+import com.netease.nim.server.sdk.im.v1.friend.response.GetFriendRelationshipResponseV1;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class TestFriendV1 {

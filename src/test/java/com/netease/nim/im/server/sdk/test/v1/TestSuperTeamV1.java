@@ -1,17 +1,17 @@
 package com.netease.nim.im.server.sdk.test.v1;
 
 import com.alibaba.fastjson2.JSON;
-import com.netease.nim.im.server.sdk.core.Result;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
+import com.netease.nim.server.sdk.core.Result;
+import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.test.YunxinApiHttpClientInit;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiServices;
-import com.netease.nim.im.server.sdk.v1.account.IAccountV1Service;
-import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequestV1;
-import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponseV1;
-import com.netease.nim.im.server.sdk.v1.super_team.ISuperTeamV1Service;
-import com.netease.nim.im.server.sdk.v1.super_team.request.*;
-import com.netease.nim.im.server.sdk.v1.super_team.response.*;
+import com.netease.nim.server.sdk.im.v1.YunxinV1ApiServices;
+import com.netease.nim.server.sdk.im.v1.account.IAccountV1Service;
+import com.netease.nim.server.sdk.im.v1.account.request.CreateAccountRequestV1;
+import com.netease.nim.server.sdk.im.v1.account.response.CreateAccountResponseV1;
+import com.netease.nim.server.sdk.im.v1.super_team.ISuperTeamV1Service;
+import com.netease.nim.server.sdk.im.v1.super_team.request.*;
+import com.netease.nim.server.sdk.im.v1.super_team.response.*;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -76,7 +76,7 @@ public class TestSuperTeamV1 {
             List<String> inviteAccids = Arrays.asList(member1, member2, member3, member4);
             SuperTeamCreateRequestV1 request = new SuperTeamCreateRequestV1();
             request.setOwner(owner);
-            request.setInviteAccids(JSON.toJSONString(inviteAccids));
+            request.setInviteAccids(inviteAccids);
             request.setTname("ygytest" + System.currentTimeMillis());
             request.setJoinmode(0);
             request.setBeinvitemode(1);
@@ -258,7 +258,7 @@ public class TestSuperTeamV1 {
             muteMemberRequest.setTid(tid);
             muteMemberRequest.setOwner(owner);
             muteMemberRequest.setMute(1);
-            muteMemberRequest.setMuteAccids(JSON.toJSONString(Arrays.asList(member)));
+            muteMemberRequest.setMuteAccids(Arrays.asList(member));
             Result<SuperTeamMuteTlistResponseV1> muteMemberResult = superTeamV1Service.muteTlist(muteMemberRequest);
             Assert.assertTrue("Failed to mute member in super team: " + muteMemberResult.getMsg(), muteMemberResult.isSuccess());
             System.out.println("**MuteTlist**" + JSON.toJSONString(muteMemberResult));
@@ -305,7 +305,7 @@ public class TestSuperTeamV1 {
             SuperTeamKickMemberRequestV1 kickRequest = new SuperTeamKickMemberRequestV1();
             kickRequest.setOwner(owner);
             kickRequest.setTid(tid);
-            kickRequest.setKickAccids(JSON.toJSONString(Arrays.asList(member3)));
+            kickRequest.setKickAccids(Arrays.asList(member3));
             Result<BaseSuperTeamResponseV1> kickResult = superTeamV1Service.kick(kickRequest);
             Assert.assertTrue("Failed to kick member from super team: " + kickResult.getMsg(), kickResult.isSuccess());
             System.out.println("**kick**" + JSON.toJSONString(kickResult));
@@ -323,7 +323,7 @@ public class TestSuperTeamV1 {
             SuperTeamAddManagerRequestV1 request = new SuperTeamAddManagerRequestV1();
             request.setTid(tid);
             request.setOwner(owner);
-            request.setManagerAccids(JSON.toJSONString(Arrays.asList(member1)));
+            request.setManagerAccids(Arrays.asList(member1));
             Result<SuperTeamAddManagerResponseV1> result = superTeamV1Service.addManager(request);
             Assert.assertTrue("Failed to add manager to super team: " + result.getMsg(), result.isSuccess());
             System.out.println("**AddManager**" + JSON.toJSONString(result));
@@ -332,7 +332,7 @@ public class TestSuperTeamV1 {
             SuperTeamRemoveManagerRequestV1 removeRequest = new SuperTeamRemoveManagerRequestV1();
             removeRequest.setTid(tid);
             removeRequest.setOwner(owner);
-            removeRequest.setManagerAccids(JSON.toJSONString(Arrays.asList(member1)));
+            removeRequest.setManagerAccids(Arrays.asList(member1));
             Result<SuperTeamRemoveManagerResponseV1> removeResult = superTeamV1Service.removeManager(removeRequest);
             Assert.assertTrue("Failed to remove manager from super team: " + removeResult.getMsg(), removeResult.isSuccess());
             System.out.println("**remove manager**" + JSON.toJSONString(removeResult));
@@ -423,7 +423,7 @@ public class TestSuperTeamV1 {
             msg.setTime(time);
             msg.setFrom(owner);
             msg.setMsgid(msgId);
-            byIdsRequest.setMsgs(JSON.toJSONString(Arrays.asList(msg)));
+            byIdsRequest.setMsgs(Arrays.asList(msg));
             
             Result<GetSuperTeamMessageByIdsResponseV1> byIdsResult = superTeamV1Service.queryHistoryMsgByIds(byIdsRequest);
             Assert.assertTrue("Failed to query super team message by IDs: " + byIdsResult.getMsg(), byIdsResult.isSuccess());

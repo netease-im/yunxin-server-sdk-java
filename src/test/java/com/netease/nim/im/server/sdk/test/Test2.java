@@ -1,8 +1,8 @@
 package com.netease.nim.im.server.sdk.test;
 
-import com.netease.nim.im.server.sdk.core.endpoint.DefaultRetryPolicy;
-import com.netease.nim.im.server.sdk.core.endpoint.RetryPolicy;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.server.sdk.core.endpoint.DefaultRetryPolicy;
+import com.netease.nim.server.sdk.core.endpoint.RetryPolicy;
+import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
 
 /**
  * Created by caojiajun on 2024/12/10

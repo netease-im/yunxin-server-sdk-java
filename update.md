@@ -1,4 +1,19 @@
 
+# 1.0.0（2025/06/xx）
+### 新增
+* 新增IM面向对象接口封装
+* 新增对 IM/RTC/NEROOM/SMS/MEETING 等业务的支持（目前仅支持raw-client)
+
+### 更新
+* PrometheusConverter新增biz字段，用于标识 IM/RTC/NEROOM/SMS/MEETING 等业务属性
+* 修改了包名，包名前缀从 `com.netease.nim.im.server.sdk` 修改为 `com.netease.nim.server.sdk` ，以便实现对非IM业务的支持（破坏性更新）
+* maven仓库依赖的 `artifactId` 从 `yunxin-im-server-sdk` 修改为 `yunxin-server-sdk` ，以便实现对非IM业务的支持（破坏性更新）
+* `HttpCodeException` 和 `YunxinSdkException` 的 `message` 中，增加 `bizName` 描述
+
+### fix
+* PrometheusConverter格式化输出中耗时分位数相关metric的字段错误的问题
+
+
 # 0.2.0（2025/03/21）
 
 ### 新增

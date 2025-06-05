@@ -2,16 +2,16 @@
 
 ```java
 import com.alibaba.fastjson2.JSONObject;
-import com.netease.nim.im.server.sdk.core.Result;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
-import com.netease.nim.im.server.sdk.v2.YunxinV2ApiServices;
-import com.netease.nim.im.server.sdk.v2.account.request.BatchQueryAccountsRequestV2;
-import com.netease.nim.im.server.sdk.v2.account.request.CreateAccountRequestV2;
-import com.netease.nim.im.server.sdk.v2.account.request.UpdateAccountRequestV2;
-import com.netease.nim.im.server.sdk.v2.account.response.BatchQueryAccountsResponseV2;
-import com.netease.nim.im.server.sdk.v2.account.response.CreateAccountResponseV2;
-import com.netease.nim.im.server.sdk.v2.account.response.UpdateAccountResponseV2;
+import core.com.netease.nim.server.sdk.Result;
+import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
+import exception.core.com.netease.nim.server.sdk.YunxinSdkException;
+import v2.im.com.netease.nim.server.sdk.YunxinV2ApiServices;
+import request.account.v2.im.com.netease.nim.server.sdk.BatchQueryAccountsRequestV2;
+import request.account.v2.im.com.netease.nim.server.sdk.CreateAccountRequestV2;
+import request.account.v2.im.com.netease.nim.server.sdk.UpdateAccountRequestV2;
+import response.account.v2.im.com.netease.nim.server.sdk.BatchQueryAccountsResponseV2;
+import response.account.v2.im.com.netease.nim.server.sdk.CreateAccountResponseV2;
+import response.account.v2.im.com.netease.nim.server.sdk.UpdateAccountResponseV2;
 
 import java.util.ArrayList;
 import java.util.List;

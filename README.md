@@ -22,35 +22,11 @@
 
 ## 引入依赖
 
-### release包
-
 ```
 <dependency>
     <groupId>com.netease.nim</groupId>
     <artifactId>yunxin-im-server-sdk</artifactId>
     <version>0.2.0</version>
-</dependency>
-```
-
-### snapshot包
-```
-<repositories>
-  <repository>
-    <id>sonatype-snapshots</id>
-    <name>Sonatype Snapshot Repository</name>
-    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-    <snapshots>
-      <enabled>true</enabled>
-    </snapshots>
-  </repository>
-</repositories>
-```
-
-```
-<dependency>
-    <groupId>com.netease.nim</groupId>
-    <artifactId>yunxin-im-server-sdk</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
 </dependency>
 ```
 

@@ -7,12 +7,12 @@
 * 特别需要注意的，务必每次请求选择不同的traceId，因为云信服务器会根据traceId做请求的去重
 
 ```java
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
-import com.netease.nim.im.server.sdk.core.Result;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiServices;
-import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequestV1;
-import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponseV1;
+import exception.core.com.netease.nim.server.sdk.YunxinSdkException;
+import core.com.netease.nim.server.sdk.Result;
+import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
+import v1.im.com.netease.nim.server.sdk.YunxinV1ApiServices;
+import request.account.v1.im.com.netease.nim.server.sdk.CreateAccountRequestV1;
+import response.account.v1.im.com.netease.nim.server.sdk.CreateAccountResponseV1;
 
 import java.util.UUID;
 
@@ -59,8 +59,8 @@ public class Test6 {
 * 如果希望限制调度服务的地区，可以初始化时增加region参数配置，如下
 
 ```java
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
-import com.netease.nim.im.server.sdk.core.endpoint.Region;
+import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
+import endpoint.core.com.netease.nim.server.sdk.Region;
 
 /**
  * Created by caojiajun on 2024/12/10
@@ -88,15 +88,13 @@ public class Test9 {
 * 如果对于某一次请求希望单独修改超时参数，则可以使用TimeoutSetter#setTimeout方法进行
 
 ```java
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
-import com.netease.nim.im.server.sdk.core.Result;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
-import com.netease.nim.im.server.sdk.core.trace.TimeoutSetter;
-import com.netease.nim.im.server.sdk.v1.YunxinV1ApiServices;
-import com.netease.nim.im.server.sdk.v1.account.request.CreateAccountRequestV1;
-import com.netease.nim.im.server.sdk.v1.account.response.CreateAccountResponseV1;
-
-import java.util.UUID;
+import exception.core.com.netease.nim.server.sdk.YunxinSdkException;
+import core.com.netease.nim.server.sdk.Result;
+import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
+import trace.core.com.netease.nim.server.sdk.TimeoutSetter;
+import v1.im.com.netease.nim.server.sdk.YunxinV1ApiServices;
+import request.account.v1.im.com.netease.nim.server.sdk.CreateAccountRequestV1;
+import response.account.v1.im.com.netease.nim.server.sdk.CreateAccountResponseV1;
 
 /**
  * Created by caojiajun on 2024/12/11

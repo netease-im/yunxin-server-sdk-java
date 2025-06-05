@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.netease.nim</groupId>
-    <artifactId>yunxin-im-server-sdk</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
+    <artifactId>yunxin-server-sdk</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <name>yunxin-im-server-sdk</name>
-    <url>https://github.com/netease-im/yunxin-im-server-sdk</url>
+    <url>https://github.com/netease-im/yunxin-server-sdk-java</url>
     <description>yunxin-im-server-sdk</description>
 
     <properties>

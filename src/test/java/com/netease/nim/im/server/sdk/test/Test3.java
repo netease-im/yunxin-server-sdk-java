@@ -1,7 +1,9 @@
 package com.netease.nim.im.server.sdk.test;
 
-import com.netease.nim.im.server.sdk.core.endpoint.*;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.server.sdk.core.endpoint.DynamicEndpointFetcher;
+import com.netease.nim.server.sdk.core.endpoint.DynamicEndpointSelector;
+import com.netease.nim.server.sdk.core.endpoint.EndpointSelector;
 
 /**
  * Created by caojiajun on 2024/12/10

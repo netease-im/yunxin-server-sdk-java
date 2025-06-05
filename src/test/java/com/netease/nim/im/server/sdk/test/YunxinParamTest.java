@@ -1,7 +1,7 @@
 package com.netease.nim.im.server.sdk.test;
 
-import com.netease.nim.im.server.sdk.v1.annotation.YunxinParam;
-import com.netease.nim.im.server.sdk.v1.annotation.YunxinParamUtils;
+import com.netease.nim.server.sdk.im.v1.annotation.YunxinParam;
+import com.netease.nim.server.sdk.im.v1.annotation.YunxinParamUtils;
 import org.junit.Assert;
 import org.junit.Test;
 

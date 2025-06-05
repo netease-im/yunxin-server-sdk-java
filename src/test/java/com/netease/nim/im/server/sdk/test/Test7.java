@@ -2,10 +2,10 @@ package com.netease.nim.im.server.sdk.test;
 
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
-import com.netease.nim.im.server.sdk.core.YunxinApiResponse;
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
-import com.netease.nim.im.server.sdk.core.http.HttpMethod;
+import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.server.sdk.core.YunxinApiResponse;
+import com.netease.nim.server.sdk.core.exception.YunxinSdkException;
+import com.netease.nim.server.sdk.core.http.HttpMethod;
 
 import java.util.HashMap;
 import java.util.Map;

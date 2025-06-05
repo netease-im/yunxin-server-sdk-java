@@ -1,20 +1,19 @@
 package com.netease.nim.im.server.sdk.test.v2;
 
 import com.alibaba.fastjson2.JSON;
-import com.netease.nim.im.server.sdk.core.Result;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
+import com.netease.nim.server.sdk.core.Result;
+import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
+import com.netease.nim.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.im.server.sdk.test.YunxinApiHttpClientInit;
-import com.netease.nim.im.server.sdk.v2.YunxinV2ApiServices;
-import com.netease.nim.im.server.sdk.v2.account.IAccountV2Service;
-import com.netease.nim.im.server.sdk.v2.account.request.CreateAccountRequestV2;
-import com.netease.nim.im.server.sdk.v2.account.response.CreateAccountResponseV2;
-import com.netease.nim.im.server.sdk.v2.translation.ITranslationV2Service;
-import com.netease.nim.im.server.sdk.v2.translation.request.TranslateTextRequestV2;
-import com.netease.nim.im.server.sdk.v2.translation.response.TranslateTextResponseV2;
+import com.netease.nim.server.sdk.im.v2.YunxinV2ApiServices;
+import com.netease.nim.server.sdk.im.v2.account.IAccountV2Service;
+import com.netease.nim.server.sdk.im.v2.account.request.CreateAccountRequestV2;
+import com.netease.nim.server.sdk.im.v2.account.response.CreateAccountResponseV2;
+import com.netease.nim.server.sdk.im.v2.translation.ITranslationV2Service;
+import com.netease.nim.server.sdk.im.v2.translation.request.TranslateTextRequestV2;
+import com.netease.nim.server.sdk.im.v2.translation.response.TranslateTextResponseV2;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

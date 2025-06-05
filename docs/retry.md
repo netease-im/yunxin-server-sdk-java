@@ -54,10 +54,10 @@ public interface RetryPolicy {
 
 ```java
 import com.netease.nim.im.server.sdk.core.endpoint.DefaultRetryInterval;
-import com.netease.nim.im.server.sdk.core.endpoint.DefaultRetryPolicy;
+import endpoint.core.com.netease.nim.server.sdk.DefaultRetryPolicy;
 import com.netease.nim.im.server.sdk.core.endpoint.RetryInterval;
-import com.netease.nim.im.server.sdk.core.endpoint.RetryPolicy;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
+import endpoint.core.com.netease.nim.server.sdk.RetryPolicy;
+import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
 
 /**
  * Created by caojiajun on 2024/12/10

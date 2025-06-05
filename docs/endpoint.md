@@ -8,9 +8,11 @@
 * 默认切换机制参考：`DynamicEndpointSelector.java` ，你也可以自定义
 
 ```java
-import com.netease.nim.im.server.sdk.core.endpoint.*;
-import com.netease.nim.im.server.sdk.core.trace.ApiVersion;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
+
+import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
+import endpoint.core.com.netease.nim.server.sdk.DynamicEndpointFetcher;
+import endpoint.core.com.netease.nim.server.sdk.DynamicEndpointSelector;
+import endpoint.core.com.netease.nim.server.sdk.EndpointSelector;
 
 /**
  * Created by caojiajun on 2024/12/10

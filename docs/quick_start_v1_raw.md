@@ -3,9 +3,9 @@
 
 ```java
 import com.alibaba.fastjson2.JSONObject;
-import com.netease.nim.im.server.sdk.core.exception.YunxinSdkException;
-import com.netease.nim.im.server.sdk.core.YunxinApiHttpClient;
-import com.netease.nim.im.server.sdk.core.YunxinApiResponse;
+import exception.core.com.netease.nim.server.sdk.YunxinSdkException;
+import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
+import core.com.netease.nim.server.sdk.YunxinApiResponse;
 
 import java.util.HashMap;
 import java.util.Map;
