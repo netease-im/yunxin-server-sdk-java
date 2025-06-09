@@ -1,5 +1,6 @@
 package com.netease.nim.im.server.sdk.test;
 
+import com.netease.nim.server.sdk.core.BizName;
 import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
 import com.netease.nim.server.sdk.core.endpoint.DynamicEndpointFetcher;
 import com.netease.nim.server.sdk.core.endpoint.DynamicEndpointSelector;
@@ -16,9 +17,9 @@ public class Test3 {
         String appsecret = "xx";
         int timeoutMillis = 5000;
         // EndpointSelector可以自定义
-        EndpointSelector endpointSelector = new DynamicEndpointSelector(new DynamicEndpointFetcher(appkey));
+        EndpointSelector endpointSelector = new DynamicEndpointSelector(BizName.IM, new DynamicEndpointFetcher(appkey));
         //
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .endpointSelector(endpointSelector)
                 .build();

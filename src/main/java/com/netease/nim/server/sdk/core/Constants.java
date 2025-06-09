@@ -30,7 +30,6 @@ public class Constants {
 
     public static class Endpoint {
 
-        public static final String detectPath = "/health/liveness.action";
         public static final int scheduleDetectIntervalSeconds = 5;
         public static final int scheduleResultIntervalSeconds = 10;
         public static final int scheduleFetchIntervalSeconds = 60;
@@ -43,21 +42,50 @@ public class Constants {
             public static final String sg_lbs = "https://srv-sdk-lbs-sg.yunxinapi.com/srv-sdk/allocate";
         }
 
-        public static class CN {
-            public static final String DEFAULT = "https://api-cn.yunxinapi.com/nimserver";
-            public static final String BACKUP = "https://api-cn-bak.yunxinapi.com/nimserver";
+        public static class IM {
+            public static final String detectPath = "/health/liveness.action";
 
-            public static final String BACKUP_1 = "https://api-cn-01.yunxinapi.com/nimserver";
-            public static final String BACKUP_2 = "https://api-cn-02.yunxinapi.com/nimserver";
-            public static final String BACKUP_3 = "https://api-cn-03.yunxinapi.com/nimserver";
-        }
-        public static class SG {
-            public static final String DEFAULT = "https://api-sg.yunxinapi.com/nimserver";
-            public static final String BACKUP = "https://api-sg-bak.yunxinapi.com/nimserver";
+            public static class CN {
+                public static final String DEFAULT = "https://api-cn.yunxinapi.com/nimserver";
+                public static final String BACKUP = "https://api-cn-bak.yunxinapi.com/nimserver";
 
-            public static final String BACKUP_1 = "https://api-sg-01.yunxinapi.com/nimserver";
-            public static final String BACKUP_2 = "https://api-sg-02.yunxinapi.com/nimserver";
-            public static final String BACKUP_3 = "https://api-sg-03.yunxinapi.com/nimserver";
+                public static final String BACKUP_1 = "https://api-cn-01.yunxinapi.com/nimserver";
+                public static final String BACKUP_2 = "https://api-cn-02.yunxinapi.com/nimserver";
+                public static final String BACKUP_3 = "https://api-cn-03.yunxinapi.com/nimserver";
+            }
+            public static class SG {
+                public static final String DEFAULT = "https://api-sg.yunxinapi.com/nimserver";
+                public static final String BACKUP = "https://api-sg-bak.yunxinapi.com/nimserver";
+
+                public static final String BACKUP_1 = "https://api-sg-01.yunxinapi.com/nimserver";
+                public static final String BACKUP_2 = "https://api-sg-02.yunxinapi.com/nimserver";
+                public static final String BACKUP_3 = "https://api-sg-03.yunxinapi.com/nimserver";
+            }
         }
+
+        public static class RTC {
+            public static final String detectPath = "/index.html";
+
+            public static class CN {
+                public static final String DEFAULT = "https://rtc.yunxinapi.com";
+                public static final String BACKUP_1 = "https://rtc-pri.yunxinapi.com";
+                public static final String BACKUP_2 = "https://rtc-bak.yunxinapi.com";
+            }
+
+            public static class SG {
+                public static final String DEFAULT = "https://rtc-ap.yunxinapi.com";
+                public static final String BACKUP_1 = "https://rtc-ap-bak.yunxinapi.com";
+            }
+        }
+
+        public static class SMS {
+            public static final String detectPath = "/health/liveness.action";
+
+            public static class CN {
+                public static final String DEFAULT = "https://sms.yunxinapi.com/sms";
+                public static final String BACKUP_1 = "https:/sms-backup.yunxinapi.com/sms";
+            }
+        }
+
     }
 }

@@ -206,7 +206,7 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
         if (okHttpClient == null) {
             return true;
         }
-        String url = endpoint + Constants.Endpoint.detectPath;
+        String url = endpoint + bizName.getDetectPath();
         Request request = new Request.Builder().get()
                 .url(url)
                 .build();
@@ -215,11 +215,11 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
             String string = response.body().string();
             success = response.code() == 200;
             if (logger.isDebugEnabled()) {
-                logger.debug("check, endpoint = {}, path = {}, code = {}, response = {}", endpoint, Constants.Endpoint.detectPath, response.code(), string);
+                logger.debug("check, endpoint = {}, path = {}, code = {}, response = {}", endpoint, bizName.getDetectPath(), response.code(), string);
             }
         } catch (Exception e) {
             if (logger.isDebugEnabled()) {
-                logger.debug("check error, endpoint = {}, path = {}", endpoint, Constants.Endpoint.detectPath, e);
+                logger.debug("check error, endpoint = {}, path = {}", endpoint, bizName.getDetectPath(), e);
             }
             success = false;
         }

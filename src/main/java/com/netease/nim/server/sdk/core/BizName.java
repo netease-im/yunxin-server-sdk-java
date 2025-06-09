@@ -20,4 +20,16 @@ public enum BizName {
     public int getValue() {
         return value;
     }
+
+    public String getDetectPath() {
+        if (this == IM) {
+            return Constants.Endpoint.IM.detectPath;
+        } else if (this == RTC) {
+            return Constants.Endpoint.RTC.detectPath;
+        } else if (this == SMS) {
+            return Constants.Endpoint.SMS.detectPath;
+        } else {
+            return Constants.Endpoint.IM.detectPath;
+        }
+    }
 }

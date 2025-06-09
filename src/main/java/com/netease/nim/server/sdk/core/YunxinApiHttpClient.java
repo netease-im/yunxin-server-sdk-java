@@ -127,7 +127,7 @@ public class YunxinApiHttpClient {
                 throw new IllegalStateException("YunxinApiHttpClient with appkey = [" + appkey + "] and bizName = [" + bizName.name() + "] duplicate init");
             }
             if (endpointConfig.getEndpointSelector() == null) {
-                EndpointSelector endpointSelector = new DynamicEndpointSelector(new DynamicEndpointFetcher(bizName, appkey, region));
+                EndpointSelector endpointSelector = new DynamicEndpointSelector(bizName, new DynamicEndpointFetcher(bizName, appkey, region));
                 endpointConfig.setEndpointSelector(endpointSelector);
             }
             YunxinApiHttpClient yunxinApiHttpClient = new YunxinApiHttpClient(bizName, appkey, appsecret, endpointConfig, httpClientConfig, metricsConfig);

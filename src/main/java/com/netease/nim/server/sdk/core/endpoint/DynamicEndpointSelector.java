@@ -44,16 +44,33 @@ public class DynamicEndpointSelector implements EndpointSelector {
     private List<String> orderedEndpoints = new ArrayList<>();
 
     public DynamicEndpointSelector(EndpointFetcher fetcher) {
-        this(fetcher, Constants.Endpoint.detectPath,
+        this(fetcher, BizName.IM.getDetectPath(),
                 Constants.Endpoint.scheduleDetectIntervalSeconds, Constants.Endpoint.scheduleResultIntervalSeconds,
                 Constants.Endpoint.slideWindowBuckets, Constants.Endpoint.slideWindowTime);
     }
 
+    public DynamicEndpointSelector(BizName bizName, EndpointFetcher fetcher) {
+        this(bizName, fetcher, Constants.Endpoint.scheduleDetectIntervalSeconds,
+                Constants.Endpoint.scheduleResultIntervalSeconds,
+                Constants.Endpoint.slideWindowBuckets, Constants.Endpoint.slideWindowTime);
+    }
+
     public DynamicEndpointSelector(EndpointFetcher fetcher, String detectPath,
-                                   int scheduleDetectIntervalSeconds,
-                                   int scheduleResultIntervalSeconds, int slideWindowBuckets, long slideWindowTime) {
+                                   int scheduleDetectIntervalSeconds, int scheduleResultIntervalSeconds,
+                                   int slideWindowBuckets, long slideWindowTime) {
         this.fetcher = fetcher;
         this.detectPath = detectPath;
+        this.scheduleDetectIntervalSeconds = scheduleDetectIntervalSeconds;
+        this.scheduleResultIntervalSeconds = scheduleResultIntervalSeconds;
+        this.slideWindowBuckets = slideWindowBuckets;
+        this.slideWindowTime = slideWindowTime;
+    }
+
+    public DynamicEndpointSelector(BizName bizName, EndpointFetcher fetcher,
+                                   int scheduleDetectIntervalSeconds, int scheduleResultIntervalSeconds,
+                                   int slideWindowBuckets, long slideWindowTime) {
+        this.fetcher = fetcher;
+        this.detectPath = bizName.getDetectPath();
         this.scheduleDetectIntervalSeconds = scheduleDetectIntervalSeconds;
         this.scheduleResultIntervalSeconds = scheduleResultIntervalSeconds;
         this.slideWindowBuckets = slideWindowBuckets;
