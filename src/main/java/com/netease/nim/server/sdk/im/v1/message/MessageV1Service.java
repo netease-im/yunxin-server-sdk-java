@@ -1,6 +1,7 @@
 package com.netease.nim.server.sdk.im.v1.message;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.netease.nim.server.sdk.core.Result;
 import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
@@ -10,6 +11,9 @@ import com.netease.nim.server.sdk.im.v1.annotation.YunxinParamUtils;
 import com.netease.nim.server.sdk.im.v1.message.request.*;
 import com.netease.nim.server.sdk.im.v1.message.response.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MessageV1Service implements IMessageV1Service {
@@ -64,7 +68,11 @@ public class MessageV1Service implements IMessageV1Service {
         if (object.containsKey("msgids")) {
             // Parse msgids from JSON object to Map<String, Long>
             JSONObject msgidsObj = object.getJSONObject("msgids");
-            response.setMsgids(msgidsObj.toJavaObject(Map.class));
+            Map<String, Long> map = new HashMap<>();
+            for (Map.Entry<String, Object> stringObjectEntry : msgidsObj.entrySet()) {
+                map.put(stringObjectEntry.getKey(), Long.parseLong(stringObjectEntry.getValue().toString()));
+            }
+            response.setMsgids(map);
         }
         return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
     }
@@ -96,7 +104,13 @@ public class MessageV1Service implements IMessageV1Service {
         }
         MarkReadTeamMessageResponseV1 response = new MarkReadTeamMessageResponseV1();
         if (object.containsKey("data")) {
-            response = JSON.parseObject(object.getString("data"), MarkReadTeamMessageResponseV1.class);
+            JSONObject data = object.getJSONObject("data");
+            JSONArray errMsgIds = data.getJSONArray("errMsgIds");
+            List<Long> list = new ArrayList<>();
+            for (Object errMsgId : errMsgIds) {
+                list.add(Long.parseLong(errMsgId.toString()));
+            }
+            response.setErrMsgIds(list);
         }
         return new Result<>(apiResponse.getEndpoint(), code, apiResponse.getTraceId(), null, response);
     }

@@ -13,7 +13,7 @@ public class GetFriendListResponseV1 {
         this.friends = friends;
     }
 
-    public class FriendInfo {
+    public static class FriendInfo {
         /**
          * 好友关系创建时间
          **/

@@ -5,13 +5,19 @@ package com.netease.nim.server.sdk.core;
  */
 public class YunxinApiResponse {
     private final String endpoint;
+    private final int httpCode;
     private final String data;
     private final String traceId;
 
-    public YunxinApiResponse(String endpoint, String data, String traceId) {
+    public YunxinApiResponse(String endpoint, int httpCode, String data, String traceId) {
         this.endpoint = endpoint;
+        this.httpCode = httpCode;
         this.data = data;
         this.traceId = traceId;
+    }
+
+    public int getHttpCode() {
+        return httpCode;
     }
 
     public String getEndpoint() {

@@ -41,7 +41,7 @@ public class QueryChatroomInfosResponseV1 {
         this.failRooms = failRooms;
     }
 
-    public class RoomInfo {
+    public static class RoomInfo {
         @JSONField(name = "roomid")
         private Long roomId;
 

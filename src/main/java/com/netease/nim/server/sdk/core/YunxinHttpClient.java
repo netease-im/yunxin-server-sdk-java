@@ -129,8 +129,10 @@ public class YunxinHttpClient implements HttpClient {
                 try (Response response = client.newCall(request).execute()) {
                     int code = response.code();
                     String string = response.body().string();
-                    if (code != 200) {
-                        throw new HttpCodeException(bizName, endpoint, code, string);
+                    if (bizName.isHttpCodeAlways200()) {
+                        if (code != 200) {
+                            throw new HttpCodeException(bizName, endpoint, code, string);
+                        }
                     }
                     endpointSelector.update(endpoint, RequestResult.SUCCESS);
                     if (metricsCollector != null) {

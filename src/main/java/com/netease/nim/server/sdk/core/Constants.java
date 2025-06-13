@@ -21,6 +21,9 @@ public class Constants {
     public static class Retry {
         public static final int maxRetry = 1;
         public static final RetryPolicy retryPolicy = new DefaultRetryPolicy(maxRetry, true);
+
+        public static final RetryPolicy retryOn502 = new DefaultRetryPolicy(maxRetry, true);
+        public static final RetryPolicy notRetryOn502 = new DefaultRetryPolicy(maxRetry, false);
     }
 
     public static class Metric {
@@ -43,8 +46,6 @@ public class Constants {
         }
 
         public static class IM {
-            public static final String detectPath = "/health/liveness.action";
-
             public static class CN {
                 public static final String DEFAULT = "https://api-cn.yunxinapi.com/nimserver";
                 public static final String BACKUP = "https://api-cn-bak.yunxinapi.com/nimserver";
@@ -64,8 +65,6 @@ public class Constants {
         }
 
         public static class RTC {
-            public static final String detectPath = "/index.html";
-
             public static class CN {
                 public static final String DEFAULT = "https://rtc.yunxinapi.com";
                 public static final String BACKUP_1 = "https://rtc-pri.yunxinapi.com";
@@ -79,11 +78,51 @@ public class Constants {
         }
 
         public static class SMS {
-            public static final String detectPath = "/health/liveness.action";
-
             public static class CN {
                 public static final String DEFAULT = "https://sms.yunxinapi.com/sms";
-                public static final String BACKUP_1 = "https:/sms-backup.yunxinapi.com/sms";
+                public static final String BACKUP_1 = "https://sms-backup.yunxinapi.com/sms";
+            }
+        }
+
+        public static class LIVE {
+            public static class CN {
+                public static final String DEFAULT = "https://vcloud.yunxinapi.com";
+                public static final String BACKUP_1 = "https://vcloud.163.com";
+            }
+
+            public static class SG {
+                public static final String DEFAULT = "https://vcloud-sea.yunxinapi.com";
+                public static final String BACKUP_1 = "https://api-sea.yunxinvcloud.com";
+            }
+        }
+
+        public static class VOD {
+            public static class CN {
+                public static final String DEFAULT = "https://vcloud.yunxinapi.com";
+                public static final String BACKUP_1 = "https://vcloud.163.com";
+            }
+
+            public static class SG {
+                public static final String DEFAULT = "https://vcloud-sea.yunxinapi.com";
+                public static final String BACKUP_1 = "https://api-sea.yunxinvcloud.com";
+            }
+        }
+
+        public static class MEETING {
+            public static class CN {
+                public static final String DEFAULT = "https://roomkit-alt1.yunxinapi.com";
+                public static final String BACKUP_1 = "https://roomkit-alt2.yunxinapi.com";
+            }
+        }
+
+        public static class NEROOM {
+            public static class CN {
+                public static final String DEFAULT = "https://roomkit-alt1.yunxinapi.com";
+                public static final String BACKUP_1 = "https://roomkit-alt2.yunxinapi.com";
+            }
+            public static class SG {
+                public static final String DEFAULT = "https://roomkit-sg.yunxinapi.com";
+                public static final String BACKUP_1 = "https://roomkit-sg-alt1.yunxinapi.com";
             }
         }
 

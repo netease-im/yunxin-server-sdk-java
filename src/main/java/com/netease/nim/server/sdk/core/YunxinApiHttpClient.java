@@ -44,11 +44,14 @@ public class YunxinApiHttpClient {
             this.bizName = bizName;
             this.appkey = appkey;
             this.appsecret = appsecret;
-            String cacheKey = appkey + "/" + appsecret + "/" + bizName.getValue();
-            YunxinApiHttpClient client = clientMap.get(cacheKey);
-            if (client != null) {
-                throw new IllegalStateException("YunxinApiHttpClient with appkey = [" + appkey + "] and bizName = [" + bizName.name() + "] duplicate init");
+            if (bizName != BizName.CUSTOM) {
+                String cacheKey = appkey + "/" + appsecret + "/" + bizName.getValue();
+                YunxinApiHttpClient client = clientMap.get(cacheKey);
+                if (client != null) {
+                    throw new IllegalStateException("YunxinApiHttpClient with appkey = [" + appkey + "] and bizName = [" + bizName.name() + "] duplicate init");
+                }
             }
+            endpointConfig.setRetryPolicy(bizName.getDefaultRetryPolicy());
         }
 
         public Builder(String appkey, String appsecret) {
@@ -122,16 +125,25 @@ public class YunxinApiHttpClient {
 
         public YunxinApiHttpClient build() {
             String cacheKey = appkey + "/" + appsecret + "/" + bizName.getValue();
-            YunxinApiHttpClient client = clientMap.get(cacheKey);
-            if (client != null) {
-                throw new IllegalStateException("YunxinApiHttpClient with appkey = [" + appkey + "] and bizName = [" + bizName.name() + "] duplicate init");
+            if (bizName != BizName.CUSTOM) {
+                YunxinApiHttpClient client = clientMap.get(cacheKey);
+                if (client != null) {
+                    throw new IllegalStateException("YunxinApiHttpClient with appkey = [" + appkey + "] and bizName = [" + bizName.name() + "] duplicate init");
+                }
+            }
+            if (bizName == BizName.CUSTOM) {
+                if (endpointConfig.getEndpointSelector() == null) {
+                    throw new IllegalArgumentException("bizName with CUSTOM must specify endpoints");
+                }
             }
             if (endpointConfig.getEndpointSelector() == null) {
                 EndpointSelector endpointSelector = new DynamicEndpointSelector(bizName, new DynamicEndpointFetcher(bizName, appkey, region));
                 endpointConfig.setEndpointSelector(endpointSelector);
             }
             YunxinApiHttpClient yunxinApiHttpClient = new YunxinApiHttpClient(bizName, appkey, appsecret, endpointConfig, httpClientConfig, metricsConfig);
-            clientMap.put(cacheKey, yunxinApiHttpClient);
+            if (bizName != BizName.CUSTOM) {
+                clientMap.put(cacheKey, yunxinApiHttpClient);
+            }
             return yunxinApiHttpClient;
         }
     }
@@ -153,7 +165,7 @@ public class YunxinApiHttpClient {
             builder.addParam(entry.getKey(), entry.getValue());
         }
         HttpResponse response = httpClient.execute(HttpMethod.POST, ContextType.form_url_encoded, ApiVersion.V1, path, path, null, builder.build());
-        return new YunxinApiResponse(response.getEndpoint(), response.getData(), response.getTraceId());
+        return new YunxinApiResponse(response.getEndpoint(), response.getHttpCode(), response.getData(), response.getTraceId());
     }
 
     /**
@@ -171,7 +183,7 @@ public class YunxinApiHttpClient {
             throw new IllegalStateException("only support bizName = IM");
         }
         HttpResponse response = httpClient.execute(method, ContextType.json, ApiVersion.V2, uri, path, queryString, data);
-        return new YunxinApiResponse(response.getEndpoint(), response.getData(), response.getTraceId());
+        return new YunxinApiResponse(response.getEndpoint(), response.getHttpCode(), response.getData(), response.getTraceId());
     }
 
     /**
@@ -187,7 +199,7 @@ public class YunxinApiHttpClient {
      */
     public final YunxinApiResponse execute(HttpMethod method, ContextType contextType, String uri, String path, Map<String, String> queryString, String data) throws YunxinSdkException {
         HttpResponse response = httpClient.execute(method, contextType, ApiVersion.V1, uri, path, queryString, data);
-        return new YunxinApiResponse(response.getEndpoint(), response.getData(), response.getTraceId());
+        return new YunxinApiResponse(response.getEndpoint(), response.getHttpCode(), response.getData(), response.getTraceId());
     }
 
     /**
@@ -202,7 +214,7 @@ public class YunxinApiHttpClient {
      */
     public final YunxinApiResponse executeJson(HttpMethod method, String uri, String path, Map<String, String> queryString, String data) throws YunxinSdkException {
         HttpResponse response = httpClient.execute(method, ContextType.json, ApiVersion.V1, uri, path, queryString, data);
-        return new YunxinApiResponse(response.getEndpoint(), response.getData(), response.getTraceId());
+        return new YunxinApiResponse(response.getEndpoint(), response.getHttpCode(), response.getData(), response.getTraceId());
     }
 
     /**
@@ -215,7 +227,8 @@ public class YunxinApiHttpClient {
      * @throws YunxinSdkException exception
      */
     public final YunxinApiResponse executeJson(HttpMethod method, String path, Map<String, String> queryString, String data) throws YunxinSdkException {
-        return executeJson(method, path, path, queryString, data);
+        HttpResponse response = httpClient.execute(method, ContextType.json, ApiVersion.V1, path, path, queryString, data);
+        return new YunxinApiResponse(response.getEndpoint(), response.getHttpCode(), response.getData(), response.getTraceId());
     }
 
     /**
@@ -230,7 +243,7 @@ public class YunxinApiHttpClient {
      */
     public final YunxinApiResponse executeForm(HttpMethod method, String uri, String path, Map<String, String> queryString, String data) throws YunxinSdkException {
         HttpResponse response = httpClient.execute(method, ContextType.form_url_encoded, ApiVersion.V1, uri, path, queryString, data);
-        return new YunxinApiResponse(response.getEndpoint(), response.getData(), response.getTraceId());
+        return new YunxinApiResponse(response.getEndpoint(), response.getHttpCode(), response.getData(), response.getTraceId());
     }
 
     /**
@@ -243,7 +256,8 @@ public class YunxinApiHttpClient {
      * @throws YunxinSdkException exception
      */
     public final YunxinApiResponse executeForm(HttpMethod method, String path, Map<String, String> queryString, String data) throws YunxinSdkException {
-        return executeForm(method, path, path, queryString, data);
+        HttpResponse response = httpClient.execute(method, ContextType.form_url_encoded, ApiVersion.V1, path, path, queryString, data);
+        return new YunxinApiResponse(response.getEndpoint(), response.getHttpCode(), response.getData(), response.getTraceId());
     }
 
     /**

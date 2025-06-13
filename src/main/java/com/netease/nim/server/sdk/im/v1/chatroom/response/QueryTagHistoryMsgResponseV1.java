@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class QueryTagHistoryMsgResponseV1 {
 
-    List<TagMsgBean> msgs;
+    private List<TagMsgBean> msgs;
 
     public List<TagMsgBean> getMsgs() {
         return msgs;
@@ -20,7 +20,7 @@ public class QueryTagHistoryMsgResponseV1 {
         this.msgs = msgs;
     }
 
-    public class TagMsgBean {
+    public static class TagMsgBean {
         @JSONField(name = "msgid")
         private Long msgId;
 

@@ -11,6 +11,9 @@ import com.netease.nim.server.sdk.im.v1.annotation.YunxinParamUtils;
 import com.netease.nim.server.sdk.im.v1.chatroom.request.*;
 import com.netease.nim.server.sdk.im.v1.chatroom.response.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -718,15 +721,17 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
             
             // Get the list of elements
             if (descObj.containsKey("list")) {
-                String listStr = descObj.getString("list");
-                if (listStr != null && !listStr.isEmpty()) {
-                    response.setList(JSON.parseArray(listStr, Map.class));
-                } else {
-                    JSONArray jsonArray = descObj.getJSONArray("list");
-                    if (jsonArray != null) {
-                        response.setList(jsonArray.toJavaList(Map.class));
+                JSONArray jsonArray = descObj.getJSONArray("list");
+                List<QueueListResponseV1.QueueElement> list = new ArrayList<>();
+                for (Object o : jsonArray) {
+                    JSONObject json = (JSONObject) o;
+                    QueueListResponseV1.QueueElement element = null;
+                    for (Map.Entry<String, Object> entry : json.entrySet()) {
+                        element = new QueueListResponseV1.QueueElement(entry.getKey(), entry.getValue().toString());
                     }
+                    list.add(element);
                 }
+                response.setList(list);
             }
         }
 
@@ -792,15 +797,17 @@ public class ChatRoomV1Service implements IChatRoomV1Service {
             
             // Get the list of elements
             if (descObj.containsKey("list")) {
-                String listStr = descObj.getString("list");
-                if (listStr != null && !listStr.isEmpty()) {
-                    response.setList(JSON.parseArray(listStr, Map.class));
-                } else {
-                    JSONArray jsonArray = descObj.getJSONArray("list");
-                    if (jsonArray != null) {
-                        response.setList(jsonArray.toJavaList(Map.class));
+                JSONArray jsonArray = descObj.getJSONArray("list");
+                List<QueueGetResponseV1.QueueElement> list = new ArrayList<>();
+                for (Object o : jsonArray) {
+                    JSONObject json = (JSONObject) o;
+                    QueueGetResponseV1.QueueElement element = null;
+                    for (Map.Entry<String, Object> entry : json.entrySet()) {
+                        element = new QueueGetResponseV1.QueueElement(entry.getKey(), entry.getValue().toString());
                     }
+                    list.add(element);
                 }
+                response.setList(list);
             }
         }
 

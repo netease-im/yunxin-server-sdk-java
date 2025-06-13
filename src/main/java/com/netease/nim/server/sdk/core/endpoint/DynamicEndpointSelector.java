@@ -55,6 +55,12 @@ public class DynamicEndpointSelector implements EndpointSelector {
                 Constants.Endpoint.slideWindowBuckets, Constants.Endpoint.slideWindowTime);
     }
 
+    public DynamicEndpointSelector(EndpointFetcher fetcher, String detectPath) {
+        this(fetcher, detectPath, Constants.Endpoint.scheduleDetectIntervalSeconds,
+                Constants.Endpoint.scheduleResultIntervalSeconds,
+                Constants.Endpoint.slideWindowBuckets, Constants.Endpoint.slideWindowTime);
+    }
+
     public DynamicEndpointSelector(EndpointFetcher fetcher, String detectPath,
                                    int scheduleDetectIntervalSeconds, int scheduleResultIntervalSeconds,
                                    int slideWindowBuckets, long slideWindowTime) {

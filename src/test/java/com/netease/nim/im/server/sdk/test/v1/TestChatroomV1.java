@@ -695,11 +695,6 @@ public class TestChatroomV1 {
         Assert.assertEquals(result.getCode(), 200);
         QueueListResponseV1 response = result.getResponse();
         System.out.println(response.getList().size());
-
-        // Update the list with results for test
-        for (Map<String, Object> element : response.getList()) {
-            System.out.println(element.get("key") + "---" + element.get("value"));
-        }
     }
 
     private static void queueGet(IChatRoomV1Service chatRoomService) {
@@ -713,7 +708,7 @@ public class TestChatroomV1 {
             !listResult.getResponse().getList().isEmpty()) {
             
             // Get the first key from the list
-            String key = (String) listResult.getResponse().getList().get(0).get("key");
+            String key = (String) listResult.getResponse().getList().get(0).getKey();
             
             // Now perform the get operation using this key
             QueueGetRequestV1 request = new QueueGetRequestV1();

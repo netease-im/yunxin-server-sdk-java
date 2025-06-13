@@ -20,7 +20,7 @@ public class TagMembersQueryResponseV1 {
         this.data = data;
     }
 
-    public class TagMemberQueryBean {
+    public static class TagMemberQueryBean {
         @JSONField(name = "roomid")
         private Long roomId;
 

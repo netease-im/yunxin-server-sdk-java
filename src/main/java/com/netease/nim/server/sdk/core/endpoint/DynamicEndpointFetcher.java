@@ -37,6 +37,8 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
     private final List<String> lbsList;
     private final int reloadIntervalSeconds;
 
+    private final String detectPath;
+
     private OkHttpClient okHttpClient;
 
     private String md5;
@@ -48,15 +50,38 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
     }
 
     public DynamicEndpointFetcher(BizName bizName, String appkey) {
-        this(bizName, appkey, null);
+        this(bizName, appkey, (Region) null);
     }
 
     public DynamicEndpointFetcher(String appkey, Region region) {
         this(BizName.IM, appkey, region);
     }
 
+    public DynamicEndpointFetcher(BizName bizName, String appkey, String detectPath) {
+        this.bizName = bizName;
+        this.detectPath = detectPath;
+        this.appkey = appkey;
+        this.lbsList = Arrays.asList(Constants.Endpoint.LBS.default_lbs, Constants.Endpoint.LBS.cn_lbs, Constants.Endpoint.LBS.sg_lbs);
+        this.reloadIntervalSeconds = Constants.Endpoint.scheduleFetchIntervalSeconds;
+    }
+
+    public DynamicEndpointFetcher(BizName bizName, String appkey, String detectPath, Region region) {
+        this.bizName = bizName;
+        this.detectPath = detectPath;
+        this.appkey = appkey;
+        if (region == Region.CN) {
+            this.lbsList = Collections.singletonList(Constants.Endpoint.LBS.cn_lbs);
+        } else if (region == Region.SG) {
+            this.lbsList = Collections.singletonList(Constants.Endpoint.LBS.sg_lbs);
+        } else {
+            this.lbsList = Arrays.asList(Constants.Endpoint.LBS.default_lbs, Constants.Endpoint.LBS.cn_lbs, Constants.Endpoint.LBS.sg_lbs);
+        }
+        this.reloadIntervalSeconds = Constants.Endpoint.scheduleFetchIntervalSeconds;
+    }
+
     public DynamicEndpointFetcher(BizName bizName, String appkey, Region region) {
         this.bizName = bizName;
+        this.detectPath = bizName.getDetectPath();
         this.appkey = appkey;
         if (region == Region.CN) {
             this.lbsList = Collections.singletonList(Constants.Endpoint.LBS.cn_lbs);
@@ -74,6 +99,7 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
 
     public DynamicEndpointFetcher(BizName bizName, String appkey, List<String> lbsList, int reloadIntervalSeconds) {
         this.bizName = bizName;
+        this.detectPath = bizName.getDetectPath();
         this.appkey = appkey;
         this.lbsList = lbsList;
         this.reloadIntervalSeconds = reloadIntervalSeconds;
@@ -206,7 +232,12 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
         if (okHttpClient == null) {
             return true;
         }
-        String url = endpoint + bizName.getDetectPath();
+        String url;
+        if (detectPath != null) {
+            url = endpoint + detectPath;
+        } else {
+            url = endpoint;
+        }
         Request request = new Request.Builder().get()
                 .url(url)
                 .build();
@@ -215,11 +246,11 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
             String string = response.body().string();
             success = response.code() == 200;
             if (logger.isDebugEnabled()) {
-                logger.debug("check, endpoint = {}, path = {}, code = {}, response = {}", endpoint, bizName.getDetectPath(), response.code(), string);
+                logger.debug("check, endpoint = {}, path = {}, code = {}, response = {}", endpoint, detectPath, response.code(), string);
             }
         } catch (Exception e) {
             if (logger.isDebugEnabled()) {
-                logger.debug("check error, endpoint = {}, path = {}", endpoint, bizName.getDetectPath(), e);
+                logger.debug("check error, endpoint = {}, path = {}", endpoint, detectPath, e);
             }
             success = false;
         }

@@ -31,7 +31,7 @@ public class ToggleCloseChatroomStatResponseV1 {
 
     private DelayInfo delayInfo;
 
-    public class DelayInfo {
+    public static class DelayInfo {
         private Boolean delayCloseEnable;
 
         private Integer delayClosePolicy;

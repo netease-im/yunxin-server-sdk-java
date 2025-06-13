@@ -29,9 +29,9 @@ public class UpdateChatroomDelayClosePolicyResponseV1 {
 
     private String creator;
 
-    private ToggleCloseChatroomStatResponseV1.DelayInfo delayInfo;
+    private DelayInfo delayInfo;
 
-    public class DelayInfo {
+    public static class DelayInfo {
         private Boolean delayCloseEnable;
 
         private Integer delayClosePolicy;
@@ -155,11 +155,11 @@ public class UpdateChatroomDelayClosePolicyResponseV1 {
         this.creator = creator;
     }
 
-    public ToggleCloseChatroomStatResponseV1.DelayInfo getDelayInfo() {
+    public DelayInfo getDelayInfo() {
         return delayInfo;
     }
 
-    public void setDelayInfo(ToggleCloseChatroomStatResponseV1.DelayInfo delayInfo) {
+    public void setDelayInfo(DelayInfo delayInfo) {
         this.delayInfo = delayInfo;
     }
 }
