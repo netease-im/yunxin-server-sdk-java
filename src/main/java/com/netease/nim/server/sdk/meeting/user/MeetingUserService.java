@@ -26,10 +26,10 @@ public class MeetingUserService implements IMeetingUserService {
         JSONObject json = JSONObject.parseObject(response.getData());
         Integer code = json.getInteger("code");
         String requestId = json.getString("requestId");
-        Long cost = json.getLong("cost");
+        String cost = json.getString("cost");
         Long ts = json.getLong("ts");
         String msg = json.getString("msg");
-        if (code != 200) {
+        if (code != 0) {
             return new MeetingResult<>(response.getEndpoint(), code, response.getTraceId(), requestId, ts, cost, msg, null);
         }
         CreateMeetingAccountResponse meetingAccountResponse = json.getObject("data", CreateMeetingAccountResponse.class);

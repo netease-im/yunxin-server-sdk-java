@@ -30,7 +30,7 @@ public class Test22 {
         YunxinApiResponse response = client.executeJson(HttpMethod.POST, "/scene/meeting/api/v2/add-user", null, request.toJSONString());
         JSONObject json = JSONObject.parseObject(response.getData());
         Integer code = json.getInteger("code");
-        if (code != 200) {
+        if (code != 0) {
             System.out.println(json);
         } else {
             System.out.println(json.getJSONObject("data"));

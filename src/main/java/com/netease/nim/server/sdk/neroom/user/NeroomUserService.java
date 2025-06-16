@@ -26,10 +26,10 @@ public class NeroomUserService implements INeroomUserService {
         JSONObject json = JSONObject.parseObject(response.getData());
         Integer code = json.getInteger("code");
         String requestId = json.getString("request_id");
-        Long cost = json.getLong("cost");
+        String cost = json.getString("cost");
         Long ts = json.getLong("ts");
         String msg = json.getString("msg");
-        if (code != 200) {
+        if (code != 0) {
             return new NeroomResult<>(response.getEndpoint(), code, response.getTraceId(), requestId, ts, cost, msg, null);
         }
         CreateNeroomAccountResponse neroomAccountResponse = json.getObject("data", CreateNeroomAccountResponse.class);

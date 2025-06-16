@@ -9,14 +9,18 @@ public class NeroomResult<T> extends Result<T> {
 
     private final String requestId;
     private final long ts;
-    private final long cost;
+    private final String cost;
 
     public NeroomResult(String endpoint, int code, String traceId, String requestId,
-                         long ts, long cost, String msg, T response) {
+                         long ts, String cost, String msg, T response) {
         super(endpoint, code, traceId, msg, response);
         this.requestId = requestId;
         this.ts = ts;
         this.cost = cost;
+    }
+
+    public boolean isSuccess() {
+        return getCode() == 0;
     }
 
     public String getRequestId() {
@@ -27,7 +31,7 @@ public class NeroomResult<T> extends Result<T> {
         return ts;
     }
 
-    public long getCost() {
+    public String getCost() {
         return cost;
     }
 }
