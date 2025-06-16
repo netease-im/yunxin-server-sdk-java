@@ -1,5 +1,6 @@
 package com.netease.nim.im.server.sdk.test;
 
+import com.netease.nim.server.sdk.core.BizName;
 import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
 
 /**
@@ -14,7 +15,7 @@ public class Test5 {
 
         String endpoint = "https://xxxx.com";
         //
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .endpoint(endpoint)
                 .build();

@@ -13,7 +13,7 @@
 * 支持trace-id，方便问题排查
 * 支持metrics，支持prometheus格式输出
 * 支持使用raw-client直接发起请求，也支持使用面向对象的client发起请求
-* 支持云信的v1-api（对应于官网的v9），也支持v2-api（对应于官网的v10）
+* 支持云信以下功能模块的api：即时通讯（IM）、实时音视频（RTC）、短信（SMS）、直播（LIVE）、点播（VOD）、房间组件（neroom）、会议（MEETING）
 * 支持云信私有化环境使用
 
 ## 架构图
@@ -35,24 +35,9 @@
 具体见：[更新日志](update.md)
 
 
-## 快速开始（v1接口，使用raw-client）
+## 快速开始
 
-[快速开始](docs/quick_start_v1_raw.md)
-
-
-## 快速开始（v1接口，使用面向对象client）
-
-[快速开始](docs/quick_start_v1_oo.md)
-
-
-## 快速开始（v2接口，使用raw-client）
-
-[快速开始](docs/quick_start_v2_raw.md)
-
-
-## 快速开始（v2接口，使用面向对象client）
-
-[快速开始](docs/quick_start_v2_oo.md)
+具体见：[快速开始](docs/quick_start)
 
 
 ## 关于重试

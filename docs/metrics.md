@@ -11,15 +11,6 @@
 
 ```java
 
-import com.alibaba.fastjson2.JSONObject;
-import metrics.core.com.netease.nim.server.sdk.MetricsCallback;
-import metrics.core.com.netease.nim.server.sdk.PrometheusConverter;
-import metrics.core.com.netease.nim.server.sdk.Stats;
-import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
-
-/**
- * Created by caojiajun on 2024/12/10
- */
 public class Test4 {
     public static void main(String[] args) {
         // 初始化
@@ -30,8 +21,9 @@ public class Test4 {
             System.out.println("receive stats callback");
             System.out.println(JSONObject.toJSONString(stats));
         };
+
         //
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .metricEnable(true)//默认true
                 .metricCollectIntervalSeconds(60)//默认60s
@@ -49,7 +41,6 @@ public class Test4 {
         System.out.println(string);
     }
 }
-
 
 ```
 

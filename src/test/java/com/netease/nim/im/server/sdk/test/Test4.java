@@ -1,6 +1,7 @@
 package com.netease.nim.im.server.sdk.test;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.netease.nim.server.sdk.core.BizName;
 import com.netease.nim.server.sdk.core.metrics.MetricsCallback;
 import com.netease.nim.server.sdk.core.metrics.PrometheusConverter;
 import com.netease.nim.server.sdk.core.metrics.Stats;
@@ -21,7 +22,7 @@ public class Test4 {
         };
 
         //
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .metricEnable(true)//默认true
                 .metricCollectIntervalSeconds(60)//默认60s

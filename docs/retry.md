@@ -53,15 +53,6 @@ public interface RetryPolicy {
 ### 初始化时设置自定义RetryPolicy
 
 ```java
-import com.netease.nim.im.server.sdk.core.endpoint.DefaultRetryInterval;
-import endpoint.core.com.netease.nim.server.sdk.DefaultRetryPolicy;
-import com.netease.nim.im.server.sdk.core.endpoint.RetryInterval;
-import endpoint.core.com.netease.nim.server.sdk.RetryPolicy;
-import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
-
-/**
- * Created by caojiajun on 2024/12/10
- */
 public class Test2 {
 
     public static void main(String[] args) {
@@ -75,7 +66,7 @@ public class Test2 {
         boolean retryOn502 = true;
         RetryPolicy retryPolicy = new DefaultRetryPolicy(maxRetry, retryOn502);
         //
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .retryPolicy(retryPolicy)
                 .build();
@@ -83,7 +74,6 @@ public class Test2 {
         //
     }
 }
-
 
 
 ```

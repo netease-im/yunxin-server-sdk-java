@@ -9,14 +9,6 @@
 
 ```java
 
-import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
-import endpoint.core.com.netease.nim.server.sdk.DynamicEndpointFetcher;
-import endpoint.core.com.netease.nim.server.sdk.DynamicEndpointSelector;
-import endpoint.core.com.netease.nim.server.sdk.EndpointSelector;
-
-/**
- * Created by caojiajun on 2024/12/10
- */
 public class Test3 {
 
     public static void main(String[] args) {
@@ -25,9 +17,9 @@ public class Test3 {
         String appsecret = "xx";
         int timeoutMillis = 5000;
         // EndpointSelector可以自定义
-        EndpointSelector endpointSelector = new DynamicEndpointSelector(new DynamicEndpointFetcher(appkey));
+        EndpointSelector endpointSelector = new DynamicEndpointSelector(BizName.IM, new DynamicEndpointFetcher(BizName.IM, appkey));
         //
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .endpointSelector(endpointSelector)
                 .build();

@@ -1,19 +1,6 @@
 ## 快速开始（v2接口，使用raw-client）
 
 ```java
-import com.alibaba.fastjson2.JSONArray;
-import com.alibaba.fastjson2.JSONObject;
-import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
-import core.com.netease.nim.server.sdk.YunxinApiResponse;
-import exception.core.com.netease.nim.server.sdk.YunxinSdkException;
-import http.core.com.netease.nim.server.sdk.HttpMethod;
-
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * Created by caojiajun on 2024/12/11
- */
 public class Test7 {
 
     public static void main(String[] args) {
@@ -21,8 +8,8 @@ public class Test7 {
         String appkey = "xx";
         String appsecret = "xx";
         int timeoutMillis = 5000;
-        // 全局一个YunxinApiHttpClient实例即可，务必不要每次请求都build一次，以免产生资源泄漏
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        //
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .build();
 
@@ -131,5 +118,6 @@ public class Test7 {
         }
     }
 }
+
 
 ```

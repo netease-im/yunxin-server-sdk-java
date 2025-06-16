@@ -1,6 +1,7 @@
 package com.netease.nim.im.server.sdk.test;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.netease.nim.server.sdk.core.BizName;
 import com.netease.nim.server.sdk.core.Result;
 import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
 import com.netease.nim.server.sdk.core.exception.YunxinSdkException;
@@ -26,7 +27,7 @@ public class Test8 {
         String appsecret = "xx";
         int timeoutMillis = 5000;
         //
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .build();
 

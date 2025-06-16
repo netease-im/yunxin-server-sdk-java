@@ -20,7 +20,7 @@ public class Test {
         String appsecret = "xx";
         int timeoutMillis = 5000;
         //
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.MEETING, appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .build();
 

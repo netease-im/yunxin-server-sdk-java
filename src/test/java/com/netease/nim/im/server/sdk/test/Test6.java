@@ -1,5 +1,6 @@
 package com.netease.nim.im.server.sdk.test;
 
+import com.netease.nim.server.sdk.core.BizName;
 import com.netease.nim.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.server.sdk.core.Result;
 import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
@@ -18,7 +19,7 @@ public class Test6 {
         String appsecret = "xx";
         int timeoutMillis = 5000;
         //
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .build();
 

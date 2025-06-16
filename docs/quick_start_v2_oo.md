@@ -1,24 +1,6 @@
 ## 快速开始（v2接口，使用面向对象client）
 
 ```java
-import com.alibaba.fastjson2.JSONObject;
-import core.com.netease.nim.server.sdk.Result;
-import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
-import exception.core.com.netease.nim.server.sdk.YunxinSdkException;
-import v2.im.com.netease.nim.server.sdk.YunxinV2ApiServices;
-import request.account.v2.im.com.netease.nim.server.sdk.BatchQueryAccountsRequestV2;
-import request.account.v2.im.com.netease.nim.server.sdk.CreateAccountRequestV2;
-import request.account.v2.im.com.netease.nim.server.sdk.UpdateAccountRequestV2;
-import response.account.v2.im.com.netease.nim.server.sdk.BatchQueryAccountsResponseV2;
-import response.account.v2.im.com.netease.nim.server.sdk.CreateAccountResponseV2;
-import response.account.v2.im.com.netease.nim.server.sdk.UpdateAccountResponseV2;
-
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by caojiajun on 2024/12/11
- */
 public class Test8 {
 
     public static void main(String[] args) {
@@ -26,8 +8,8 @@ public class Test8 {
         String appkey = "xx";
         String appsecret = "xx";
         int timeoutMillis = 5000;
-        // 全局一个YunxinApiHttpClient实例即可，务必不要每次请求都build一次，以免产生资源泄漏
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        //
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .build();
 

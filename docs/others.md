@@ -7,14 +7,7 @@
 * 特别需要注意的，务必每次请求选择不同的traceId，因为云信服务器会根据traceId做请求的去重
 
 ```java
-import exception.core.com.netease.nim.server.sdk.YunxinSdkException;
-import core.com.netease.nim.server.sdk.Result;
-import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
-import v1.im.com.netease.nim.server.sdk.YunxinV1ApiServices;
-import request.account.v1.im.com.netease.nim.server.sdk.CreateAccountRequestV1;
-import response.account.v1.im.com.netease.nim.server.sdk.CreateAccountResponseV1;
 
-import java.util.UUID;
 
 /**
  * Created by caojiajun on 2024/12/11
@@ -27,7 +20,7 @@ public class Test6 {
         String appsecret = "xx";
         int timeoutMillis = 5000;
         //
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .build();
 
@@ -38,17 +31,22 @@ public class Test6 {
         CreateAccountRequestV1 request = new CreateAccountRequestV1();
         request.setAccid("zhangsan");
         try {
-            //调用之前可以手动设置traceId
-            //特别需要注意的，务必每次请求选择不同的traceId，因为云信服务器可能根据traceId做请求的去重
-            YunxinTraceId.set(UUID.randomUUID().toString().replace("-", ""));
-            //
             Result<CreateAccountResponseV1> result = services.getAccountService().createAccount(request);
-            //...
-        } catch (YunxinSdkException e) {
-            //...
+            if (result.isSuccess()) {
+                CreateAccountResponseV1 response = result.getResponse();
+                // 注册成功
+                System.out.println("register success, accid=" + response.getAccid() + ", token=" + response.getToken() + ", traceId=" + result.getTraceId());
+            } else {
+                // 注册失败，如参数错误、重复注册等
+                System.err.println("register fail, code=" + result.getCode() + ", msg=" + result.getMsg() + ", traceId=" + result.getTraceId());
+            }
+        } catch (YunxinSdkException e) {//这是一个RuntimeException
+            // 超时等异常
+            System.err.println("register error, endpoint = " + e.getContext().getEndpoint() + ", traceId=" + e.getTraceId());
         }
     }
 }
+
 ```
 
 
@@ -59,12 +57,6 @@ public class Test6 {
 * 如果希望限制调度服务的地区，可以初始化时增加region参数配置，如下
 
 ```java
-import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
-import endpoint.core.com.netease.nim.server.sdk.Region;
-
-/**
- * Created by caojiajun on 2024/12/10
- */
 public class Test9 {
 
     public static void main(String[] args) {
@@ -73,7 +65,7 @@ public class Test9 {
         String appsecret = "xx";
         int timeoutMillis = 5000;
         //
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .region(Region.SG)//限制调度服务域名的地区，默认可以不填
                 .build();
@@ -88,17 +80,6 @@ public class Test9 {
 * 如果对于某一次请求希望单独修改超时参数，则可以使用TimeoutSetter#setTimeout方法进行
 
 ```java
-import exception.core.com.netease.nim.server.sdk.YunxinSdkException;
-import core.com.netease.nim.server.sdk.Result;
-import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
-import trace.core.com.netease.nim.server.sdk.TimeoutSetter;
-import v1.im.com.netease.nim.server.sdk.YunxinV1ApiServices;
-import request.account.v1.im.com.netease.nim.server.sdk.CreateAccountRequestV1;
-import response.account.v1.im.com.netease.nim.server.sdk.CreateAccountResponseV1;
-
-/**
- * Created by caojiajun on 2024/12/11
- */
 public class Test6 {
 
     public static void main(String[] args) {
@@ -107,7 +88,7 @@ public class Test6 {
         String appsecret = "xx";
         int timeoutMillis = 5000;
         //
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .build();
 
@@ -118,15 +99,20 @@ public class Test6 {
         CreateAccountRequestV1 request = new CreateAccountRequestV1();
         request.setAccid("zhangsan");
         try {
-            //本次请求单独设置为1000ms的超时，而不是默认的5000ms超时，注意这个参数是一次性的
-            TimeoutSetter.setTimeout(1000);
-            //
             Result<CreateAccountResponseV1> result = services.getAccountService().createAccount(request);
-            //...
-        } catch (YunxinSdkException e) {
-            //...
+            if (result.isSuccess()) {
+                CreateAccountResponseV1 response = result.getResponse();
+                // 注册成功
+                System.out.println("register success, accid=" + response.getAccid() + ", token=" + response.getToken() + ", traceId=" + result.getTraceId());
+            } else {
+                // 注册失败，如参数错误、重复注册等
+                System.err.println("register fail, code=" + result.getCode() + ", msg=" + result.getMsg() + ", traceId=" + result.getTraceId());
+            }
+        } catch (YunxinSdkException e) {//这是一个RuntimeException
+            // 超时等异常
+            System.err.println("register error, endpoint = " + e.getContext().getEndpoint() + ", traceId=" + e.getTraceId());
         }
-        //下一次请求还是会使用默认的5000ms请求
     }
 }
+
 ```

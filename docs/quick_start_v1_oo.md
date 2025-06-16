@@ -1,17 +1,6 @@
 ## 快速开始（v1接口，使用面向对象client）
 
 ```java
-
-import exception.core.com.netease.nim.server.sdk.YunxinSdkException;
-import core.com.netease.nim.server.sdk.YunxinApiHttpClient;
-import core.com.netease.nim.server.sdk.Result;
-import v1.im.com.netease.nim.server.sdk.YunxinV1ApiServices;
-import request.account.v1.im.com.netease.nim.server.sdk.CreateAccountRequestV1;
-import response.account.v1.im.com.netease.nim.server.sdk.CreateAccountResponseV1;
-
-/**
- * Created by caojiajun on 2024/12/11
- */
 public class Test6 {
 
     public static void main(String[] args) {
@@ -19,8 +8,8 @@ public class Test6 {
         String appkey = "xx";
         String appsecret = "xx";
         int timeoutMillis = 5000;
-        // 全局一个YunxinApiHttpClient实例即可，务必不要每次请求都build一次，以免产生资源泄漏
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        //
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .build();
 
@@ -28,7 +17,7 @@ public class Test6 {
         YunxinV1ApiServices services = new YunxinV1ApiServices(client);
 
         // request
-        CreateAccountRequestV1 request = new CreateAccountRequest();
+        CreateAccountRequestV1 request = new CreateAccountRequestV1();
         request.setAccid("zhangsan");
         try {
             Result<CreateAccountResponseV1> result = services.getAccountService().createAccount(request);

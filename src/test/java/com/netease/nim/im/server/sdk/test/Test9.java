@@ -1,5 +1,6 @@
 package com.netease.nim.im.server.sdk.test;
 
+import com.netease.nim.server.sdk.core.BizName;
 import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
 import com.netease.nim.server.sdk.core.endpoint.Region;
 
@@ -14,7 +15,7 @@ public class Test9 {
         String appsecret = "xx";
         int timeoutMillis = 5000;
         //
-        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(appkey, appsecret)
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
                 .timeoutMillis(timeoutMillis)
                 .region(Region.SG)//限制调度服务域名的地区，默认可以不填
                 .build();
