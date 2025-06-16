@@ -37,7 +37,7 @@
 
 ## 快速开始
 
-具体见：[快速开始](docs/quick_start)
+具体见：[快速开始](docs/quick_start.md)
 
 
 ## 关于重试
