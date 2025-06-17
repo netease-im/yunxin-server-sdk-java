@@ -6,7 +6,9 @@ import com.netease.nim.server.sdk.core.Result;
 import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
 import com.netease.nim.server.sdk.rtc.YunxinRtcApiServices;
 import com.netease.nim.server.sdk.rtc.room.IRtcRoomService;
+import com.netease.nim.server.sdk.rtc.room.request.RtcCreateRoomRequest;
 import com.netease.nim.server.sdk.rtc.room.request.RtcGetRoomByCnameRequest;
+import com.netease.nim.server.sdk.rtc.room.response.RtcCreateRoomResponse;
 import com.netease.nim.server.sdk.rtc.room.response.RtcGetRoomResponse;
 
 
@@ -17,8 +19,8 @@ public class Test12 {
 
     public static void main(String[] args) {
         // 初始化
-        String appkey = "xx";
-        String appsecret = "xx";
+        String appkey = "xxx";
+        String appsecret = "xxx";
         int timeoutMillis = 5000;
         //
         YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.RTC, appkey, appsecret)
@@ -28,15 +30,26 @@ public class Test12 {
         YunxinRtcApiServices services = new YunxinRtcApiServices(client);
         IRtcRoomService rtcRoomService = services.getRtcRoomService();
 
-        //根据cname查询房间信息
-        RtcGetRoomByCnameRequest request = new RtcGetRoomByCnameRequest();
-        request.setCname("xxx");
-        Result<RtcGetRoomResponse> result = rtcRoomService.getRoomByCname(request);
-        if (result.getCode() != 200) {
-            System.out.println(result.getCode());
-        } else {
-            RtcGetRoomResponse response = result.getResponse();
-            System.out.println(JSONObject.toJSONString(response));
+        {
+            RtcCreateRoomRequest request = new RtcCreateRoomRequest();
+            request.setChannelName("xxx");
+            request.setMode(2);
+            request.setUid(123);
+            Result<RtcCreateRoomResponse> result = rtcRoomService.createRoom(request);
+            System.out.println(JSONObject.toJSONString(result));
+        }
+
+        {
+            //根据cname查询房间信息
+            RtcGetRoomByCnameRequest request = new RtcGetRoomByCnameRequest();
+            request.setCname("xxx");
+            Result<RtcGetRoomResponse> result = rtcRoomService.getRoomByCname(request);
+            if (result.getCode() != 200) {
+                System.out.println(result.getCode());
+            } else {
+                RtcGetRoomResponse response = result.getResponse();
+                System.out.println(JSONObject.toJSONString(response));
+            }
         }
     }
 }

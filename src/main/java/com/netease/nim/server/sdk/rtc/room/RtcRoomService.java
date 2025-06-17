@@ -40,7 +40,7 @@ public class RtcRoomService implements IRtcRoomService {
     @Override
     public Result<RtcGetRoomResponse> getRoomByCid(RtcGetRoomByCidRequest request) {
         String path = RtcRoomUrlContext.GET_ROOM_BY_CID.replace("{cid}", String.valueOf(request.getCid()));
-        YunxinApiResponse response = httpClient.executeJson(HttpMethod.POST, RtcRoomUrlContext.GET_ROOM_BY_CID, path, null, null);
+        YunxinApiResponse response = httpClient.executeJson(HttpMethod.GET, RtcRoomUrlContext.GET_ROOM_BY_CID, path, null, null);
         int httpCode = response.getHttpCode();
         if (httpCode != 200) {
             return new Result<>(response.getEndpoint(), httpCode, response.getTraceId(), null, null);
@@ -53,7 +53,7 @@ public class RtcRoomService implements IRtcRoomService {
     public Result<RtcGetRoomResponse> getRoomByCname(RtcGetRoomByCnameRequest request) {
         Map<String, String> queryString = new HashMap<>();
         queryString.put("cname", request.getCname());
-        YunxinApiResponse response = httpClient.executeJson(HttpMethod.POST, RtcRoomUrlContext.GET_ROOM_BY_CNAME, queryString, null);
+        YunxinApiResponse response = httpClient.executeJson(HttpMethod.GET, RtcRoomUrlContext.GET_ROOM_BY_CNAME, queryString, null);
         int httpCode = response.getHttpCode();
         if (httpCode != 200) {
             return new Result<>(response.getEndpoint(), httpCode, response.getTraceId(), null, null);
