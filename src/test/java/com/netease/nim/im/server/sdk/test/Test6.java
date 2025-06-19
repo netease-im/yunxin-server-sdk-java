@@ -5,6 +5,7 @@ import com.netease.nim.server.sdk.core.exception.YunxinSdkException;
 import com.netease.nim.server.sdk.core.Result;
 import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
 import com.netease.nim.server.sdk.core.trace.TimeoutSetter;
+import com.netease.nim.server.sdk.core.trace.YunxinTraceId;
 import com.netease.nim.server.sdk.im.v1.YunxinV1ApiServices;
 import com.netease.nim.server.sdk.im.v1.account.request.CreateAccountRequestV1;
 import com.netease.nim.server.sdk.im.v1.account.response.CreateAccountResponseV1;
@@ -31,7 +32,8 @@ public class Test6 {
         CreateAccountRequestV1 request = new CreateAccountRequestV1();
         request.setAccid("zhangsan");
         try {
-            TimeoutSetter.setTimeout(10000);
+            TimeoutSetter.setTimeout(10000);//设置本次请求的超时时间
+            YunxinTraceId.set("your_trace_id");//设置本次请求的traceId
             Result<CreateAccountResponseV1> result = services.getAccountService().createAccount(request);
             if (result.isSuccess()) {
                 CreateAccountResponseV1 response = result.getResponse();

@@ -31,6 +31,7 @@ public class Test6 {
         CreateAccountRequestV1 request = new CreateAccountRequestV1();
         request.setAccid("zhangsan");
         try {
+            YunxinTraceId.set("your_trace_id");//设置本次请求的traceId
             Result<CreateAccountResponseV1> result = services.getAccountService().createAccount(request);
             if (result.isSuccess()) {
                 CreateAccountResponseV1 response = result.getResponse();
@@ -52,9 +53,9 @@ public class Test6 {
 
 ### 关于sdk的调度
 
-* sdk初始化时会通过云信服务器下发实际使用的api域名
+* sdk初始化时会通过云信的调度服务器下发实际使用的api域名
 * 调度域名默认使用全球化加速的域名
-* 如果希望限制调度服务的地区，可以初始化时增加region参数配置，如下
+* 如果希望限制调度域名的dns解析结果到特定地区，可以初始化时增加region参数配置，如下
 
 ```java
 public class Test9 {
