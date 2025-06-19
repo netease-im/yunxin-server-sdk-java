@@ -102,7 +102,7 @@ public class Test6 {
         CreateAccountRequestV1 request = new CreateAccountRequestV1();
         request.setAccid("zhangsan");
         try {
-            TimeoutSetter.setTimeout(10000);//设置为10s超时
+            TimeoutSetter.setTimeout(10000);//设置本次请求为10s超时
             Result<CreateAccountResponseV1> result = services.getAccountService().createAccount(request);
             if (result.isSuccess()) {
                 CreateAccountResponseV1 response = result.getResponse();
