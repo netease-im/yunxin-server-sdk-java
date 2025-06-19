@@ -78,6 +78,8 @@ public class Test9 {
 
 * sdk初始化时会配置接口的超时参数
 * 如果对于某一次请求希望单独修改超时参数，则可以使用TimeoutSetter#setTimeout方法进行
+* 需要注意的是，TimeoutSetter#setTimeout方法只对接下来的一次请求生效，之后的请求会恢复为默认超时配置
+* 特别的，对于批量类型的接口，如批量发送消息，建议调大超时参数
 
 ```java
 public class Test6 {
@@ -99,6 +101,7 @@ public class Test6 {
         CreateAccountRequestV1 request = new CreateAccountRequestV1();
         request.setAccid("zhangsan");
         try {
+            TimeoutSetter.setTimeout(10000);//设置为10s超时
             Result<CreateAccountResponseV1> result = services.getAccountService().createAccount(request);
             if (result.isSuccess()) {
                 CreateAccountResponseV1 response = result.getResponse();

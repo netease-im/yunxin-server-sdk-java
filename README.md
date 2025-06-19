@@ -1,4 +1,4 @@
-# 云信im-server-sdk
+# yunxin-server-sdk
 
 ![GitHub](https://img.shields.io/badge/license-MIT-blue.svg)
 ![GitHub release](https://img.shields.io/github/release/netease-im/yunxin-im-server-sdk.svg)
@@ -13,7 +13,7 @@
 * 支持trace-id，方便问题排查
 * 支持metrics，支持prometheus格式输出
 * 支持使用raw-client直接发起请求，也支持使用面向对象的client发起请求
-* 支持云信以下功能模块的api：即时通讯（IM）、实时音视频（RTC）、短信（SMS）、直播（LIVE）、点播（VOD）、房间组件（neroom）、会议（MEETING）
+* 支持云信以下功能模块的api：即时通讯（IM）、实时音视频（RTC）、短信（SMS）、直播（LIVE）、点播（VOD）、房间组件（NEROOM）、会议（MEETING）
 * 支持云信私有化环境使用
 
 ## 架构图

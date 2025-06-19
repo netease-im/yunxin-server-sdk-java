@@ -1,6 +1,6 @@
 package com.netease.nim.server.sdk.rtc.room;
 
-import com.netease.nim.server.sdk.core.Result;
+import com.netease.nim.server.sdk.rtc.RtcResult;
 import com.netease.nim.server.sdk.rtc.room.request.RtcCreateRoomRequest;
 import com.netease.nim.server.sdk.rtc.room.request.RtcGetRoomByCidRequest;
 import com.netease.nim.server.sdk.rtc.room.request.RtcGetRoomByCnameRequest;
@@ -12,9 +12,9 @@ import com.netease.nim.server.sdk.rtc.room.response.RtcGetRoomResponse;
  */
 public interface IRtcRoomService {
 
-    Result<RtcCreateRoomResponse> createRoom(RtcCreateRoomRequest request);
+    RtcResult<RtcCreateRoomResponse> createRoom(RtcCreateRoomRequest request);
 
-    Result<RtcGetRoomResponse> getRoomByCid(RtcGetRoomByCidRequest request);
+    RtcResult<RtcGetRoomResponse> getRoomByCid(RtcGetRoomByCidRequest request);
 
-    Result<RtcGetRoomResponse> getRoomByCname(RtcGetRoomByCnameRequest request);
+    RtcResult<RtcGetRoomResponse> getRoomByCname(RtcGetRoomByCnameRequest request);
 }

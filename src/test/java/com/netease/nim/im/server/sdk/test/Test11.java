@@ -26,14 +26,19 @@ public class Test11 {
 
         //根据cname查询房间信息
         Map<String, String> queryString = new HashMap<>();
-        queryString.put("cname", "xxx");
+        queryString.put("cname", "xxxxx");
         YunxinApiResponse response = client.executeJson(HttpMethod.GET, "/v3/api/rooms", queryString, null);
         int httpCode = response.getHttpCode();
         if (httpCode != 200) {
             System.out.println(JSONObject.toJSONString(response));
         } else {
             JSONObject jsonObject = JSONObject.parseObject(response.getData());
-            System.out.println(jsonObject.toString());
+            Integer code = jsonObject.getInteger("code");
+            if (code != 200) {
+                System.out.println(response.getData());
+            } else {
+                System.out.println(jsonObject);
+            }
         }
     }
 }

@@ -5,16 +5,7 @@ package com.netease.nim.server.sdk.rtc.room.response;
  */
 public class RtcCreateRoomResponse {
 
-    private int code;
     private long cid;
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
 
     public long getCid() {
         return cid;

@@ -22,7 +22,7 @@ public class Test13 {
                 .timeoutMillis(timeoutMillis)
                 .build();
 
-        //根据cname查询房间信息
+        //发送短信验证码
         ParamBuilder builder = new ParamBuilder();
         builder.addParam("mobile", "13012340000");
         YunxinApiResponse apiResponse = client.executeForm(HttpMethod.POST, "/sendcode.action", null, builder.build());
