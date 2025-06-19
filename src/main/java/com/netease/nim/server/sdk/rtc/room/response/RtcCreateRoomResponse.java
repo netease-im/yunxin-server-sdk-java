@@ -5,13 +5,13 @@ package com.netease.nim.server.sdk.rtc.room.response;
  */
 public class RtcCreateRoomResponse {
 
-    private long cid;
+    private Long cid;
 
-    public long getCid() {
+    public Long getCid() {
         return cid;
     }
 
-    public void setCid(long cid) {
+    public void setCid(Long cid) {
         this.cid = cid;
     }
 }

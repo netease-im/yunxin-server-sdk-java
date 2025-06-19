@@ -4,14 +4,14 @@ package com.netease.nim.server.sdk.sms.response;
  * Created by caojiajun on 2025/6/12
  */
 public class SmsSendCodeResponse {
-    private long sendid;
+    private Long sendid;
     private String authCode;
 
-    public long getSendid() {
+    public Long getSendid() {
         return sendid;
     }
 
-    public void setSendid(long sendid) {
+    public void setSendid(Long sendid) {
         this.sendid = sendid;
     }
 
