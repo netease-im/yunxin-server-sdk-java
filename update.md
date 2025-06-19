@@ -1,8 +1,8 @@
 
 # 1.0.0（2025/06/xx）
 ### 新增
-* 新增IM面向对象接口封装
-* 新增对 IM/RTC/NEROOM/SMS/MEETING 等业务的支持（目前仅支持raw-client)
+* 新增 `IM` 面向对象接口封装
+* 新增对 `RTC/SMS/LIVE/VOD/NEROOM/MEETING` 等业务的支持（目前仅支持raw-client)
 
 ### 更新
 * PrometheusConverter新增biz字段，用于标识 IM/RTC/NEROOM/SMS/MEETING 等业务属性
