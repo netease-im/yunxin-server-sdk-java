@@ -13,6 +13,7 @@ public class ToggleChatBanRequestV2 {
     /**
      * Account ID of the member (not serialized to JSON)
      */
+    @JSONField(serialize = false)
     private String accountId;
     
     /**

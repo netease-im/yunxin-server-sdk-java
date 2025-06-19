@@ -10,7 +10,7 @@ public class ToggleBlockedRequestV2 {
     /**
      * Account ID of the member to block/unblock
      */
-    @JSONField(name = "account_id")
+    @JSONField(serialize = false)
     private String accountId;
     
     /**

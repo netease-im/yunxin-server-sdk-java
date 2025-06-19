@@ -160,10 +160,11 @@ public class TestChatroomMemberV2 {
         // Set basic profile information
         request.setRoomNick("Member " + accountId);
         request.setNotificationEnabled(false);
-        
+        request.setAccountId(accountId);
+
         // Add member to chatroom by setting their role
         IChatroomMemberV2Service memberService = services.getChatroomMemberService();
-        Result<SetMemberRoleResponseV2> result = memberService.setMemberRole(accountId, request);
+        Result<SetMemberRoleResponseV2> result = memberService.setMemberRole(request);
         
         // If failed with code other than already exists, log the issue but continue
         if (result.getCode() != 200) {
@@ -190,10 +191,11 @@ public class TestChatroomMemberV2 {
             2             // Normal member role
         );
         tagRequest.setRoomNick("Test Tagged Member");
+        tagRequest.setAccountId(memberId);
         
         // Set tag for the member
         IChatroomMemberV2Service memberService = services.getChatroomMemberService();
-        Result<SetMemberRoleResponseV2> tagResult = memberService.setMemberRole(memberId, tagRequest);
+        Result<SetMemberRoleResponseV2> tagResult = memberService.setMemberRole(tagRequest);
         Assert.assertEquals(200, tagResult.getCode());
         
         // Now proceed with ban operations
@@ -409,7 +411,8 @@ public class TestChatroomMemberV2 {
         
         // Update profile
         IChatroomMemberV2Service memberService = services.getChatroomMemberService();
-        Result<SetMemberRoleResponseV2> result = memberService.setMemberRole(accountId, request);
+        request.setAccountId(accountId);
+        Result<SetMemberRoleResponseV2> result = memberService.setMemberRole(request);
         
         System.out.println("Update Member Profile: " + result.getMsg());
         System.out.println("Response: " + JSON.toJSONString(result));
@@ -442,7 +445,8 @@ public class TestChatroomMemberV2 {
         
         // Set member role
         IChatroomMemberV2Service memberService = services.getChatroomMemberService();
-        Result<SetMemberRoleResponseV2> result = memberService.setMemberRole(accountId, request);
+        request.setAccountId(accountId);
+        Result<SetMemberRoleResponseV2> result = memberService.setMemberRole(request);
         
         System.out.println("Set Member as Guest: " + result.getMsg());
         System.out.println("Response: " + JSON.toJSONString(result));
@@ -552,7 +556,8 @@ public class TestChatroomMemberV2 {
         
         // Ban/unban member
         IChatroomMemberV2Service memberService = services.getChatroomMemberService();
-        Result<ToggleChatBanResponseV2> result = memberService.toggleChatBan(accountId, request);
+        request.setAccountId(accountId);
+        Result<ToggleChatBanResponseV2> result = memberService.toggleChatBan(request);
         
         System.out.println((ban ? "Ban" : "Unban") + " Member from Chatting: " + result.getMsg());
         System.out.println("Response: " + JSON.toJSONString(result));
@@ -669,7 +674,8 @@ public class TestChatroomMemberV2 {
         
         // Block/unblock member
         IChatroomMemberV2Service memberService = services.getChatroomMemberService();
-        Result<ToggleBlockedResponseV2> result = memberService.toggleBlocked(accountId, request);
+        request.setAccountId(accountId);
+        Result<ToggleBlockedResponseV2> result = memberService.toggleBlocked(request);
         
         System.out.println((block ? "Block" : "Unblock") + " Member from Chatroom: " + result.getMsg());
         System.out.println("Response: " + JSON.toJSONString(result));
@@ -703,7 +709,8 @@ public class TestChatroomMemberV2 {
                 2             // Admin role
             );
             IChatroomMemberV2Service memberService = services.getChatroomMemberService();
-            Result<SetMemberRoleResponseV2> adminResult = memberService.setMemberRole(adminId, adminRequest);
+            adminRequest.setAccountId(adminId);
+            Result<SetMemberRoleResponseV2> adminResult = memberService.setMemberRole(adminRequest);
             
             // Proceed with admin as operator if successful
             if (adminResult.getCode() == 200) {

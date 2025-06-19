@@ -60,13 +60,12 @@ public interface IChatroomMemberV2Service {
      * - Setting a member as a guest effectively removes their fixed member status
      * - The creator's role cannot be changed or reassigned
      * 
-     * @param accountId the account ID of the member to set role
      * @param request request containing the role to set and optional profile information
      * @return result indicating success or failure
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if required parameters are missing or invalid
      */
-    Result<SetMemberRoleResponseV2> setMemberRole(String accountId, SetMemberRoleRequestV2 request) throws YunxinSdkException;
+    Result<SetMemberRoleResponseV2> setMemberRole(SetMemberRoleRequestV2 request) throws YunxinSdkException;
     
     /**
      * Update online chatroom member information
@@ -81,13 +80,12 @@ public interface IChatroomMemberV2Service {
      *   If a fixed member is offline and persistence is false, the API will return an error.
      * - Guests: Can only update online information. If a guest is offline, the API will return an error.
      * 
-     * @param accountId the account ID of the member to update
      * @param request request containing the information to update
      * @return result indicating success or failure
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if required parameters are missing or invalid
      */
-    Result<UpdateOnlineMemberInfoResponseV2> updateOnlineMemberInfo(String accountId, UpdateOnlineMemberInfoRequestV2 request) throws YunxinSdkException;
+    Result<UpdateOnlineMemberInfoResponseV2> updateOnlineMemberInfo(UpdateOnlineMemberInfoRequestV2 request) throws YunxinSdkException;
     
     /**
      * Ban or unban a chatroom member from chatting
@@ -107,7 +105,7 @@ public interface IChatroomMemberV2Service {
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if required parameters are missing or invalid
      */
-    Result<ToggleChatBanResponseV2> toggleChatBan(String accountId, ToggleChatBanRequestV2 request) throws YunxinSdkException;
+    Result<ToggleChatBanResponseV2> toggleChatBan(ToggleChatBanRequestV2 request) throws YunxinSdkException;
     
     /**
      * Temporarily ban or unban a chatroom member from chatting
@@ -142,13 +140,12 @@ public interface IChatroomMemberV2Service {
      * - Only the creator or administrators can block/unblock chatroom members
      * - Cannot block the creator
      * 
-     * @param accountId the account ID of the member to block/unblock
      * @param request request containing block parameters including operator and blocked state
      * @return result indicating success or failure
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if required parameters are missing or invalid
      */
-    Result<ToggleBlockedResponseV2> toggleBlocked(String accountId, ToggleBlockedRequestV2 request) throws YunxinSdkException;
+    Result<ToggleBlockedResponseV2> toggleBlocked(ToggleBlockedRequestV2 request) throws YunxinSdkException;
     
     /**
      * Modify online chatroom member tags
@@ -169,7 +166,7 @@ public interface IChatroomMemberV2Service {
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if required parameters are missing or invalid
      */
-    Result<ModifyMemberTagsResponseV2> modifyMemberTags(String accountId, ModifyMemberTagsRequestV2 request) throws YunxinSdkException;
+    Result<ModifyMemberTagsResponseV2> modifyMemberTags(ModifyMemberTagsRequestV2 request) throws YunxinSdkException;
     
     /**
      * Query the count of online members with a specific tag in a chatroom

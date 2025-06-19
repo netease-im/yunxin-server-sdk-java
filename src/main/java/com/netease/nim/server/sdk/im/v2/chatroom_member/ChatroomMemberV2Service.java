@@ -91,19 +91,13 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
      * - Setting a member as a guest effectively removes their fixed member status
      * - The creator's role cannot be changed or reassigned
      * 
-     * @param accountId the account ID of the member to set role
      * @param request request containing the role to set and optional profile information
      * @return result indicating success or failure
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if required parameters are missing or invalid
      */
     @Override
-    public Result<SetMemberRoleResponseV2> setMemberRole(String accountId, SetMemberRoleRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (accountId == null || accountId.isEmpty()) {
-            throw new IllegalArgumentException("Account ID cannot be null or empty");
-        }
-        
+    public Result<SetMemberRoleResponseV2> setMemberRole(SetMemberRoleRequestV2 request) throws YunxinSdkException {
         if (request.getRoomId() == null) {
             throw new IllegalArgumentException("Chatroom ID cannot be null");
         }
@@ -113,7 +107,7 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
         }
 
         // Replace the path parameter in the URL
-        String endpoint = ChatroomMemberV2UrlContext.SET_MEMBER_ROLE.replace("{account_id}", accountId);
+        String endpoint = ChatroomMemberV2UrlContext.SET_MEMBER_ROLE.replace("{account_id}", request.getAccountId());
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
@@ -143,27 +137,19 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
      *   If a fixed member is offline and persistence is false, the API will return an error.
      * - Guests: Can only update online information. If a guest is offline, the API will return an error.
      * 
-     * @param accountId the account ID of the member to update
      * @param request request containing the information to update
      * @return result indicating success or failure
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if required parameters are missing or invalid
      */
     @Override
-    public Result<UpdateOnlineMemberInfoResponseV2> updateOnlineMemberInfo(String accountId, UpdateOnlineMemberInfoRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (accountId == null || accountId.isEmpty()) {
-            throw new IllegalArgumentException("Account ID cannot be null or empty");
-        }
-        
+    public Result<UpdateOnlineMemberInfoResponseV2> updateOnlineMemberInfo(UpdateOnlineMemberInfoRequestV2 request) throws YunxinSdkException {
         if (request.getRoomId() == null) {
             throw new IllegalArgumentException("Chatroom ID cannot be null");
         }
         
-
-        
         // Replace the path parameter in the URL
-        String endpoint = ChatroomMemberV2UrlContext.UPDATE_ONLINE_MEMBER_INFO.replace("{account_id}", accountId);
+        String endpoint = ChatroomMemberV2UrlContext.UPDATE_ONLINE_MEMBER_INFO.replace("{account_id}", request.getAccountId());
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
@@ -192,19 +178,13 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
      * - Creator and administrators can ban/unban regular members
      * - Cannot ban/unban yourself
      * 
-     * @param accountId the account ID of the member to ban/unban
      * @param request request containing ban parameters including operator and banned state
      * @return result indicating success or failure
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if required parameters are missing or invalid
      */
     @Override
-    public Result<ToggleChatBanResponseV2> toggleChatBan(String accountId, ToggleChatBanRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (accountId == null || accountId.isEmpty()) {
-            throw new IllegalArgumentException("Account ID cannot be null or empty");
-        }
-        
+    public Result<ToggleChatBanResponseV2> toggleChatBan(ToggleChatBanRequestV2 request) throws YunxinSdkException {
         if (request.getRoomId() == null) {
             throw new IllegalArgumentException("Chatroom ID cannot be null");
         }
@@ -216,15 +196,9 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
         if (request.getChatBanned() == null) {
             throw new IllegalArgumentException("Chat banned state cannot be null");
         }
-        
-        // Check if trying to ban/unban themselves
-        if (accountId.equals(request.getOperatorAccountId())) {
-            throw new IllegalArgumentException("Cannot ban/unban yourself");
-        }
-        
 
         // Replace the path parameter in the URL
-        String endpoint = ChatroomMemberV2UrlContext.TOGGLE_CHAT_BAN.replace("{account_id}", accountId);
+        String endpoint = ChatroomMemberV2UrlContext.TOGGLE_CHAT_BAN.replace("{account_id}", request.getAccountId());
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
@@ -254,19 +228,13 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
      * Permissions:
      * - Only the creator or administrators can modify other online members' tags.
      * 
-     * @param accountId the account ID of the member to modify tags
      * @param request request containing the tags to set and notification options
      * @return result indicating success or failure
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if required parameters are missing or invalid
      */
     @Override
-    public Result<ModifyMemberTagsResponseV2> modifyMemberTags(String accountId, ModifyMemberTagsRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (accountId == null || accountId.isEmpty()) {
-            throw new IllegalArgumentException("Account ID cannot be null or empty");
-        }
-        
+    public Result<ModifyMemberTagsResponseV2> modifyMemberTags(ModifyMemberTagsRequestV2 request) throws YunxinSdkException {
         if (request.getRoomId() == null) {
             throw new IllegalArgumentException("Chatroom ID cannot be null");
         }
@@ -277,7 +245,7 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
 
         
         // Replace the path parameter in the URL
-        String endpoint = ChatroomMemberV2UrlContext.MODIFY_MEMBER_TAGS.replace("{account_id}", accountId);
+        String endpoint = ChatroomMemberV2UrlContext.MODIFY_MEMBER_TAGS.replace("{account_id}", request.getAccountId());
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
@@ -470,19 +438,14 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
      * - Only the creator or administrators can block/unblock chatroom members
      * - Cannot block the creator
      * 
-     * @param accountId the account ID of the member to block/unblock
      * @param request request containing block parameters including operator and blocked state
      * @return result indicating success or failure
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if required parameters are missing or invalid
      */
     @Override
-    public Result<ToggleBlockedResponseV2> toggleBlocked(String accountId, ToggleBlockedRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (accountId == null || accountId.isEmpty()) {
-            throw new IllegalArgumentException("Account ID cannot be null or empty");
-        }
-        
+    public Result<ToggleBlockedResponseV2> toggleBlocked(ToggleBlockedRequestV2 request) throws YunxinSdkException {
+
         if (request.getRoomId() == null) {
             throw new IllegalArgumentException("Chatroom ID cannot be null");
         }
@@ -495,14 +458,8 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
             throw new IllegalArgumentException("Blocked state cannot be null");
         }
         
-        // Check if trying to block/unblock themselves
-        if (accountId.equals(request.getOperatorAccountId())) {
-            throw new IllegalArgumentException("Cannot block/unblock yourself");
-        }
-
-        
         // Replace the path parameter in the URL
-        String endpoint = ChatroomMemberV2UrlContext.TOGGLE_BLOCKED.replace("{account_id}", accountId);
+        String endpoint = ChatroomMemberV2UrlContext.TOGGLE_BLOCKED.replace("{account_id}", request.getAccountId());
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
