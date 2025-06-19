@@ -112,13 +112,9 @@ public class TeamV2Service implements ITeamV2Service {
      * - configuration: Updated team configuration settings
      */
     @Override
-    public Result<UpdateTeamResponseV2> updateTeam(Long teamId, UpdateTeamRequestV2 request) throws YunxinSdkException {
-        if (teamId == null) {
-            throw new IllegalArgumentException("Team ID cannot be null");
-        }
-        
+    public Result<UpdateTeamResponseV2> updateTeam(UpdateTeamRequestV2 request) throws YunxinSdkException {
         // Replace the path parameter in the URL
-        String endpoint = TeamV2UrlContext.UPDATE_TEAM.replace("{team_id}", teamId.toString());
+        String endpoint = TeamV2UrlContext.UPDATE_TEAM.replace("{team_id}", String.valueOf(request.getTeamId()));
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);

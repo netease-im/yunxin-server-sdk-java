@@ -13,6 +13,9 @@ import com.alibaba.fastjson2.annotation.JSONField;
  */
 public class UpdateChatroomStatusRequestV2 {
 
+    @JSONField(serialize = false)
+    private Long roomId;
+
     /**
      * Operator account ID (must be the chatroom creator)
      */
@@ -76,7 +79,15 @@ public class UpdateChatroomStatusRequestV2 {
         this.delayClosePolicy = delayClosePolicy;
         this.delaySeconds = delaySeconds;
     }
-    
+
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
+    }
+
     /**
      * Get the operator account ID
      * 

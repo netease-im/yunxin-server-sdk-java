@@ -46,12 +46,11 @@ public interface ITeamV2Service {
      * 
      * API: PATCH https://open.yunxinapi.com/im/v2.1/teams/{team_id}
      * 
-     * @param teamId the ID of the team to update
      * @param request request containing updated team information
      * @return result containing the updated team details
      * @throws YunxinSdkException exception on network error
      */
-    Result<UpdateTeamResponseV2> updateTeam(Long teamId, UpdateTeamRequestV2 request) throws YunxinSdkException;
+    Result<UpdateTeamResponseV2> updateTeam(UpdateTeamRequestV2 request) throws YunxinSdkException;
     
     /**
      * Disband a team

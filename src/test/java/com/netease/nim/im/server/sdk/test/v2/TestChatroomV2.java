@@ -366,7 +366,8 @@ public class TestChatroomV2 {
         );
         
         IChatroomV2Service chatroomService = services.getChatroomService();
-        Result<UpdateChatroomStatusResponseV2> closeResult = chatroomService.updateChatroomStatus(fullRoomId, closeRequest);
+        closeRequest.setRoomId(fullRoomId);
+        Result<UpdateChatroomStatusResponseV2> closeResult = chatroomService.updateChatroomStatus(closeRequest);
         
         System.out.println("Close Chatroom: " + closeResult.getMsg());
         System.out.println("Response: " + JSON.toJSONString(closeResult));
@@ -389,8 +390,8 @@ public class TestChatroomV2 {
             2,        // Auto-close policy: Close after being idle
             3600L     // Auto-close after 1 hour of being idle
         );
-        
-        Result<UpdateChatroomStatusResponseV2> openResult = chatroomService.updateChatroomStatus(fullRoomId, openRequest);
+        openRequest.setRoomId(fullRoomId);
+        Result<UpdateChatroomStatusResponseV2> openResult = chatroomService.updateChatroomStatus(openRequest);
         
         System.out.println("Reopen Chatroom: " + openResult.getMsg());
         System.out.println("Response: " + JSON.toJSONString(openResult));
@@ -425,7 +426,8 @@ public class TestChatroomV2 {
         muteRequest.setNotificationExtension("{\"mute_reason\":\"Test muting\",\"timestamp\":\"" + System.currentTimeMillis() + "\"}");
         
         IChatroomV2Service chatroomService = services.getChatroomService();
-        Result<ToggleChatroomMuteResponseV2> muteResult = chatroomService.toggleChatroomMute(fullRoomId, muteRequest);
+        muteRequest.setRoomId(fullRoomId);
+        Result<ToggleChatroomMuteResponseV2> muteResult = chatroomService.toggleChatroomMute(muteRequest);
         
         System.out.println("Enable Chatroom Mute: " + muteResult.getMsg());
         System.out.println("Response: " + JSON.toJSONString(muteResult));
@@ -453,8 +455,9 @@ public class TestChatroomV2 {
         // Optionally send notification about the change
         unmuteRequest.setNotificationEnabled(true);
         unmuteRequest.setNotificationExtension("{\"unmute_reason\":\"Test unmuting\",\"timestamp\":\"" + System.currentTimeMillis() + "\"}");
-        
-        Result<ToggleChatroomMuteResponseV2> unmuteResult = chatroomService.toggleChatroomMute(fullRoomId, unmuteRequest);
+
+        unmuteRequest.setRoomId(fullRoomId);
+        Result<ToggleChatroomMuteResponseV2> unmuteResult = chatroomService.toggleChatroomMute(unmuteRequest);
         
         System.out.println("Disable Chatroom Mute: " + unmuteResult.getMsg());
         System.out.println("Response: " + JSON.toJSONString(unmuteResult));

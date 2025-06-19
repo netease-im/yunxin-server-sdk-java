@@ -251,7 +251,8 @@ public class TestTeamV2 {
         request.setConfiguration(config);
 
         ITeamV2Service teamService = services.getTeamService();
-        Result<UpdateTeamResponseV2> result = teamService.updateTeam(teamId, request);
+        request.setTeamId(teamId);
+        Result<UpdateTeamResponseV2> result = teamService.updateTeam(request);
 
         System.out.println("updateTeam:" + result.getMsg());
         System.out.println("Response: " + JSON.toJSONString(result));

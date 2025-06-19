@@ -9,6 +9,9 @@ import java.util.List;
  * API: PATCH https://open.yunxinapi.com/im/v2.1/teams/{team_id}
  */
 public class UpdateTeamRequestV2 {
+
+    @JSONField(serialize = false)
+    private Long teamId;
     
     /**
      * Operator's account ID (optional)
@@ -281,9 +284,17 @@ public class UpdateTeamRequestV2 {
             return this;
         }
     }
-    
+
     // Getters and setters
-    
+
+    public Long getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
+    }
+
     public String getOperatorId() {
         return operatorId;
     }

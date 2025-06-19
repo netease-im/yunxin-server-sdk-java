@@ -266,19 +266,14 @@ public class ChatroomV2Service implements IChatroomV2Service {
      * - Only the chatroom creator can open or close the chatroom.
      * - To use the auto-close feature, it must be enabled in the Yunxin console first.
      * 
-     * @param roomId the ID of the chatroom to update
      * @param request request containing the parameters for updating chatroom status
      * @return result containing the updated chatroom information
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if roomId is null or invalid, or if required parameters are missing
      */
     @Override
-    public Result<UpdateChatroomStatusResponseV2> updateChatroomStatus(Long roomId, UpdateChatroomStatusRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (roomId == null) {
-            throw new IllegalArgumentException("Chatroom ID cannot be null");
-        }
-        
+    public Result<UpdateChatroomStatusResponseV2> updateChatroomStatus(UpdateChatroomStatusRequestV2 request) throws YunxinSdkException {
+
         if (request.getOperatorAccountId() == null || request.getOperatorAccountId().isEmpty()) {
             throw new IllegalArgumentException("Operator account ID cannot be null or empty");
         }
@@ -288,7 +283,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         }
 
         // Replace the path parameter in the URL
-        String endpoint = ChatroomV2UrlContext.UPDATE_CHATROOM_STATUS.replace("{room_id}", roomId.toString());
+        String endpoint = ChatroomV2UrlContext.UPDATE_CHATROOM_STATUS.replace("{room_id}", String.valueOf(request.getRoomId()));
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
@@ -318,19 +313,14 @@ public class ChatroomV2Service implements IChatroomV2Service {
      * - Only the chatroom creator or administrators can toggle global mute status.
      * - You can optionally send a notification to chatroom members about the mute status change.
      * 
-     * @param roomId the ID of the chatroom to toggle mute status
      * @param request request containing the parameters for toggling mute status
      * @return result indicating success or failure
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if roomId is null or invalid, or if required parameters are missing
      */
     @Override
-    public Result<ToggleChatroomMuteResponseV2> toggleChatroomMute(Long roomId, ToggleChatroomMuteRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (roomId == null) {
-            throw new IllegalArgumentException("Chatroom ID cannot be null");
-        }
-        
+    public Result<ToggleChatroomMuteResponseV2> toggleChatroomMute(ToggleChatroomMuteRequestV2 request) throws YunxinSdkException {
+
         if (request.getOperatorAccountId() == null || request.getOperatorAccountId().isEmpty()) {
             throw new IllegalArgumentException("Operator account ID cannot be null or empty");
         }
@@ -341,7 +331,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
         
 
         // Replace the path parameter in the URL
-        String endpoint = ChatroomV2UrlContext.TOGGLE_CHATROOM_MUTE.replace("{room_id}", roomId.toString());
+        String endpoint = ChatroomV2UrlContext.TOGGLE_CHATROOM_MUTE.replace("{room_id}", String.valueOf(request.getRoomId()));
         
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);

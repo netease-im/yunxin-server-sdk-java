@@ -99,7 +99,6 @@ public interface IChatroomMemberV2Service {
      * - Creator and administrators can ban/unban regular members
      * - Cannot ban/unban yourself
      * 
-     * @param accountId the account ID of the member to ban/unban
      * @param request request containing ban parameters including operator and banned state
      * @return result indicating success or failure
      * @throws YunxinSdkException if a network or server error occurs
@@ -160,7 +159,6 @@ public interface IChatroomMemberV2Service {
      * Permissions:
      * - Only the creator or administrators can modify other online members' tags.
      * 
-     * @param accountId the account ID of the member to modify tags
      * @param request request containing the tags to set and notification options
      * @return result indicating success or failure
      * @throws YunxinSdkException if a network or server error occurs

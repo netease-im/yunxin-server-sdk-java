@@ -10,6 +10,9 @@ import com.alibaba.fastjson2.annotation.JSONField;
  */
 public class ToggleChatroomMuteRequestV2 {
 
+    @JSONField(serialize = false)
+    private Long roomId;
+
     /**
      * Operator account ID (must be the chatroom creator or an administrator)
      */
@@ -71,7 +74,15 @@ public class ToggleChatroomMuteRequestV2 {
         this.notificationEnabled = notificationEnabled;
         this.notificationExtension = notificationExtension;
     }
-    
+
+    public Long getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
+    }
+
     /**
      * Get the operator account ID
      * 

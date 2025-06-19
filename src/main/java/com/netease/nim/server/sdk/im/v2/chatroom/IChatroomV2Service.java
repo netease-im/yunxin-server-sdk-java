@@ -118,13 +118,12 @@ public interface IChatroomV2Service {
      * - Only the chatroom creator can open or close the chatroom.
      * - To use the auto-close feature, it must be enabled in the Yunxin console first.
      * 
-     * @param roomId the ID of the chatroom to update
      * @param request request containing the parameters for updating chatroom status
      * @return result containing the updated chatroom information
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if roomId is null or invalid, or if required parameters are missing
      */
-    Result<UpdateChatroomStatusResponseV2> updateChatroomStatus(Long roomId, UpdateChatroomStatusRequestV2 request) throws YunxinSdkException;
+    Result<UpdateChatroomStatusResponseV2> updateChatroomStatus(UpdateChatroomStatusRequestV2 request) throws YunxinSdkException;
     
     /**
      * Toggle chatroom mute status (global mute)
@@ -139,13 +138,12 @@ public interface IChatroomV2Service {
      * - Only the chatroom creator or administrators can toggle global mute status.
      * - You can optionally send a notification to chatroom members about the mute status change.
      * 
-     * @param roomId the ID of the chatroom to toggle mute status
      * @param request request containing the parameters for toggling mute status
      * @return result indicating success or failure
      * @throws YunxinSdkException if a network or server error occurs
      * @throws IllegalArgumentException if roomId is null or invalid, or if required parameters are missing
      */
-    Result<ToggleChatroomMuteResponseV2> toggleChatroomMute(Long roomId, ToggleChatroomMuteRequestV2 request) throws YunxinSdkException;
+    Result<ToggleChatroomMuteResponseV2> toggleChatroomMute(ToggleChatroomMuteRequestV2 request) throws YunxinSdkException;
     
     /**
      * Toggle in/out notification for a chatroom
