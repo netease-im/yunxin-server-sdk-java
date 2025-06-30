@@ -6,4 +6,4 @@
 /src/main/webapp/WEB-INF/lib
 /*.iml
 .DS_Store
-/.idea
+.idea/
