@@ -6,20 +6,11 @@ import com.alibaba.fastjson2.annotation.JSONField;
  * Response for refreshing account token
  */
 public class RefreshTokenResponseV2 {
-    /**
-     * Account ID
-     */
     @JSONField(name = "account_id")
     private String accountId;
 
-    /**
-     * New refreshed token
-     */
     private String token;
 
-    /**
-     * Account configuration
-     */
     private Configuration configuration;
 
     public String getAccountId() {
@@ -46,42 +37,21 @@ public class RefreshTokenResponseV2 {
         this.configuration = configuration;
     }
 
-    /**
-     * Account configuration settings
-     */
     public static class Configuration {
-        /**
-         * Whether the account is enabled
-         */
         private Boolean enabled;
 
-        /**
-         * Whether the account is banned from P2P chat
-         */
         @JSONField(name = "p2p_chat_banned")
         private Boolean p2pChatBanned;
 
-        /**
-         * Whether the account is banned from team chat
-         */
         @JSONField(name = "team_chat_banned")
         private Boolean teamChatBanned;
 
-        /**
-         * Whether the account is banned from chatroom chat
-         */
         @JSONField(name = "chatroom_chat_banned")
         private Boolean chatroomChatBanned;
 
-        /**
-         * Whether the account is banned from qchat chat
-         */
         @JSONField(name = "qchat_chat_banned")
         private Boolean qchatChatBanned;
 
-        /**
-         * Whether push is enabled when desktop is online
-         */
         @JSONField(name = "push_enabled_when_desktop_online")
         private Boolean pushEnabledWhenDesktopOnline;
 

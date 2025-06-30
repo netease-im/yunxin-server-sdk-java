@@ -130,11 +130,11 @@ public class QueryUserInfosResponseV1 {
             this.ex = ex;
         }
 
-        public int getGender() {
+        public Integer getGender() {
             return gender;
         }
 
-        public void setGender(int gender) {
+        public void setGender(Integer gender) {
             this.gender = gender;
         }
 

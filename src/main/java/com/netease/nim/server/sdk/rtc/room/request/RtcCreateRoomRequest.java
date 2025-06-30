@@ -5,8 +5,8 @@ package com.netease.nim.server.sdk.rtc.room.request;
  */
 public class RtcCreateRoomRequest {
     private String channelName;
-    private int mode;
-    private long uid;
+    private Integer mode;
+    private Long uid;
 
     public String getChannelName() {
         return channelName;
@@ -16,19 +16,19 @@ public class RtcCreateRoomRequest {
         this.channelName = channelName;
     }
 
-    public int getMode() {
+    public Integer getMode() {
         return mode;
     }
 
-    public void setMode(int mode) {
+    public void setMode(Integer mode) {
         this.mode = mode;
     }
 
-    public long getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(long uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 }

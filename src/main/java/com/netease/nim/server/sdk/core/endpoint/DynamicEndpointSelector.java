@@ -5,7 +5,6 @@ import com.netease.nim.server.sdk.core.exception.EndpointFetchException;
 import com.netease.nim.server.sdk.core.BizName;
 import com.netease.nim.server.sdk.core.utils.NamedThreadFactory;
 import okhttp3.*;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -209,7 +208,7 @@ public class DynamicEndpointSelector implements EndpointSelector {
         }
 
         @Override
-        public int compareTo(@NotNull Entry o) {
+        public int compareTo(Entry o) {
             if (this.ratio >= 1.0 && o.ratio >= 1.0) {
                 int compare = Double.compare(this.latency, o.latency);
                 if (compare == 0) {

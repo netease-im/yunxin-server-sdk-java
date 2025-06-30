@@ -35,7 +35,7 @@ public class Test12 {
             RtcCreateRoomRequest request = new RtcCreateRoomRequest();
             request.setChannelName("xxx");
             request.setMode(2);
-            request.setUid(123);
+            request.setUid(123L);
             RtcResult<RtcCreateRoomResponse> result = rtcRoomService.createRoom(request);
             if (result.isSuccess()) {
                 System.out.println(JSONObject.toJSONString(result.getResponse()));
@@ -59,7 +59,7 @@ public class Test12 {
         {
             //根据cid查询房间信息
             RtcGetRoomByCidRequest request = new RtcGetRoomByCidRequest();
-            request.setCid(123);
+            request.setCid(123L);
             RtcResult<RtcGetRoomResponse> result = rtcRoomService.getRoomByCid(request);
             if (result.isSuccess()) {
                 System.out.println(JSONObject.toJSONString(result.getResponse()));

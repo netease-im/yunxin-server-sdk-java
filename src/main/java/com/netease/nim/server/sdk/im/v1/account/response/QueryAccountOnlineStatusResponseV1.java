@@ -49,22 +49,22 @@ public class QueryAccountOnlineStatusResponseV1 {
     }
 
     public static class Status {
-        private long loginTime;
-        private int clientType;
+        private Long loginTime;
+        private Integer clientType;
 
-        public long getLoginTime() {
+        public Long getLoginTime() {
             return loginTime;
         }
 
-        public void setLoginTime(long loginTime) {
+        public void setLoginTime(Long loginTime) {
             this.loginTime = loginTime;
         }
 
-        public int getClientType() {
+        public Integer getClientType() {
             return clientType;
         }
 
-        public void setClientType(int clientType) {
+        public void setClientType(Integer clientType) {
             this.clientType = clientType;
         }
     }

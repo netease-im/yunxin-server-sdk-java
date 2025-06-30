@@ -49,6 +49,9 @@ public class LatencySlideWindows {
             count += c.count.sum();
             sum += c.spend.sum();
         }
+        if (count == 0) {
+            return 0;
+        }
         return sum * 1.0 / count;
     }
 
