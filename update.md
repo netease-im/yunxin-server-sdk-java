@@ -10,7 +10,7 @@
 * 无
 
 
-# 0.9.0（2025/07/xx）
+# 0.9.0（2025/06/30）
 ### 新增
 * 新增对 `RTC/SMS/LIVE/VOD/NEROOM/MEETING` 等业务的支持（目前仅支持raw-client)
 
