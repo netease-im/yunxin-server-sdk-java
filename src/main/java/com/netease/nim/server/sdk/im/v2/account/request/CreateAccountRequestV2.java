@@ -3,6 +3,8 @@ package com.netease.nim.server.sdk.im.v2.account.request;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 
+import java.util.List;
+
 /**
  * Created by caojiajun on 2024/12/11
  */
@@ -50,6 +52,17 @@ public class CreateAccountRequestV2 {
 
     public void setUserInformation(UserInformation userInformation) {
         this.userInformation = userInformation;
+    }
+
+    @JSONField(name = "antispam_configuration")
+    private AntispamConfiguration antispamConfiguration;
+
+    public AntispamConfiguration getAntispamConfiguration() {
+        return antispamConfiguration;
+    }
+
+    public void setAntispamConfiguration(AntispamConfiguration antispamConfiguration) {
+        this.antispamConfiguration = antispamConfiguration;
     }
 
     public static class Configuration {
@@ -110,6 +123,54 @@ public class CreateAccountRequestV2 {
         }
     }
 
+    public static class AntispamConfiguration {
+        @JSONField(name = "enabled")
+        private Boolean enabled;
+
+        @JSONField(name = "business_id_map")
+        private List<BusinessIdMapItem> businessIdMap;
+
+        public Boolean getEnabled() {
+            return enabled;
+        }
+
+        public void setEnabled(Boolean enabled) {
+            this.enabled = enabled;
+        }
+
+        public List<BusinessIdMapItem> getBusinessIdMap() {
+            return businessIdMap;
+        }
+
+        public void setBusinessIdMap(List<BusinessIdMapItem> businessIdMap) {
+            this.businessIdMap = businessIdMap;
+        }
+    }
+
+    public static class BusinessIdMapItem {
+        @JSONField(name = "type")
+        private Integer type;
+
+        @JSONField(name = "business_id")
+        private String businessId;
+
+        public Integer getType() {
+            return type;
+        }
+
+        public void setType(Integer type) {
+            this.type = type;
+        }
+
+        public String getBusinessId() {
+            return businessId;
+        }
+
+        public void setBusinessId(String businessId) {
+            this.businessId = businessId;
+        }
+    }
+
     public static class UserInformation {
 
         @JSONField(name = "name")
@@ -136,8 +197,7 @@ public class CreateAccountRequestV2 {
         @JSONField(name = "extension")
         private String extension;
 
-        @JSONField(name = "antispam_business_id")
-        private String antispamBusinessId;
+
 
         public String getName() {
             return name;
@@ -203,12 +263,6 @@ public class CreateAccountRequestV2 {
             this.extension = extension;
         }
 
-        public String getAntispamBusinessId() {
-            return antispamBusinessId;
-        }
 
-        public void setAntispamBusinessId(String antispamBusinessId) {
-            this.antispamBusinessId = antispamBusinessId;
-        }
     }
 }

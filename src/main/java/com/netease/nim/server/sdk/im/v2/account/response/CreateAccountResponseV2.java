@@ -141,13 +141,12 @@ public class CreateAccountResponseV2 {
         private String mobile;
 
         @JSONField(name = "gender")
-        private String gender;
+        private Integer gender;
 
         @JSONField(name = "extension")
         private String extension;
 
-        @JSONField(name = "antispam_business_id")
-        private String antispamBusinessId;
+
 
         public String getName() {
             return name;
@@ -197,11 +196,11 @@ public class CreateAccountResponseV2 {
             this.mobile = mobile;
         }
 
-        public String getGender() {
+        public Integer getGender() {
             return gender;
         }
 
-        public void setGender(String gender) {
+        public void setGender(Integer gender) {
             this.gender = gender;
         }
 
@@ -213,12 +212,6 @@ public class CreateAccountResponseV2 {
             this.extension = extension;
         }
 
-        public String getAntispamBusinessId() {
-            return antispamBusinessId;
-        }
 
-        public void setAntispamBusinessId(String antispamBusinessId) {
-            this.antispamBusinessId = antispamBusinessId;
-        }
     }
 }

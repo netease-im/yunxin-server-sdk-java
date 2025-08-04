@@ -39,6 +39,9 @@ public class UpdateAccountRequestV2 {
         @JSONField(name = "qchat_chat_banned")
         private Boolean qchatChatBanned;
 
+        @JSONField(name = "push_enabled_when_desktop_online")
+        private Boolean pushEnabledWhenDesktopOnline;
+
         public Boolean getEnabled() {
             return enabled;
         }
@@ -77,6 +80,14 @@ public class UpdateAccountRequestV2 {
 
         public void setQchatChatBanned(Boolean qchatChatBanned) {
             this.qchatChatBanned = qchatChatBanned;
+        }
+
+        public Boolean getPushEnabledWhenDesktopOnline() {
+            return pushEnabledWhenDesktopOnline;
+        }
+
+        public void setPushEnabledWhenDesktopOnline(Boolean pushEnabledWhenDesktopOnline) {
+            this.pushEnabledWhenDesktopOnline = pushEnabledWhenDesktopOnline;
         }
     }
 

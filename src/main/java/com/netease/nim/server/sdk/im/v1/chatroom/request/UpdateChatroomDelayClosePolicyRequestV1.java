@@ -1,0 +1,43 @@
+package com.netease.nim.server.sdk.im.v1.chatroom.request;
+
+
+import com.netease.nim.server.sdk.im.v1.annotation.YunxinParam;
+
+/**
+ * Created by hekaijie  on 2024/12/24
+ */
+public class UpdateChatroomDelayClosePolicyRequestV1 {
+
+    @YunxinParam("roomid")
+    private Long roomid;
+
+    @YunxinParam("delayClosePolicy")
+    private Integer delayClosePolicy;
+
+    @YunxinParam("delaySeconds")
+    private Long delaySeconds;
+
+    public Long getRoomid() {
+        return roomid;
+    }
+
+    public void setRoomid(Long roomid) {
+        this.roomid = roomid;
+    }
+
+    public Integer getDelayClosePolicy() {
+        return delayClosePolicy;
+    }
+
+    public void setDelayClosePolicy(Integer delayClosePolicy) {
+        this.delayClosePolicy = delayClosePolicy;
+    }
+
+    public Long getDelaySeconds() {
+        return delaySeconds;
+    }
+
+    public void setDelaySeconds(Long delaySeconds) {
+        this.delaySeconds = delaySeconds;
+    }
+}

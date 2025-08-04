@@ -18,7 +18,7 @@ public class AccountV2UrlContext {
     /**
      * Set push config endpoint template
      */
-    static final String SET_PUSH_CONFIG = "/im/v2/accounts/{account_id}/configuration/push";
+    static final String SET_PUSH_CONFIG = "/im/v2/accounts/{account_id}/actions/push_config";
     
     /**
      * Disable account endpoint template

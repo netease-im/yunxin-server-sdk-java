@@ -123,8 +123,8 @@ public class YunxinHttpClient implements HttpClient {
                 //invoke
                 long startTime = System.currentTimeMillis();
                 if (logger.isDebugEnabled()) {
-                    logger.debug("execute, bizName = {}, endpoint = {}, method = {}, contextType = {}, apiVersion= {}, uri = {}, traceId = {}",
-                            bizName, endpoint, method, contextType, apiVersion, uri, traceId);
+                    logger.debug("execute, bizName = {}, endpoint = {}, method = {}, contextType = {}, apiVersion= {}, uri = {}, path = {}, traceId = {}, queryString = {}, data = {}",
+                            bizName, endpoint, method, contextType, apiVersion, uri, path, traceId, queryString, data);
                 }
                 try (Response response = client.newCall(request).execute()) {
                     int code = response.code();

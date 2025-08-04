@@ -174,16 +174,18 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
                 return true;
             }
             if (code == 200) {
+                boolean existsSkip = false;
                 JSONObject data = json.getJSONObject("data");
                 String defaultEndpoint = data.getString("default.endpoint");
                 if (!check(defaultEndpoint)) {
-                    logger.error("default endpoint check error, skip update, endpoint = {}", defaultEndpoint);
-                    return false;
+                    logger.error("default endpoint check error, skip, endpoint = {}", defaultEndpoint);
+                    defaultEndpoint = null;
+                    existsSkip = true;
                 }
                 JSONArray backupEndpointsJson = data.getJSONArray("backup.endpoints");
                 Endpoints endpoints = new Endpoints();
                 List<String> backupEndpoints = new ArrayList<>();
-                boolean existsSkip = false;
+
                 if (backupEndpointsJson != null) {
                     for (Object backupEndpoint : backupEndpointsJson) {
                         if (!check(String.valueOf(backupEndpoint))) {
@@ -191,7 +193,11 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
                             existsSkip = true;
                             continue;
                         }
-                        backupEndpoints.add(String.valueOf(backupEndpoint));
+                        if (defaultEndpoint == null) {
+                            defaultEndpoint = String.valueOf(backupEndpoint);
+                        } else {
+                            backupEndpoints.add(String.valueOf(backupEndpoint));
+                        }
                     }
                 }
                 endpoints.setDefaultEndpoint(defaultEndpoint);

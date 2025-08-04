@@ -40,7 +40,7 @@ public class KickAccountResponseV2 {
         private String deviceId;
         
         @JSONField(name = "client_type")
-        private String clientType;
+        private Integer clientType;
         
         @JSONField(name = "consid")
         private String consid;
@@ -56,11 +56,11 @@ public class KickAccountResponseV2 {
             this.deviceId = deviceId;
         }
 
-        public String getClientType() {
+        public Integer getClientType() {
             return clientType;
         }
 
-        public void setClientType(String clientType) {
+        public void setClientType(Integer clientType) {
             this.clientType = clientType;
         }
 
