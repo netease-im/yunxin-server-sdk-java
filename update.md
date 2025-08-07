@@ -1,11 +1,4 @@
-
 本文介绍网易云信服务端 Java SDK 的更新日志。具体功能请前往 [集成 SDK](https://doc.yunxin.163.com/messaging2/server-apis/jQxNjEwMjI?platform=server) 体验。
-
-<style>
-table th:first-of-type {width: 20%;}
-table th:nth-of-type(2) {width: 40%;}
-table th:nth-of-type(3) {width: 40%;}
-</style>
 
 ## 1.0.1 (2025-08-07)
 
@@ -44,10 +37,10 @@ table th:nth-of-type(3) {width: 40%;}
 
 - ⚠️**破坏性更新**：为支持多业务线，进行了以下调整。
 
-    变更项目 | 原值 | 新值 |
-      ---| ---| --- |
-    包名前缀 | `com.netease.nim.im.server.sdk` | `com.netease.nim.server.sdk` |
-    Maven artifactId | `yunxin-im-server-sdk` | `yunxin-server-sdk` |
+  | 变更项目             | 原值                              | 新值                           |
+  |------------------|---------------------------------|------------------------------|
+  | 包名前缀             | `com.netease.nim.im.server.sdk` | `com.netease.nim.server.sdk` |
+  | Maven artifactId | `yunxin-im-server-sdk`          | `yunxin-server-sdk`          |
 
 - **升级指南**：请更新 Maven 依赖配置，并调整 `import` 语句中的包名。
 
