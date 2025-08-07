@@ -17,15 +17,6 @@ table th:nth-of-type(3) {width: 40%;}
 
 修复了当默认域名不可用时 SDK 初始化失败的问题，提升服务可用性。
 
-**接口变更**
-
-根据 API 服务类命名规范，修改部分代码命名。
-
-| 变更项目 | 原值 | 新值 |
-| ---| ---| --- |
-| 接口 | `getSuperTeamV1Service` | `getSuperTeamService` |
-| 实例 | `superTeamV1Service` | `superTeamService` |
-
 **兼容性**
 
 完全向后兼容，无需修改现有代码。
