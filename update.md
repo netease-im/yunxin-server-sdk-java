@@ -1,60 +1,90 @@
 
-# 1.0.1（2025/08/07）
-### 新增
-* 无
+本文介绍网易云信服务端 Java SDK 的更新日志。具体功能请前往 [集成 SDK](https://doc.yunxin.163.com/messaging2/server-apis/jQxNjEwMjI?platform=server) 体验。
 
-### 更新
-* 规范YunxinV1ApiServices的命名
+<style>
+table th:first-of-type {width: 20%;}
+table th:nth-of-type(2) {width: 40%;}
+table th:nth-of-type(3) {width: 40%;}
+</style>
 
-### fix
-* 无
+## 1.0.1 (2025-08-07)
 
+**新增功能**
 
-# 1.0.0（2025/08/07）
-### 新增
-* 新增 `IM` 面向对象接口封装
+**面向对象 IM 接口封装**：全新推出面向对象的 IM 服务接口，大幅简化开发体验。开发者无需再处理复杂的原始 API 调用，可通过直观的对象方法完成 IM 相关操作，如用户管理、消息发送、群组管理等。
 
-### 更新
-* 无
+**缺陷修复**
 
-### fix
-* 修复默认域名不可用时，sdk初始化失败的问题
+修复了当默认域名不可用时 SDK 初始化失败的问题，提升服务可用性。
 
+**接口变更**
 
-# 0.9.0（2025/06/30）
-### 新增
-* 新增对 `RTC/SMS/LIVE/VOD/NEROOM/MEETING` 等业务的支持（目前仅支持raw-client)
+根据 API 服务类命名规范，修改部分代码命名。
 
-### 更新
-* PrometheusConverter新增biz字段，用于标识 IM/RTC/NEROOM/SMS/MEETING 等业务属性
-* 修改了包名，包名前缀从 `com.netease.nim.im.server.sdk` 修改为 `com.netease.nim.server.sdk` ，以便实现对非IM业务的支持（破坏性更新）
-* maven仓库依赖的 `artifactId` 从 `yunxin-im-server-sdk` 修改为 `yunxin-server-sdk` ，以便实现对非IM业务的支持（破坏性更新）
-* `HttpCodeException` 和 `YunxinSdkException` 的 `message` 中，增加 `bizName` 描述
+| 变更项目 | 原值 | 新值 |
+| ---| ---| --- |
+| 接口 | `getSuperTeamV1Service` | `getSuperTeamService` |
+| 实例 | `superTeamV1Service` | `superTeamService` |
 
-### fix
-* PrometheusConverter格式化输出中耗时分位数相关metric的字段错误的问题
+**兼容性**
 
+完全向后兼容，无需修改现有代码。
 
-# 0.2.0（2025/03/21）
-### 新增
-* 在发起请求之前，允许设置超时，从而可以对单次请求设置和全局超时配置不一样的超时时间
+**兼容性**
 
-### 更新
-* 一个appkey/appsecret组合仅允许初始化YunxinHttpClient一次，多次初始化将直接报错
+向后兼容，现有基于原始 API 的代码可正常运行。
 
-### fix
-* 无
+## 0.9.0 (2025-06-30)
 
+**新增功能**
 
-# 0.1.0（2024/12/24）
-### 新增
-* 第一个release版本
-* 提供sdk核心功能，包括：多域名切换和调度策略、重试策略、监控、trace等
-* 提供云信v1-api的raw-client，以及创建账号的面向对象client
-* 提供云信v2-api的raw-client，以及创建账号、更新账号、查询账号的面向对象client
+**多业务线支持**：新增对音视频通话 RTC、短信服务 SMS、直播 LIVE、点播 VOD、房间组件 NEROOM、网易会议组件 MEETING 等业务的支持。您可以通过统一的 SDK 管理多条业务线，简化集成复杂度。
 
-### 更新
-* 无
+**功能优化**
 
-### fix
-* 无
+- **监控指标增强**：`PrometheusConverter` 新增 biz 字段，用于区分 IM、RTC、NEROOM、SMS、MEETING 等不同业务的监控数据，便于运维团队精细化监控和问题定位。
+- **异常信息优化**：`HttpCodeException` 和 `YunxinSdkException` 的错误信息中新增 `bizName` 描述，帮助开发者快速识别异常来源的业务模块。
+
+**缺陷修复**
+
+修复 `PrometheusConverter` 格式化输出中耗时分位数相关指标字段错误的问题，确保监控数据的准确性。
+
+**兼容性**
+
+- ⚠️**破坏性更新**：为支持多业务线，进行了以下调整。
+
+    变更项目 | 原值 | 新值 |
+      ---| ---| --- |
+    包名前缀 | `com.netease.nim.im.server.sdk` | `com.netease.nim.server.sdk` |
+    Maven artifactId | `yunxin-im-server-sdk` | `yunxin-server-sdk` |
+
+- **升级指南**：请更新 Maven 依赖配置，并调整 `import` 语句中的包名。
+
+## 0.2.0 (2025-03-21)
+
+**新增功能**
+
+**单次请求超时配置**：支持在发起请求前动态设置超时时间，允许为特定请求设置与全局配置不同的超时值。适用于处理耗时不同的业务场景，如文件上传、批量数据处理等对超时要求不同的操作。
+
+**功能优化**
+
+**SDK 初始化安全性增强**：同一个网易云信开发者账号的 appkey/appsecret 组合，仅允许初始化 `YunxinHttpClient` 一次，重复初始化会立即抛出错误。避免因误操作导致的资源浪费和潜在的配置冲突问题。
+
+**兼容性**
+
+- 大部分场景向后兼容。
+- 如果现有代码中存在重复初始化 `YunxinHttpClient` 的情况，需要进行相应调整。
+
+## 0.1.0 (2024-12-24)
+
+**新增功能**
+
+- **SDK 核心功能**：首个正式版本发布，提供完整的 SDK 核心能力，包括智能多域名切换和调度策略、自动重试机制、全链路监控、分布式链路追踪等企业级特性。适用于对服务可用性和可观测性有高要求的生产环境。
+
+- **网易云信 V1 IM API 支持**：提供网易云信 V1 版本 API 的原始客户端调用能力，同时封装了用户账号创建的面向对象接口。适用于需要使用 V1 版本 API 的存量业务和账号管理场景。
+
+- **网易云信 V2 IM  API 支持**：提供网易云信 V2 版本 API 的原始客户端调用能力，并封装了账号创建、更新、查询的完整面向对象接口。适用于新接入的业务和需要更丰富账号管理功能的场景。
+
+**兼容性**
+
+首个版本，建立基础兼容性规范。
