@@ -59,9 +59,9 @@ public class TestHistoryV1 {
         }
                 
         services = new YunxinV1ApiServices(client);
-        historyV1Service = services.getHistoryV1Service();
-        messageV1Service = services.getMessageV1Service();
-        chatroomMessageV1Service = services.getChatroomMessageV1Service();
+        historyV1Service = services.getHistoryService();
+        messageV1Service = services.getMessageService();
+        chatroomMessageV1Service = services.getChatroomMessageService();
         
         // 创建测试资源
         try {

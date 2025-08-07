@@ -36,7 +36,7 @@ public class TestFriendV1 {
             return;
         }
         services = new YunxinV1ApiServices(client);
-        friendV1Service = services.getFriendV1Service();
+        friendV1Service = services.getFriendService();
         
         // 创建测试账号
         createAccount(accid1);

@@ -26,7 +26,7 @@
 <dependency>
     <groupId>com.netease.nim</groupId>
     <artifactId>yunxin-server-sdk</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 

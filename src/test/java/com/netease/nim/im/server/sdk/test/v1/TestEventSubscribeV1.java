@@ -49,7 +49,7 @@ public class TestEventSubscribeV1 {
         }
                 
         services = new YunxinV1ApiServices(client);
-        eventSubscribeV1Service = services.getEventSubscribeV1Service();
+        eventSubscribeV1Service = services.getEventSubscribeService();
         
         // Create test accounts
         try {

@@ -36,13 +36,13 @@ public class YunxinV1ApiServices {
     private final IHistoryV1Service historyService;
     private final ITeamV1Service teamService;
     private final IChatRoomV1Service chatRoomService;
-    private final ISuperTeamV1Service superTeamV1Service;
-    private final IChatroomMessageV1Service chatroomMessageV1Service;
-    private final ITranslationV1Service translationV1Service;
-    private final ISpecialRelationV1Service specialRelationV1Service;
-    private final IMessageV1Service messageV1Service;
+    private final ISuperTeamV1Service superTeamService;
+    private final IChatroomMessageV1Service chatroomMessageService;
+    private final ITranslationV1Service translationService;
+    private final ISpecialRelationV1Service specialRelationService;
+    private final IMessageV1Service messageService;
     private final ISystemNotificationV1Service systemNotificationService;
-    private final IEventSubscribeV1Service eventSubscribeV1Service;
+    private final IEventSubscribeV1Service eventSubscribeService;
 
     public YunxinV1ApiServices(YunxinApiHttpClient yunxinApiHttpClient) {
         this.accountService = new AccountV1Service(yunxinApiHttpClient);
@@ -50,24 +50,24 @@ public class YunxinV1ApiServices {
         this.historyService = new HistoryV1Service(yunxinApiHttpClient);
         this.teamService = new TeamV1Service(yunxinApiHttpClient);
         this.chatRoomService = new ChatRoomV1Service(yunxinApiHttpClient);
-        this.superTeamV1Service = new SuperTeamV1Service(yunxinApiHttpClient);
-        this.chatroomMessageV1Service = new ChatroomMessageV1Service(yunxinApiHttpClient);
-        this.translationV1Service = new TranslationV1Service(yunxinApiHttpClient);
-        this.specialRelationV1Service = new SpecialRelationV1Service(yunxinApiHttpClient);
-        this.messageV1Service = new MessageV1Service(yunxinApiHttpClient);
+        this.superTeamService = new SuperTeamV1Service(yunxinApiHttpClient);
+        this.chatroomMessageService = new ChatroomMessageV1Service(yunxinApiHttpClient);
+        this.translationService = new TranslationV1Service(yunxinApiHttpClient);
+        this.specialRelationService = new SpecialRelationV1Service(yunxinApiHttpClient);
+        this.messageService = new MessageV1Service(yunxinApiHttpClient);
         this.systemNotificationService = new SystemNotificationV1Service(yunxinApiHttpClient);
-        this.eventSubscribeV1Service = new EventSubscribeV1Service(yunxinApiHttpClient);
+        this.eventSubscribeService = new EventSubscribeV1Service(yunxinApiHttpClient);
     }
 
     public IAccountV1Service getAccountService() {
         return accountService;
     }
 
-    public IFriendV1Service getFriendV1Service() {
+    public IFriendV1Service getFriendService() {
         return friendService;
     }
 
-    public IHistoryV1Service getHistoryV1Service() {
+    public IHistoryV1Service getHistoryService() {
         return historyService;
     }
 
@@ -79,31 +79,31 @@ public class YunxinV1ApiServices {
         return chatRoomService;
     }
 
-    public ISuperTeamV1Service getSuperTeamV1Service() {
-        return superTeamV1Service;
+    public ISuperTeamV1Service getSuperTeamService() {
+        return superTeamService;
     }
 
-    public IChatroomMessageV1Service getChatroomMessageV1Service() {
-        return chatroomMessageV1Service;
+    public IChatroomMessageV1Service getChatroomMessageService() {
+        return chatroomMessageService;
     }
 
-    public ITranslationV1Service getTranslationV1Service() {
-        return translationV1Service;
+    public ITranslationV1Service getTranslationService() {
+        return translationService;
     }
 
-    public ISpecialRelationV1Service getSpecialRelationV1Service() {
-        return specialRelationV1Service;
+    public ISpecialRelationV1Service getSpecialRelationService() {
+        return specialRelationService;
     }
 
-    public IMessageV1Service getMessageV1Service() {
-        return messageV1Service;
+    public IMessageV1Service getMessageService() {
+        return messageService;
     }
 
     public ISystemNotificationV1Service getSystemNotificationService() {
         return systemNotificationService;
     }
-    
-    public IEventSubscribeV1Service getEventSubscribeV1Service() {
-        return eventSubscribeV1Service;
+
+    public IEventSubscribeV1Service getEventSubscribeService() {
+        return eventSubscribeService;
     }
 }

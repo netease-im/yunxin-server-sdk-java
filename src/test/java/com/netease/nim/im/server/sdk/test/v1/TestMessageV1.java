@@ -45,7 +45,7 @@ public class TestMessageV1 {
         }
 
         services = new YunxinV1ApiServices(client);
-        messageV1Service = services.getMessageV1Service();
+        messageV1Service = services.getMessageService();
         accountV1Service = services.getAccountService();
         teamV1Service = services.getTeamService();
         

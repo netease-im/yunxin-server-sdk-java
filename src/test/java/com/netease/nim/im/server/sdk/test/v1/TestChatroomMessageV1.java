@@ -44,7 +44,7 @@ public class TestChatroomMessageV1 {
         }
 
         services = new YunxinV1ApiServices(client);
-        chatroomMessageService = services.getChatroomMessageV1Service();
+        chatroomMessageService = services.getChatroomMessageService();
         
         // Create test accounts
         createAccount(fromAccid);

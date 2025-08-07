@@ -56,7 +56,7 @@ public class TestSuperTeamV1 {
             return;
         }
         services = new YunxinV1ApiServices(client);
-        superTeamV1Service = services.getSuperTeamV1Service();
+        superTeamV1Service = services.getSuperTeamService();
         accountV1Service = services.getAccountService();
         
         // 创建测试账号

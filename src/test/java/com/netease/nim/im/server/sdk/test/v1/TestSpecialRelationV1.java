@@ -49,7 +49,7 @@ public class TestSpecialRelationV1 {
             return;
         }
         services = new YunxinV1ApiServices(client);
-        specialRelationV1Service = services.getSpecialRelationV1Service();
+        specialRelationV1Service = services.getSpecialRelationService();
         accountV1Service = services.getAccountService();
         
         // 创建测试账号

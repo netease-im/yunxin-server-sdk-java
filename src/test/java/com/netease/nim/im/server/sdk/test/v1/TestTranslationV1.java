@@ -37,7 +37,7 @@ public class TestTranslationV1 {
             return;
         }
         services = new YunxinV1ApiServices(client);
-        translationV1Service = services.getTranslationV1Service();
+        translationV1Service = services.getTranslationService();
         accountV1Service = services.getAccountService();
         
         // 创建测试账号
