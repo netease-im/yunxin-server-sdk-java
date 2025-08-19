@@ -23,6 +23,8 @@ import com.netease.nim.server.sdk.im.v2.conversation_group.ConversationGroupV2Se
 import com.netease.nim.server.sdk.im.v2.conversation_group.IConversationGroupV2Service;
 import com.netease.nim.server.sdk.im.v2.conversation_unread.ConversationUnreadV2Service;
 import com.netease.nim.server.sdk.im.v2.conversation_unread.IConversationUnreadV2Service;
+import com.netease.nim.server.sdk.im.v2.signal.ISignalV2Service;
+import com.netease.nim.server.sdk.im.v2.signal.SignalV2Service;
 import com.netease.nim.server.sdk.im.v2.system_notification.CustomNotificationV2Service;
 import com.netease.nim.server.sdk.im.v2.system_notification.ICustomNotificationV2Service;
 import com.netease.nim.server.sdk.im.v2.friend.FriendV2Service;
@@ -67,6 +69,7 @@ public class YunxinV2ApiServices {
     private final ISubscriptionV2Service subscriptionService;
     private final IAiSerivce aiService;
     private final IToolV2Service toolService;
+    private final ISignalV2Service signalService;
 
     public YunxinV2ApiServices(YunxinApiHttpClient yunxinApiHttpClient) {
         this.accountService = new AccountV2Service(yunxinApiHttpClient);
@@ -89,6 +92,7 @@ public class YunxinV2ApiServices {
         this.subscriptionService = new SubscriptionV2Service(yunxinApiHttpClient);
                 this.aiService = new AiService(yunxinApiHttpClient);
         this.toolService = new ToolV2Service(yunxinApiHttpClient);
+        this.signalService = new SignalV2Service(yunxinApiHttpClient);
     }
 
     public IAccountV2Service getAccountService() {
@@ -171,4 +175,7 @@ public class YunxinV2ApiServices {
         return toolService;
     }
 
+    public ISignalV2Service getSignalService() {
+        return signalService;
+    }
 }

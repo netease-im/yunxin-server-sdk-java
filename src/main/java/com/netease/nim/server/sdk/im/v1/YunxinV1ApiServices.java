@@ -15,6 +15,8 @@ import com.netease.nim.server.sdk.im.v1.history.HistoryV1Service;
 import com.netease.nim.server.sdk.im.v1.history.IHistoryV1Service;
 import com.netease.nim.server.sdk.im.v1.message.IMessageV1Service;
 import com.netease.nim.server.sdk.im.v1.message.MessageV1Service;
+import com.netease.nim.server.sdk.im.v1.signal.ISignalV1Service;
+import com.netease.nim.server.sdk.im.v1.signal.SignalV1Service;
 import com.netease.nim.server.sdk.im.v1.special_relation.ISpecialRelationV1Service;
 import com.netease.nim.server.sdk.im.v1.special_relation.SpecialRelationV1Service;
 import com.netease.nim.server.sdk.im.v1.super_team.ISuperTeamV1Service;
@@ -42,6 +44,7 @@ public class YunxinV1ApiServices {
     private final ISpecialRelationV1Service specialRelationService;
     private final IMessageV1Service messageService;
     private final ISystemNotificationV1Service systemNotificationService;
+    private final ISignalV1Service signalService;
     private final IEventSubscribeV1Service eventSubscribeService;
 
     public YunxinV1ApiServices(YunxinApiHttpClient yunxinApiHttpClient) {
@@ -56,6 +59,7 @@ public class YunxinV1ApiServices {
         this.specialRelationService = new SpecialRelationV1Service(yunxinApiHttpClient);
         this.messageService = new MessageV1Service(yunxinApiHttpClient);
         this.systemNotificationService = new SystemNotificationV1Service(yunxinApiHttpClient);
+        this.signalService = new SignalV1Service(yunxinApiHttpClient);
         this.eventSubscribeService = new EventSubscribeV1Service(yunxinApiHttpClient);
     }
 
@@ -105,5 +109,9 @@ public class YunxinV1ApiServices {
 
     public IEventSubscribeV1Service getEventSubscribeService() {
         return eventSubscribeService;
+    }
+
+    public ISignalV1Service getSignalService() {
+        return signalService;
     }
 }

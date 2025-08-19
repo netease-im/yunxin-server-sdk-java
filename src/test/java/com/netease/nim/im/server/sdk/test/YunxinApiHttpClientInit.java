@@ -31,4 +31,27 @@ public class YunxinApiHttpClientInit {
                 .build();
         return yunxinApiHttpClient;
     }
+    public static YunxinApiHttpClient initWithEndPoint(String endpoint) {
+        if (yunxinApiHttpClient != null) {
+            return yunxinApiHttpClient;
+        }
+        String appkey = System.getProperty("appkey");
+        String appsecret = System.getProperty("appsecret");
+        if (appkey == null) {
+            appkey = System.getenv("appkey");
+        }
+        if (appsecret == null) {
+            appsecret = System.getenv("appsecret");
+        }
+        if (appkey == null || appsecret == null) {
+            System.out.println("appkey not found");
+            return null;
+        }
+        int timeoutMillis = 5000;
+        yunxinApiHttpClient = new YunxinApiHttpClient.Builder(appkey, appsecret)
+                .timeoutMillis(timeoutMillis)
+                .endpoint(endpoint)
+                .build();
+        return yunxinApiHttpClient;
+    }
 }
