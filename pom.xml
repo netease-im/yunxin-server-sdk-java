@@ -6,7 +6,7 @@
 
     <groupId>com.netease.nim</groupId>
     <artifactId>yunxin-server-sdk</artifactId>
-    <version>1.1.0`</version>
+    <version>1.1.0</version>
     <name>yunxin-im-server-sdk</name>
     <url>https://github.com/netease-im/yunxin-server-sdk-java</url>
     <description>yunxin-im-server-sdk</description>
