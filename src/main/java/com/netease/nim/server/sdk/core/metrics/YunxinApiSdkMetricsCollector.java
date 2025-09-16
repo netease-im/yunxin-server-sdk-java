@@ -26,8 +26,8 @@ public class YunxinApiSdkMetricsCollector {
             0, TimeUnit.SECONDS, new LinkedBlockingQueue<>(100), new NamedThreadFactory("yunxin-sdk-stats-callback"));
 
     private final BizName bizName;
-    private final ConcurrentHashMap<Key1, Statistics> map1 = new ConcurrentHashMap<>();
-    private final ConcurrentHashMap<Key2, Statistics> map2 = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<Key1, Statistics> map1 = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<Key2, Statistics> map2 = new ConcurrentHashMap<>();
 
     private final MetricsCallback metricsCallback;
 
@@ -61,6 +61,10 @@ public class YunxinApiSdkMetricsCollector {
 
     private void calc() {
         try {
+            ConcurrentHashMap<Key1, Statistics> map1 = this.map1;
+            ConcurrentHashMap<Key2, Statistics> map2 = this.map2;
+            this.map1 = new ConcurrentHashMap<>();
+            this.map2 = new ConcurrentHashMap<>();
             List<EndpointStats> endpointStatsList = new ArrayList<>();
             List<UriStats> uriStatsList = new ArrayList<>();
             for (Map.Entry<Key1, Statistics> entry : map1.entrySet()) {

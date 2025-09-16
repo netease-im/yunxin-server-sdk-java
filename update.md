@@ -1,5 +1,13 @@
 本文介绍网易云信服务端 Java SDK 的更新日志。具体功能请前往 [集成 SDK](https://doc.yunxin.163.com/messaging2/server-apis/jQxNjEwMjI?platform=server) 体验。
 
+## 1.1.1 (2025-09-16)
+
+**缺陷修复**
+
+修复metrics内存泄露的问题
+
+
+
 ## 1.1.0 (2025-08-19)
 
 **新增功能**

@@ -136,7 +136,7 @@ public class YunxinHttpClient implements HttpClient {
                     }
                     endpointSelector.update(endpoint, RequestResult.SUCCESS);
                     if (metricsCollector != null) {
-                        metricsCollector.collect(endpoint, method, contextType, apiVersion, path, "success", System.currentTimeMillis() - startTime);
+                        metricsCollector.collect(endpoint, method, contextType, apiVersion, uri, "success", System.currentTimeMillis() - startTime);
                     }
                     return new HttpResponse(endpoint, code, string, traceId);
                 } catch (Exception e) {
