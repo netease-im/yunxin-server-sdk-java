@@ -10,7 +10,7 @@ public class YunxinSdkException extends RuntimeException {
     private final ExecuteContext context;
 
     public YunxinSdkException(ExecuteContext context, Exception e) {
-        super("biz:" + context.getBizName() + "endpoint: " + context.getEndpoint() + ", trace-id: " + context.getTraceId() + ", message: " + e.getMessage(), e);
+        super("biz:" + context.getBizName() + ", endpoint: " + context.getEndpoint() + ", trace-id: " + context.getTraceId() + ", message: " + e.getMessage(), e);
         this.context = context;
     }
 
