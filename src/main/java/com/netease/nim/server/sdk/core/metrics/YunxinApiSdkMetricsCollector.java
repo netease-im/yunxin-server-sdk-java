@@ -33,13 +33,15 @@ public class YunxinApiSdkMetricsCollector {
 
     private Stats stats = new Stats();
 
+    private final ScheduledFuture<?> scheduledFuture;
+
     public YunxinApiSdkMetricsCollector(BizName bizName, int collectIntervalSeconds, MetricsCallback metricsCallback) {
         if (collectIntervalSeconds <= 0) {
             throw new IllegalArgumentException("illegal collectIntervalSeconds");
         }
         this.bizName = bizName;
         this.metricsCallback = metricsCallback;
-        scheduler.scheduleAtFixedRate(this::calc, collectIntervalSeconds, collectIntervalSeconds, TimeUnit.SECONDS);
+        this.scheduledFuture = scheduler.scheduleAtFixedRate(this::calc, collectIntervalSeconds, collectIntervalSeconds, TimeUnit.SECONDS);
     }
 
     public void collect(String endpoint, HttpMethod method, ContextType contextType, ApiVersion apiVersion,
@@ -57,6 +59,10 @@ public class YunxinApiSdkMetricsCollector {
             statistics2 = map2.computeIfAbsent(key2, k -> new Statistics());
         }
         statistics2.update(spendMs);
+    }
+
+    public void shutdown() {
+        scheduledFuture.cancel(false);
     }
 
     private void calc() {

@@ -9,10 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * Created by caojiajun on 2024/12/9
@@ -41,6 +38,9 @@ public class DynamicEndpointSelector implements EndpointSelector {
     private OkHttpClient okHttpClient;
 
     private List<String> orderedEndpoints = new ArrayList<>();
+
+    private ScheduledFuture<?> scheduleResultFuture;
+    private ScheduledFuture<?> scheduleDetectFuture;
 
     public DynamicEndpointSelector(EndpointFetcher fetcher) {
         this(fetcher, BizName.IM.getDetectPath(),
@@ -101,9 +101,19 @@ public class DynamicEndpointSelector implements EndpointSelector {
             orderedEndpoints.addAll(backupEndpoints);
         }
         if (detectPath != null) {
-            scheduler1.scheduleAtFixedRate(this::scheduleDetect, scheduleDetectIntervalSeconds, scheduleDetectIntervalSeconds, TimeUnit.SECONDS);
+            scheduleDetectFuture = scheduler1.scheduleAtFixedRate(this::scheduleDetect, scheduleDetectIntervalSeconds, scheduleDetectIntervalSeconds, TimeUnit.SECONDS);
         }
-        scheduler2.scheduleAtFixedRate(this::scheduleResult, scheduleResultIntervalSeconds, scheduleResultIntervalSeconds, TimeUnit.SECONDS);
+        scheduleResultFuture = scheduler2.scheduleAtFixedRate(this::scheduleResult, scheduleResultIntervalSeconds, scheduleResultIntervalSeconds, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public void shutdown() {
+        if (scheduleResultFuture != null) {
+            scheduleResultFuture.cancel(false);
+        }
+        if (scheduleDetectFuture != null) {
+            scheduleDetectFuture.cancel(false);
+        }
     }
 
     @Override

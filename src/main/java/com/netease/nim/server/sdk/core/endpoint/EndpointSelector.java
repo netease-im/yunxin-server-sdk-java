@@ -13,4 +13,7 @@ public interface EndpointSelector {
 
     String selectEndpoint(String excludeEndpoint);
 
+    default void shutdown() {
+
+    }
 }

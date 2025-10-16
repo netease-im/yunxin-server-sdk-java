@@ -47,6 +47,7 @@ public class YunxinHttpClient implements HttpClient {
     private final EndpointSelector endpointSelector;
 
     private YunxinApiSdkMetricsCollector metricsCollector;
+    private boolean running = true;
 
     public YunxinHttpClient(BizName bizName, String appkey, String appsecret, EndpointConfig endpointConfig,
                             YunxinHttpClientConfig httpClientConfig, MetricsConfig metricsConfig) {
@@ -71,10 +72,12 @@ public class YunxinHttpClient implements HttpClient {
         this.endpointSelector.init(okHttpClient);
     }
 
-
     @Override
     public HttpResponse execute(HttpMethod method, ContextType contextType, ApiVersion apiVersion,
                                 String uri, String path, Map<String, String> queryString, String data) throws YunxinSdkException {
+        if (!running) {
+            throw new IllegalStateException("yunxin http client has shutdown.");
+        }
         //trace-id
         String traceId = YunxinTraceId.get();
         if (traceId == null) {
@@ -208,10 +211,24 @@ public class YunxinHttpClient implements HttpClient {
 
     @Override
     public Stats getStats() {
+        if (!running) {
+            throw new IllegalStateException("yunxin http client has bean shutdown.");
+        }
         if (metricsCollector == null) {
             return null;
         }
         return metricsCollector.getStats();
+    }
+
+    @Override
+    public void shutdown() {
+        if (metricsCollector != null) {
+            metricsCollector.shutdown();
+        }
+        if (endpointSelector != null) {
+            endpointSelector.shutdown();
+        }
+        running = false;
     }
 
     private void addHeaders(Request.Builder builder, ApiVersion apiVersion, String traceId) {

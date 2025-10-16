@@ -30,5 +30,14 @@ public interface HttpClient {
     HttpResponse execute(HttpMethod method, ContextType contextType, ApiVersion apiVersion,
                          String uri, String path, Map<String, String> queryString, String data) throws YunxinSdkException;
 
+    /**
+     * shutdown
+     */
+    void shutdown();
+
+    /**
+     * get status bean
+     * @return status bean
+     */
     Stats getStats();
 }

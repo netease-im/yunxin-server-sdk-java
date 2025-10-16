@@ -5,5 +5,5 @@ package com.netease.nim.server.sdk.core.version;
  */
 public class YunxinApiSdkVersion {
 
-    public static final String version = "1.1.1";
+    public static final String version = "1.1.2";
 }

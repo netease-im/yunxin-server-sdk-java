@@ -23,11 +23,13 @@ public class YunxinApiHttpClient {
 
     private final BizName bizName;
     private final YunxinHttpClient httpClient;
+    private final String duplicateKey;
 
     private YunxinApiHttpClient(BizName bizName, String appkey, String appsecret, EndpointConfig endpointConfig,
                                 YunxinHttpClientConfig httpClientConfig, MetricsConfig metricsConfig) {
         this.bizName = bizName;
         this.httpClient = new YunxinHttpClient(bizName, appkey, appsecret, endpointConfig, httpClientConfig, metricsConfig);
+        this.duplicateKey = appkey + "/" + appsecret + "/" + bizName.getValue();
     }
 
     public static class Builder {
@@ -266,5 +268,13 @@ public class YunxinApiHttpClient {
      */
     public final Stats getStats() {
         return httpClient.getStats();
+    }
+
+    /**
+     * shutdown
+     */
+    public final void shutdown() {
+        httpClient.shutdown();
+        clientMap.remove(duplicateKey);
     }
 }
