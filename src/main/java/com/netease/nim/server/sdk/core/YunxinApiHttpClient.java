@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class YunxinApiHttpClient {
 
-    private static final ConcurrentHashMap<String, YunxinApiHttpClient> clientMap = new ConcurrentHashMap<>();
+//    private static final ConcurrentHashMap<String, YunxinApiHttpClient> clientMap = new ConcurrentHashMap<>();
 
     private final BizName bizName;
     private final YunxinHttpClient httpClient;
@@ -44,13 +44,13 @@ public class YunxinApiHttpClient {
             this.bizName = bizName;
             this.appkey = appkey;
             this.appsecret = appsecret;
-            if (bizName != BizName.CUSTOM) {
-                String cacheKey = appkey + "/" + appsecret + "/" + bizName.getValue();
-                YunxinApiHttpClient client = clientMap.get(cacheKey);
-                if (client != null) {
-                    throw new IllegalStateException("YunxinApiHttpClient with appkey = [" + appkey + "] and bizName = [" + bizName.name() + "] duplicate init");
-                }
-            }
+//            if (bizName != BizName.CUSTOM) {
+//                String cacheKey = appkey + "/" + appsecret + "/" + bizName.getValue();
+//                YunxinApiHttpClient client = clientMap.get(cacheKey);
+//                if (client != null) {
+//                    throw new IllegalStateException("YunxinApiHttpClient with appkey = [" + appkey + "] and bizName = [" + bizName.name() + "] duplicate init");
+//                }
+//            }
             endpointConfig.setRetryPolicy(bizName.getDefaultRetryPolicy());
         }
 
@@ -125,12 +125,12 @@ public class YunxinApiHttpClient {
 
         public YunxinApiHttpClient build() {
             String cacheKey = appkey + "/" + appsecret + "/" + bizName.getValue();
-            if (bizName != BizName.CUSTOM) {
-                YunxinApiHttpClient client = clientMap.get(cacheKey);
-                if (client != null) {
-                    throw new IllegalStateException("YunxinApiHttpClient with appkey = [" + appkey + "] and bizName = [" + bizName.name() + "] duplicate init");
-                }
-            }
+//            if (bizName != BizName.CUSTOM) {
+//                YunxinApiHttpClient client = clientMap.get(cacheKey);
+//                if (client != null) {
+//                    throw new IllegalStateException("YunxinApiHttpClient with appkey = [" + appkey + "] and bizName = [" + bizName.name() + "] duplicate init");
+//                }
+//            }
             if (bizName == BizName.CUSTOM) {
                 if (endpointConfig.getEndpointSelector() == null) {
                     throw new IllegalArgumentException("bizName with CUSTOM must specify endpoints");
@@ -141,9 +141,9 @@ public class YunxinApiHttpClient {
                 endpointConfig.setEndpointSelector(endpointSelector);
             }
             YunxinApiHttpClient yunxinApiHttpClient = new YunxinApiHttpClient(bizName, appkey, appsecret, endpointConfig, httpClientConfig, metricsConfig);
-            if (bizName != BizName.CUSTOM) {
-                clientMap.put(cacheKey, yunxinApiHttpClient);
-            }
+//            if (bizName != BizName.CUSTOM) {
+//                clientMap.put(cacheKey, yunxinApiHttpClient);
+//            }
             return yunxinApiHttpClient;
         }
     }
