@@ -76,7 +76,7 @@ public class YunxinHttpClient implements HttpClient {
     public HttpResponse execute(HttpMethod method, ContextType contextType, ApiVersion apiVersion,
                                 String uri, String path, Map<String, String> queryString, String data) throws YunxinSdkException {
         if (!running) {
-            throw new IllegalStateException("yunxin http client has shutdown.");
+            throw new IllegalStateException("yunxin http client has bean shutdown.");
         }
         //trace-id
         String traceId = YunxinTraceId.get();
