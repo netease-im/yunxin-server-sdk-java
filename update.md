@@ -4,8 +4,8 @@
 
 **新增功能**
 
-**YunxinHttpClient支持shutdown**
-**YunxinHttpClient支持设置代理**
+* YunxinHttpClient支持shutdown
+* YunxinHttpClient支持设置代理
 
 
 ## 1.1.1 (2025-09-16)
