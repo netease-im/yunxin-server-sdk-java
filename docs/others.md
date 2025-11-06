@@ -120,3 +120,62 @@ public class Test6 {
 }
 
 ```
+
+
+### 关于代理
+
+* sdk初始化时支持设置代理
+* 可以使用Proxy，也可以使用ProxySelector
+
+```java
+
+public class Test6 {
+
+    public static void main(String[] args) {
+        String appkey = "xx";
+        String appsecret = "xx";
+        int timeoutMillis = 5000;
+
+        Proxy proxy = new Proxy(Proxy.Type.SOCKS, "10.0.0.0", 1080);
+
+        //
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
+                .timeoutMillis(timeoutMillis)
+                .proxy(proxy)
+                .build();
+    }
+}
+
+```
+
+```java
+
+public class Test6 {
+
+    public static void main(String[] args) {
+        String appkey = "xx";
+        String appsecret = "xx";
+        int timeoutMillis = 5000;
+
+        ProxySelector proxySelector = new ProxySelector() {
+            @Override
+            public List<Proxy> select(URI uri) {
+                // your custom logic
+                return null;
+            }
+
+            @Override
+            public void connectFailed(URI uri, SocketAddress sa, IOException ioe) {
+                // your custom logic
+            }
+        };
+
+        //
+        YunxinApiHttpClient client = new YunxinApiHttpClient.Builder(BizName.IM, appkey, appsecret)
+                .timeoutMillis(timeoutMillis)
+                .proxySelector(proxySelector)
+                .build();
+    }
+}
+
+```

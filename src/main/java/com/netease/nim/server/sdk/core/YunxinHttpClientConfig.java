@@ -1,6 +1,9 @@
 package com.netease.nim.server.sdk.core;
 
 
+import java.net.Proxy;
+import java.net.ProxySelector;
+
 /**
  * Created by caojiajun on 2024/11/27
  */
@@ -13,6 +16,8 @@ public class YunxinHttpClientConfig {
     private int maxRequestsPerHost = Constants.Http.maxRequestsPerHost;
     private int keepAliveSeconds = Constants.Http.keepAliveSeconds;
     private int maxIdleConnections = Constants.Http.maxIdleConnections;
+    private Proxy proxy;
+    private ProxySelector proxySelector;
 
     public long getConnectTimeoutMillis() {
         return connectTimeoutMillis;
@@ -68,5 +73,21 @@ public class YunxinHttpClientConfig {
 
     public void setMaxIdleConnections(int maxIdleConnections) {
         this.maxIdleConnections = maxIdleConnections;
+    }
+
+    public Proxy getProxy() {
+        return proxy;
+    }
+
+    public void setProxy(Proxy proxy) {
+        this.proxy = proxy;
+    }
+
+    public ProxySelector getProxySelector() {
+        return proxySelector;
+    }
+
+    public void setProxySelector(ProxySelector proxySelector) {
+        this.proxySelector = proxySelector;
     }
 }

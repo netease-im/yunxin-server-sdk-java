@@ -62,13 +62,19 @@ public class YunxinHttpClient implements HttpClient {
         Dispatcher dispatcher = new Dispatcher();
         dispatcher.setMaxRequests(httpClientConfig.getMaxRequests());
         dispatcher.setMaxRequestsPerHost(httpClientConfig.getMaxRequestsPerHost());
-        this.okHttpClient = new OkHttpClient.Builder()
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .connectTimeout(httpClientConfig.getConnectTimeoutMillis(), TimeUnit.MILLISECONDS)
                 .readTimeout(httpClientConfig.getReadTimeoutMillis(), TimeUnit.MILLISECONDS)
                 .writeTimeout(httpClientConfig.getWriteTimeoutMillis(), TimeUnit.MILLISECONDS)
                 .dispatcher(dispatcher)
-                .connectionPool(new ConnectionPool(httpClientConfig.getMaxIdleConnections(), httpClientConfig.getKeepAliveSeconds(), TimeUnit.SECONDS))
-                .build();
+                .connectionPool(new ConnectionPool(httpClientConfig.getMaxIdleConnections(), httpClientConfig.getKeepAliveSeconds(), TimeUnit.SECONDS));
+        if (httpClientConfig.getProxy() != null) {
+            builder.proxy(httpClientConfig.getProxy());
+        }
+        if (httpClientConfig.getProxySelector() != null) {
+            builder.proxySelector(httpClientConfig.getProxySelector());
+        }
+        this.okHttpClient = builder.build();
         this.endpointSelector.init(okHttpClient);
     }
 

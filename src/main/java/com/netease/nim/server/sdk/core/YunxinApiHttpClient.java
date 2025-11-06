@@ -11,6 +11,8 @@ import com.netease.nim.server.sdk.core.metrics.Stats;
 import com.netease.nim.server.sdk.core.metrics.MetricsCallback;
 import com.netease.nim.server.sdk.core.trace.ApiVersion;
 
+import java.net.Proxy;
+import java.net.ProxySelector;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -99,6 +101,22 @@ public class YunxinApiHttpClient {
                 throw new IllegalArgumentException("httpClientConfig null");
             }
             this.httpClientConfig = httpClientConfig;
+            return this;
+        }
+
+        public Builder proxy(Proxy proxy) {
+            if (proxy == null) {
+                throw new IllegalArgumentException("proxy is null");
+            }
+            httpClientConfig.setProxy(proxy);
+            return this;
+        }
+
+        public Builder proxySelector(ProxySelector proxySelector) {
+            if (proxySelector == null) {
+                throw new IllegalArgumentException("proxySelector is null");
+            }
+            httpClientConfig.setProxySelector(proxySelector);
             return this;
         }
 
