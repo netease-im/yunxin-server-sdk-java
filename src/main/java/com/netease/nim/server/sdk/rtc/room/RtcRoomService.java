@@ -124,7 +124,9 @@ public class RtcRoomService implements IRtcRoomService {
             queryString.put("uid", uid.toString());
         }
         Number userRole = request.getUserRole();
-        if (userRole != null) queryString.put("userRole", userRole.toString());
+        if (userRole != null) {
+            queryString.put("userRole", userRole.toString());
+        }
         YunxinApiResponse response = httpClient.executeJson(HttpMethod.GET, RtcRoomUrlContext.LIST_MEMBERS_V3, queryString, null);
         int httpCode = response.getHttpCode();
         int code = 0;
