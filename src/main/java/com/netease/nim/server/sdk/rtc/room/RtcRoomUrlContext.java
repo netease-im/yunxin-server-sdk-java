@@ -10,4 +10,8 @@ public class RtcRoomUrlContext {
     static final String GET_ROOM_BY_CID = "/v2/api/rooms/{cid}";
 
     static final String GET_ROOM_BY_CNAME = "/v3/api/rooms";
+
+    static final String LIST_MEMBERS_V2 = "/v2/api/rooms/{cid}/members";
+
+    static final String LIST_MEMBERS_V3 = "/v3/api/rooms/members";
 }
