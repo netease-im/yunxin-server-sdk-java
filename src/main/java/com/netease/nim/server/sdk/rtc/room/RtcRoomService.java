@@ -101,11 +101,10 @@ public class RtcRoomService implements IRtcRoomService {
         String msg;
         RtcListRoomMembersResponse listRoomMembersResponse = null;
         try {
-            JSONObject json = JSONObject.parseObject(response.getData());
-            code = json.getIntValue("code");
-            requestId = json.getString("requestId");
-            msg = json.getString("errmsg");
             listRoomMembersResponse = JSONObject.parseObject(response.getData(), RtcListRoomMembersResponse.class);
+            code = listRoomMembersResponse.getCode();
+            requestId = listRoomMembersResponse.getRequestId();
+            msg = listRoomMembersResponse.getErrmsg();
         } catch (Exception e) {
             msg = response.getData();
         }
@@ -127,11 +126,10 @@ public class RtcRoomService implements IRtcRoomService {
         String msg;
         RtcListRoomMembersResponse listRoomMembersResponse = null;
         try {
-            JSONObject json = JSONObject.parseObject(response.getData());
-            code = json.getIntValue("code");
-            requestId = json.getString("requestId");
-            msg = json.getString("errmsg");
             listRoomMembersResponse = JSONObject.parseObject(response.getData(), RtcListRoomMembersResponse.class);
+            code = listRoomMembersResponse.getCode();
+            requestId = listRoomMembersResponse.getRequestId();
+            msg = listRoomMembersResponse.getErrmsg();
         } catch (Exception e) {
             msg = response.getData();
         }
