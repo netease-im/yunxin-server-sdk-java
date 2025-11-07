@@ -91,9 +91,13 @@ public class RtcRoomService implements IRtcRoomService {
     @Override
     public RtcResult<RtcListRoomMembersResponse> listRoomMembersV2(RtcListRoomMembersRequestV2 request) {
         String path = RtcRoomUrlContext.LIST_MEMBERS_V2.replace("{cid}", String.valueOf(request.getCid()));
-        if (request.getUid() != null) path += "/" + request.getUid();
+        if (request.getUid() != null) {
+            path += "/" + request.getUid();
+        }
         Map<String, String> queryString = new HashMap<>();
-        if (request.getUserRole() != null) queryString.put("userRole", request.getUserRole().toString());
+        if (request.getUserRole() != null) {
+            queryString.put("userRole", request.getUserRole().toString());
+        }
         YunxinApiResponse response = httpClient.executeJson(HttpMethod.GET, RtcRoomUrlContext.GET_ROOM_BY_CID, path, queryString, null);
         int httpCode = response.getHttpCode();
         int code = 0;
@@ -116,7 +120,9 @@ public class RtcRoomService implements IRtcRoomService {
         Map<String, String> queryString = new HashMap<>();
         queryString.put("cname", request.getCname());
         Number uid = request.getUid();
-        if (uid != null) queryString.put("uid", uid.toString());
+        if (uid != null) {
+            queryString.put("uid", uid.toString());
+        }
         Number userRole = request.getUserRole();
         if (userRole != null) queryString.put("userRole", userRole.toString());
         YunxinApiResponse response = httpClient.executeJson(HttpMethod.GET, RtcRoomUrlContext.LIST_MEMBERS_V3, queryString, null);
