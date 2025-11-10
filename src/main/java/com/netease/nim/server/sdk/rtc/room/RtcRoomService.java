@@ -5,11 +5,10 @@ import com.netease.nim.server.sdk.core.YunxinApiHttpClient;
 import com.netease.nim.server.sdk.core.YunxinApiResponse;
 import com.netease.nim.server.sdk.core.http.HttpMethod;
 import com.netease.nim.server.sdk.rtc.RtcResult;
-import com.netease.nim.server.sdk.rtc.room.request.RtcCreateRoomRequest;
-import com.netease.nim.server.sdk.rtc.room.request.RtcGetRoomByCidRequest;
-import com.netease.nim.server.sdk.rtc.room.request.RtcGetRoomByCnameRequest;
+import com.netease.nim.server.sdk.rtc.room.request.*;
 import com.netease.nim.server.sdk.rtc.room.response.RtcCreateRoomResponse;
 import com.netease.nim.server.sdk.rtc.room.response.RtcGetRoomResponse;
+import com.netease.nim.server.sdk.rtc.room.response.RtcListRoomMembersResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -87,5 +86,61 @@ public class RtcRoomService implements IRtcRoomService {
             msg = response.getData();
         }
         return new RtcResult<>(response.getEndpoint(), code, httpCode, requestId, response.getTraceId(), msg, getRoomResponse);
+    }
+
+    @Override
+    public RtcResult<RtcListRoomMembersResponse> listRoomMembersV2(RtcListRoomMembersRequestV2 request) {
+        String path = RtcRoomUrlContext.LIST_MEMBERS_V2.replace("{cid}", String.valueOf(request.getCid()));
+        if (request.getUid() != null) {
+            path += "/" + request.getUid();
+        }
+        Map<String, String> queryString = new HashMap<>();
+        if (request.getUserRole() != null) {
+            queryString.put("userRole", request.getUserRole().toString());
+        }
+        YunxinApiResponse response = httpClient.executeJson(HttpMethod.GET, RtcRoomUrlContext.LIST_MEMBERS_V2, path, queryString, null);
+        int httpCode = response.getHttpCode();
+        int code = 0;
+        String requestId = null;
+        String msg;
+        RtcListRoomMembersResponse listRoomMembersResponse = null;
+        try {
+            listRoomMembersResponse = JSONObject.parseObject(response.getData(), RtcListRoomMembersResponse.class);
+            code = listRoomMembersResponse.getCode();
+            requestId = listRoomMembersResponse.getRequestId();
+            msg = listRoomMembersResponse.getErrmsg();
+        } catch (Exception e) {
+            msg = response.getData();
+        }
+        return new RtcResult<>(response.getEndpoint(), code, httpCode, requestId, response.getTraceId(), msg, listRoomMembersResponse);
+    }
+
+    @Override
+    public RtcResult<RtcListRoomMembersResponse> listRoomMembersV3(RtcListRoomMembersRequestV3 request) {
+        Map<String, String> queryString = new HashMap<>();
+        queryString.put("cname", request.getCname());
+        Number uid = request.getUid();
+        if (uid != null) {
+            queryString.put("uid", uid.toString());
+        }
+        Number userRole = request.getUserRole();
+        if (userRole != null) {
+            queryString.put("userRole", userRole.toString());
+        }
+        YunxinApiResponse response = httpClient.executeJson(HttpMethod.GET, RtcRoomUrlContext.LIST_MEMBERS_V3, queryString, null);
+        int httpCode = response.getHttpCode();
+        int code = 0;
+        String requestId = null;
+        String msg;
+        RtcListRoomMembersResponse listRoomMembersResponse = null;
+        try {
+            listRoomMembersResponse = JSONObject.parseObject(response.getData(), RtcListRoomMembersResponse.class);
+            code = listRoomMembersResponse.getCode();
+            requestId = listRoomMembersResponse.getRequestId();
+            msg = listRoomMembersResponse.getErrmsg();
+        } catch (Exception e) {
+            msg = response.getData();
+        }
+        return new RtcResult<>(response.getEndpoint(), code, httpCode, requestId, response.getTraceId(), msg, listRoomMembersResponse);
     }
 }
