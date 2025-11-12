@@ -14,4 +14,10 @@ public class RtcRoomUrlContext {
     static final String LIST_MEMBERS_V2 = "/v2/api/rooms/{cid}/members";
 
     static final String LIST_MEMBERS_V3 = "/v3/api/rooms/members";
+
+    static final String ADD_MEMBER_TO_KICKLIST_V2 = "/v2/api/kicklist/{cid}/members/{uid}";
+
+    static final String ADD_MEMBER_TO_KICKLIST_V2_WITH_DURATION = "/v2/api/kicklist/{cid}/members/{uid}/{duration}";
+
+    static final String ADD_MEMBER_TO_KICKLIST_V3 = "/v3/api/kicklist/members";
 }
