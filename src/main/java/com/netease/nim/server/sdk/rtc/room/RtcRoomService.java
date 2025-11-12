@@ -6,6 +6,7 @@ import com.netease.nim.server.sdk.core.YunxinApiResponse;
 import com.netease.nim.server.sdk.core.http.HttpMethod;
 import com.netease.nim.server.sdk.rtc.RtcResult;
 import com.netease.nim.server.sdk.rtc.room.request.*;
+import com.netease.nim.server.sdk.rtc.room.response.RtcAddMemberToKicklistResponse;
 import com.netease.nim.server.sdk.rtc.room.response.RtcCreateRoomResponse;
 import com.netease.nim.server.sdk.rtc.room.response.RtcGetRoomResponse;
 import com.netease.nim.server.sdk.rtc.room.response.RtcListRoomMembersResponse;
@@ -142,5 +143,58 @@ public class RtcRoomService implements IRtcRoomService {
             msg = response.getData();
         }
         return new RtcResult<>(response.getEndpoint(), code, httpCode, requestId, response.getTraceId(), msg, listRoomMembersResponse);
+    }
+
+    @Override
+    public RtcResult<RtcAddMemberToKicklistResponse> addMemberToKicklistV2(RtcAddMemberToKicklistRequestV2 request) {
+        boolean hasDuration = request.getDuration() == null;
+        String uri = hasDuration ? RtcRoomUrlContext.ADD_MEMBER_TO_KICKLIST_V2 : RtcRoomUrlContext.ADD_MEMBER_TO_KICKLIST_V2_WITH_DURATION;
+        String path = uri.replace("{cid}", String.valueOf(request.getCid()))
+                .replace("{uid}", String.valueOf(request.getUid()));
+        if (hasDuration) {
+            path = path.replace("{duration}", String.valueOf(request.getDuration()));
+        }
+        YunxinApiResponse response = httpClient.executeJson(HttpMethod.POST, uri, path, null, null);
+        int httpCode = response.getHttpCode();
+        int code = 0;
+        String requestId = null;
+        String msg;
+        RtcAddMemberToKicklistResponse addMemberToKicklistResponse = null;
+        try {
+            addMemberToKicklistResponse = JSONObject.parseObject(response.getData(), RtcAddMemberToKicklistResponse.class);
+            code = addMemberToKicklistResponse.getCode();
+            requestId = addMemberToKicklistResponse.getRequestId();
+            msg = addMemberToKicklistResponse.getErrmsg();
+        } catch (Exception e) {
+            msg = response.getData();
+        }
+        return new RtcResult<>(response.getEndpoint(), code, httpCode, requestId, response.getTraceId(), msg, addMemberToKicklistResponse);
+    }
+
+    @Override
+    public RtcResult<RtcAddMemberToKicklistResponse> addMemberToKicklistV3(RtcAddMemberToKicklistRequestV3 request) {
+        Map<String, String> queryString = new HashMap<>();
+        queryString.put("cname", request.getCname());
+        Number uid = request.getUid();
+        queryString.put("uid", uid.toString());
+        Number duration = request.getDuration();
+        if (duration != null) {
+            queryString.put("duration", duration.toString());
+        }
+        YunxinApiResponse response = httpClient.executeJson(HttpMethod.POST, RtcRoomUrlContext.ADD_MEMBER_TO_KICKLIST_V3, queryString, null);
+        int httpCode = response.getHttpCode();
+        int code = 0;
+        String requestId = null;
+        String msg;
+        RtcAddMemberToKicklistResponse addMemberToKicklistResponse = null;
+        try {
+            addMemberToKicklistResponse = JSONObject.parseObject(response.getData(), RtcAddMemberToKicklistResponse.class);
+            code = addMemberToKicklistResponse.getCode();
+            requestId = addMemberToKicklistResponse.getRequestId();
+            msg = addMemberToKicklistResponse.getErrmsg();
+        } catch (Exception e) {
+            msg = response.getData();
+        }
+        return new RtcResult<>(response.getEndpoint(), code, httpCode, requestId, response.getTraceId(), msg, addMemberToKicklistResponse);
     }
 }
