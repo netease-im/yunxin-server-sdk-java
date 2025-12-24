@@ -34,6 +34,8 @@ import com.netease.nim.server.sdk.im.v2.chatroom_member.response.UpdateOnlineMem
 import com.netease.nim.server.sdk.im.v2.chatroom_member.response.DeleteVirtualMembersResponseV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.request.ClearVirtualMembersRequestV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.response.ClearVirtualMembersResponseV2;
+import com.netease.nim.server.sdk.im.v2.chatroom_member.request.KickChatRoomMemberRequestV2;
+import com.netease.nim.server.sdk.im.v2.chatroom_member.response.KickChatRoomMemberResponseV2;
 
 public interface IChatroomMemberV2Service {
 
@@ -68,4 +70,6 @@ public interface IChatroomMemberV2Service {
     Result<QueryVirtualMembersResponseV2> queryVirtualMembers(QueryVirtualMembersRequestV2 request) throws YunxinSdkException;
     
     Result<QueryChatBannedResponseV2> queryChatBanned(QueryChatBannedRequestV2 request) throws YunxinSdkException;
+    
+    Result<KickChatRoomMemberResponseV2> kickMember(KickChatRoomMemberRequestV2 request) throws YunxinSdkException;
 } 

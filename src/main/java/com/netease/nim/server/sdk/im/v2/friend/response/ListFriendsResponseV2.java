@@ -16,6 +16,9 @@ public class ListFriendsResponseV2 {
     @JSONField(name = "items")
     private List<FriendItemV2> items;
 
+    @JSONField(name = "total")
+    private Integer total;
+
     public Boolean getHasMore() {
         return hasMore;
     }
@@ -40,7 +43,14 @@ public class ListFriendsResponseV2 {
         this.items = items;
     }
 
-    
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
     public static class FriendItemV2 {
 
         @JSONField(name = "friend_account_id")

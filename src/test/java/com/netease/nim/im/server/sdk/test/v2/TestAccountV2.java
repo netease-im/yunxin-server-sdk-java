@@ -104,6 +104,37 @@ public class TestAccountV2 {
         refreshToken(accountId);
     }
     
+    @Test
+    public void testCreateAccountWithEmailValidationMode() throws YunxinSdkException {
+        if (services == null) return;
+        
+        // Test with mode 0 (default validation mode)
+        String accountIdMode0 = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 32);
+        createAccountWithEmailValidationMode(accountIdMode0, 0);
+        
+        // Test with mode 1 (extended validation mode with special and Latin characters)
+        String accountIdMode1 = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 32);
+        createAccountWithEmailValidationMode(accountIdMode1, 1);
+        
+        // Test with mode 2 (no validation - not recommended)
+        String accountIdMode2 = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 32);
+        createAccountWithEmailValidationMode(accountIdMode2, 2);
+    }
+    
+    @Test
+    public void testUpdateAccountWithEmailValidationMode() throws YunxinSdkException {
+        if (services == null) return;
+        
+        // Create an account first
+        String testAccountId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 32);
+        createAccount(testAccountId);
+        
+        // Update account with different email validation modes
+        updateAccountWithEmailValidationMode(testAccountId, 0);
+        updateAccountWithEmailValidationMode(testAccountId, 1);
+        updateAccountWithEmailValidationMode(testAccountId, 2);
+    }
+    
     /**
      * Test create account operation
      * 
@@ -136,6 +167,8 @@ public class TestAccountV2 {
         userInfo.setGender(1);
         // 扩展字段，建议JSON格式，长度上限 1024 位字符
         userInfo.setExtension("{\"custom_key\":\"custom_value\"}");
+        // 用户信息校验模式，0-默认当前校验模式；1-扩展校验模式，包括特殊字符和拉丁字符；2-不校验，不建议用该模式，可能会导致未知显示问题
+        userInfo.setEmailValidationMode(0);
         request.setUserInformation(userInfo);
 
         // 设置安全通相关配置
@@ -179,6 +212,75 @@ public class TestAccountV2 {
     }
     
     /**
+     * Test create account with different email validation modes
+     * 
+     * @param accountId The accountId for the account
+     * @param emailValidationMode Email validation mode: 0-default, 1-extended, 2-no validation
+     * @return CreateAccountResponseV2 response object
+     * @throws YunxinSdkException if an error occurs
+     */
+    private static CreateAccountResponseV2 createAccountWithEmailValidationMode(String accountId, Integer emailValidationMode) throws YunxinSdkException {
+        CreateAccountRequestV2 request = new CreateAccountRequestV2();
+        request.setAccountId(accountId);
+        request.setToken(UUID.randomUUID().toString().replaceAll("-", ""));
+        
+        // 设置用户信息，包含email_validation_mode
+        CreateAccountRequestV2.UserInformation userInfo = new CreateAccountRequestV2.UserInformation();
+        userInfo.setName("testUser_" + emailValidationMode);
+        userInfo.setEmail("test@example.com");
+        // 设置用户信息校验模式
+        // 0：默认当前校验模式
+        // 1：扩展校验模式，包括特殊字符和拉丁字符
+        // 2：不校验，不建议用该模式，可能会导致未知显示问题
+        userInfo.setEmailValidationMode(emailValidationMode);
+        request.setUserInformation(userInfo);
+        
+        IAccountV2Service accountService = services.getAccountService();
+        Result<CreateAccountResponseV2> result = accountService.createAccount(request);
+        System.out.println("createAccountWithEmailValidationMode (mode=" + emailValidationMode + "): " + result.getMsg());
+        
+        // Assertions
+        Assert.assertEquals(200, result.getCode());
+        Assert.assertNotNull(result.getResponse());
+        Assert.assertEquals(accountId, result.getResponse().getAccountId());
+        
+        return result.getResponse();
+    }
+    
+    /**
+     * Test update account with different email validation modes
+     * 
+     * @param accountId The accountId for the account
+     * @param emailValidationMode Email validation mode: 0-default, 1-extended, 2-no validation
+     * @throws YunxinSdkException if an error occurs
+     */
+    private static void updateAccountWithEmailValidationMode(String accountId, Integer emailValidationMode) throws YunxinSdkException {
+        UpdateAccountRequestV2 request = new UpdateAccountRequestV2();
+        request.setAccountId(accountId);
+        
+        // Set user information with email_validation_mode
+        UpdateAccountRequestV2.UserInformation userInfo = new UpdateAccountRequestV2.UserInformation();
+        userInfo.setName("updatedUser_mode_" + emailValidationMode);
+        userInfo.setAvatar("https://example.com/avatar-mode-" + emailValidationMode + ".jpg");
+        userInfo.setEmail("updated" + emailValidationMode + "@example.com");
+        // 设置用户信息校验模式
+        // 0：默认当前校验模式
+        // 1：扩展校验模式，包括特殊字符和拉丁字符
+        // 2：不校验，不建议用该模式，可能会导致未知显示问题
+        userInfo.setEmailValidationMode(emailValidationMode);
+        request.setUserInformation(userInfo);
+        
+        IAccountV2Service accountService = services.getAccountService();
+        Result<UpdateAccountResponseV2> result = accountService.updateAccount(request);
+        System.out.println("updateAccountWithEmailValidationMode (mode=" + emailValidationMode + "): " + result.getMsg());
+        
+        // Assertions
+        Assert.assertEquals(200, result.getCode());
+        Assert.assertNotNull(result.getResponse());
+        Assert.assertEquals(accountId, result.getResponse().getAccountId());
+    }
+    
+    /**
      * Test update account operation
      * 
      * @param updatedName The new name for the account
@@ -192,6 +294,15 @@ public class TestAccountV2 {
         UpdateAccountRequestV2.Configuration config = new UpdateAccountRequestV2.Configuration();
         config.setEnabled(true);
         request.setConfiguration(config);
+        
+        // Set user information with email_validation_mode
+        UpdateAccountRequestV2.UserInformation userInfo = new UpdateAccountRequestV2.UserInformation();
+        userInfo.setName(updatedName);
+        userInfo.setAvatar("https://example.com/updated-avatar.jpg");
+        userInfo.setSign("Updated signature");
+        // 用户信息校验模式，0-默认当前校验模式；1-扩展校验模式，包括特殊字符和拉丁字符；2-不校验，不建议用该模式，可能会导致未知显示问题
+        userInfo.setEmailValidationMode(1);
+        request.setUserInformation(userInfo);
         
         IAccountV2Service accountService = services.getAccountService();
         Result<UpdateAccountResponseV2> result = accountService.updateAccount(request);

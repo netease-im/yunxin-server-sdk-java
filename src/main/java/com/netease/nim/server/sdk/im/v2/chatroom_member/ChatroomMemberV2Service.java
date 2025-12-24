@@ -10,6 +10,7 @@ import com.netease.nim.server.sdk.im.v2.chatroom_member.request.AddVirtualMember
 import com.netease.nim.server.sdk.im.v2.chatroom_member.request.BatchQueryChatroomMembersRequestV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.request.ClearVirtualMembersRequestV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.request.DeleteVirtualMembersRequestV2;
+import com.netease.nim.server.sdk.im.v2.chatroom_member.request.KickChatRoomMemberRequestV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.request.ListTaggedMembersRequestV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.request.ModifyMemberTagsRequestV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.request.QueryChatBannedRequestV2;
@@ -26,6 +27,7 @@ import com.netease.nim.server.sdk.im.v2.chatroom_member.response.AddVirtualMembe
 import com.netease.nim.server.sdk.im.v2.chatroom_member.response.BatchQueryChatroomMembersResponseV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.response.ClearVirtualMembersResponseV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.response.DeleteVirtualMembersResponseV2;
+import com.netease.nim.server.sdk.im.v2.chatroom_member.response.KickChatRoomMemberResponseV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.response.ListTaggedMembersResponseV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.response.ModifyMemberTagsResponseV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.response.QueryChatBannedResponseV2;
@@ -41,7 +43,6 @@ import com.netease.nim.server.sdk.im.v2.chatroom_member.response.UpdateOnlineMem
 import com.netease.nim.server.sdk.im.v2.util.ResultUtils;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
@@ -553,5 +554,38 @@ public class ChatroomMemberV2Service implements IChatroomMemberV2Service {
             null  // No request body for GET request
         );
         return ResultUtils.convert(apiResponse, QueryChatBannedResponseV2.class);
+    }
+
+    @Override
+    public Result<KickChatRoomMemberResponseV2> kickMember(KickChatRoomMemberRequestV2 request) throws YunxinSdkException {
+        // Validate required parameters
+        if (request.getAccountId() == null || request.getAccountId().isEmpty()) {
+            throw new IllegalArgumentException("Account ID cannot be null or empty");
+        }
+        
+        if (request.getRoomId() == null) {
+            throw new IllegalArgumentException("Room ID cannot be null");
+        }
+        
+        if (request.getOperatorAccountId() == null || request.getOperatorAccountId().isEmpty()) {
+            throw new IllegalArgumentException("Operator account ID cannot be null or empty");
+        }
+        
+        // Replace the path parameter in the URL
+        String path = ChatroomMemberV2UrlContext.KICK_MEMBER.replace("{account_id}", request.getAccountId());
+        
+        // Convert the request to JSON string
+        String requestBody = JSONObject.toJSONString(request);
+        
+        // Execute API call
+        YunxinApiResponse apiResponse = httpClient.executeV2Api(
+            HttpMethod.PATCH,
+            ChatroomMemberV2UrlContext.KICK_MEMBER,
+            path,
+            null, // No query parameters
+            requestBody
+        );
+        
+        return ResultUtils.convert(apiResponse, KickChatRoomMemberResponseV2.class);
     }
 }

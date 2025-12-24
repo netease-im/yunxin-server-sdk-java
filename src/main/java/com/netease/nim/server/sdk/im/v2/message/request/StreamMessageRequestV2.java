@@ -2,6 +2,8 @@ package com.netease.nim.server.sdk.im.v2.message.request;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 
+import java.util.List;
+
 /**
  * Request object for sending a stream message.
  * API: POST https://{endpoint}/im/v2/conversations/{conversation_id}/messages/actions/stream_message
@@ -48,6 +50,30 @@ public class StreamMessageRequestV2 {
      */
     @JSONField(name = "extension")
     private String extension;
+
+    /**
+     * RAG information list carried in stream message.
+     */
+    @JSONField(name = "rag_info_list")
+    private List<RagInfo> ragInfoList;
+
+    /**
+     * Advanced team message configuration.
+     */
+    @JSONField(name = "team_option")
+    private TeamOption teamOption;
+
+    /**
+     * Team targeted message configuration.
+     */
+    @JSONField(name = "target_option")
+    private TargetOption targetOption;
+
+    /**
+     * Thread message configuration.
+     */
+    @JSONField(name = "thread_config")
+    private ThreadConfig threadConfig;
 
     public static class StreamMessage {
         @JSONField(name = "message_type")
@@ -336,5 +362,293 @@ public class StreamMessageRequestV2 {
 
     public void setExtension(String extension) {
         this.extension = extension;
+    }
+
+    public java.util.List<RagInfo> getRagInfoList() {
+        return ragInfoList;
+    }
+
+    public void setRagInfoList(java.util.List<RagInfo> ragInfoList) {
+        this.ragInfoList = ragInfoList;
+    }
+
+    public TeamOption getTeamOption() {
+        return teamOption;
+    }
+
+    public void setTeamOption(TeamOption teamOption) {
+        this.teamOption = teamOption;
+    }
+
+    public TargetOption getTargetOption() {
+        return targetOption;
+    }
+
+    public void setTargetOption(TargetOption targetOption) {
+        this.targetOption = targetOption;
+    }
+
+    public ThreadConfig getThreadConfig() {
+        return threadConfig;
+    }
+
+    public void setThreadConfig(ThreadConfig threadConfig) {
+        this.threadConfig = threadConfig;
+    }
+
+    /**
+     * RAG information for stream messages.
+     */
+    public static class RagInfo {
+        @JSONField(name = "name")
+        private String name;
+
+        @JSONField(name = "icon")
+        private String icon;
+
+        @JSONField(name = "title")
+        private String title;
+
+        @JSONField(name = "time")
+        private Long time;
+
+        @JSONField(name = "url")
+        private String url;
+
+        @JSONField(name = "description")
+        private String description;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getIcon() {
+            return icon;
+        }
+
+        public void setIcon(String icon) {
+            this.icon = icon;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public Long getTime() {
+            return time;
+        }
+
+        public void setTime(Long time) {
+            this.time = time;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+    }
+
+    /**
+     * Advanced team message configuration.
+     */
+    public static class TeamOption {
+        @JSONField(name = "mark_as_read")
+        private Boolean markAsRead;
+
+        @JSONField(name = "ignore_chat_banned")
+        private Boolean ignoreChatBanned;
+
+        @JSONField(name = "ignore_member_chat_banned")
+        private Boolean ignoreMemberChatBanned;
+
+        @JSONField(name = "check_team_member_valid")
+        private Boolean checkTeamMemberValid;
+
+        public Boolean getMarkAsRead() {
+            return markAsRead;
+        }
+
+        public void setMarkAsRead(Boolean markAsRead) {
+            this.markAsRead = markAsRead;
+        }
+
+        public Boolean getIgnoreChatBanned() {
+            return ignoreChatBanned;
+        }
+
+        public void setIgnoreChatBanned(Boolean ignoreChatBanned) {
+            this.ignoreChatBanned = ignoreChatBanned;
+        }
+
+        public Boolean getIgnoreMemberChatBanned() {
+            return ignoreMemberChatBanned;
+        }
+
+        public void setIgnoreMemberChatBanned(Boolean ignoreMemberChatBanned) {
+            this.ignoreMemberChatBanned = ignoreMemberChatBanned;
+        }
+
+        public Boolean getCheckTeamMemberValid() {
+            return checkTeamMemberValid;
+        }
+
+        public void setCheckTeamMemberValid(Boolean checkTeamMemberValid) {
+            this.checkTeamMemberValid = checkTeamMemberValid;
+        }
+    }
+
+    /**
+     * Team targeted message configuration.
+     */
+    public static class TargetOption {
+        @JSONField(name = "receiver_account_ids")
+        private List<String> receiverAccountIds;
+
+        @JSONField(name = "inclusive")
+        private Boolean inclusive;
+
+        @JSONField(name = "check_team_member_valid")
+        private Boolean checkTeamMemberValid;
+
+        @JSONField(name = "visible_to_new_member")
+        private Boolean visibleToNewMember;
+
+        public List<String> getReceiverAccountIds() {
+            return receiverAccountIds;
+        }
+
+        public void setReceiverAccountIds(List<String> receiverAccountIds) {
+            this.receiverAccountIds = receiverAccountIds;
+        }
+
+        public Boolean getInclusive() {
+            return inclusive;
+        }
+
+        public void setInclusive(Boolean inclusive) {
+            this.inclusive = inclusive;
+        }
+
+        public Boolean getCheckTeamMemberValid() {
+            return checkTeamMemberValid;
+        }
+
+        public void setCheckTeamMemberValid(Boolean checkTeamMemberValid) {
+            this.checkTeamMemberValid = checkTeamMemberValid;
+        }
+
+        public Boolean getVisibleToNewMember() {
+            return visibleToNewMember;
+        }
+
+        public void setVisibleToNewMember(Boolean visibleToNewMember) {
+            this.visibleToNewMember = visibleToNewMember;
+        }
+    }
+
+    /**
+     * Thread message configuration.
+     */
+    public static class ThreadConfig {
+        @JSONField(name = "thread_root")
+        private ThreadMessage threadRoot;
+
+        @JSONField(name = "thread_reply")
+        private ThreadMessage threadReply;
+
+        public ThreadMessage getThreadRoot() {
+            return threadRoot;
+        }
+
+        public void setThreadRoot(ThreadMessage threadRoot) {
+            this.threadRoot = threadRoot;
+        }
+
+        public ThreadMessage getThreadReply() {
+            return threadReply;
+        }
+
+        public void setThreadReply(ThreadMessage threadReply) {
+            this.threadReply = threadReply;
+        }
+    }
+
+    /**
+     * Thread message information.
+     */
+    public static class ThreadMessage {
+        @JSONField(name = "sender_id")
+        private String senderId;
+
+        @JSONField(name = "receiver_id")
+        private String receiverId;
+
+        @JSONField(name = "create_time")
+        private Long createTime;
+
+        @JSONField(name = "message_server_id")
+        private Long messageServerId;
+
+        @JSONField(name = "message_client_id")
+        private String messageClientId;
+
+        public String getSenderId() {
+            return senderId;
+        }
+
+        public void setSenderId(String senderId) {
+            this.senderId = senderId;
+        }
+
+        public String getReceiverId() {
+            return receiverId;
+        }
+
+        public void setReceiverId(String receiverId) {
+            this.receiverId = receiverId;
+        }
+
+        public Long getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(Long createTime) {
+            this.createTime = createTime;
+        }
+
+        public Long getMessageServerId() {
+            return messageServerId;
+        }
+
+        public void setMessageServerId(Long messageServerId) {
+            this.messageServerId = messageServerId;
+        }
+
+        public String getMessageClientId() {
+            return messageClientId;
+        }
+
+        public void setMessageClientId(String messageClientId) {
+            this.messageClientId = messageClientId;
+        }
     }
 }

@@ -22,6 +22,8 @@ import com.netease.nim.server.sdk.im.v2.chatroom_member.request.ToggleChatBanReq
 import com.netease.nim.server.sdk.im.v2.chatroom_member.request.ToggleTaggedMembersChatBanRequestV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.request.ToggleTempChatBanRequestV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.request.BatchQueryChatroomMembersRequestV2;
+import com.netease.nim.server.sdk.im.v2.chatroom_member.request.KickChatRoomMemberRequestV2;
+import com.netease.nim.server.sdk.im.v2.chatroom_member.response.KickChatRoomMemberResponseV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.response.ListTaggedMembersResponseV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.response.QueryChatBannedResponseV2;
 import com.netease.nim.server.sdk.im.v2.chatroom_member.response.QueryChatroomBlacklistResponseV2;
@@ -1008,6 +1010,39 @@ public class TestChatroomMemberV2 {
         testBanMemberFromChatting(roomId, memberId, roomCreator, false);
         
         System.out.println("Query chat banned members test completed successfully");
+    }
+
+    /**
+     * Test kicking member out of chatroom
+     */
+    //@Test
+    public void testKickMember() throws YunxinSdkException {
+        if (services == null || roomId == null) return;
+        
+        System.out.println("\n==== Testing Kick Member ====");
+        
+        IChatroomMemberV2Service memberService = services.getChatroomMemberService();
+        
+        // Test kicking a member from chatroom
+        KickChatRoomMemberRequestV2 request = new KickChatRoomMemberRequestV2();
+        request.setAccountId(guestId); // 踢出访客
+        request.setRoomId(roomId);
+        request.setOperatorAccountId(roomCreator); // 创建者执行踢人操作
+        request.setNotificationEnabled(true); // 发送通知
+        request.setNotificationExtension("{\"reason\":\"测试踢人功能\"}");
+        
+        Result<KickChatRoomMemberResponseV2> result = memberService.kickMember(request);
+        
+        System.out.println("Kick Member Result: " + result.getMsg());
+        System.out.println("Response: " + JSON.toJSONString(result));
+        
+        // Note: This test may fail if the member is not in the chatroom
+        // In a real test environment, you would need to ensure the member has joined first
+        if (result.getCode() == 200) {
+            System.out.println("Successfully kicked member " + guestId + " from chatroom " + roomId);
+        } else {
+            System.out.println("Kick member failed with code: " + result.getCode() + ", message: " + result.getMsg());
+        }
     }
 
     /**

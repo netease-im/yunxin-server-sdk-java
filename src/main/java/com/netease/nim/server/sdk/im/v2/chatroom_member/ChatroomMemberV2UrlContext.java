@@ -89,4 +89,9 @@ public class ChatroomMemberV2UrlContext {
      * Query chat banned members endpoint
      */
     static final String QUERY_CHAT_BANNED = "/im/v2.1/room_members/{room_id}/actions/chat_banned";
+    
+    /**
+     * Kick member out of chatroom endpoint
+     */
+    static final String KICK_MEMBER = "/im/v2.1/room_members/{account_id}/actions/kicked";
 } 

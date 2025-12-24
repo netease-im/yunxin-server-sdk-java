@@ -304,9 +304,153 @@ public class TestMessageV2 {
         message.setAttachment(attachment);
         request.setMessage(message);
 
+        // 添加 RAG 信息列表
+        java.util.List<StreamMessageRequestV2.RagInfo> ragInfoList = new java.util.ArrayList<>();
+        StreamMessageRequestV2.RagInfo ragInfo = new StreamMessageRequestV2.RagInfo();
+        ragInfo.setName("测试RAG");
+        ragInfo.setIcon("https://example.com/rag-icon.png");
+        ragInfo.setTitle("RAG资源标题");
+        ragInfo.setTime(System.currentTimeMillis());
+        ragInfo.setUrl("https://example.com/rag-resource");
+        ragInfo.setDescription("这是一个RAG资源的描述信息");
+        ragInfoList.add(ragInfo);
+        request.setRagInfoList(ragInfoList);
+
         Result<StreamMessageResponseV2> result = messageService.streamMessage(request);
 
         Assert.assertTrue(result.isSuccess());
+    }
+
+    @Test
+    public void testStreamMessageWithRagInfo() throws YunxinSdkException {
+        if (services == null) return;
+
+        String conversationId = accountId1 + "|1|" + accountId2;
+
+        StreamMessageRequestV2 request = new StreamMessageRequestV2();
+        request.setConversationId(conversationId);
+
+        // 设置消息体
+        StreamMessageRequestV2.StreamMessage message = new StreamMessageRequestV2.StreamMessage();
+        message.setMessageClientId(UUID.randomUUID().toString());
+        message.setMessageType(0);
+        
+        StreamMessageRequestV2.StreamAttachment attachment = new StreamMessageRequestV2.StreamAttachment();
+        attachment.setText("这是一条带有RAG信息的流式消息。");
+        attachment.setIndex(0);
+        attachment.setFinish(1);
+        message.setAttachment(attachment);
+        request.setMessage(message);
+
+        // 添加多个 RAG 信息
+        java.util.List<StreamMessageRequestV2.RagInfo> ragInfoList = new java.util.ArrayList<>();
+        
+        // RAG 信息 1
+        StreamMessageRequestV2.RagInfo ragInfo1 = new StreamMessageRequestV2.RagInfo();
+        ragInfo1.setName("知识库文档1");
+        ragInfo1.setIcon("https://example.com/doc-icon-1.png");
+        ragInfo1.setTitle("关于AI技术的介绍");
+        ragInfo1.setTime(System.currentTimeMillis() - 86400000); // 1天前
+        ragInfo1.setUrl("https://example.com/doc/ai-intro");
+        ragInfo1.setDescription("这是一份详细介绍人工智能技术发展的文档");
+        ragInfoList.add(ragInfo1);
+        
+        // RAG 信息 2
+        StreamMessageRequestV2.RagInfo ragInfo2 = new StreamMessageRequestV2.RagInfo();
+        ragInfo2.setName("知识库文档2");
+        ragInfo2.setIcon("https://example.com/doc-icon-2.png");
+        ragInfo2.setTitle("机器学习实践指南");
+        ragInfo2.setTime(System.currentTimeMillis() - 172800000); // 2天前
+        ragInfo2.setUrl("https://example.com/doc/ml-guide");
+        ragInfo2.setDescription("机器学习的实践应用案例和最佳实践");
+        ragInfoList.add(ragInfo2);
+        
+        request.setRagInfoList(ragInfoList);
+
+        Result<StreamMessageResponseV2> result = messageService.streamMessage(request);
+        
+        System.out.println("testStreamMessageWithRagInfo: " + result.getMsg());
+        Assert.assertTrue(result.isSuccess());
+        Assert.assertNotNull(result.getResponse());
+        Assert.assertNotNull(result.getResponse().getMessageServerId());
+    }
+
+    @Test
+    public void testStreamMessageWithTeamOption() throws YunxinSdkException {
+        if (services == null) return;
+
+        // 使用群聊会话ID (假设 accountId1 是群ID)
+        String conversationId = accountId1 + "|2|" + "test_team_id";
+
+        StreamMessageRequestV2 request = new StreamMessageRequestV2();
+        request.setConversationId(conversationId);
+
+        // 设置消息体
+        StreamMessageRequestV2.StreamMessage message = new StreamMessageRequestV2.StreamMessage();
+        message.setMessageClientId(UUID.randomUUID().toString());
+        message.setMessageType(0);
+        
+        StreamMessageRequestV2.StreamAttachment attachment = new StreamMessageRequestV2.StreamAttachment();
+        attachment.setText("这是一条高级群消息，测试 team_option 配置。");
+        attachment.setIndex(0);
+        attachment.setFinish(1);
+        message.setAttachment(attachment);
+        request.setMessage(message);
+
+        // 设置高级群消息配置
+        StreamMessageRequestV2.TeamOption teamOption = new StreamMessageRequestV2.TeamOption();
+        teamOption.setMarkAsRead(true); // 需要已读功能
+        teamOption.setIgnoreChatBanned(false); // 不忽略群禁言
+        teamOption.setIgnoreMemberChatBanned(false); // 不忽略成员禁言
+        teamOption.setCheckTeamMemberValid(true); // 验证群成员身份
+        request.setTeamOption(teamOption);
+
+        Result<StreamMessageResponseV2> result = messageService.streamMessage(request);
+        
+        System.out.println("testStreamMessageWithTeamOption: " + result.getMsg());
+        // Note: This may fail if the conversation doesn't exist, which is expected in test environment
+        System.out.println("Result code: " + result.getCode());
+    }
+
+    @Test
+    public void testStreamMessageWithTargetOption() throws YunxinSdkException {
+        if (services == null) return;
+
+        // 使用群聊会话ID
+        String conversationId = accountId1 + "|2|" + "test_team_id";
+
+        StreamMessageRequestV2 request = new StreamMessageRequestV2();
+        request.setConversationId(conversationId);
+
+        // 设置消息体
+        StreamMessageRequestV2.StreamMessage message = new StreamMessageRequestV2.StreamMessage();
+        message.setMessageClientId(UUID.randomUUID().toString());
+        message.setMessageType(0);
+        
+        StreamMessageRequestV2.StreamAttachment attachment = new StreamMessageRequestV2.StreamAttachment();
+        attachment.setText("这是一条群定向消息，只有指定成员可见。");
+        attachment.setIndex(0);
+        attachment.setFinish(1);
+        message.setAttachment(attachment);
+        request.setMessage(message);
+
+        // 设置群定向消息配置
+        StreamMessageRequestV2.TargetOption targetOption = new StreamMessageRequestV2.TargetOption();
+        // 设置接收者列表（可见列表）
+        java.util.List<String> receiverIds = new java.util.ArrayList<>();
+        receiverIds.add(accountId2);
+        receiverIds.add(accountId3);
+        targetOption.setReceiverAccountIds(receiverIds);
+        targetOption.setInclusive(true); // 可见列表
+        targetOption.setCheckTeamMemberValid(true); // 验证群成员身份
+        targetOption.setVisibleToNewMember(false); // 新成员不可见
+        request.setTargetOption(targetOption);
+
+        Result<StreamMessageResponseV2> result = messageService.streamMessage(request);
+        
+        System.out.println("testStreamMessageWithTargetOption: " + result.getMsg());
+        // Note: This may fail if the conversation doesn't exist, which is expected in test environment
+        System.out.println("Result code: " + result.getCode());
     }
 
     @Test

@@ -22,6 +22,9 @@ public class UpdateAccountRequestV2 {
     @JSONField(name = "kick_notify_extension")
     private String kickNotifyExtension;
 
+    @JSONField(name = "user_information")
+    private UserInformation userInformation;
+
     public static class Configuration {
 
         @JSONField(name = "enabled")
@@ -129,5 +132,115 @@ public class UpdateAccountRequestV2 {
 
     public void setKickNotifyExtension(String kickNotifyExtension) {
         this.kickNotifyExtension = kickNotifyExtension;
+    }
+
+    public UserInformation getUserInformation() {
+        return userInformation;
+    }
+
+    public void setUserInformation(UserInformation userInformation) {
+        this.userInformation = userInformation;
+    }
+
+    public static class UserInformation {
+
+        @JSONField(name = "name")
+        private String name;
+
+        @JSONField(name = "avatar")
+        private String avatar;
+
+        @JSONField(name = "sign")
+        private String sign;
+
+        @JSONField(name = "email")
+        private String email;
+
+        @JSONField(name = "birthday")
+        private String birthday;
+
+        @JSONField(name = "mobile")
+        private String mobile;
+
+        @JSONField(name = "gender")
+        private Integer gender;
+
+        @JSONField(name = "extension")
+        private String extension;
+
+        @JSONField(name = "email_validation_mode")
+        private Integer emailValidationMode;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
+
+        public String getSign() {
+            return sign;
+        }
+
+        public void setSign(String sign) {
+            this.sign = sign;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getBirthday() {
+            return birthday;
+        }
+
+        public void setBirthday(String birthday) {
+            this.birthday = birthday;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
+
+        public Integer getGender() {
+            return gender;
+        }
+
+        public void setGender(Integer gender) {
+            this.gender = gender;
+        }
+
+        public String getExtension() {
+            return extension;
+        }
+
+        public void setExtension(String extension) {
+            this.extension = extension;
+        }
+
+        public Integer getEmailValidationMode() {
+            return emailValidationMode;
+        }
+
+        public void setEmailValidationMode(Integer emailValidationMode) {
+            this.emailValidationMode = emailValidationMode;
+        }
     }
 }
