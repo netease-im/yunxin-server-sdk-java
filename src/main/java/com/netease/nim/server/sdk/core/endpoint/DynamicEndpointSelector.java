@@ -127,13 +127,16 @@ public class DynamicEndpointSelector implements EndpointSelector {
     }
 
     @Override
-    public String selectEndpoint(String excludeEndpoint) {
+    public String selectEndpoint(Set<String> excludeEndpoints) {
         if (backupEndpoints == null || backupEndpoints.isEmpty()) {
             return defaultEndpoint;
         }
         try {
             for (String endpoint : orderedEndpoints) {
-                if (!Objects.equals(endpoint, excludeEndpoint)) {
+                if (excludeEndpoints == null) {
+                    return endpoint;
+                }
+                if (!excludeEndpoints.contains(endpoint)) {
                     return endpoint;
                 }
             }

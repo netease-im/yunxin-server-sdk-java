@@ -182,6 +182,9 @@ public class YunxinApiHttpClient {
         }
         ParamBuilder builder = new ParamBuilder();
         for (Map.Entry<String, String> entry : paramMap.entrySet()) {
+            if (entry.getKey() == null || entry.getValue() == null) {
+                continue;
+            }
             builder.addParam(entry.getKey(), entry.getValue());
         }
         HttpResponse response = httpClient.execute(HttpMethod.POST, ContextType.form_url_encoded, ApiVersion.V1, path, path, null, builder.build());

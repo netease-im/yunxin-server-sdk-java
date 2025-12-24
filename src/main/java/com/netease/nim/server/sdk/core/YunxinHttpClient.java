@@ -21,7 +21,9 @@ import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -100,6 +102,9 @@ public class YunxinHttpClient implements HttpClient {
             } else {
                 ParamBuilder query = new ParamBuilder();
                 for (Map.Entry<String, String> entry : queryString.entrySet()) {
+                    if (entry.getKey() == null || entry.getValue() == null) {
+                        continue;
+                    }
                     query.addParam(entry.getKey(), entry.getValue());
                 }
                 url = path + "?" + query.build();
@@ -115,6 +120,8 @@ public class YunxinHttpClient implements HttpClient {
             }
             Long timeoutMillis = TimeoutSetter.getAndClear();
             OkHttpClient client = client(timeoutMillis);
+
+            Set<String> excludeEndpoints = new HashSet<>();
 
             for (int i=0; i<=maxRetry; i++) {
                 //request
@@ -194,7 +201,8 @@ public class YunxinHttpClient implements HttpClient {
                         }
                     }
                     if (retryAction.isNextEndpoint()) {
-                        endpoint = endpointSelector.selectEndpoint(endpoint);
+                        excludeEndpoints.add(endpoint);
+                        endpoint = endpointSelector.selectEndpoint(excludeEndpoints);
                     }
                 }
             }

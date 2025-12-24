@@ -2,6 +2,8 @@ package com.netease.nim.server.sdk.core.endpoint;
 
 import okhttp3.OkHttpClient;
 
+import java.util.Set;
+
 /**
  * Created by caojiajun on 2024/12/9
  */
@@ -24,7 +26,7 @@ public class FixedEndpointSelector implements EndpointSelector {
     }
 
     @Override
-    public String selectEndpoint(String excludeEndpoint) {
+    public String selectEndpoint(Set<String> excludeEndpoints) {
         return endpoint;
     }
 }
