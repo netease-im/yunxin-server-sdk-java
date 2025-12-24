@@ -29,30 +29,7 @@ public class CustomNotificationV2Service implements ICustomNotificationV2Service
     }
 
     @Override
-    public Result<SendCustomNotificationResponseV2> sendCustomNotification(
-            SendCustomNotificationRequestV2 request) throws YunxinSdkException {
-        
-        // Validate required parameters
-        if (request.getSenderId() == null || request.getSenderId().isEmpty()) {
-            throw new IllegalArgumentException("Sender ID cannot be null or empty");
-        }
-        
-        if (request.getType() == null) {
-            throw new IllegalArgumentException("Notification type cannot be null");
-        }
-        
-        if (request.getType() < 1 || request.getType() > 3) {
-            throw new IllegalArgumentException("Invalid notification type: must be 1 (P2P), 2 (Team), or 3 (Superteam)");
-        }
-        
-        if (request.getReceiverId() == null || request.getReceiverId().isEmpty()) {
-            throw new IllegalArgumentException("Receiver ID cannot be null or empty");
-        }
-        
-        if (request.getContent() == null || request.getContent().isEmpty()) {
-            throw new IllegalArgumentException("Content cannot be null or empty");
-        }
-
+    public Result<SendCustomNotificationResponseV2> sendCustomNotification(SendCustomNotificationRequestV2 request) throws YunxinSdkException {
         
         // Convert to JSON string using JSONField annotations
         String jsonRequestBody = JSON.toJSONString(request);
@@ -69,21 +46,7 @@ public class CustomNotificationV2Service implements ICustomNotificationV2Service
     }
     
     @Override
-    public Result<SendBatchCustomNotificationResponseV2> sendBatchCustomNotification(
-            SendBatchCustomNotificationRequestV2 request) throws YunxinSdkException {
-        
-        // Validate required parameters
-        if (request.getSenderId() == null || request.getSenderId().isEmpty()) {
-            throw new IllegalArgumentException("Sender ID cannot be null or empty");
-        }
-        
-        if (request.getReceiverIds() == null || request.getReceiverIds().isEmpty()) {
-            throw new IllegalArgumentException("Receiver IDs cannot be null or empty");
-        }
-
-        if (request.getContent() == null || request.getContent().isEmpty()) {
-            throw new IllegalArgumentException("Content cannot be null or empty");
-        }
+    public Result<SendBatchCustomNotificationResponseV2> sendBatchCustomNotification(SendBatchCustomNotificationRequestV2 request) throws YunxinSdkException {
         
         // Convert to JSON string using JSONField annotations
         String jsonRequestBody = JSON.toJSONString(request);

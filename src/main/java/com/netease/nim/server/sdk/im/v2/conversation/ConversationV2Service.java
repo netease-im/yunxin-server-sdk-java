@@ -41,10 +41,7 @@ public class ConversationV2Service implements IConversationV2Service {
     @Override
     public Result<UpdateConversationResponseV2> updateConversation(UpdateConversationRequestV2 request) throws YunxinSdkException {
         String conversationId = request.getConversationId();
-        if (conversationId == null || conversationId.isEmpty()) {
-            throw new IllegalArgumentException("Conversation ID cannot be null or empty");
-        }
-        
+
         // Replace the path parameter in the URL
         String path = ConversationV2UrlContext.UPDATE_CONVERSATION.replace("{conversation_id}", conversationId);
         
@@ -65,10 +62,7 @@ public class ConversationV2Service implements IConversationV2Service {
     @Override
     public Result<DeleteConversationResponseV2> deleteConversation(DeleteConversationRequestV2 request) throws YunxinSdkException {
         String conversationId = request.getConversationId();
-        if (conversationId == null || conversationId.isEmpty()) {
-            throw new IllegalArgumentException("Conversation ID cannot be null or empty");
-        }
-        
+
         // Replace the path parameter in the URL
         String path = ConversationV2UrlContext.DELETE_CONVERSATION.replace("{conversation_id}", conversationId);
         
@@ -93,10 +87,6 @@ public class ConversationV2Service implements IConversationV2Service {
     @Override
     public Result<BatchDeleteConversationsResponseV2> batchDeleteConversations(BatchDeleteConversationsRequestV2 request) throws YunxinSdkException {
         List<String> conversationIds = request.getConversationIds();
-        if (conversationIds == null || conversationIds.isEmpty()) {
-            throw new IllegalArgumentException("Conversation IDs list cannot be null or empty");
-        }
-
         // Each ID is joined with commas
         String conversationIdsParam = String.join(",", conversationIds);
         
@@ -123,10 +113,7 @@ public class ConversationV2Service implements IConversationV2Service {
     @Override
     public Result<GetConversationResponseV2> getConversation(GetConversationRequestV2 request) throws YunxinSdkException {
         String conversationId = request.getConversationId();
-        if (conversationId == null || conversationId.isEmpty()) {
-            throw new IllegalArgumentException("Conversation ID cannot be null or empty");
-        }
-        
+
         // Replace the path parameter in the URL
         String path = ConversationV2UrlContext.GET_CONVERSATION.replace("{conversation_id}", conversationId);
         
@@ -144,9 +131,6 @@ public class ConversationV2Service implements IConversationV2Service {
     @Override
     public Result<BatchGetConversationsResponseV2> batchGetConversations(BatchGetConversationsRequestV2 request) throws YunxinSdkException {
         List<String> conversationIds = request.getConversationIds();
-        if (conversationIds == null || conversationIds.isEmpty()) {
-            throw new IllegalArgumentException("Conversation IDs list cannot be null or empty");
-        }
         // Each ID is joined with commas
         String conversationIdsParam = String.join(",", conversationIds);
         
@@ -168,10 +152,7 @@ public class ConversationV2Service implements IConversationV2Service {
     @Override
     public Result<ListConversationsResponseV2> listConversations(ListConversationsRequestV2 request) throws YunxinSdkException {
         String accountId = request.getAccountId();
-        if (accountId == null || accountId.isEmpty()) {
-            throw new IllegalArgumentException("Account ID cannot be null or empty");
-        }
-        
+
         // Add query parameters
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("account_id", accountId);
@@ -200,15 +181,9 @@ public class ConversationV2Service implements IConversationV2Service {
     @Override
     public Result<StickTopConversationResponseV2> stickTopConversation(StickTopConversationRequestV2 request) throws YunxinSdkException {
         String conversationId = request.getConversationId();
-        if (conversationId == null || conversationId.isEmpty()) {
-            throw new IllegalArgumentException("Conversation ID cannot be null or empty");
-        }
-        
+
         Integer topType = request.getTopType();
-        if (topType == null || (topType != 0 && topType != 1)) {
-            throw new IllegalArgumentException("Top type must be 1 (pin) or 0 (unpin)");
-        }
-        
+
         // Replace the path parameter in the URL
         String path = ConversationV2UrlContext.STICK_TOP_CONVERSATION.replace("{conversation_id}", conversationId);
         

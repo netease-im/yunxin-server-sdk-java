@@ -341,7 +341,7 @@ public class MessageV2Service implements IMessageV2Service {
             queryParams.put("time_period", request.getTimePeriod().toString());
         }
         
-        if (request.getKeywordList() != null && request.getKeywordList().size() > 0) {
+        if (request.getKeywordList() != null && !request.getKeywordList().isEmpty()) {
             queryParams.put("keyword_list", request.getKeywordListAsJsonString());
         }
         

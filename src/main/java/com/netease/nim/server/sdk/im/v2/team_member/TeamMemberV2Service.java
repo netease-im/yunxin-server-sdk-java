@@ -34,38 +34,8 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
 
 
     @Override
-    public Result<InviteTeamMembersResponseV2> inviteTeamMembers(InviteTeamMembersRequestV2 request) 
-            throws YunxinSdkException {
-        
-        // Validate required parameters
-        if (request == null) {
-            throw new IllegalArgumentException("Request cannot be null");
-        }
-        
-        if (request.getOperatorId() == null || request.getOperatorId().isEmpty()) {
-            throw new IllegalArgumentException("Operator ID cannot be null or empty");
-        }
-        
-        if (request.getTeamId() == null) {
-            throw new IllegalArgumentException("Team ID cannot be null");
-        }
-        
-        if (request.getTeamType() == null) {
-            throw new IllegalArgumentException("Team type cannot be null");
-        }
-        
-        if (request.getTeamType() != 1 && request.getTeamType() != 2) {
-            throw new IllegalArgumentException("Invalid team type: must be 1 (Advanced team) or 2 (Super team)");
-        }
-        
-        if (request.getInviteAccountIds() == null || request.getInviteAccountIds().isEmpty()) {
-            throw new IllegalArgumentException("Invite account IDs list cannot be null or empty");
-        }
+    public Result<InviteTeamMembersResponseV2> inviteTeamMembers(InviteTeamMembersRequestV2 request) throws YunxinSdkException {
 
-        if (request.getMsg() == null || request.getMsg().isEmpty()) {
-            throw new IllegalArgumentException("Invitation message cannot be null or empty");
-        }
-        
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
         
@@ -81,34 +51,7 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
     }
 
     @Override
-    public Result<KickTeamMembersResponseV2> kickTeamMembers(KickTeamMembersRequestV2 request) 
-            throws YunxinSdkException {
-        
-        // Validate required parameters
-        if (request == null) {
-            throw new IllegalArgumentException("Request cannot be null");
-        }
-        
-        if (request.getOperatorId() == null || request.getOperatorId().isEmpty()) {
-            throw new IllegalArgumentException("Operator ID cannot be null or empty");
-        }
-        
-        if (request.getTeamId() == null) {
-            throw new IllegalArgumentException("Team ID cannot be null");
-        }
-        
-        if (request.getTeamType() == null) {
-            throw new IllegalArgumentException("Team type cannot be null");
-        }
-        
-        if (request.getTeamType() != 1 && request.getTeamType() != 2) {
-            throw new IllegalArgumentException("Invalid team type: must be 1 (Advanced team) or 2 (Super team)");
-        }
-        
-        if (request.getKickAccountIds() == null || request.getKickAccountIds().isEmpty()) {
-            throw new IllegalArgumentException("Kick account IDs list cannot be null or empty");
-        }
-        
+    public Result<KickTeamMembersResponseV2> kickTeamMembers(KickTeamMembersRequestV2 request) throws YunxinSdkException {
         // Set up query parameters - using query parameters instead of request body for DELETE request
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("operator_id", request.getOperatorId());
@@ -133,30 +76,8 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
     }
 
     @Override
-    public Result<LeaveTeamResponseV2> leaveTeam(LeaveTeamRequestV2 request) 
-            throws YunxinSdkException {
-        
-        // Validate required parameters
-        if (request == null) {
-            throw new IllegalArgumentException("Request cannot be null");
-        }
-        
-        if (request.getAccountId() == null || request.getAccountId().isEmpty()) {
-            throw new IllegalArgumentException("Account ID cannot be null or empty");
-        }
-        
-        if (request.getTeamId() == null) {
-            throw new IllegalArgumentException("Team ID cannot be null");
-        }
-        
-        if (request.getTeamType() == null) {
-            throw new IllegalArgumentException("Team type cannot be null");
-        }
-        
-        if (request.getTeamType() != 1 && request.getTeamType() != 2) {
-            throw new IllegalArgumentException("Invalid team type: must be 1 (Advanced team) or 2 (Super team)");
-        }
-        
+    public Result<LeaveTeamResponseV2> leaveTeam(LeaveTeamRequestV2 request) throws YunxinSdkException {
+
         // Set up query parameters - using query parameters instead of request body for DELETE request
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("account_id", request.getAccountId());
@@ -180,40 +101,8 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
     }
 
     @Override
-    public Result<UpdateTeamMemberResponseV2> updateTeamMember(UpdateTeamMemberRequestV2 request) 
-            throws YunxinSdkException {
-        
-        // Validate required parameters
-        if (request == null) {
-            throw new IllegalArgumentException("Request cannot be null");
-        }
-        
-        if (request.getAccountId() == null || request.getAccountId().isEmpty()) {
-            throw new IllegalArgumentException("Account ID cannot be null or empty");
-        }
-        
-        if (request.getOperatorId() == null || request.getOperatorId().isEmpty()) {
-            throw new IllegalArgumentException("Operator ID cannot be null or empty");
-        }
-        
-        if (request.getTeamId() == null) {
-            throw new IllegalArgumentException("Team ID cannot be null");
-        }
-        
-        if (request.getTeamType() == null) {
-            throw new IllegalArgumentException("Team type cannot be null");
-        }
-        
-        if (request.getTeamType() != 1 && request.getTeamType() != 2) {
-            throw new IllegalArgumentException("Invalid team type: must be 1 (Advanced team) or 2 (Super team)");
-        }
-        
-        // Validate message notify state if provided
-        if (request.getMessageNotifyState() != null && 
-                (request.getMessageNotifyState() < 0 || request.getMessageNotifyState() > 2)) {
-            throw new IllegalArgumentException("Invalid message notify state: must be 0, 1, or 2");
-        }
-        
+    public Result<UpdateTeamMemberResponseV2> updateTeamMember(UpdateTeamMemberRequestV2 request) throws YunxinSdkException {
+
         // Replace the path parameter in the URL
         String path = TeamMemberV2UrlContext.UPDATE_TEAM_MEMBER.replace("{account_id}", request.getAccountId());
         
@@ -243,34 +132,8 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
     }
 
     @Override
-    public Result<BatchMuteTeamMembersResponseV2> batchMuteTeamMembers(BatchMuteTeamMembersRequestV2 request) 
-            throws YunxinSdkException {
-        
-        // Validate required parameters
-        if (request == null) {
-            throw new IllegalArgumentException("Request cannot be null");
-        }
-        
-        if (request.getOperatorId() == null || request.getOperatorId().isEmpty()) {
-            throw new IllegalArgumentException("Operator ID cannot be null or empty");
-        }
-        
-        if (request.getTeamId() == null) {
-            throw new IllegalArgumentException("Team ID cannot be null");
-        }
-        
-        if (request.getTeamType() == null) {
-            throw new IllegalArgumentException("Team type cannot be null");
-        }
-        
-        if (request.getTeamType() != 1 && request.getTeamType() != 2) {
-            throw new IllegalArgumentException("Invalid team type: must be 1 (Advanced team) or 2 (Super team)");
-        }
-        
-        if (request.getChatBanAccountIds() == null || request.getChatBanAccountIds().isEmpty()) {
-            throw new IllegalArgumentException("Chat ban account IDs list cannot be null or empty");
-        }
-        
+    public Result<BatchMuteTeamMembersResponseV2> batchMuteTeamMembers(BatchMuteTeamMembersRequestV2 request) throws YunxinSdkException {
+
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
         
@@ -286,33 +149,8 @@ public class TeamMemberV2Service implements ITeamMemberV2Service {
     }
 
     @Override
-    public Result<QueryJoinedTeamsResponseV2> queryJoinedTeams(QueryJoinedTeamsRequestV2 request) 
-            throws YunxinSdkException {
-        
-        // Validate required parameters
-        if (request == null) {
-            throw new IllegalArgumentException("Request cannot be null");
-        }
-        
-        if (request.getAccountId() == null || request.getAccountId().isEmpty()) {
-            throw new IllegalArgumentException("Account ID cannot be null or empty");
-        }
-        
-        if (request.getTeamType() == null) {
-            throw new IllegalArgumentException("Team type cannot be null");
-        }
-        
-        if (request.getTeamType() != 1 && request.getTeamType() != 2) {
-            throw new IllegalArgumentException("Invalid team type: must be 1 (Advanced team) or 2 (Super team)");
-        }
-        
-        // Validate needReturnMemberInfo if provided
-        if (request.getNeedReturnMemberInfo() != null && 
-                request.getNeedReturnMemberInfo() != 0 && 
-                request.getNeedReturnMemberInfo() != 1) {
-            throw new IllegalArgumentException("Need return member info must be 0 or 1");
-        }
-        
+    public Result<QueryJoinedTeamsResponseV2> queryJoinedTeams(QueryJoinedTeamsRequestV2 request) throws YunxinSdkException {
+
         // Replace the path parameter in the URL
         String path = TeamMemberV2UrlContext.JOINED_TEAMS.replace("{account_id}", request.getAccountId());
         

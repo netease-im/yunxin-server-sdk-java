@@ -41,15 +41,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
 
     @Override
     public Result<CreateChatroomResponseV2> createChatroom(CreateChatroomRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request.getCreator() == null || request.getCreator().isEmpty()) {
-            throw new IllegalArgumentException("Creator cannot be null or empty");
-        }
-        
-        if (request.getRoomName() == null || request.getRoomName().isEmpty()) {
-            throw new IllegalArgumentException("Room name cannot be null or empty");
-        }
-        
+
         // Convert the request to JSON string
         String requestBody = JSONObject.toJSONString(request);
         
@@ -67,20 +59,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
 
     @Override
     public Result<GetChatroomAddressResponseV2> getChatroomAddress(GetChatroomAddressRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request.getRoomId() == null) {
-            throw new IllegalArgumentException("Chatroom ID cannot be null");
-        }
-        
-        if (request.getAccountId() == null || request.getAccountId().isEmpty()) {
-            throw new IllegalArgumentException("Account ID cannot be null or empty");
-        }
-        
-        if (request.getClientIp() == null || request.getClientIp().isEmpty()) {
-            throw new IllegalArgumentException("Client IP cannot be null or empty");
-        }
 
-        
         // Replace the path parameter in the URL
         String path = ChatroomV2UrlContext.GET_CHATROOM_ADDRESS.replace("{room_id}", request.getRoomId().toString());
         
@@ -111,11 +90,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
 
     @Override
     public Result<GetChatroomInfoResponseV2> getChatroomInfo(GetChatroomInfoRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request.getRoomId() == null) {
-            throw new IllegalArgumentException("Chatroom ID cannot be null");
-        }
-        
+
         // Replace the path parameter in the URL
         String path = ChatroomV2UrlContext.GET_CHATROOM_INFO.replace("{room_id}", request.getRoomId().toString());
         
@@ -144,10 +119,6 @@ public class ChatroomV2Service implements IChatroomV2Service {
 
     @Override
     public Result<UpdateChatroomInfoResponseV2> updateChatroomInfo(UpdateChatroomInfoRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request.getRoomId() == null) {
-            throw new IllegalArgumentException("Chatroom ID cannot be null");
-        }
         // Replace the path parameter in the URL
         String path = ChatroomV2UrlContext.UPDATE_CHATROOM_INFO.replace("{room_id}", request.getRoomId().toString());
         
@@ -168,15 +139,6 @@ public class ChatroomV2Service implements IChatroomV2Service {
 
     @Override
     public Result<UpdateChatroomStatusResponseV2> updateChatroomStatus(UpdateChatroomStatusRequestV2 request) throws YunxinSdkException {
-
-        if (request.getOperatorAccountId() == null || request.getOperatorAccountId().isEmpty()) {
-            throw new IllegalArgumentException("Operator account ID cannot be null or empty");
-        }
-        
-        if (request.getValid() == null) {
-            throw new IllegalArgumentException("Valid status cannot be null");
-        }
-
         // Replace the path parameter in the URL
         String path = ChatroomV2UrlContext.UPDATE_CHATROOM_STATUS.replace("{room_id}", String.valueOf(request.getRoomId()));
         
@@ -199,15 +161,6 @@ public class ChatroomV2Service implements IChatroomV2Service {
     @Override
     public Result<ToggleChatroomMuteResponseV2> toggleChatroomMute(ToggleChatroomMuteRequestV2 request) throws YunxinSdkException {
 
-        if (request.getOperatorAccountId() == null || request.getOperatorAccountId().isEmpty()) {
-            throw new IllegalArgumentException("Operator account ID cannot be null or empty");
-        }
-        
-        if (request.getChatBanned() == null) {
-            throw new IllegalArgumentException("Chat banned status cannot be null");
-        }
-        
-
         // Replace the path parameter in the URL
         String path = ChatroomV2UrlContext.TOGGLE_CHATROOM_MUTE.replace("{room_id}", String.valueOf(request.getRoomId()));
         
@@ -228,15 +181,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
 
     @Override
     public Result<ToggleInOutNotificationResponseV2> toggleInOutNotification(ToggleInOutNotificationRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request.getRoomId() == null) {
-            throw new IllegalArgumentException("Chatroom ID cannot be null");
-        }
-        
-        if (request.getInOutNotification() == null) {
-            throw new IllegalArgumentException("In/out notification status cannot be null");
-        }
-        
+
         // Replace the path parameter in the URL
         String path = ChatroomV2UrlContext.TOGGLE_IN_OUT_NOTIFICATION.replace("{room_id}", request.getRoomId().toString());
         
@@ -258,11 +203,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
 
     @Override
     public Result<QueryOpenChatroomsResponseV2> queryOpenChatrooms(QueryOpenChatroomsRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request.getCreatorAccountId() == null || request.getCreatorAccountId().isEmpty()) {
-            throw new IllegalArgumentException("Creator account ID cannot be null or empty");
-        }
-        
+
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("creator_account_id", request.getCreatorAccountId());
@@ -281,18 +222,6 @@ public class ChatroomV2Service implements IChatroomV2Service {
 
     @Override
     public Result<ListOnlineMembersResponseV2> listOnlineMembers(ListOnlineMembersRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request.getRoomId() == null) {
-            throw new IllegalArgumentException("Chatroom ID cannot be null");
-        }
-        
-        if (request.getOffset() == null) {
-            throw new IllegalArgumentException("Offset cannot be null");
-        }
-        
-        if (request.getLimit() == null) {
-            throw new IllegalArgumentException("Limit cannot be null");
-        }
         // Replace the path parameter in the URL
         String path = ChatroomV2UrlContext.LIST_ONLINE_MEMBERS.replace("{room_id}", request.getRoomId().toString());
         
@@ -319,11 +248,7 @@ public class ChatroomV2Service implements IChatroomV2Service {
 
     @Override
     public Result<ListFixedMembersResponseV2> listFixedMembers(ListFixedMembersRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request.getRoomId() == null) {
-            throw new IllegalArgumentException("Chatroom ID cannot be null");
-        }
-        
+
         // Replace the path parameter in the URL
         String path = ChatroomV2UrlContext.LIST_FIXED_MEMBERS.replace("{room_id}", request.getRoomId().toString());
         

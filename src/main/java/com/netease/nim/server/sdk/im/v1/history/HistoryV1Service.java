@@ -291,7 +291,7 @@ public class HistoryV1Service implements IHistoryV1Service {
             if (events != null) {
                 for (Object evt : events) {
                     // evt 可能是 JSONObject，需要转成 UserEvent
-                    QueryUserEventsResponseV1.UserEvent userEvent = JSON.toJavaObject((JSONObject) evt, QueryUserEventsResponseV1.UserEvent.class);
+                    QueryUserEventsResponseV1.UserEvent userEvent = JSON.toJavaObject(evt, QueryUserEventsResponseV1.UserEvent.class);
                     userEvents.add(userEvent);
                 }
             }

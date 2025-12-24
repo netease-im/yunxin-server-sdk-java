@@ -38,13 +38,7 @@ public class BroadcastV2Service implements IBroadcastV2Service {
     }
 
     @Override
-    public Result<SendBroadcastNotificationResponseV2> sendBroadcastNotification(
-            SendBroadcastNotificationRequestV2 request) throws YunxinSdkException {
-        
-        // Validate required parameters
-        if (request.getContent() == null || request.getContent().isEmpty()) {
-            throw new IllegalArgumentException("Content cannot be null or empty");
-        }
+    public Result<SendBroadcastNotificationResponseV2> sendBroadcastNotification(SendBroadcastNotificationRequestV2 request) throws YunxinSdkException {
         
         // Convert to JSON string using JSONField annotations
         String jsonRequestBody = JSON.toJSONString(request);
@@ -60,14 +54,8 @@ public class BroadcastV2Service implements IBroadcastV2Service {
     }
     
     @Override
-    public Result<DeleteBroadcastNotificationResponseV2> deleteBroadcastNotification(
-            DeleteBroadcastNotificationRequestV2 request) throws YunxinSdkException {
-        
-        // Validate required parameters
-        if (request.getBroadcastId() == null || request.getBroadcastId().isEmpty()) {
-            throw new IllegalArgumentException("Broadcast ID cannot be null or empty");
-        }
-        
+    public Result<DeleteBroadcastNotificationResponseV2> deleteBroadcastNotification(DeleteBroadcastNotificationRequestV2 request) throws YunxinSdkException {
+
         // Replace the path parameter in the URL
         String path = BroadcastV2UrlContext.DELETE_BROADCAST_NOTIFICATION
                 .replace("{broadcast_id}", request.getBroadcastId());
@@ -85,13 +73,7 @@ public class BroadcastV2Service implements IBroadcastV2Service {
     }
     
     @Override
-    public Result<QueryBroadcastNotificationResponseV2> queryBroadcastNotification(
-            QueryBroadcastNotificationRequestV2 request) throws YunxinSdkException {
-        
-        // Validate required parameters
-        if (request.getBroadcastId() == null || request.getBroadcastId().isEmpty()) {
-            throw new IllegalArgumentException("Broadcast ID cannot be null or empty");
-        }
+    public Result<QueryBroadcastNotificationResponseV2> queryBroadcastNotification(QueryBroadcastNotificationRequestV2 request) throws YunxinSdkException {
         
         // Replace the path parameter in the URL
         String path = BroadcastV2UrlContext.QUERY_BROADCAST_NOTIFICATION
@@ -141,21 +123,7 @@ public class BroadcastV2Service implements IBroadcastV2Service {
     }
     
     @Override
-    public Result<SendChatroomBroadcastNotificationResponseV2> sendChatroomBroadcastNotification(
-            SendChatroomBroadcastNotificationRequestV2 request) throws YunxinSdkException {
-        
-        // Validate required parameters
-        if (request.getClientBroadcastId() == null || request.getClientBroadcastId().isEmpty()) {
-            throw new IllegalArgumentException("Client broadcast ID cannot be null or empty");
-        }
-        
-        if (request.getSenderId() == null || request.getSenderId().isEmpty()) {
-            throw new IllegalArgumentException("Sender ID cannot be null or empty");
-        }
-        
-        if (request.getMessage() == null) {
-            throw new IllegalArgumentException("Message cannot be null");
-        }
+    public Result<SendChatroomBroadcastNotificationResponseV2> sendChatroomBroadcastNotification(SendChatroomBroadcastNotificationRequestV2 request) throws YunxinSdkException {
         
         // Convert to JSON string using JSONField annotations
         String jsonRequestBody = JSON.toJSONString(request);

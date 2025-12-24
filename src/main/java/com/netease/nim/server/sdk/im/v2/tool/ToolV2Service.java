@@ -1,8 +1,6 @@
 package com.netease.nim.server.sdk.im.v2.tool;
 
 import com.netease.nim.server.sdk.core.exception.YunxinSdkException;
-import com.netease.nim.server.sdk.im.v2.ai.request.ChatAssistRequestV2;
-import com.netease.nim.server.sdk.im.v2.ai.response.ChatAssistResponseV2;
 
 import com.alibaba.fastjson2.JSON;
 import com.netease.nim.server.sdk.core.Result;
@@ -31,15 +29,6 @@ public class ToolV2Service implements IToolV2Service {
 
     @Override
     public Result<AsrResponseV2> asr(AsrRequestV2 request) throws YunxinSdkException {
-        if (request.getOperatorAccountId()==null) {
-            throw new IllegalArgumentException("operator_account_id cannot be empty");
-        }
-        if (request.getFormat()==null) {
-            throw new IllegalArgumentException("format cannot be empty");
-        }
-        if (request.getUrl()==null) {
-            throw new IllegalArgumentException("url cannot be empty");
-        }
 
         String body = JSON.toJSONString(request);
         YunxinApiResponse apiResponse = yunxinApiHttpClient.executeV2Api(
@@ -53,19 +42,6 @@ public class ToolV2Service implements IToolV2Service {
     }
     @Override
     public Result<TranslateTextResponseV2> translateText(TranslateTextRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request.getOperatorAccountId() == null || request.getOperatorAccountId().isEmpty()) {
-            throw new IllegalArgumentException("Operator account ID cannot be null or empty");
-        }
-
-        if (request.getSourceText() == null || request.getSourceText().isEmpty()) {
-            throw new IllegalArgumentException("Source text cannot be null or empty");
-        }
-
-        if (request.getTargetLanguage() == null || request.getTargetLanguage().isEmpty()) {
-            throw new IllegalArgumentException("Target language cannot be null or empty");
-        }
-
         // Set default source language to "auto" if not provided
         if (request.getSourceLanguage() == null || request.getSourceLanguage().isEmpty()) {
             request.setSourceLanguage("auto");

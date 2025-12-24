@@ -34,21 +34,7 @@ public class SubscriptionV2Service implements ISubscriptionV2Service {
     }
 
     @Override
-    public Result<SubscribeUserStatusResponseV2> subscribeUserStatus(
-            SubscribeUserStatusRequestV2 request) throws YunxinSdkException {
-        
-        // Validate required parameters
-        if (request.getSubscriberAccountId() == null || request.getSubscriberAccountId().isEmpty()) {
-            throw new IllegalArgumentException("Subscriber account ID cannot be null or empty");
-        }
-        
-        if (request.getDuration() == null) {
-            throw new IllegalArgumentException("Duration cannot be null");
-        }
-
-        if (request.getAccountIds() == null || request.getAccountIds().isEmpty()) {
-            throw new IllegalArgumentException("Account IDs list cannot be null or empty");
-        }
+    public Result<SubscribeUserStatusResponseV2> subscribeUserStatus(SubscribeUserStatusRequestV2 request) throws YunxinSdkException {
         
         // Create URL with path parameter
         String url = SubscriptionV2UrlContext.SUBSCRIBE_USER_STATUS.replace(
@@ -74,13 +60,7 @@ public class SubscriptionV2Service implements ISubscriptionV2Service {
     }
     
     @Override
-    public Result<UnsubscribeUserStatusResponseV2> unsubscribeUserStatus(
-            UnsubscribeUserStatusRequestV2 request) throws YunxinSdkException {
-        
-        // Validate required parameters
-        if (request.getSubscriberAccountId() == null || request.getSubscriberAccountId().isEmpty()) {
-            throw new IllegalArgumentException("Subscriber account ID cannot be null or empty");
-        }
+    public Result<UnsubscribeUserStatusResponseV2> unsubscribeUserStatus(UnsubscribeUserStatusRequestV2 request) throws YunxinSdkException {
 
         // Create URL with path parameter
         String url = SubscriptionV2UrlContext.UNSUBSCRIBE_USER_STATUS.replace(
@@ -102,17 +82,7 @@ public class SubscriptionV2Service implements ISubscriptionV2Service {
     }
     
     @Override
-    public Result<QueryUserStatusSubscriptionResponseV2> queryUserStatusSubscription(
-            QueryUserStatusSubscriptionRequestV2 request) throws YunxinSdkException {
-        
-        // Validate required parameters
-        if (request.getSubscriberAccountId() == null || request.getSubscriberAccountId().isEmpty()) {
-            throw new IllegalArgumentException("Subscriber account ID cannot be null or empty");
-        }
-        
-        if (request.getAccountIds() == null || request.getAccountIds().isEmpty()) {
-            throw new IllegalArgumentException("Account IDs list cannot be null or empty");
-        }
+    public Result<QueryUserStatusSubscriptionResponseV2> queryUserStatusSubscription(QueryUserStatusSubscriptionRequestV2 request) throws YunxinSdkException {
 
         // Create URL with path parameter
         String url = SubscriptionV2UrlContext.QUERY_USER_STATUS_SUBSCRIPTION.replace(

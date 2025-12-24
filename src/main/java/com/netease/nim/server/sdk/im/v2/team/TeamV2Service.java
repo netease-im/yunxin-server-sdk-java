@@ -78,23 +78,6 @@ public class TeamV2Service implements ITeamV2Service {
 
     @Override
     public Result<DisbandTeamResponseV2> disbandTeam(DisbandTeamRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request == null) {
-            throw new IllegalArgumentException("Request cannot be null");
-        }
-        
-        if (request.getTeamId() == null) {
-            throw new IllegalArgumentException("Team ID cannot be null");
-        }
-        
-        if (request.getTeamType() == null) {
-            throw new IllegalArgumentException("Team type cannot be null");
-        }
-        
-        if (request.getTeamType() != 1 && request.getTeamType() != 2) {
-            throw new IllegalArgumentException("Invalid team type: must be 1 (Advanced team) or 2 (Super team)");
-        }
-
         // Replace the path parameter in the URL
         String path = TeamV2UrlContext.DISBAND_TEAM.replace("{team_id}", request.getTeamId().toString());
 
@@ -123,22 +106,6 @@ public class TeamV2Service implements ITeamV2Service {
 
     @Override
     public Result<BatchQueryTeamInfoResponseV2> batchQueryTeamInfo(BatchQueryTeamInfoRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request == null) {
-            throw new IllegalArgumentException("Request cannot be null");
-        }
-        
-        if (request.getTeamIds() == null || request.getTeamIds().isEmpty()) {
-            throw new IllegalArgumentException("Team IDs list cannot be null or empty");
-        }
-        
-        if (request.getTeamType() == null) {
-            throw new IllegalArgumentException("Team type cannot be null");
-        }
-        
-        if (request.getTeamType() != 1 && request.getTeamType() != 2) {
-            throw new IllegalArgumentException("Invalid team type: must be 1 (Advanced team) or 2 (Super team)");
-        }
 
         // Set up query parameters
         Map<String, String> queryParams = new HashMap<>();

@@ -31,15 +31,7 @@ public class ChatroomQueueV2Service implements IChatroomQueueV2Service {
 
     @Override
     public Result<InitializeChatroomQueueResponseV2> initializeChatroomQueue(InitializeChatroomQueueRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request == null) {
-            throw new IllegalArgumentException("Request cannot be null");
-        }
-        
-        if (request.getRoomId() == null) {
-            throw new IllegalArgumentException("Chatroom ID cannot be null");
-        }
-        
+
         // Prepare request body
         JSONObject requestBody = new JSONObject();
         
@@ -81,15 +73,7 @@ public class ChatroomQueueV2Service implements IChatroomQueueV2Service {
 
     @Override
     public Result<QueryChatroomQueueElementsResponseV2> queryChatroomQueueElements(QueryChatroomQueueElementsRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request == null) {
-            throw new IllegalArgumentException("Request cannot be null");
-        }
-        
-        if (request.getRoomId() == null) {
-            throw new IllegalArgumentException("Chatroom ID cannot be null");
-        }
-        
+
         // Prepare request body
         JSONObject requestBody = new JSONObject();
         
@@ -130,39 +114,6 @@ public class ChatroomQueueV2Service implements IChatroomQueueV2Service {
     
     @Override
     public Result<UpdateChatroomQueueResponseV2> updateChatroomQueue(UpdateChatroomQueueRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request == null) {
-            throw new IllegalArgumentException("Request cannot be null");
-        }
-        
-        if (request.getRoomId() == null) {
-            throw new IllegalArgumentException("Chatroom ID cannot be null");
-        }
-        
-        if (request.getOperatorAccountId() == null || request.getOperatorAccountId().trim().isEmpty()) {
-            throw new IllegalArgumentException("Operator account ID cannot be null or empty");
-        }
-        
-        if (request.getElementList() == null || request.getElementList().isEmpty()) {
-            throw new IllegalArgumentException("Element list cannot be null or empty");
-        }
-        
-        // Validate each element in the list
-        for (UpdateChatroomQueueRequestV2.QueueElement element : request.getElementList()) {
-            if (element.getElementKey() == null || element.getElementKey().trim().isEmpty()) {
-                throw new IllegalArgumentException("Element key cannot be null or empty");
-            }
-            
-            if (element.getElementValue() == null || element.getElementValue().trim().isEmpty()) {
-                throw new IllegalArgumentException("Element value cannot be null or empty");
-            }
-            
-            if (element.getElementAddPolicy() != null && 
-                (element.getElementAddPolicy() < 0 || element.getElementAddPolicy() > 2)) {
-                throw new IllegalArgumentException("Element add policy must be 0, 1, or 2");
-            }
-        }
-        
         // Prepare request body
         JSONObject requestBody = new JSONObject();
         
@@ -252,15 +203,6 @@ public class ChatroomQueueV2Service implements IChatroomQueueV2Service {
 
     @Override
     public Result<DeleteChatroomQueueResponseV2> deleteChatroomQueue(DeleteChatroomQueueRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request == null) {
-            throw new IllegalArgumentException("Request cannot be null");
-        }
-        
-        if (request.getRoomId() == null) {
-            throw new IllegalArgumentException("Chatroom ID cannot be null");
-        }
-        
         // Prepare request body
         JSONObject requestBody = new JSONObject();
         
@@ -323,16 +265,6 @@ public class ChatroomQueueV2Service implements IChatroomQueueV2Service {
 
     @Override
     public Result<PollChatroomQueueElementResponseV2> pollChatroomQueueElement(PollChatroomQueueElementRequestV2 request) throws YunxinSdkException {
-        // Validate required parameters
-        if (request == null) {
-            throw new IllegalArgumentException("Request cannot be null");
-        }
-        
-        if (request.getRoomId() == null) {
-            throw new IllegalArgumentException("Chatroom ID cannot be null");
-        }
-
-        
         // Prepare request body
         JSONObject requestBody = new JSONObject();
         
