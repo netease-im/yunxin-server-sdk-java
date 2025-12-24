@@ -151,6 +151,7 @@ public class DynamicEndpointFetcher implements EndpointFetcher {
             builder.addParam("md5", md5);
         }
         builder.addParam("biz", bizName.getValue());
+        builder.addParam("p", "java");
         Request request = new Request.Builder().get()
                 .url(lbs + "?" + builder.build())
                 .build();
