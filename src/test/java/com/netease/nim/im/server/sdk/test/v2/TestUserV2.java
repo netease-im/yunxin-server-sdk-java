@@ -81,6 +81,12 @@ public class TestUserV2 {
         getUsersOnlineStatus(accountId, accountId2);
     }
     
+    @Test
+    public void testUpdateUserWithEmailValidationMode() throws YunxinSdkException {
+        if (services == null) return;
+        updateUserWithEmailValidationMode(accountId);
+    }
+    
     /**
      * Helper method to create a test account
      * 
@@ -182,6 +188,47 @@ public class TestUserV2 {
         if (response.getExtension() != null) {
             System.out.println("Extension: " + response.getExtension());
         }
+    }
+    
+    /**
+     * Test updating user with email validation mode
+     * 
+     * @param accountId the account ID to update
+     * @throws YunxinSdkException if an error occurs
+     */
+    private static void updateUserWithEmailValidationMode(String accountId) throws YunxinSdkException {
+        UpdateUserRequestV2 request = new UpdateUserRequestV2();
+        request.setAccountId(accountId);
+        
+        // Set user profile information
+        request.setName("User with Email Validation");
+        request.setEmail("test.validation@example.com");
+        
+        // Set email validation mode
+        // 0: Default validation mode
+        // 1: Extended validation mode (includes special characters and Latin characters)
+        // 2: No validation (not recommended, may cause unknown display issues)
+        request.setEmailValidationMode(1); // Use extended validation mode
+        
+        IUserV2Service userService = services.getUserService();
+        Result<UpdateUserResponseV2> result = userService.updateUser(request);
+        
+        System.out.println("updateUserWithEmailValidationMode:" + result.getMsg());
+        
+        // Assertions
+        Assert.assertEquals(200, result.getCode());
+        Assert.assertNotNull(result.getResponse());
+        
+        UpdateUserResponseV2 response = result.getResponse();
+        Assert.assertEquals(accountId, response.getAccountId());
+        Assert.assertEquals("User with Email Validation", response.getName());
+        Assert.assertEquals("test.validation@example.com", response.getEmail());
+        
+        // Print response details
+        System.out.println("Updated user with email validation mode:");
+        System.out.println("Account ID: " + response.getAccountId());
+        System.out.println("Name: " + response.getName());
+        System.out.println("Email: " + response.getEmail());
     }
     
     /**

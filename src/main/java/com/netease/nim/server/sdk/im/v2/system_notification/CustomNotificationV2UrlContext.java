@@ -14,4 +14,4 @@ public class CustomNotificationV2UrlContext {
      * URL for sending batch custom notifications
      */
     public static final String BATCH_CUSTOM_NOTIFICATION = "/im/v2/custom_notification/batch";
-} 
+}

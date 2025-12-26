@@ -168,8 +168,6 @@ public class UpdateAccountRequestV2 {
         @JSONField(name = "extension")
         private String extension;
 
-        @JSONField(name = "email_validation_mode")
-        private Integer emailValidationMode;
 
         public String getName() {
             return name;
@@ -235,12 +233,5 @@ public class UpdateAccountRequestV2 {
             this.extension = extension;
         }
 
-        public Integer getEmailValidationMode() {
-            return emailValidationMode;
-        }
-
-        public void setEmailValidationMode(Integer emailValidationMode) {
-            this.emailValidationMode = emailValidationMode;
-        }
     }
 }

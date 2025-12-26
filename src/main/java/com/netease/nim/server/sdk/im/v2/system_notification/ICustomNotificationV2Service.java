@@ -17,4 +17,4 @@ public interface ICustomNotificationV2Service {
             
     Result<SendBatchCustomNotificationResponseV2> sendBatchCustomNotification(
             SendBatchCustomNotificationRequestV2 request) throws YunxinSdkException;
-} 
+}

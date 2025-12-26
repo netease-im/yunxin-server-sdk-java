@@ -38,6 +38,9 @@ public class UpdateUserRequestV2 {
     
     @JSONField(name = "gender")
     private Integer gender;
+
+    @JSONField(name = "email_validation_mode")
+    private Integer emailValidationMode;
     
     @JSONField(name = "extension")
     private String extension;
@@ -135,7 +138,15 @@ public class UpdateUserRequestV2 {
         this.antispamConfiguration = antispamConfiguration;
     }
 
-    
+    public Integer getEmailValidationMode() {
+        return emailValidationMode;
+    }
+
+    public void setEmailValidationMode(Integer emailValidationMode) {
+        this.emailValidationMode = emailValidationMode;
+    }
+
+
     public static class AntispamBusinessIdMapV2 {
 
         

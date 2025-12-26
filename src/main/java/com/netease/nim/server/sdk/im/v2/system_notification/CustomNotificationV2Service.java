@@ -31,7 +31,6 @@ public class CustomNotificationV2Service implements ICustomNotificationV2Service
     @Override
     public Result<SendCustomNotificationResponseV2> sendCustomNotification(SendCustomNotificationRequestV2 request) throws YunxinSdkException {
         
-        // Convert to JSON string using JSONField annotations
         String jsonRequestBody = JSON.toJSONString(request);
         
         YunxinApiResponse apiResponse = yunxinApiHttpClient.executeV2Api(
@@ -48,7 +47,6 @@ public class CustomNotificationV2Service implements ICustomNotificationV2Service
     @Override
     public Result<SendBatchCustomNotificationResponseV2> sendBatchCustomNotification(SendBatchCustomNotificationRequestV2 request) throws YunxinSdkException {
         
-        // Convert to JSON string using JSONField annotations
         String jsonRequestBody = JSON.toJSONString(request);
         
         YunxinApiResponse apiResponse = yunxinApiHttpClient.executeV2Api(
@@ -61,4 +59,4 @@ public class CustomNotificationV2Service implements ICustomNotificationV2Service
         
         return ResultUtils.convert(apiResponse, SendBatchCustomNotificationResponseV2.class);
     }
-} 
+}

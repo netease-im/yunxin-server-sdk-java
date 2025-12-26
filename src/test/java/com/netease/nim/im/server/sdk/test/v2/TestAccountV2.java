@@ -267,7 +267,6 @@ public class TestAccountV2 {
         // 0：默认当前校验模式
         // 1：扩展校验模式，包括特殊字符和拉丁字符
         // 2：不校验，不建议用该模式，可能会导致未知显示问题
-        userInfo.setEmailValidationMode(emailValidationMode);
         request.setUserInformation(userInfo);
         
         IAccountV2Service accountService = services.getAccountService();
@@ -300,8 +299,6 @@ public class TestAccountV2 {
         userInfo.setName(updatedName);
         userInfo.setAvatar("https://example.com/updated-avatar.jpg");
         userInfo.setSign("Updated signature");
-        // 用户信息校验模式，0-默认当前校验模式；1-扩展校验模式，包括特殊字符和拉丁字符；2-不校验，不建议用该模式，可能会导致未知显示问题
-        userInfo.setEmailValidationMode(1);
         request.setUserInformation(userInfo);
         
         IAccountV2Service accountService = services.getAccountService();

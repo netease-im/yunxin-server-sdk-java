@@ -27,6 +27,8 @@ import com.netease.nim.server.sdk.im.v2.signal.ISignalV2Service;
 import com.netease.nim.server.sdk.im.v2.signal.SignalV2Service;
 import com.netease.nim.server.sdk.im.v2.system_notification.CustomNotificationV2Service;
 import com.netease.nim.server.sdk.im.v2.system_notification.ICustomNotificationV2Service;
+import com.netease.nim.server.sdk.im.v2.system_push.ISystemPushV2Service;
+import com.netease.nim.server.sdk.im.v2.system_push.SystemPushV2Service;
 import com.netease.nim.server.sdk.im.v2.friend.FriendV2Service;
 import com.netease.nim.server.sdk.im.v2.friend.IFriendV2Service;
 import com.netease.nim.server.sdk.im.v2.message.IMessageV2Service;
@@ -66,6 +68,7 @@ public class YunxinV2ApiServices {
     private final IBlockV2Service blockService;
     private final IBroadcastV2Service broadcastService;
     private final ICustomNotificationV2Service customNotificationService;
+    private final ISystemPushV2Service systemPushService;
     private final ISubscriptionV2Service subscriptionService;
     private final IAiSerivce aiService;
     private final IToolV2Service toolService;
@@ -89,6 +92,7 @@ public class YunxinV2ApiServices {
         this.blockService = new BlockV2Service(yunxinApiHttpClient);
         this.broadcastService = new BroadcastV2Service(yunxinApiHttpClient);
         this.customNotificationService = new CustomNotificationV2Service(yunxinApiHttpClient);
+        this.systemPushService = new SystemPushV2Service(yunxinApiHttpClient);
         this.subscriptionService = new SubscriptionV2Service(yunxinApiHttpClient);
                 this.aiService = new AiService(yunxinApiHttpClient);
         this.toolService = new ToolV2Service(yunxinApiHttpClient);
@@ -161,6 +165,10 @@ public class YunxinV2ApiServices {
     
     public ICustomNotificationV2Service getCustomNotificationService() {
         return customNotificationService;
+    }
+    
+    public ISystemPushV2Service getSystemPushService() {
+        return systemPushService;
     }
     
     public ISubscriptionV2Service getSubscriptionService() {
