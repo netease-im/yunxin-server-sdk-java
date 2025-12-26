@@ -147,8 +147,8 @@ public class RtcRoomService implements IRtcRoomService {
 
     @Override
     public RtcResult<RtcAddMemberToKicklistResponse> addMemberToKicklistV2(RtcAddMemberToKicklistRequestV2 request) {
-        boolean hasDuration = request.getDuration() == null;
-        String uri = hasDuration ? RtcRoomUrlContext.ADD_MEMBER_TO_KICKLIST_V2 : RtcRoomUrlContext.ADD_MEMBER_TO_KICKLIST_V2_WITH_DURATION;
+        boolean hasDuration = request.getDuration() != null;
+        String uri = hasDuration ? RtcRoomUrlContext.ADD_MEMBER_TO_KICKLIST_V2_WITH_DURATION : RtcRoomUrlContext.ADD_MEMBER_TO_KICKLIST_V2;
         String path = uri.replace("{cid}", String.valueOf(request.getCid()))
                 .replace("{uid}", String.valueOf(request.getUid()));
         if (hasDuration) {
