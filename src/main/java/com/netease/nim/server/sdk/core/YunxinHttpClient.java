@@ -261,6 +261,6 @@ public class YunxinHttpClient implements HttpClient {
         } else {
             builder.addHeader(X_CUSTOM_TRACE_ID, traceId);
         }
-        builder.addHeader("User-Agent", "yunxin-server-sdk/" + YunxinApiSdkVersion.version);
+        builder.addHeader("User-Agent", "yunxin-server-sdk-java/" + YunxinApiSdkVersion.version);
     }
 }
