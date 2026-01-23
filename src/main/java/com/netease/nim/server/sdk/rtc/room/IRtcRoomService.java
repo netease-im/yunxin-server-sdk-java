@@ -4,6 +4,7 @@ import com.netease.nim.server.sdk.rtc.RtcResult;
 import com.netease.nim.server.sdk.rtc.room.request.*;
 import com.netease.nim.server.sdk.rtc.room.response.RtcAddMemberToKicklistResponse;
 import com.netease.nim.server.sdk.rtc.room.response.RtcCreateRoomResponse;
+import com.netease.nim.server.sdk.rtc.room.response.RtcDeleteRoomResponse;
 import com.netease.nim.server.sdk.rtc.room.response.RtcGetRoomResponse;
 import com.netease.nim.server.sdk.rtc.room.response.RtcListRoomMembersResponse;
 import com.netease.nim.server.sdk.rtc.room.response.RtcMemberRightChangeResponse;
@@ -30,4 +31,8 @@ public interface IRtcRoomService {
     RtcResult<RtcMemberRightChangeResponse> memberRightChangeV2(RtcMemberRightChangeRequestV2 request);
 
     RtcResult<RtcMemberRightChangeResponse> memberRightChangeV3(RtcMemberRightChangeRequestV3 request);
+
+    RtcResult<RtcDeleteRoomResponse> deleteRoomV2(RtcDeleteRoomRequestV2 request);
+
+    RtcResult<RtcDeleteRoomResponse> deleteRoomV3(RtcDeleteRoomRequestV3 request);
 }

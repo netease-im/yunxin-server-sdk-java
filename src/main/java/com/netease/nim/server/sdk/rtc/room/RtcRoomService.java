@@ -8,6 +8,7 @@ import com.netease.nim.server.sdk.rtc.RtcResult;
 import com.netease.nim.server.sdk.rtc.room.request.*;
 import com.netease.nim.server.sdk.rtc.room.response.RtcAddMemberToKicklistResponse;
 import com.netease.nim.server.sdk.rtc.room.response.RtcCreateRoomResponse;
+import com.netease.nim.server.sdk.rtc.room.response.RtcDeleteRoomResponse;
 import com.netease.nim.server.sdk.rtc.room.response.RtcGetRoomResponse;
 import com.netease.nim.server.sdk.rtc.room.response.RtcListRoomMembersResponse;
 import com.netease.nim.server.sdk.rtc.room.response.RtcMemberRightChangeResponse;
@@ -239,5 +240,46 @@ public class RtcRoomService implements IRtcRoomService {
             msg = response.getData();
         }
         return new RtcResult<>(response.getEndpoint(), code, httpCode, requestId, response.getTraceId(), msg, memberRightChangeResponse);
+    }
+
+    @Override
+    public RtcResult<RtcDeleteRoomResponse> deleteRoomV2(RtcDeleteRoomRequestV2 request) {
+        String path = RtcRoomUrlContext.DELETE_ROOM_V2.replace("{cid}", String.valueOf(request.getCid()));
+        YunxinApiResponse response = httpClient.executeJson(HttpMethod.DELETE, RtcRoomUrlContext.DELETE_ROOM_V2, path, null, null);
+        int httpCode = response.getHttpCode();
+        int code = 0;
+        String requestId = null;
+        String msg;
+        RtcDeleteRoomResponse deleteRoomResponse = null;
+        try {
+            deleteRoomResponse = JSONObject.parseObject(response.getData(), RtcDeleteRoomResponse.class);
+            code = deleteRoomResponse.getCode();
+            requestId = deleteRoomResponse.getRequestId();
+            msg = deleteRoomResponse.getErrmsg();
+        } catch (Exception e) {
+            msg = response.getData();
+        }
+        return new RtcResult<>(response.getEndpoint(), code, httpCode, requestId, response.getTraceId(), msg, deleteRoomResponse);
+    }
+
+    @Override
+    public RtcResult<RtcDeleteRoomResponse> deleteRoomV3(RtcDeleteRoomRequestV3 request) {
+        Map<String, String> queryString = new HashMap<>();
+        queryString.put("cname", request.getCname());
+        YunxinApiResponse response = httpClient.executeJson(HttpMethod.DELETE, RtcRoomUrlContext.DELETE_ROOM_V3, queryString, null);
+        int httpCode = response.getHttpCode();
+        int code = 0;
+        String requestId = null;
+        String msg;
+        RtcDeleteRoomResponse deleteRoomResponse = null;
+        try {
+            deleteRoomResponse = JSONObject.parseObject(response.getData(), RtcDeleteRoomResponse.class);
+            code = deleteRoomResponse.getCode();
+            requestId = deleteRoomResponse.getRequestId();
+            msg = deleteRoomResponse.getErrmsg();
+        } catch (Exception e) {
+            msg = response.getData();
+        }
+        return new RtcResult<>(response.getEndpoint(), code, httpCode, requestId, response.getTraceId(), msg, deleteRoomResponse);
     }
 }
