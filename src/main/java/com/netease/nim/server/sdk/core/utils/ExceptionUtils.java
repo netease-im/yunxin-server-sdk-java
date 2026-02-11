@@ -10,18 +10,13 @@ public class ExceptionUtils {
 
     /**
      * 获取实际错误原因
+     *
      * @param e 异常
      * @return cause
      */
     public static Throwable getRealCause(Throwable e) {
         while (true) {
-            if (e instanceof okhttp3.internal.connection.RouteException) {
-                if (e.getCause() == null) {
-                    break;
-                } else {
-                    e = e.getCause();
-                }
-            } else if (e instanceof ExecutionException) {
+            if (e instanceof ExecutionException) {
                 if (e.getCause() == null) {
                     break;
                 } else {
@@ -49,6 +44,7 @@ public class ExceptionUtils {
 
     /**
      * 是否是连接错误
+     *
      * @param t 异常
      * @return 结果
      */
@@ -69,6 +65,7 @@ public class ExceptionUtils {
 
     /**
      * 是否超时异常
+     *
      * @param t 异常
      * @return 结果
      */
